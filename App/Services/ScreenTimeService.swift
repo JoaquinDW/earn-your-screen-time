@@ -85,8 +85,13 @@ final class MockScreenTimeService: ScreenTimeServing {
 
     @discardableResult
     func reconcile() -> SharedState {
-        let state = SharedStore.shared.load()
-        shieldsApplied = state.ledger.restrictionState == .locked
+        // Mirrors the live service: reconciling persists the resulting state, so the
+        // Simulator exercises the same read/write path the device uses.
+        var state = SharedStore.shared.load()
+        state.restrictedItemCount = selection.itemCount
+        shieldsApplied = state.ledger.restrictionState == .locked || selection.isEmpty
+        state.shieldsApplied = shieldsApplied
+        SharedStore.shared.save(state)
         return state
     }
 

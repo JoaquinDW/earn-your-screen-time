@@ -102,3 +102,19 @@ Leé `docs/ARQUITECTURA.md` para entender **por qué** el consumo se mide como s
 - [ ] **Fase 4** — Loop completo integrado.
 - [ ] **Fase 5** — SwiftData y reset diario.
 - [ ] **Fase 6** — UI de producto (onboarding, dashboard, ajustes).
+
+---
+
+## 7. Desarrollar sin la cuenta Apple (mientras esperás la aprobación)
+
+La app corre en el Simulador con un mock de Screen Time: se ve toda la UI y toda la lógica de
+la billetera. Lo único que no funciona ahí es el bloqueo real.
+
+```bash
+make build                                  # compila
+./scripts/seed-simulator.sh 3842 360 es     # carga un estado de ejemplo y abre la app en español
+./scripts/seed-simulator.sh 1000 0 en       # 1.000 pasos, nada consumido, en inglés
+```
+
+Verificado: el App Group **sí funciona en el Simulador**, así que el camino
+`App Group → JSON → dominio → UI` se prueba entero sin iPhone y sin cuenta paga.
