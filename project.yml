@@ -1,0 +1,81 @@
+name: EarnYourScreenTime
+
+options:
+  bundleIdPrefix: com.balthasardeweert
+  deploymentTarget:
+    iOS: "18.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: false
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    # Leave empty: pick your Team in Xcode > Signing & Capabilities once your
+    # Apple Developer Program membership is active.
+    DEVELOPMENT_TEAM: ""
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+
+packages:
+  EarnDomain:
+    path: Packages/EarnDomain
+
+targets:
+  EarnYourScreenTime:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+    dependencies:
+      - package: EarnDomain
+      - target: DeviceActivityMonitorExtension
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime
+        PRODUCT_NAME: Earn Your Screen Time
+        INFOPLIST_FILE: App/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/Resources/EarnYourScreenTime.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+
+  DeviceActivityMonitorExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Extensions/DeviceActivityMonitor
+      - path: Shared
+    dependencies:
+      - package: EarnDomain
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.monitor
+        PRODUCT_NAME: DeviceActivityMonitorExtension
+        INFOPLIST_FILE: Extensions/DeviceActivityMonitor/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extensions/DeviceActivityMonitor/DeviceActivityMonitorExtension.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+
+schemes:
+  EarnYourScreenTime:
+    build:
+      targets:
+        EarnYourScreenTime: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    archive:
+      config: Release
