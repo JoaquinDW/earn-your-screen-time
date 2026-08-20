@@ -2,10 +2,8 @@ import EarnDomain
 import FamilyControls
 import SwiftUI
 
-/// Phase 1 harness: prove authorization → picker → shield → unshield on a real iPhone.
-///
-/// This is intentionally a plain, unpolished screen. The product UI (PRD §15/§28) comes later,
-/// once the blocking loop is verified on hardware.
+/// Developer harness kept from Phase 1: prove authorization → picker → shield → unshield on a
+/// real iPhone, and force wallet states without walking. Reachable from Settings › Developer.
 struct SpikeView: View {
     @Environment(AppEnvironment.self) private var env
     @State private var isPickerPresented = false
@@ -14,30 +12,30 @@ struct SpikeView: View {
     @State private var isRequesting = false
 
     var body: some View {
-        NavigationStack {
-            Form {
-                statusSection
-                appsSection
-                walletSection
-                shieldSection
-                if let errorMessage {
-                    Section {
-                        Text(errorMessage)
-                            .font(.footnote)
-                            .foregroundStyle(.red)
-                    }
+        Form {
+            statusSection
+            appsSection
+            walletSection
+            shieldSection
+
+            if let errorMessage {
+                Section {
+                    Text(errorMessage)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("spike.title")
-            .familyActivityPicker(isPresented: $isPickerPresented, selection: $selection)
-            .onChange(of: selection) { _, newValue in
-                env.screenTime.selection = newValue
-                env.refresh()
-            }
-            .onAppear {
-                selection = env.screenTime.selection
-                env.refresh()
-            }
+        }
+        .navigationTitle("spike.title")
+        .navigationBarTitleDisplayMode(.inline)
+        .familyActivityPicker(isPresented: $isPickerPresented, selection: $selection)
+        .onChange(of: selection) { _, newValue in
+            env.screenTime.selection = newValue
+            env.reload()
+        }
+        .onAppear {
+            selection = env.screenTime.selection
+            env.reload()
         }
     }
 
@@ -61,7 +59,7 @@ struct SpikeView: View {
             if !env.isAppGroupConfigured {
                 Label("spike.appGroupMissing", systemImage: "exclamationmark.triangle")
                     .font(.footnote)
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(Theme.activity)
             }
         }
     }
@@ -76,14 +74,14 @@ struct SpikeView: View {
 
     private var walletSection: some View {
         Section("spike.section.wallet") {
-            LabeledContent("spike.available", value: minutes(env.state.ledger.wallet.availableSeconds))
-            LabeledContent("spike.earned", value: minutes(env.state.ledger.wallet.earnedSeconds))
-            LabeledContent("spike.used", value: minutes(env.state.ledger.wallet.consumedSeconds))
-            LabeledContent("spike.state", value: env.state.ledger.restrictionState == .locked
-                ? String(localized: "spike.state.locked")
-                : String(localized: "spike.state.available"))
-            Button("spike.addFiveMinutes") { env.grantDebugCredit(seconds: 300) }
-            Button("spike.resetDay", role: .destructive) { env.resetToday() }
+            LabeledContent("spike.available", value: minutes(env.wallet.availableSeconds))
+            LabeledContent("spike.earned", value: minutes(env.wallet.earnedSeconds))
+            LabeledContent("spike.used", value: minutes(env.wallet.consumedSeconds))
+            LabeledContent("spike.state", value: env.isLocked
+                ? String(localized: "dashboard.state.locked")
+                : String(localized: "dashboard.state.available"))
+            Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
+            Button("settings.resetDay", role: .destructive) { env.resetToday() }
         }
     }
 
@@ -91,11 +89,11 @@ struct SpikeView: View {
         Section {
             Button("spike.blockNow") {
                 env.screenTime.shieldNow()
-                env.refresh()
+                env.reload()
             }
             Button("spike.unblockNow") {
                 env.screenTime.unshieldNow()
-                env.refresh()
+                env.reload()
             }
         } header: {
             Text("spike.section.manualShield")
@@ -115,7 +113,7 @@ struct SpikeView: View {
     }
 
     private func minutes(_ seconds: Int) -> String {
-        String(localized: "spike.minutesValue \(seconds / 60)")
+        String(localized: "common.minutesValue \(seconds / 60)")
     }
 
     private func requestAuthorization() async {
@@ -131,6 +129,11 @@ struct SpikeView: View {
 }
 
 #Preview {
-    SpikeView()
-        .environment(AppEnvironment(screenTime: MockScreenTimeService(status: .approved)))
+    NavigationStack {
+        SpikeView()
+    }
+    .environment(AppEnvironment(
+        screenTime: MockScreenTimeService(status: .approved),
+        health: MockHealthKitService(hasRequested: true)
+    ))
 }

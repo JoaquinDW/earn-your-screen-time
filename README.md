@@ -48,6 +48,8 @@ make open     # abre el proyecto en Xcode
    - Verificá que aparezcan las capabilities **Family Controls** y **App Groups**
      (con `group.com.balthasardeweert.earnyourscreentime` tildado).
      Si no aparecen: botón **+ Capability** (arriba a la izquierda de esa pestaña) → agregalas.
+   - Solo en el target **EarnYourScreenTime**, agregá además **HealthKit** (para leer los pasos).
+     La extensión no lo necesita.
 5. En tu iPhone: **Ajustes → Privacidad y seguridad → Modo de desarrollador → activar**
    (el teléfono se reinicia).
 6. Conectá el iPhone por cable, elegilo en la barra superior de Xcode y apretá **▶︎ (Run)**.
@@ -98,10 +100,10 @@ Leé `docs/ARQUITECTURA.md` para entender **por qué** el consumo se mide como s
 - [x] **Fase 0** — Andamiaje, dominio y tests.
 - [x] **Fase 1** — Autorización → selector de apps → bloquear → desbloquear. *(falta probar en iPhone)*
 - [ ] **Fase 2** — DeviceActivity: consumo real de uso y re-bloqueo automático.
-- [ ] **Fase 3** — HealthKit: pasos.
+- [x] **Fase 3** — HealthKit: autorización y lectura de pasos del día. *(falta entrega en background, va en Fase 4)*
 - [ ] **Fase 4** — Loop completo integrado.
 - [ ] **Fase 5** — SwiftData y reset diario.
-- [ ] **Fase 6** — UI de producto (onboarding, dashboard, ajustes).
+- [x] **Fase 6** — UI de producto: onboarding, dashboard, selección de apps y ajustes, en es/en.
 
 ---
 

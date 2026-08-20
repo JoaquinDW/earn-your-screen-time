@@ -66,3 +66,13 @@ si se pasa. Prohibido meter ahí SwiftData, red o frameworks pesados.
 `ApplicationToken` y compañía no exponen bundle ID ni nombre. No se puede mostrar "TikTok" en la UI
 salvo con `Label(token)`, que dibuja el sistema. Tampoco se puede subir esa información a un
 servidor de forma útil. No intentamos derivar identidades (PRD §27).
+
+## 12. HealthKit no dice si te dieron permiso de lectura
+Por privacidad, Apple no revela si el usuario concedió lectura de pasos: revelarlo delataría que
+esa persona no tiene datos de salud. `authorizationStatus(for:)` solo informa sobre permisos de
+**escritura**. La única señal honesta es "preguntamos y una consulta respondió".
+
+Consecuencia: **alguien que denegó el permiso se ve exactamente igual que alguien que no caminó**
+(0 pasos). La UI está escrita para que ambos casos se lean con sentido, y el onboarding marca el
+paso como completado cuando se mostró el diálogo del sistema, no cuando se concedió — porque eso
+último no se puede saber.

@@ -7,11 +7,13 @@ struct EarnYourScreenTimeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            SpikeView()
+            RootView()
                 .environment(environment)
+                .tint(Theme.earned)
                 .onChange(of: scenePhase) { _, phase in
-                    // The monitor extension may have changed the balance while we were closed.
-                    if phase == .active { environment.refresh() }
+                    // The monitor extension may have spent credits while we were closed.
+                    guard phase == .active else { return }
+                    Task { await environment.refresh() }
                 }
         }
     }
