@@ -152,7 +152,6 @@ struct DailyResetTests {
         let yesterday = CreditEngine.apply(activityAmount: 4_000, to: freshLedger()).ledger
         let rolled = CreditEngine.rollOverIfNeeded(yesterday, to: DayKey(year: 2026, month: 8, day: 21))
         #expect(rolled.wallet.availableSeconds == 0)
-        #expect(rolled.restrictionState == .locked)
     }
 
     @Test("Carry-over hook is available for a future premium feature")

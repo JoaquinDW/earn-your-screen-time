@@ -1,0 +1,95 @@
+{
+  "identifier" : "99325E79-DA27-42F6-881A-42B2382F81F6",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "",
+    "_developerTeamID" : "",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "B9771429-CB85-4224-8F61-9C49E9F89C89",
+      "localizations" : [
+        {
+          "description" : "Unlock unlimited app selection and advanced earning features.",
+          "displayName" : "Earn Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "name" : "Earn Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "20B2ABF8-85F7-436B-917F-CA8D38EC375A",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlimited restricted apps, custom ratios, and future Pro earning modes.",
+              "displayName" : "Earn Pro Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Earn Pro Monthly",
+          "subscriptionGroupID" : "B9771429-CB85-4224-8F61-9C49E9F89C89",
+          "type" : "RecurringSubscription",
+          "winBackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "1945E2D8-EBB8-41BB-B07B-DBA43C60548D",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlimited restricted apps, custom ratios, and future Pro earning modes.",
+              "displayName" : "Earn Pro Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Earn Pro Yearly",
+          "subscriptionGroupID" : "B9771429-CB85-4224-8F61-9C49E9F89C89",
+          "type" : "RecurringSubscription",
+          "winBackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

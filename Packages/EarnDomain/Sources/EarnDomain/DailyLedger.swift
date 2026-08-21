@@ -34,6 +34,4 @@ public struct DailyLedger: Codable, Equatable, Sendable {
 
     /// Activity that counts toward the current rule.
     public var qualifyingAmount: Int { max(0, activityAmount - baselineAmount) }
-
-    public var restrictionState: RestrictionState { wallet.restrictionState }
 }

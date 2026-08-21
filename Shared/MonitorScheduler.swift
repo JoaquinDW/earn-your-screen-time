@@ -2,61 +2,122 @@ import DeviceActivity
 import EarnDomain
 import FamilyControls
 import Foundation
+import OSLog
 
-/// Registers the DeviceActivity thresholds that measure real usage of the restricted apps.
-///
-/// ## Why thresholds are cumulative from midnight
-///
-/// The schedule covers the whole day and every event is created with
-/// `includesPastActivity: true`, so a threshold of *N minutes* means "N minutes of restricted-app
-/// usage since midnight". That matters because monitoring has to be restarted every time the user
-/// earns more credits, and restarting resets relative counters — cumulative thresholds survive it.
-///
-/// The last threshold equals the total minutes earned today, so it fires exactly when the balance
-/// hits zero. The earlier ones only keep the displayed balance roughly in sync.
+/// Carries one explicit access session in a non-repeating DeviceActivity schedule.
 struct MonitorScheduler {
     static let shared = MonitorScheduler()
+    private static let legacyActivityName = DeviceActivityName("earnYourScreenTimeDaily")
+    private static let logger = Logger(
+        subsystem: "com.balthasardeweert.earnyourscreentime",
+        category: "DeviceActivityScheduler"
+    )
 
-    static let activityName = DeviceActivityName("earnYourScreenTimeDaily")
+    private struct Registration: Codable, Equatable {
+        let sessionID: UUID
+        let activityName: String
+        let endsAt: Date
+        let selection: Data
+    }
+
+    private enum Key {
+        static let registration = "shared.sessionMonitorRegistration.v2"
+        static let legacyRegistration = "shared.monitorRegistration.v1"
+    }
 
     private var center: DeviceActivityCenter { DeviceActivityCenter() }
+    private var defaults: UserDefaults { AppGroup.defaults }
 
-    /// A full day, which also gives us a midnight `intervalDidStart` callback for the daily reset.
-    /// (DeviceActivity requires intervals of at least 15 minutes.)
-    private var dailySchedule: DeviceActivitySchedule {
-        DeviceActivitySchedule(
-            intervalStart: DateComponents(hour: 0, minute: 0),
-            intervalEnd: DateComponents(hour: 23, minute: 59),
-            repeats: true
+    /// Keeps a valid registration, or recreates it for the session's remaining wall-clock time.
+    func refresh(
+        state: SharedState,
+        selection: FamilyActivitySelection,
+        now: Date = Date()
+    ) throws {
+        guard !selection.isEmpty,
+              let session = state.activeSession(at: now),
+              let plan = SessionMonitorPlan.make(for: session, at: now) else {
+            stopAll()
+            return
+        }
+
+        let registration = Registration(
+            sessionID: session.id,
+            activityName: plan.activityName,
+            endsAt: session.endsAt,
+            selection: try JSONEncoder().encode(selection)
+        )
+        let activityName = DeviceActivityName(plan.activityName)
+        if registration == storedRegistration, center.activities.contains(activityName) {
+            Self.logger.debug("Keeping session monitor \(plan.activityName, privacy: .public)")
+            return
+        }
+
+        stopAll()
+
+        // Starting one second in the past guarantees that `now` falls inside the interval. The
+        // carrier ends 15 minutes from now; warningTime targets the session's actual `endsAt`.
+        let calendar = Calendar.current
+        let intervalStart = calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second],
+            from: now.addingTimeInterval(-1)
+        )
+        let intervalEnd = calendar.dateComponents(
+            [.year, .month, .day, .hour, .minute, .second],
+            from: now.addingTimeInterval(TimeInterval(SessionMonitorPlan.carrierSeconds))
+        )
+        let schedule = DeviceActivitySchedule(
+            intervalStart: intervalStart,
+            intervalEnd: intervalEnd,
+            repeats: false,
+            warningTime: plan.warningSeconds.map { DateComponents(second: $0) }
+        )
+
+        try center.startMonitoring(activityName, during: schedule)
+        store(registration)
+        Self.logger.notice(
+            "Started session monitor \(plan.activityName, privacy: .public), remaining seconds: \(plan.remainingSeconds, privacy: .public)"
         )
     }
 
-    /// Restarts monitoring so the thresholds match the current balance.
-    /// Call this every time credits are earned or the app selection changes.
-    func refresh(state: SharedState, selection: FamilyActivitySelection) throws {
-        stop()
-        guard !selection.isEmpty else { return }
-
-        let thresholds = MonitorPlan.thresholds(totalEarnedSeconds: state.ledger.wallet.earnedSeconds)
-        var events: [DeviceActivityEvent.Name: DeviceActivityEvent] = [:]
-        for threshold in thresholds {
-            events[DeviceActivityEvent.Name(threshold.eventName)] = DeviceActivityEvent(
-                applications: selection.applicationTokens,
-                categories: selection.categoryTokens,
-                webDomains: selection.webDomainTokens,
-                threshold: DateComponents(minute: threshold.minute),
-                includesPastActivity: true
-            )
+    func stop(sessionID: UUID) {
+        center.stopMonitoring([DeviceActivityName(SessionMonitorPlan.activityName(for: sessionID))])
+        if storedRegistration?.sessionID == sessionID {
+            clearRegistration()
         }
-
-        try center.startMonitoring(Self.activityName, during: dailySchedule, events: events)
     }
 
-    func stop() {
-        center.stopMonitoring([Self.activityName])
+    func stopAll() {
+        let sessionActivities = center.activities.filter {
+            $0.rawValue.hasPrefix(SessionMonitorPlan.activityPrefix)
+                || $0 == Self.legacyActivityName
+        }
+        if !sessionActivities.isEmpty {
+            center.stopMonitoring(sessionActivities)
+        }
+        clearRegistration()
+        defaults.removeObject(forKey: Key.legacyRegistration)
     }
 
     var isMonitoring: Bool {
-        center.activities.contains(Self.activityName)
+        center.activities.contains { $0.rawValue.hasPrefix(SessionMonitorPlan.activityPrefix) }
+    }
+
+    private var storedRegistration: Registration? {
+        guard let data = defaults.data(forKey: Key.registration) else { return nil }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try? decoder.decode(Registration.self, from: data)
+    }
+
+    private func store(_ registration: Registration) {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        guard let data = try? encoder.encode(registration) else { return }
+        defaults.set(data, forKey: Key.registration)
+    }
+
+    private func clearRegistration() {
+        defaults.removeObject(forKey: Key.registration)
     }
 }

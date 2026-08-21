@@ -12,12 +12,10 @@ protocol ScreenTimeServing: AnyObject {
     var selection: FamilyActivitySelection { get set }
 
     func requestAuthorization() async throws
-    /// Applies or removes shields to match the current balance, and refreshes usage thresholds.
+    /// Applies or removes shields to match the current explicit access session.
     @discardableResult func reconcile() -> SharedState
-    /// Forces shields on, regardless of balance (debug / spike).
-    func shieldNow()
-    /// Forces shields off, regardless of balance (debug / spike).
-    func unshieldNow()
+    @discardableResult func startSession(durationMinutes: Int) throws -> SharedState
+    @discardableResult func resetToday() -> SharedState
     var isMonitoring: Bool { get }
 }
 
@@ -26,7 +24,6 @@ protocol ScreenTimeServing: AnyObject {
 final class LiveScreenTimeService: ScreenTimeServing {
     private let selectionStore = SelectionStore.shared
     private let coordinator = RestrictionCoordinator.shared
-    private let shields = ShieldController.shared
     private let scheduler = MonitorScheduler.shared
 
     var authorizationStatus: AuthorizationStatus {
@@ -36,6 +33,7 @@ final class LiveScreenTimeService: ScreenTimeServing {
     var selection: FamilyActivitySelection {
         get { selectionStore.load() }
         set {
+            coordinator.cancelActiveSession()
             selectionStore.save(newValue)
             reconcile()
         }
@@ -52,14 +50,14 @@ final class LiveScreenTimeService: ScreenTimeServing {
         coordinator.reconcile()
     }
 
-    func shieldNow() {
-        shields.apply(selectionStore.load())
-        SharedStore.shared.mutate { $0.shieldsApplied = true }
+    @discardableResult
+    func startSession(durationMinutes: Int) throws -> SharedState {
+        try coordinator.startSession(durationMinutes: durationMinutes)
     }
 
-    func unshieldNow() {
-        shields.clear()
-        SharedStore.shared.mutate { $0.shieldsApplied = false }
+    @discardableResult
+    func resetToday() -> SharedState {
+        coordinator.resetToday()
     }
 
     var isMonitoring: Bool { scheduler.isMonitoring }
@@ -69,7 +67,14 @@ final class LiveScreenTimeService: ScreenTimeServing {
 @MainActor
 final class MockScreenTimeService: ScreenTimeServing {
     private(set) var status: AuthorizationStatus
-    var selection = FamilyActivitySelection()
+    var selection = FamilyActivitySelection() {
+        didSet {
+            SharedStore.shared.mutate { state in
+                state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
+            }
+            _ = reconcile()
+        }
+    }
     private(set) var shieldsApplied = true
 
     init(status: AuthorizationStatus = .notDetermined) {
@@ -89,14 +94,34 @@ final class MockScreenTimeService: ScreenTimeServing {
         // Simulator exercises the same read/write path the device uses.
         var state = SharedStore.shared.load()
         state.restrictedItemCount = selection.itemCount
-        shieldsApplied = state.ledger.restrictionState == .locked || selection.isEmpty
+        state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: Date())
+        shieldsApplied = state.activeSession() == nil || selection.isEmpty
         state.shieldsApplied = shieldsApplied
         SharedStore.shared.save(state)
         return state
     }
 
-    func shieldNow() { shieldsApplied = true }
-    func unshieldNow() { shieldsApplied = false }
+    @discardableResult
+    func startSession(durationMinutes: Int) throws -> SharedState {
+        guard !selection.isEmpty else { throw RestrictionCoordinatorError.noSelection }
+        var state = try ScreenTimeSessionEngine.start(
+            durationMinutes: durationMinutes,
+            at: Date(),
+            in: SharedStore.shared.load()
+        )
+        shieldsApplied = false
+        state.shieldsApplied = false
+        SharedStore.shared.save(state)
+        return state
+    }
+
+    @discardableResult
+    func resetToday() -> SharedState {
+        SharedStore.shared.reset()
+        shieldsApplied = true
+        return reconcile()
+    }
+
     var isMonitoring: Bool { false }
 }
 

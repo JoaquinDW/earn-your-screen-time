@@ -1,167 +1,86 @@
-import FamilyControls
 import SwiftUI
 
-/// Both permissions, each explained before it is asked, each recoverable if denied (PRD §6).
-struct PermissionsStep: View {
-    let onFinish: () -> Void
+struct HealthPermissionStep: View {
+    let onContinue: (Int?) -> Void
+    let onBack: () -> Void
+
     @Environment(AppEnvironment.self) private var env
-
-    @State private var screenTimeState: RequestState = .idle
-    @State private var healthState: RequestState = .idle
-
-    enum RequestState: Equatable {
-        case idle, requesting, granted, failed(String)
-    }
-
-    private var screenTimeGranted: Bool {
-        env.screenTime.authorizationStatus.isApproved
-    }
-
-    private var canFinish: Bool { screenTimeGranted }
+    @State private var isRequesting = false
+    @State private var error: String?
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: Theme.Space.l) {
-                    Text("onboarding.permissions.title")
-                        .font(.largeTitle.bold())
-                        .padding(.top, Theme.Space.l)
-
-                    Text("onboarding.permissions.subtitle")
-                        .font(.body)
-                        .foregroundStyle(.secondary)
-
-                    PermissionCard(
-                        symbol: "hourglass",
-                        title: "onboarding.permission.screenTime.title",
-                        explanation: "onboarding.permission.screenTime.why",
-                        deniedHelp: "onboarding.permission.screenTime.denied",
-                        state: screenTimeGranted ? .granted : screenTimeState,
-                        action: requestScreenTime
-                    )
-
-                    PermissionCard(
-                        symbol: "figure.walk",
-                        title: "onboarding.permission.health.title",
-                        explanation: "onboarding.permission.health.why",
-                        deniedHelp: "onboarding.permission.health.denied",
-                        state: env.health.hasRequestedAuthorization ? .granted : healthState,
-                        action: requestHealth
-                    )
-                }
-                .padding(.horizontal, Theme.Space.m)
-            }
-
-            VStack(spacing: Theme.Space.s) {
-                Button(action: onFinish) {
-                    Text("onboarding.start")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .tint(Theme.earned)
-                .disabled(!canFinish)
-
-                if !canFinish {
-                    Text("onboarding.screenTimeRequired")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                }
-            }
-            .padding(.horizontal, Theme.Space.m)
-            .padding(.bottom, Theme.Space.m)
-        }
-    }
-
-    private func requestScreenTime() {
-        Task {
-            screenTimeState = .requesting
-            do {
-                try await env.screenTime.requestAuthorization()
-                screenTimeState = .granted
-            } catch {
-                screenTimeState = .failed(error.localizedDescription)
-            }
-        }
-    }
-
-    private func requestHealth() {
-        Task {
-            healthState = .requesting
-            do {
-                try await env.health.requestAuthorization()
-                healthState = .granted
-            } catch {
-                healthState = .failed(error.localizedDescription)
-            }
-        }
-    }
-}
-
-private struct PermissionCard: View {
-    let symbol: String
-    let title: LocalizedStringKey
-    let explanation: LocalizedStringKey
-    let deniedHelp: LocalizedStringKey
-    let state: PermissionsStep.RequestState
-    let action: () -> Void
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            HStack(spacing: Theme.Space.m) {
-                Image(systemName: symbol)
-                    .font(.title2)
-                    .foregroundStyle(Theme.earned)
-                    .frame(width: 32)
-                    .accessibilityHidden(true)
-
-                Text(title).font(.headline)
-
-                Spacer()
-
-                if state == .granted {
-                    // Icon plus label: never colour alone.
-                    Label("onboarding.permission.granted", systemImage: "checkmark.circle.fill")
-                        .labelStyle(.iconOnly)
-                        .font(.title3)
-                        .foregroundStyle(Theme.earned)
-                        .accessibilityLabel(Text("onboarding.permission.granted"))
-                }
-            }
-
-            Text(explanation)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+        OnboardingScaffold(onBack: onBack) {
+            Text("AUTOMATIC EARNING").eyebrowStyle(Theme.coralDeep)
+            Text("Turn your steps into screen time.")
+                .font(.serif(42))
                 .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 12)
+            Text("Earn uses Apple Health to automatically convert your movement into screen-time credit.")
+                .font(.sans(15))
+                .foregroundStyle(Theme.muted)
+                .padding(.top, 12)
 
-            switch state {
-            case .granted:
-                EmptyView()
-            case .requesting:
-                ProgressView().frame(maxWidth: .infinity, minHeight: Theme.minTouchTarget)
-            case .failed(let message):
-                VStack(alignment: .leading, spacing: Theme.Space.s) {
-                    Label(deniedHelp, systemImage: "exclamationmark.triangle.fill")
-                        .font(.footnote)
-                        .foregroundStyle(Theme.activity)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text(message)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Button("onboarding.permission.retry", action: action)
-                        .buttonStyle(.bordered)
+            VStack(spacing: Theme.Space.l) {
+                permissionNode(icon: "heart.fill", label: "Apple Health", color: Theme.coralDeep)
+                Image(systemName: "arrow.down").foregroundStyle(Theme.muted).accessibilityHidden(true)
+                permissionNode(icon: "figure.walk", label: "Your steps", color: Theme.coralDeep)
+                Image(systemName: "arrow.down").foregroundStyle(Theme.muted).accessibilityHidden(true)
+                permissionNode(icon: "timer", label: "Earned minutes", color: Theme.sageDeep)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, Theme.Space.xl)
+
+            Text("Health data stays in Apple Health and on your device.")
+                .font(.sans(13.5))
+                .foregroundStyle(Theme.muted)
+                .frame(maxWidth: .infinity, alignment: .center)
+            if let error {
+                Text(error).font(.sans(13)).foregroundStyle(Theme.coralDeep).padding(.top, 8)
+            }
+        } action: {
+            Button {
+                connect()
+            } label: {
+                HStack {
+                    if isRequesting { ProgressView().tint(Theme.paper) }
+                    Text(isRequesting ? "Connecting" : "Connect Apple Health")
                 }
-            case .idle:
-                Button(action: action) {
-                    Text("onboarding.permission.allow").frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.pill)
+            .disabled(isRequesting)
+        }
+    }
+
+    private func permissionNode(icon: String, label: String, color: Color) -> some View {
+        HStack(spacing: Theme.Space.m) {
+            Image(systemName: icon)
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(color)
+                .frame(width: 48, height: 48)
+                .background(color.opacity(0.1), in: .circle)
+            Text(label).font(.serif(24))
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func connect() {
+        guard !isRequesting else { return }
+        isRequesting = true
+        error = nil
+        env.analytics.track(.healthKitRequested)
+        Task {
+            do {
+                if !env.health.hasRequestedAuthorization {
+                    try await env.health.requestAuthorization()
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
+                // HealthKit cannot reveal read denial; this event means the request completed.
+                env.analytics.track(.healthKitGranted.withProperties(["read_status_verifiable": .bool(false)]))
+                let average = try? await env.health.recentAverageSteps()
+                onContinue(average ?? nil)
+            } catch {
+                self.error = error.localizedDescription
+                isRequesting = false
             }
         }
-        .padding(Theme.Space.m)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Theme.surface, in: .rect(cornerRadius: Theme.cornerRadius))
     }
 }

@@ -24,6 +24,20 @@
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Earn Your Screen Time reads your daily step count so that walking earns you minutes of screen time. Your health data stays on this device.</string>
+	<key>RevenueCatAPIKey</key>
+	<string>$(REVENUECAT_API_KEY)</string>
+	<key>TermsOfUseURL</key>
+	<string>$(TERMS_OF_USE_URL)</string>
+	<key>PrivacyPolicyURL</key>
+	<string>$(PRIVACY_POLICY_URL)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>InstrumentSerif-Regular.ttf</string>
+		<string>InstrumentSerif-Italic.ttf</string>
+		<string>Figtree-Regular.ttf</string>
+		<string>Figtree-SemiBold.ttf</string>
+		<string>Figtree-Bold.ttf</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

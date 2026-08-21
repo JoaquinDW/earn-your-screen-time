@@ -44,13 +44,6 @@ public enum CreditEngine {
         return Outcome(ledger: updated, awardedSeconds: seconds, awardedMilestones: newMilestones)
     }
 
-    /// Records total restricted-app usage reported by the system.
-    public static func applyConsumption(totalSeconds: Int, to ledger: DailyLedger) -> DailyLedger {
-        var updated = ledger
-        updated.wallet.recordTotalConsumed(seconds: totalSeconds)
-        return updated
-    }
-
     /// Switches to a new earning rule without re-awarding anything already paid.
     ///
     /// The new rule starts counting from the current activity level, so only *future*

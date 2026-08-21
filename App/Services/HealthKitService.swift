@@ -17,6 +17,9 @@ protocol HealthKitServing: AnyObject {
     func requestAuthorization() async throws
     /// Steps recorded today, in the user's local calendar.
     func todaySteps() async throws -> Int
+    /// Average steps over the seven completed days in the user's local calendar.
+    /// Returns `nil` when HealthKit exposes no readable samples; denial is indistinguishable.
+    func recentAverageSteps() async throws -> Int?
 }
 
 @MainActor
@@ -49,6 +52,24 @@ final class LiveHealthKitService: HealthKitServing {
         let sum = try await descriptor.result(for: store)?.sumQuantity()
         return Int(sum?.doubleValue(for: .count()) ?? 0)
     }
+
+    func recentAverageSteps() async throws -> Int? {
+        guard isAvailable else { throw HealthKitError.unavailable }
+        let calendar = Calendar.current
+        let end = calendar.startOfDay(for: Date())
+        guard let start = calendar.date(byAdding: .day, value: -7, to: end) else { return nil }
+        let predicate = HKQuery.predicateForSamples(
+            withStart: start,
+            end: end,
+            options: [.strictStartDate, .strictEndDate]
+        )
+        let descriptor = HKStatisticsQueryDescriptor(
+            predicate: .quantitySample(type: stepType, predicate: predicate),
+            options: .cumulativeSum
+        )
+        guard let sum = try await descriptor.result(for: store)?.sumQuantity() else { return nil }
+        return Int(sum.doubleValue(for: .count()) / 7)
+    }
 }
 
 enum HealthKitError: LocalizedError {
@@ -65,10 +86,12 @@ enum HealthKitError: LocalizedError {
 final class MockHealthKitService: HealthKitServing {
     private(set) var hasRequestedAuthorization: Bool
     private var steps: Int?
+    private var averageSteps: Int?
 
-    init(hasRequested: Bool = false, steps: Int? = nil) {
+    init(hasRequested: Bool = false, steps: Int? = nil, recentAverageSteps: Int? = nil) {
         self.hasRequestedAuthorization = hasRequested
         self.steps = steps
+        self.averageSteps = recentAverageSteps
     }
 
     var isAvailable: Bool { true }
@@ -80,5 +103,9 @@ final class MockHealthKitService: HealthKitServing {
 
     func todaySteps() async throws -> Int {
         steps ?? SharedStore.shared.load().ledger.activityAmount
+    }
+
+    func recentAverageSteps() async throws -> Int? {
+        averageSteps
     }
 }

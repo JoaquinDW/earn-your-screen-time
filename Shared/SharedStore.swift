@@ -6,9 +6,8 @@ import Foundation
 /// Deliberately not a database: `DeviceActivityMonitorExtension` runs under a very small
 /// memory budget, so it must be able to read and write this cheaply.
 ///
-/// Concurrency note: the app and the monitor extension are rarely alive at the same time, and
-/// the only field the extension writes (`consumedSeconds`) only ever moves forward, so a lost
-/// update converges on the next event instead of corrupting the balance.
+/// Concurrency note: session status only moves from active to completed/cancelled. Every writer
+/// loads the latest blob before applying that monotonic transition.
 struct SharedStore {
     static let shared = SharedStore()
 
@@ -30,9 +29,23 @@ struct SharedStore {
 
         guard stored.ledger.day != today else { return stored }
 
-        // New calendar day: reset the ledger. MVP has no carry-over (PRD §17).
+        // New calendar day: file the day that just ended, then reset the ledger.
+        // MVP has no carry-over (PRD §17).
         var rolled = stored
+        let finishedDay = DaySummary(ledger: stored.ledger)
+        rolled.history.record(finishedDay)
+        if let journey = rolled.journey {
+            rolled.journey = journey
+                .incorporating(finishedDay)
+                .finalizing(asOf: today)
+        }
         rolled.ledger = CreditEngine.rollOverIfNeeded(stored.ledger, to: today)
+        rolled.currentSession = stored.currentSession.map { session in
+            var cancelled = session
+            if cancelled.status == .active { cancelled.status = .cancelled }
+            return cancelled
+        }
+        rolled.schemaVersion = SharedState.currentSchemaVersion
         rolled.shieldsApplied = true
         return rolled
     }

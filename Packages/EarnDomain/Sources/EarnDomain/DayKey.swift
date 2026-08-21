@@ -25,6 +25,16 @@ public struct DayKey: Codable, Hashable, Sendable, Comparable, CustomStringConve
         calendar.date(from: DateComponents(year: year, month: month, day: day))
     }
 
+    /// The same day shifted by `days`, in the given calendar. `nil` only for a day that
+    /// cannot be represented (a corrupt stored key).
+    public func adding(days: Int, calendar: Calendar = .current) -> DayKey? {
+        guard
+            let start = startOfDay(calendar: calendar),
+            let shifted = calendar.date(byAdding: .day, value: days, to: start)
+        else { return nil }
+        return DayKey(date: shifted, calendar: calendar)
+    }
+
     public var description: String { String(format: "%04d-%02d-%02d", year, month, day) }
 
     public static func < (lhs: DayKey, rhs: DayKey) -> Bool {

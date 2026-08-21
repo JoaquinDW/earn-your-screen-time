@@ -1,0 +1,163 @@
+# Monetization
+
+## Architecture
+
+Monetization is app-only under `App/Monetization`. RevenueCat is not linked into `Shared` or the
+Device Activity extension. Screen-time credits remain exclusively in `EarnDomain` and cannot be
+purchased.
+
+`AppEnvironment` owns one `SubscriptionManager`, which configures RevenueCat once during app
+startup and explicitly selects RevenueCat's StoreKit 2 implementation. SwiftUI reads:
+
+- `subscriptionManager.status`: `unknown`, `free`, or `pro`
+- `subscriptionManager.isPro`: convenience access to the active entitlement
+- `env.featureAccess`: centralized Free/Pro capabilities and limits
+
+An unavailable network refresh does not change the last known status. RevenueCat cached
+`CustomerInfo` is applied before a refresh when available. A build with no SDK key intentionally
+runs as Free instead of trying to initialize RevenueCat.
+
+`ProPaywallView` is a fully app-owned SwiftUI paywall. `PaywallViewModel` owns its loading,
+selection, purchase, restore, and error state; `SubscriptionService` is the only layer that calls
+RevenueCat. RevenueCat supplies packages and localized prices but does not control paywall UI.
+
+`restrictedAppSelectionGate` wraps the existing Family Controls picker. Free users may persist one
+selected opaque item; an attempt to select more presents the Pro paywall. Pro users have no product
+limit. The gate never reads or derives token identities.
+
+New users build their app selection during onboarding before seeing a mandatory personalized
+paywall. Completing onboarding requires an active `pro` entitlement from purchase or restore.
+Users who completed an earlier onboarding release remain grandfathered on the existing Free limits.
+Trial copy is shown only when RevenueCat reports both a free introductory offer and eligibility for
+the selected product.
+
+## RevenueCat Configuration
+
+The single entitlement is:
+
+```text
+pro
+```
+
+Expected product identifiers are currently:
+
+```text
+monthly
+yearly
+```
+
+These values are centralized in `App/Monetization/Entitlements.swift`. Change them there and in the
+StoreKit/App Store/RevenueCat product definitions if the final identifiers differ.
+
+The public RevenueCat SDK key is read from the `RevenueCatAPIKey` Info.plist value, backed by the
+`REVENUECAT_API_KEY` build setting in `project.yml`. Debug uses the project's `test_` RevenueCat Test
+Store key. Release intentionally uses an empty value and therefore runs as Free until the real Apple
+app is connected. Never submit an App Store build containing a `test_` key.
+
+When the Apple app is connected, set its `appl_` public SDK key for Release through CI or a local
+`.xcconfig`. Keep the generated `.xcodeproj` and any local `.xcconfig` overrides out of source
+control.
+
+The default/current RevenueCat Offering is used. Attach monthly and annual packages to it; no
+RevenueCat-hosted paywall is required. Terms and Privacy URLs are centralized as build settings in
+`project.yml` and exposed through Info.plist rather than duplicated in views. Their checked-in
+values are intentionally empty until the app's own published legal pages are available; provide
+them through CI or an untracked `.xcconfig` for distribution.
+
+For the current Test Store project:
+
+1. Create a one-month subscription product with identifier `monthly`.
+2. Create a one-year subscription product with identifier `yearly`.
+3. Attach both products to the `pro` entitlement.
+4. Add `monthly` to the monthly package and `yearly` to the annual package in the current Offering.
+5. Run the normal `EarnYourScreenTime` scheme. RevenueCat presents its Test Store purchase modal,
+   where success, failure, and cancellation can be simulated.
+
+Test Store purchases update `CustomerInfo` and renew on accelerated schedules. A monthly product
+renews every five minutes and a yearly product every hour, up to five renewals.
+
+## Local StoreKit Testing
+
+`StoreKit/EarnYourScreenTime.storekit` separately defines `monthly` and `yearly` Apple
+auto-renewable subscriptions in one subscription group. It is not used by RevenueCat Test Store:
+the current Debug `test_` key intentionally bypasses Apple's purchase flow.
+
+Once an Apple `appl_` SDK key and Apple product mappings are available, regenerate with `make gen`,
+configure that Apple key for the StoreKit scheme, and run `EarnYourScreenTime StoreKit` from Xcode.
+Use Xcode's StoreKit transaction manager to accelerate renewals, expire subscriptions, interrupt
+purchases, and clear transaction history.
+
+RevenueCat must know how local products map to the entitlement before its paywall can sell them:
+
+1. Create a RevenueCat project/app and configure its public SDK key.
+2. Add `monthly` and `yearly` as Apple products in RevenueCat.
+3. Attach both products to the `pro` entitlement.
+4. Add monthly and annual packages to the current Offering.
+5. In Xcode, open the `.storekit` file and use **Editor > Save Public Certificate**.
+6. Upload that certificate in the RevenueCat iOS app's StoreKit testing framework settings.
+7. Run the `EarnYourScreenTime StoreKit` scheme directly from Xcode.
+
+Without an Apple RevenueCat SDK key/product mapping, the app remains usable as Free and displays the
+non-purchasing fallback. The local StoreKit file alone cannot produce the RevenueCat Pro
+entitlement. Xcode local tests are useful for transaction lifecycle behavior, but RevenueCat notes
+that some Xcode cancellation/refund simulations are not fully represented in its dashboard.
+
+## App Store Connect And RevenueCat
+
+Once products exist in App Store Connect:
+
+1. Connect the App Store Connect app to the RevenueCat project.
+2. Import the monthly and yearly products into RevenueCat.
+3. Attach both products to the `pro` entitlement.
+4. Attach monthly and annual packages to the current Offering.
+5. Configure the production RevenueCat Apple SDK key for Release builds.
+
+## Customer Center
+
+Active Pro subscribers see **Manage Pro subscription** in Settings. This presents RevenueCatUI's
+`CustomerCenterView` through `SubscriptionCustomerCenterView`, keeping RevenueCat APIs inside the
+monetization layer. Restore callbacks update `SubscriptionManager` immediately.
+
+Configure and publish Customer Center in the RevenueCat dashboard before production. Include the
+appropriate subscription management, cancellation, refund/support, and restore paths. Free users
+continue to use Restore Purchases from the paywall.
+
+For Apple Sandbox, disable the local StoreKit configuration by using the normal
+`EarnYourScreenTime` scheme. Sign into a Sandbox Apple Account on a physical device, purchase and
+restore, then test renewal, expiration, billing retry, and cancellation. Repeat the purchase and
+restore flows through TestFlight before release. Sandbox timing and prices are not production
+behavior.
+
+## Free And Pro Limits
+
+`App/Monetization/FeatureAccess.swift` is the source of truth for product capabilities:
+
+- Free restricted selection limit: 1
+- Unlimited restricted selections: Pro
+- Custom earning ratios: Pro
+- Workout earning: Pro
+- Focus earning: Pro
+- Advanced statistics: Pro
+
+Future gates should consume `FeatureAccess` rather than import RevenueCat or compare entitlement
+strings. RevenueCat code should remain confined to the monetization layer.
+
+## TODO once Apple Developer account is active
+
+- Create a subscription group in App Store Connect.
+- Create the monthly subscription.
+- Create the annual subscription.
+- Add localization and pricing.
+- Complete required subscription metadata and review information.
+- Accept paid-app agreements and complete tax/banking requirements.
+- Connect the App Store Connect app to RevenueCat.
+- Import products into RevenueCat.
+- Attach products to an Offering.
+- Attach products to the `pro` entitlement.
+- Configure the production RevenueCat SDK key.
+- Confirm the production Terms of Service and Privacy Policy URLs in `project.yml`.
+- Configure and publish RevenueCat Customer Center.
+- Test purchases using Apple Sandbox.
+- Test through TestFlight.
+- Verify restore purchases.
+- Verify subscription renewal, expiration, billing retry, and cancellation behavior.

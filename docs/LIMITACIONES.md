@@ -20,43 +20,45 @@ prueba en hardware real. El proyecto usa `MockScreenTimeService` en el Simulador
 siendo desarrollable.
 
 ## 4. No se puede leer el uso exacto de apps
-No hay API que devuelva minutos por app. El consumo se **infiere por eventos de umbral**
-(ver `ARQUITECTURA.md`). Consecuencia visible: el contador "usado hoy" avanza a saltos, no segundo
-a segundo.
+No hay API que devuelva minutos por app. El producto no intenta inferirlos: al iniciar una sesión
+reserva 5, 10 o 15 minutos completos y abre una ventana de reloj. El saldo se gasta aunque el usuario
+bloquee el teléfono o no abra ninguna app restringida durante esa ventana.
 
-## 5. Los eventos de umbral no son perfectos
-`eventDidReachThreshold` a veces se demora, se agrupa con otros, o no llega. Hay reportes
-consistentes en iOS 17.5–18. Mitigación en este proyecto:
-- el manejador es idempotente (`consumido = max(consumido, …)`);
-- la app reconcilia el estado cada vez que pasa a primer plano;
-- el umbral final coincide exactamente con el saldo, así que un tick perdido no adelanta ni atrasa
-  el bloqueo.
+## 5. Los callbacks de Device Activity no son temporizadores exactos
+`intervalWillEndWarning` e `intervalDidEnd` los entrega iOS y pueden demorarse. Mitigación:
+- la app reconcilia contra `endsAt` cada vez que pasa a primer plano;
+- una notificación local avisa un minuto antes y al terminar;
+- el callback valida el UUID y es idempotente;
+- toda pérdida de estado o fallo de monitor termina con shields aplicados.
 
-**Pendiente de medir en Fase 2 con hardware:** latencia real del evento, tasa de eventos perdidos, y
-cuántos eventos tolera una actividad. Los resultados van acá.
+**Pendiente de medir en hardware:** latencia real de ambos callbacks y comportamiento con la app y
+el teléfono bloqueados.
 
 ## 6. Intervalo mínimo de 15 minutos
-`DeviceActivitySchedule` no admite intervalos más cortos. Usamos uno diario, así que no molesta.
+`DeviceActivitySchedule` no admite intervalos más cortos. Para sesiones de 5 y 10 minutos usamos un
+carrier de 15 minutos y terminamos en `intervalWillEndWarning`; una sesión de 15 minutos termina en
+`intervalDidEnd`.
 
-## 7. `includesPastActivity` cambió en iOS 17.4
-Antes de iOS 17.4 los eventos se comportaban como si fuera `true`; desde 17.4 el default es `false`
-y además hay reportes de que con `false` los eventos a veces nunca llegan. Este proyecto lo setea
-**explícitamente en `true`**, que además es lo que necesita el diseño de umbrales acumulados.
+## 7. Un shield no expulsa de forma garantizada una app abierta
+Al vencer la sesión reaplicamos el shield, pero iOS no garantiza cerrar de inmediato una app que ya
+está en primer plano. La restricción sí aparece al volver a entrar o cuando el sistema vuelve a
+evaluarla. No existe una API pública para forzar el cierre.
 
 ## 8. Los pasos en background llegan como mucho ~1 vez por hora
 HealthKit despierta la app con `HKObserverQuery` + `enableBackgroundDelivery`, pero para step count
 el sistema limita las entregas a aproximadamente una por hora.
 
 Traducción honesta al producto:
-- si el usuario **abre la app**, el desbloqueo es instantáneo;
-- si no la abre, el desbloqueo llega cuando iOS despierte la app (puede tardar hasta ~1 hora).
+- si el usuario **abre la app**, la acreditación de nuevos minutos es instantánea;
+- si no la abre, la acreditación llega cuando iOS despierte la app (puede tardar hasta ~1 hora).
 
 Mitigación: notificación local al acreditar en background + copy en el shield que invita a abrir la
 app. **No hay forma soportada de mejorar esto.**
 
-## 9. El botón del shield no puede abrir tu app
-`ShieldActionResponse` solo tiene `none`, `close` y `defer`. No existe "abrir app padre". El shield
-solo puede mostrar texto; abrir Earn es una acción manual del usuario.
+## 9. Abrir la app desde el botón del shield depende de la versión
+Desde iOS 26.5, `ShieldActionResponse.openParentalControlsApp` permite abrir públicamente la app que
+aplicó el shield. En iOS 18–26.4 no existe esa respuesta: el botón cierra la app restringida con
+`.close` y el usuario debe abrir Earn manualmente. No usamos URLs ni APIs privadas para esquivarlo.
 
 ## 10. Memoria de las extensiones
 `DeviceActivityMonitorExtension` corre con un presupuesto de memoria muy chico y el sistema la mata

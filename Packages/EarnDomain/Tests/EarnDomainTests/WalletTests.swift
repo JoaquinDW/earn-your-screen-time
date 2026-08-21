@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import EarnDomain
 
-@Suite("Consumption and exhaustion (PRD §22)")
+@Suite("Earned time balance")
 struct WalletTests {
 
     @Test("earned 600 − consumed 240 = 360 available")
@@ -10,52 +10,49 @@ struct WalletTests {
         let wallet = ScreenTimeWallet(earnedSeconds: 600, consumedSeconds: 240)
         #expect(wallet.availableSeconds == 360)
         #expect(wallet.availableMinutes == 6)
-        #expect(wallet.restrictionState == .available)
     }
 
-    @Test("Consuming everything locks the apps")
+    @Test("Reserving the full balance leaves no available time")
     func exhaustion() {
         let wallet = ScreenTimeWallet(earnedSeconds: 600, consumedSeconds: 600)
         #expect(wallet.availableSeconds == 0)
-        #expect(wallet.restrictionState == .locked)
     }
 
     @Test("Overshooting consumption never produces a negative balance")
     func neverNegative() {
         let wallet = ScreenTimeWallet(earnedSeconds: 600, consumedSeconds: 900)
         #expect(wallet.availableSeconds == 0)
-        #expect(wallet.restrictionState == .locked)
     }
 
-    @Test("Consumption reports only move forward (threshold events can repeat)")
-    func consumptionIsIdempotent() {
+    @Test("A reservation succeeds only when the balance covers it")
+    func reservationRequiresBalance() {
         var wallet = ScreenTimeWallet(earnedSeconds: 600)
-        wallet.recordTotalConsumed(seconds: 180)
-        wallet.recordTotalConsumed(seconds: 120)   // stale/duplicate event
-        wallet.recordTotalConsumed(seconds: 180)   // re-delivered event
-        #expect(wallet.consumedSeconds == 180)
-        #expect(wallet.availableSeconds == 420)
+        let firstReservation = wallet.spend(seconds: 300)
+        let oversizedReservation = wallet.spend(seconds: 301)
+        #expect(firstReservation)
+        #expect(!oversizedReservation)
+        #expect(wallet.consumedSeconds == 300)
+        #expect(wallet.availableSeconds == 300)
     }
 
-    @Test("Earning more after exhaustion unlocks again")
-    func earningAfterExhaustionUnlocks() {
+    @Test("Earning after a reservation only increases available balance")
+    func earningAfterReservation() {
         var ledger = DailyLedger(
             day: DayKey(year: 2026, month: 8, day: 20),
             wallet: ScreenTimeWallet(earnedSeconds: 600, consumedSeconds: 600)
         )
         ledger.activityAmount = 2_000
         ledger.milestonesRewarded = 2
-        #expect(ledger.restrictionState == .locked)
+        #expect(ledger.wallet.availableSeconds == 0)
 
         ledger = CreditEngine.apply(activityAmount: 3_000, to: ledger).ledger
         #expect(ledger.wallet.availableSeconds == 300)
-        #expect(ledger.restrictionState == .available)
     }
 
-    @Test("A brand-new day starts locked")
-    func newDayStartsLocked() {
+    @Test("A brand-new day starts with an empty balance")
+    func newDayStartsEmpty() {
         let ledger = CreditEngine.startOfDay(DayKey(year: 2026, month: 8, day: 20), rule: .default)
-        #expect(ledger.restrictionState == .locked)
+        #expect(ledger.wallet.availableSeconds == 0)
     }
 }
 

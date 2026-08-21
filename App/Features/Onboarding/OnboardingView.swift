@@ -1,100 +1,202 @@
+import EarnDomain
 import SwiftUI
 
-/// First launch: explain the idea, then ask for the two permissions it needs (PRD §5.1, §6).
 struct OnboardingView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var step: Step = .concept
+    @AppStorage("onboarding.step.v2") private var storedStep = 0
 
-    private enum Step: Hashable { case concept, permissions }
+    @State private var profile = OnboardingProfile()
+    @State private var isMovingBack = false
+    @State private var recentAverage: Int?
+    @State private var viewedSteps: Set<Step> = []
+
+    private var step: Step { Step(rawValue: storedStep) ?? .hook }
 
     var body: some View {
         ZStack {
-            Theme.background.ignoresSafeArea()
-
-            switch step {
-            case .concept:
-                ConceptStep(onContinue: advance)
-                    .transition(.asymmetric(
-                        insertion: .opacity,
-                        removal: .push(from: .trailing)
-                    ))
-            case .permissions:
-                PermissionsStep(onFinish: env.completeOnboarding)
-                    .transition(.push(from: .trailing))
-            }
+            PaperBackground()
+            content
+                .id(step)
+                .transition(reduceMotion ? .opacity : .push(from: isMovingBack ? .leading : .trailing))
         }
+        .foregroundStyle(Theme.ink)
         .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: step)
+        .onAppear {
+            profile = env.profile
+            env.analytics.track(.onboardingStarted)
+            trackView(step)
+        }
+        .onChange(of: profile) { _, updated in env.saveProfile(updated) }
+        .onChange(of: storedStep) { _, _ in trackView(step) }
     }
 
-    private func advance() { step = .permissions }
+    @ViewBuilder
+    private var content: some View {
+        switch step {
+        case .hook:
+            OnboardingHookStep(onContinue: advance)
+        case .scrolling:
+            QuestionStep(question: .scrolling, profile: $profile, step: step, onContinue: questionContinue, onBack: goBack)
+        case .movement:
+            QuestionStep(question: .movement, profile: $profile, step: step, onContinue: questionContinue, onBack: goBack)
+        case .outcomes:
+            QuestionStep(question: .outcomes, profile: $profile, step: step, onContinue: questionContinue, onBack: goBack)
+        case .science:
+            ScienceStep(onContinue: advance, onBack: goBack)
+        case .mechanism:
+            MechanismStep(rule: env.ledger.rule, onContinue: mechanismContinue, onBack: goBack)
+        case .plan:
+            PlanStep(profile: profile, rule: env.ledger.rule, onContinue: advance, onBack: goBack)
+        case .projection:
+            ProjectionStep(profile: profile, rule: env.ledger.rule, onContinue: projectionContinue, onBack: goBack)
+        case .apps:
+            AppsStep(onContinue: advance, onBack: goBack)
+        case .commitment:
+            CommitmentStep(profile: profile, rule: env.ledger.rule, onContinue: commitmentContinue, onBack: goBack)
+        case .health:
+            HealthPermissionStep(onContinue: healthContinue, onBack: goBack)
+        case .result:
+            FinalPlanStep(profile: profile, recentAverage: recentAverage, onContinue: advance, onBack: goBack)
+        case .paywall:
+            OnboardingPaywallStep(profile: profile, onActivated: advance)
+        case .activation:
+            ActivationStep(profile: profile, rule: env.ledger.rule, onFinish: finish)
+        }
+    }
+
+    private func questionContinue() {
+        switch step {
+        case .scrolling:
+            if let scrolling = profile.scrolling {
+                env.analytics.track(.scrollTimeSelected.withProperties(["band": .string(scrolling.rawValue)]))
+            }
+        case .movement:
+            if let movement = profile.movement {
+                env.analytics.track(.currentStepsSelected.withProperties(["band": .string(movement.rawValue)]))
+            }
+        case .outcomes:
+            env.analytics.track(.desiredOutcomesSelected.withProperties([
+                "count": .int(profile.desiredOutcomes.count),
+                "values": .string(profile.desiredOutcomes.map(\.rawValue).sorted().joined(separator: ","))
+            ]))
+        default: break
+        }
+        advance()
+    }
+
+    private func mechanismContinue() {
+        env.analytics.track(.mechanismUnderstood)
+        env.analytics.track(.planGenerated.withProperties(["daily_goal": .int(profile.dailyStepGoal)]))
+        advance()
+    }
+
+    private func projectionContinue() {
+        env.analytics.track(.thirtyDayProjectionCTA)
+        advance()
+    }
+
+    private func commitmentContinue() {
+        env.analytics.track(.commitmentConfirmed.withProperties(["daily_goal": .int(profile.dailyStepGoal)]))
+        advance()
+    }
+
+    private func healthContinue(average: Int?) {
+        recentAverage = average
+        advance()
+    }
+
+    private func advance() {
+        guard let next = step.next else { return }
+        isMovingBack = false
+        storedStep = next.rawValue
+    }
+
+    private func goBack() {
+        guard let previous = step.previous else { return }
+        isMovingBack = true
+        storedStep = previous.rawValue
+    }
+
+    private func finish() {
+        storedStep = 0
+        env.completeOnboarding()
+    }
+
+    private func trackView(_ step: Step) {
+        guard viewedSteps.insert(step).inserted else { return }
+        switch step {
+        case .science: env.analytics.track(.scienceScreenViewed)
+        case .projection: env.analytics.track(.thirtyDayProjectionViewed)
+        case .result: env.analytics.track(.personalizedResultViewed)
+        default: break
+        }
+    }
+
+    enum Step: Int, CaseIterable, Hashable {
+        case hook, scrolling, movement, outcomes, science, mechanism, plan, projection
+        case apps, commitment, health, result, paywall, activation
+
+        var next: Step? { Step(rawValue: rawValue + 1) }
+        var previous: Step? { rawValue == 0 ? nil : Step(rawValue: rawValue - 1) }
+    }
 }
 
-// MARK: - Concept
-
-private struct ConceptStep: View {
+private struct QuestionStep: View {
+    let question: OnboardingQuestion
+    @Binding var profile: OnboardingProfile
+    let step: OnboardingView.Step
     let onContinue: () -> Void
-    @ScaledMetric(relativeTo: .largeTitle) private var markSize: CGFloat = 68
+    let onBack: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: Theme.Space.l)
-
-            Image(systemName: "figure.walk.motion")
-                .font(.system(size: markSize, weight: .light))
-                .foregroundStyle(Theme.earned)
-                .accessibilityHidden(true)
+        OnboardingScaffold(onBack: onBack) {
+            StepDots(total: OnboardingView.Step.allCases.count - 1, completed: step.rawValue)
                 .padding(.bottom, Theme.Space.l)
+            Text("A LITTLE ABOUT YOU").eyebrowStyle(Theme.coralDeep)
+            Text(question.title)
+                .font(.serif(38))
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 12)
+            Text(question.subtitle)
+                .font(.sans(14.5))
+                .foregroundStyle(Theme.muted)
+                .padding(.top, 10)
+                .padding(.bottom, Theme.Space.m)
 
-            Text("onboarding.title")
-                .font(.largeTitle.bold())
-                .multilineTextAlignment(.center)
-
-            Text("onboarding.tagline")
-                .font(.title3)
-                .foregroundStyle(.secondary)
-                .padding(.top, Theme.Space.s)
-
-            VStack(alignment: .leading, spacing: Theme.Space.l) {
-                Bullet(symbol: "square.grid.2x2", text: "onboarding.step1")
-                Bullet(symbol: "figure.walk", text: "onboarding.step2")
-                Bullet(symbol: "hourglass", text: "onboarding.step3")
-                Bullet(symbol: "lock", text: "onboarding.step4")
+            VStack(spacing: 0) {
+                ForEach(question.options(for: $profile)) { answer in
+                    Hairline()
+                    ChoiceRow(label: answer.label, isSelected: answer.isSelected, action: answer.select)
+                }
+                Hairline()
             }
-            .padding(.horizontal, Theme.Space.l)
-            .padding(.top, Theme.Space.xxl)
-
-            Spacer(minLength: Theme.Space.l)
-
-            Button(action: onContinue) {
-                Text("onboarding.continue")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(Theme.earned)
-            .padding(.horizontal, Theme.Space.l)
-            .padding(.bottom, Theme.Space.m)
+        } action: {
+            Button("Continue", action: onContinue)
+                .buttonStyle(.pill)
+                .disabled(!question.isAnswered(in: profile))
         }
-        .padding(.horizontal, Theme.Space.m)
     }
 }
 
-private struct Bullet: View {
-    let symbol: String
-    let text: LocalizedStringKey
+private struct OnboardingPaywallStep: View {
+    let profile: OnboardingProfile
+    let onActivated: () -> Void
+    @Environment(AppEnvironment.self) private var env
 
     var body: some View {
-        HStack(alignment: .top, spacing: Theme.Space.m) {
-            Image(systemName: symbol)
-                .font(.title3)
-                .foregroundStyle(Theme.earned)
-                .frame(width: 32)
-                .accessibilityHidden(true)
-            Text(text)
-                .font(.body)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .accessibilityElement(children: .combine)
+        ProPaywallView(profile: profile, allowsDismiss: false, onActivated: onActivated)
+            .task {
+                await env.subscriptionManager.refresh()
+                if env.subscriptionManager.isPro { onActivated() }
+            }
     }
+}
+
+#Preview {
+    OnboardingView()
+        .environment(AppEnvironment(
+            screenTime: MockScreenTimeService(status: .approved),
+            health: MockHealthKitService(recentAverageSteps: 4_350)
+        ))
 }

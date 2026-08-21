@@ -35,8 +35,7 @@ public struct EarningRule: Codable, Equatable, Sendable {
     public init(source: EarningSource = .steps, amountRequired: Int, rewardSeconds: Int) {
         self.source = source
         self.amountRequired = min(max(amountRequired, Self.minimumAmount), Self.maximumAmount)
-        // Rounded to whole minutes: DeviceActivity thresholds are only reliable at
-        // minute granularity, so a reward of 90s could never be spent exactly.
+        // Sessions are offered in whole minutes, so fractional-minute credit cannot be spent.
         let clampedReward = min(max(rewardSeconds, Self.minimumReward), Self.maximumReward)
         self.rewardSeconds = (clampedReward / 60) * 60
     }

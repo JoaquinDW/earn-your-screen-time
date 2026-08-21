@@ -2,8 +2,8 @@ import EarnDomain
 import FamilyControls
 import SwiftUI
 
-/// Developer harness kept from Phase 1: prove authorization → picker → shield → unshield on a
-/// real iPhone, and force wallet states without walking. Reachable from Settings › Developer.
+/// Developer harness for authorization, app selection, and wallet states without walking.
+/// Reachable from Settings › Developer.
 struct SpikeView: View {
     @Environment(AppEnvironment.self) private var env
     @State private var isPickerPresented = false
@@ -16,7 +16,6 @@ struct SpikeView: View {
             statusSection
             appsSection
             walletSection
-            shieldSection
 
             if let errorMessage {
                 Section {
@@ -30,8 +29,7 @@ struct SpikeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .familyActivityPicker(isPresented: $isPickerPresented, selection: $selection)
         .onChange(of: selection) { _, newValue in
-            env.screenTime.selection = newValue
-            env.reload()
+            env.updateRestrictedSelection(newValue)
         }
         .onAppear {
             selection = env.screenTime.selection
@@ -83,24 +81,6 @@ struct SpikeView: View {
             Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
             Button("settings.resetDay", role: .destructive) { env.resetToday() }
         }
-    }
-
-    private var shieldSection: some View {
-        Section {
-            Button("spike.blockNow") {
-                env.screenTime.shieldNow()
-                env.reload()
-            }
-            Button("spike.unblockNow") {
-                env.screenTime.unshieldNow()
-                env.reload()
-            }
-        } header: {
-            Text("spike.section.manualShield")
-        } footer: {
-            Text("spike.manualShieldHint")
-        }
-        .disabled(selection.isEmpty)
     }
 
     // MARK: - Helpers

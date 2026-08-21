@@ -19,15 +19,20 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
-    # Leave empty: pick your Team in Xcode > Signing & Capabilities once your
-    # Apple Developer Program membership is active.
-    DEVELOPMENT_TEAM: ""
+    # Keep signing here because XcodeGen replaces manual project.pbxproj changes.
+    DEVELOPMENT_TEAM: F7RT2PJH7G
     ENABLE_USER_SCRIPT_SANDBOXING: YES
     SWIFT_EMIT_LOC_STRINGS: YES
 
 packages:
   EarnDomain:
     path: Packages/EarnDomain
+  RevenueCat:
+    url: https://github.com/RevenueCat/purchases-ios-spm.git
+    from: 5.85.0
+
+fileGroups:
+  - StoreKit/EarnYourScreenTime.storekit
 
 targets:
   EarnYourScreenTime:
@@ -38,7 +43,15 @@ targets:
       - path: Shared
     dependencies:
       - package: EarnDomain
+      - package: RevenueCat
+        product: RevenueCat
+      - package: RevenueCat
+        product: RevenueCatUI
       - target: DeviceActivityMonitorExtension
+        embed: true
+      - target: ShieldConfigurationExtension
+        embed: true
+      - target: ShieldActionExtension
         embed: true
     settings:
       base:
@@ -50,6 +63,15 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
+        # Supply the app's published legal pages through CI or an untracked xcconfig.
+        TERMS_OF_USE_URL: ""
+        PRIVACY_POLICY_URL: ""
+      configs:
+        # Public Test Store key. Release intentionally has no key until the Apple app is connected.
+        Debug:
+          REVENUECAT_API_KEY: test_WQzWgKDQJvCwnbkXvlBZisaXHwE
+        Release:
+          REVENUECAT_API_KEY: ""
 
   DeviceActivityMonitorExtension:
     type: app-extension
@@ -68,6 +90,38 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
 
+  ShieldConfigurationExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Extensions/ShieldConfiguration
+      - path: Shared/AppGroup.swift
+      - path: Shared/SharedStore.swift
+    dependencies:
+      - package: EarnDomain
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.shieldconfiguration
+        PRODUCT_NAME: ShieldConfigurationExtension
+        INFOPLIST_FILE: Extensions/ShieldConfiguration/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extensions/ShieldConfiguration/ShieldConfigurationExtension.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+
+  ShieldActionExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Extensions/ShieldAction
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.shieldaction
+        PRODUCT_NAME: ShieldActionExtension
+        INFOPLIST_FILE: Extensions/ShieldAction/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extensions/ShieldAction/ShieldActionExtension.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+
 schemes:
   EarnYourScreenTime:
     build:
@@ -75,6 +129,18 @@ schemes:
         EarnYourScreenTime: all
     run:
       config: Debug
+    test:
+      config: Debug
+    archive:
+      config: Release
+
+  EarnYourScreenTime StoreKit:
+    build:
+      targets:
+        EarnYourScreenTime: all
+    run:
+      config: Debug
+      storeKitConfiguration: StoreKit/EarnYourScreenTime.storekit
     test:
       config: Debug
     archive:

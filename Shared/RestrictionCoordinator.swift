@@ -1,10 +1,19 @@
 import EarnDomain
+import FamilyControls
 import Foundation
 
-/// Keeps the shields in sync with the wallet: the single place that decides
-/// LOCKED vs AVAILABLE (PRD §11).
-///
-/// Used by both the app and the DeviceActivity extension so the rule can never drift.
+enum RestrictionCoordinatorError: LocalizedError {
+    case noSelection
+
+    var errorDescription: String? {
+        switch self {
+        case .noSelection:
+            String(localized: "session.error.noSelection")
+        }
+    }
+}
+
+/// The sole decision point for shielded versus temporarily available apps.
 struct RestrictionCoordinator {
     static let shared = RestrictionCoordinator()
 
@@ -13,51 +22,123 @@ struct RestrictionCoordinator {
     private let shields = ShieldController.shared
     private let scheduler = MonitorScheduler.shared
 
-    /// Applies or removes shields to match the current balance, and refreshes the usage
-    /// thresholds. Returns the reconciled state.
+    /// Recovers expired state and makes external restrictions match the persisted session.
     @discardableResult
-    func reconcile(refreshMonitoring: Bool = true) -> SharedState {
+    func reconcile(
+        refreshMonitoring: Bool = true,
+        now: Date = Date()
+    ) -> SharedState {
         let selection = selectionStore.load()
-        var state = store.load()
+        var state = ScreenTimeSessionEngine.recoverExpiredSession(
+            in: store.load(now: now),
+            at: now
+        )
+        state.schemaVersion = SharedState.currentSchemaVersion
         state.restrictedItemCount = selection.itemCount
 
-        let shouldShield = state.ledger.restrictionState == .locked || selection.isEmpty
+        if selection.isEmpty, state.activeSession(at: now) != nil {
+            state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
+        }
+
+        if refreshMonitoring {
+            do {
+                try scheduler.refresh(state: state, selection: selection, now: now)
+            } catch {
+                // Monitoring is what guarantees re-shielding while Earn is closed. Fail closed.
+                state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
+                scheduler.stopAll()
+            }
+        }
+
+        let shouldShield = state.activeSession(at: now) == nil || selection.isEmpty
         if shouldShield {
             shields.apply(selection)
         } else {
             shields.clear()
         }
         state.shieldsApplied = shouldShield
-
-        if refreshMonitoring {
-            try? scheduler.refresh(state: state, selection: selection)
-        }
-
         store.save(state)
         return state
     }
 
-    /// Records usage reported by a DeviceActivity threshold event and re-shields if the
-    /// balance is now spent. Safe to call with repeated or out-of-order events.
-    @discardableResult
-    func recordUsage(totalSeconds: Int) -> SharedState {
-        var state = store.mutate { state in
-            state.ledger = CreditEngine.applyConsumption(totalSeconds: totalSeconds, to: state.ledger)
+    /// Reserves credit, persists the session, schedules its end, then removes shields.
+    func startSession(
+        durationMinutes: Int,
+        now: Date = Date()
+    ) throws -> SharedState {
+        let selection = selectionStore.load()
+        guard !selection.isEmpty else { throw RestrictionCoordinatorError.noSelection }
+
+        let base = ScreenTimeSessionEngine.recoverExpiredSession(
+            in: store.load(now: now),
+            at: now
+        )
+        var sessionState = try ScreenTimeSessionEngine.start(
+            durationMinutes: durationMinutes,
+            at: now,
+            in: base
+        )
+        sessionState.schemaVersion = SharedState.currentSchemaVersion
+        sessionState.restrictedItemCount = selection.itemCount
+        sessionState.shieldsApplied = true
+        store.save(sessionState)
+
+        do {
+            try scheduler.refresh(state: sessionState, selection: selection, now: now)
+        } catch {
+            scheduler.stopAll()
+            shields.apply(selection)
+            var rolledBack = base
+            rolledBack.shieldsApplied = true
+            store.save(rolledBack)
+            throw error
         }
 
-        if state.ledger.restrictionState == .locked, !state.shieldsApplied {
-            shields.apply(selectionStore.load())
-            state.shieldsApplied = true
-            store.save(state)
-        }
-        return state
+        shields.clear()
+        sessionState.shieldsApplied = false
+        store.save(sessionState)
+        return sessionState
     }
 
-    /// Called at midnight: the day resets to a zero balance, so everything shields again.
-    func startNewDay() {
-        var state = store.load()          // load() already rolls the ledger over to today
+    /// Called by the monitor warning/end callbacks. A stale callback cannot finish a newer session.
+    @discardableResult
+    func completeSession(sessionID: UUID) -> SharedState {
+        let current = store.load()
+        guard current.currentSession?.id == sessionID,
+              current.currentSession?.status == .active else {
+            return current
+        }
+
+        var state = ScreenTimeSessionEngine.complete(sessionID: sessionID, in: current)
         shields.apply(selectionStore.load())
         state.shieldsApplied = true
         store.save(state)
+        scheduler.stop(sessionID: sessionID)
+        return state
+    }
+
+    /// Ends access without refunding already reserved time.
+    @discardableResult
+    func cancelActiveSession() -> SharedState {
+        var state = ScreenTimeSessionEngine.cancelActiveSession(in: store.load())
+        scheduler.stopAll()
+        shields.apply(selectionStore.load())
+        state.shieldsApplied = true
+        store.save(state)
+        return state
+    }
+
+    /// Debug reset that also removes every external side effect from the previous state.
+    @discardableResult
+    func resetToday() -> SharedState {
+        scheduler.stopAll()
+        store.reset()
+        let selection = selectionStore.load()
+        shields.apply(selection)
+        var state = store.load()
+        state.restrictedItemCount = selection.itemCount
+        state.shieldsApplied = true
+        store.save(state)
+        return state
     }
 }

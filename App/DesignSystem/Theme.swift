@@ -1,28 +1,54 @@
 import SwiftUI
 
-/// Semantic design tokens.
+/// Semantic design tokens for the "Move first. Scroll later." identity.
 ///
-/// Direction (PRD §28): minimal, native, calm, premium, motivational — never parental-control
-/// software. In practice that means system materials and typography, an 8pt spacing rhythm, and
-/// a palette where "locked" reads as *neutral*, never as an alarm. There is no red in the
-/// primary states: running out of screen time is not an error, it is just the next lap.
+/// The palette is warm paper: cream ground, ink text, a soft coral for *earning* and a sage
+/// green for *earned*. There is no red anywhere — running out of screen time is not an error,
+/// it is just the next lap (PRD §28).
+///
+/// The design is a single, deliberately light paper palette; the app pins itself to the light
+/// appearance rather than inventing a dark variant the design does not specify.
 enum Theme {
 
-    // MARK: - Colour
+    // MARK: - Palette
 
-    /// Earned / available screen time. The one saturated colour in the app.
-    static let earned = Color(light: 0x1B7F55, dark: 0x3BC98C)
-    /// Activity (steps, progress toward the next reward).
-    static let activity = Color(light: 0xB4762A, dark: 0xE0A85C)
-    /// Locked state. Deliberately calm and neutral.
-    static let locked = Color(light: 0x6B6F76, dark: 0x9AA0A8)
+    /// Page ground.
+    static let background = Color(hex: 0xFAF3E7)
+    /// Slightly brighter paper, used for the arrival/reward scene.
+    static let paper = Color(hex: 0xFFFAF2)
+    static let ink = Color(hex: 0x24211E)
+    static let muted = Color(hex: 0x6F685F)
+    /// The hairlines that replace cards throughout the design.
+    static let line = Color(hex: 0x24211E).opacity(0.14)
 
-    static let background = Color(.systemGroupedBackground)
-    static let surface = Color(.secondarySystemGroupedBackground)
-    static let track = Color(.tertiarySystemFill)
-    static let separator = Color(.separator)
+    /// Progress toward the next reward — the trail, the accent numbers.
+    static let coral = Color(hex: 0xD9805F)
+    static let coralLight = Color(hex: 0xF3D6C8)
+    static let coralDeep = Color(hex: 0xA85536)
+    static let coralPressed = Color(hex: 0x8F4529)
 
-    // MARK: - Spacing (8pt rhythm)
+    /// Screen time already earned.
+    static let sage = Color(hex: 0x8FAE86)
+    static let sageLight = Color(hex: 0xDCEAD4)
+    static let sageDeep = Color(hex: 0x4F6B4C)
+    static let sagePressed = Color(hex: 0x3D5439)
+
+    static let sky = Color(hex: 0xCFE1E8)
+    static let skyDeep = Color(hex: 0x5B7D8D)
+
+    // MARK: - Roles
+    //
+    // Named by meaning so screens do not reach for raw colours.
+
+    /// Earned / available screen time.
+    static let earned = sageDeep
+    /// Activity: steps, distance to the next reward.
+    static let activity = coralDeep
+    /// Locked state. Calm and neutral by design.
+    static let locked = muted
+    static let surface = paper
+
+    // MARK: - Spacing (8pt rhythm, with the design's wider gutters)
 
     enum Space {
         static let xs: CGFloat = 4
@@ -31,29 +57,27 @@ enum Theme {
         static let l: CGFloat = 24
         static let xl: CGFloat = 32
         static let xxl: CGFloat = 48
+        /// Horizontal page gutter used by every full-screen layout.
+        static let gutter: CGFloat = 28
     }
 
     static let cornerRadius: CGFloat = 20
+    /// The sheet lip the content pulls over the illustration.
+    static let sheetRadius: CGFloat = 28
     /// Apple HIG minimum touch target.
     static let minTouchTarget: CGFloat = 44
+    /// Every primary action in the design is a full-width pill of this height.
+    static let buttonHeight: CGFloat = 58
 }
 
 extension Color {
-    /// Declares both themes together so neither is an afterthought.
-    init(light: UInt32, dark: UInt32) {
-        self.init(uiColor: UIColor { traits in
-            UIColor(rgb: traits.userInterfaceStyle == .dark ? dark : light)
-        })
-    }
-}
-
-extension UIColor {
-    fileprivate convenience init(rgb: UInt32) {
+    init(hex: UInt32) {
         self.init(
-            red: CGFloat((rgb >> 16) & 0xFF) / 255,
-            green: CGFloat((rgb >> 8) & 0xFF) / 255,
-            blue: CGFloat(rgb & 0xFF) / 255,
-            alpha: 1
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: 1
         )
     }
 }

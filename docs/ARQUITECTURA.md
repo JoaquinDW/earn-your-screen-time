@@ -6,54 +6,48 @@ Apple **no le da a tu app** el uso exacto de otras apps. No existe una API que d
 "TikTok = 4 minutos hoy". `DeviceActivityReport` muestra esos datos dentro de una vista sandboxeada
 cuyo contenido no puede salir de la extensión que la dibuja.
 
-Lo único que Apple sí ofrece: **avisarte cuando el uso acumulado de un conjunto de apps cruza un
-umbral que vos definiste** (`DeviceActivityEvent` + `DeviceActivityMonitorExtension`).
+Por eso el producto no intenta medir consumo real. Reserva por adelantado una ventana de reloj y
+usa `DeviceActivityMonitorExtension` únicamente para volver a aplicar los shields al finalizar.
 
-Todo el diseño sale de ahí.
+## Cómo funciona una sesión de acceso
 
-## Cómo medimos el consumo
-
-Un solo `DeviceActivitySchedule` diario (00:00 → 23:59, `repeats: true`) y eventos cuyo umbral es
-**uso acumulado desde la medianoche**, todos con `includesPastActivity: true`.
+Las apps elegidas están bloqueadas por defecto. El saldo ganado no quita el shield automáticamente:
+el usuario compra de forma explícita una ventana de 5, 10 o 15 minutos.
 
 ```
-umbral del último evento  =  minutos TOTALES ganados hoy
-se aplica el shield        cuando  uso acumulado hoy ≥ total ganado hoy
-saldo disponible           =  ganado hoy − uso acumulado hoy
+al iniciar       = se reserva toda la duración en la billetera
+sesión vigente   = se quitan los shields
+al vencer        = se reaplican los shields
 ```
 
-### Por qué acumulado desde medianoche y no "desde que ganó los minutos"
+La reserva es inmediata y no se reembolsa si cambia la selección, se resetea el día o cruza la
+medianoche. Así la contabilidad no depende de poder leer cuánto tiempo pasó realmente dentro de
+otra app, dato que Apple no expone.
 
-Cada vez que el usuario gana créditos hay que **reiniciar el monitoreo** para registrar el umbral
-nuevo. Reiniciar borra los contadores relativos. Si los umbrales fueran "10 minutos desde ahora",
-cada reinicio regalaría minutos.
+`ScreenTimeSessionEngine` concentra las transiciones puras: iniciar una única sesión, completarla,
+cancelarla y recuperar una sesión vencida. `ScreenTimeSession` persiste UUID, inicio, fin, duración,
+estado y segundos reservados. Los callbacks incluyen el UUID en el nombre de la actividad para que
+un callback atrasado nunca pueda completar una sesión más nueva.
 
-Con umbrales acumulados desde la medianoche, más `includesPastActivity: true`, reiniciar es
-inofensivo: el sistema vuelve a contar desde el mismo origen y los umbrales siguen significando lo
-mismo. Los eventos ya cruzados se re-disparan, y como el manejador hace
-`consumido = max(consumido, minuto × 60)`, re-procesarlos no cambia nada.
+### Carrier de Device Activity
 
-Esto es lo que hace `MonitorPlan.thresholds(totalEarnedSeconds:)`, y está cubierto por tests
-(`MonitorPlanTests`): al aumentar el saldo, los umbrales viejos siguen presentes con el mismo valor.
+Apple exige que `DeviceActivitySchedule` dure al menos 15 minutos. `MonitorScheduler` registra una
+actividad no repetitiva `accessSession_<UUID>` con un carrier de 15 minutos:
 
-### Ticks intermedios
+- 5 minutos: `intervalWillEndWarning`, diez minutos antes del final del carrier;
+- 10 minutos: `intervalWillEndWarning`, cinco minutos antes del final;
+- 15 minutos: `intervalDidEnd`.
 
-Además del evento final se registran umbrales intermedios (`tick_1`, `tick_2`, …) para que el saldo
-que se ve en pantalla se mantenga más o menos al día. Son cosméticos: el que importa es el último.
-El total de eventos se limita a 20 por actividad (`MonitorPlan.defaultMaxEvents`); con saldos
-grandes la granularidad se agranda automáticamente.
-
-### Cumple el requisito del PRD
-
-El tiempo se descuenta **solo cuando el usuario usa las apps restringidas**. Si bloquea el teléfono
-30 minutos, el uso acumulado no se mueve y el saldo queda intacto. No hay ninguna cuenta regresiva
-de reloj.
+Si la app vuelve a primer plano, `RestrictionCoordinator.reconcile` conserva un monitor válido o
+lo reconstruye para el tiempo restante. Si el registro falla, la operación falla cerrada: restaura
+el saldo anterior, cancela la sesión y mantiene los shields.
 
 ## Dónde vive el estado
 
 | Capa | Qué guarda | Quién la usa |
 |---|---|---|
-| `UserDefaults` del App Group (`SharedStore`) | estado vivo: ganado, consumido, regla, día | la app **y** las extensiones |
+| `UserDefaults` del App Group (`SharedStore`) | saldo, regla, día y sesión actual | la app **y** las extensiones |
+| `UserDefaults` del App Group (`MonitorScheduler`) | registro del monitor de la sesión | la app y la extensión de monitoreo |
 | `FamilyActivitySelection` codificada (`SelectionStore`) | los tokens opacos de las apps elegidas | la app y las extensiones |
 | SwiftData *(Fase 5)* | ajustes e historial diario | solo la app |
 
@@ -62,9 +56,9 @@ pasa. Por eso lee y escribe `UserDefaults`, no una base de datos.
 
 ### Concurrencia
 
-La app y la extensión casi nunca están vivas a la vez. El único campo que escribe la extensión
-(`consumedSeconds`) **solo avanza**, así que una escritura perdida se corrige sola en el evento
-siguiente en vez de corromper el saldo.
+La app y la extensión casi nunca están vivas a la vez. La reserva del saldo se persiste antes de
+quitar shields y antes de iniciar el monitor. Después, el estado de sesión solo avanza de `active`
+a `completed` o `cancelled`; cada callback vuelve a cargar el blob y valida el UUID antes de escribir.
 
 ## Capas
 
