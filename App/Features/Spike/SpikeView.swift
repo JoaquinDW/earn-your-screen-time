@@ -76,8 +76,8 @@ struct SpikeView: View {
             LabeledContent("spike.earned", value: minutes(env.wallet.earnedSeconds))
             LabeledContent("spike.used", value: minutes(env.wallet.consumedSeconds))
             LabeledContent("spike.state", value: env.isLocked
-                ? String(localized: "dashboard.state.locked")
-                : String(localized: "dashboard.state.available"))
+                ? localized("dashboard.state.locked")
+                : localized("dashboard.state.available"))
             Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
             Button("settings.resetDay", role: .destructive) { env.resetToday() }
         }
@@ -87,13 +87,13 @@ struct SpikeView: View {
 
     private var authorizationLabel: String {
         let status = env.screenTime.authorizationStatus
-        if status.isApproved { return String(localized: "spike.auth.approved") }
-        if status == .denied { return String(localized: "spike.auth.denied") }
-        return String(localized: "spike.auth.notDetermined")
+        if status.isApproved { return localized("spike.auth.approved") }
+        if status == .denied { return localized("spike.auth.denied") }
+        return localized("spike.auth.notDetermined")
     }
 
     private func minutes(_ seconds: Int) -> String {
-        String(localized: "common.minutesValue \(seconds / 60)")
+        String(localized: "common.minutesValue \(seconds / 60)", locale: env.appLanguage.locale)
     }
 
     private func requestAuthorization() async {
@@ -103,8 +103,15 @@ struct SpikeView: View {
         do {
             try await env.screenTime.requestAuthorization()
         } catch {
-            errorMessage = String(localized: "spike.auth.failed \(error.localizedDescription)")
+            errorMessage = String(
+                localized: "spike.auth.failed \(error.localizedDescription)",
+                locale: env.appLanguage.locale
+            )
         }
+    }
+
+    private func localized(_ key: String.LocalizationValue) -> String {
+        String(localized: key, locale: env.appLanguage.locale)
     }
 }
 

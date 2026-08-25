@@ -32,12 +32,13 @@ PLISTS=$(find ~/Library/Developer/CoreSimulator/Devices/"$SIM"/data \
   -name "$GROUP_ID.plist" 2>/dev/null)
 [ -n "$PLISTS" ] || { echo "Todavía no existe el App Group: corré la app una vez primero."; exit 1; }
 
-python3 - "$STEPS" "$CONSUMED" "$ONBOARDED" $PLISTS <<'PY'
+python3 - "$STEPS" "$CONSUMED" "$ONBOARDED" "$LANG_CODE" $PLISTS <<'PY'
 import json, plistlib, sys, datetime, random
 steps, consumed = int(sys.argv[1]), int(sys.argv[2])
 onboarded = sys.argv[3] != "0"
-paths = sys.argv[4:]
-rule = {"source": "steps", "amountRequired": 1000, "rewardSeconds": 300}
+language = {"en": "english", "es": "spanish"}.get(sys.argv[4], "system")
+paths = sys.argv[5:]
+rule = {"source": "steps", "amountRequired": 500, "rewardSeconds": 300}
 milestones = steps // rule["amountRequired"]
 today = datetime.date.today()
 
@@ -57,15 +58,17 @@ for back in range(6, 0, -1):
     })
 
 state = {
-    "schemaVersion": 4, "onboardingCompleted": onboarded, "restrictedItemCount": 5,
+    "schemaVersion": 5, "onboardingCompleted": onboarded, "restrictedItemCount": 5,
+    "hasEarnedFirstReward": onboarded, "adaptiveIntroSeen": onboarded,
     "shieldsApplied": True, "currentSession": None,
     "onboarding": {
         "desiredOutcomes": ["walkMore", "scrollLess", "feelInControl"],
         "scrolling": "twoToFourHours", "movement": "threeToFiveThousand",
-        "recommendedDailyStepGoal": 8000,
+        "recommendedDailyStepGoal": 4000, "baselineDailySteps": 3500,
+        "baselineSource": "healthKit", "primaryGoal": "moveMore",
     },
     "journey": ({
-        "startDay": key(today), "dailyGoal": 8000, "target": 240000,
+        "startDay": key(today), "dailyGoal": 4000, "target": 120000,
         "cumulativeSteps": 0, "earnedSeconds": 0, "activeDays": 0,
         "goalHitDays": 0, "completionAcknowledged": False, "incorporatedDays": [],
     } if onboarded else None),
@@ -75,10 +78,15 @@ state = {
         "rule": rule, "activityAmount": steps, "baselineAmount": 0,
         "milestonesRewarded": milestones,
         "wallet": {"earnedSeconds": milestones * rule["rewardSeconds"], "consumedSeconds": consumed},
+        "dailyGoal": 4000, "goalBonusSeconds": 600,
+        "goalBonusAwarded": steps >= 4000, "transactions": [],
     },
 }
 for path in paths:
-    plistlib.dump({"shared.state.v1": json.dumps(state).encode()}, open(path, "wb"))
+    plistlib.dump({
+        "shared.state.v1": json.dumps(state).encode(),
+        "app.language.preference.v1": language,
+    }, open(path, "wb"))
 earned = milestones * rule["rewardSeconds"]
 print(f"{steps} pasos → ganado {earned//60} min, reservado {consumed//60} min, disponible {max(0,earned-consumed)//60} min")
 print("onboarding: " + ("completado" if onboarded else "sin hacer"))

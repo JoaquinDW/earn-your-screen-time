@@ -55,16 +55,20 @@ struct MonitorScheduler {
 
         stopAll()
 
-        // Starting one second in the past guarantees that `now` falls inside the interval. The
-        // carrier ends 15 minutes from now; warningTime targets the session's actual `endsAt`.
+        // Starting one second in the past guarantees that `now` falls inside the interval. Short
+        // sessions use the 15-minute carrier; longer sessions end with the schedule itself.
         let calendar = Calendar.current
         let intervalStart = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second],
             from: now.addingTimeInterval(-1)
         )
+        let rawIntervalEnd = now.addingTimeInterval(TimeInterval(plan.scheduleSeconds))
+        let roundedIntervalEnd = Date(
+            timeIntervalSince1970: ceil(rawIntervalEnd.timeIntervalSince1970)
+        )
         let intervalEnd = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second],
-            from: now.addingTimeInterval(TimeInterval(SessionMonitorPlan.carrierSeconds))
+            from: roundedIntervalEnd
         )
         let schedule = DeviceActivitySchedule(
             intervalStart: intervalStart,

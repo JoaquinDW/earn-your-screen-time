@@ -3,8 +3,9 @@ import SwiftUI
 
 private enum SettingsDestination: Hashable {
     case apps
-    case subscription
+    #if DEBUG
     case spike
+    #endif
 }
 
 /// Rule configuration (PRD §16) plus the developer tools for the remaining phases.
@@ -17,8 +18,10 @@ struct SettingsView: View {
 
     @State private var stepsRequired: Int = EarningRule.default.amountRequired
     @State private var rewardMinutes: Int = EarningRule.default.rewardMinutes
+    @State private var dailyStepGoal = GoalRecommendationEngine.minimumGoal
     @State private var isShowingRuleChangeConfirm = false
     @State private var isShowingPaywall = false
+    @State private var isShowingCustomerCenter = false
     @State private var path: [SettingsDestination] = []
 
     private let stepOptions = [250, 500, 750, 1_000, 1_500, 2_000, 3_000]
@@ -34,9 +37,43 @@ struct SettingsView: View {
         NavigationStack(path: $path) {
             Form {
                 Section {
+                    Picker("settings.language", selection: languageBinding) {
+                        Text("settings.language.system").tag(AppLanguage.system)
+                        Text("settings.language.english").tag(AppLanguage.english)
+                        Text("settings.language.spanish").tag(AppLanguage.spanish)
+                    }
+                } header: {
+                    Text("settings.language.section")
+                } footer: {
+                    Text("settings.language.footer")
+                }
+
+                Section {
+                    Toggle("settings.haptics", isOn: hapticFeedbackBinding)
+                } footer: {
+                    Text("settings.haptics.footer")
+                }
+
+                Section {
+                    Stepper(value: $dailyStepGoal, in: 2_000...20_000, step: 500) {
+                        LabeledContent(
+                            "Daily movement goal",
+                            value: "\(dailyStepGoal.formatted(.number.locale(env.appLanguage.locale))) steps"
+                        )
+                    }
+                    if dailyStepGoal != env.dailyStepGoal {
+                        Button("Save daily goal") { env.updateDailyGoal(dailyStepGoal) }
+                    }
+                } header: {
+                    Text("Movement goal")
+                } footer: {
+                    Text("Your goal tracks daily progress. It does not change how quickly you earn minutes.")
+                }
+
+                Section {
                     Picker("settings.stepsRequired", selection: $stepsRequired) {
                         ForEach(stepOptions, id: \.self) { steps in
-                            Text(steps.formatted()).tag(steps)
+                            Text(steps.formatted(.number.locale(env.appLanguage.locale))).tag(steps)
                         }
                     }
                     Picker("settings.reward", selection: $rewardMinutes) {
@@ -73,31 +110,37 @@ struct SettingsView: View {
 
                     if env.subscriptionManager.isPro,
                        env.subscriptionManager.isRevenueCatConfigured {
-                        NavigationLink(
-                            "settings.subscription.manage",
-                            value: SettingsDestination.subscription
-                        )
+                        Button("settings.subscription.manage") {
+                            isShowingCustomerCenter = true
+                        }
                     } else {
                         Button("settings.subscription.upgrade") { isShowingPaywall = true }
                     }
                 }
 
+                #if DEBUG
                 Section("settings.developer") {
                     LabeledContent("settings.screenTimeStatus", value: statusLabel)
                     LabeledContent("settings.monitoring", value: env.screenTime.isMonitoring
-                        ? String(localized: "common.yes")
-                        : String(localized: "common.no"))
+                        ? String(localized: "common.yes", locale: env.appLanguage.locale)
+                        : String(localized: "common.no", locale: env.appLanguage.locale))
                     NavigationLink("settings.spike", value: SettingsDestination.spike)
                 }
 
                 Section {
                     Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
                     Button("settings.resetDay", role: .destructive) { env.resetToday() }
+                    Button("Debug: +5 min earned") { env.triggerDebugFeedback(.screenTimeEarned(minutes: 5)) }
+                    Button("Debug: goal complete") { env.triggerDebugFeedback(.dailyGoalCompleted(minutes: 5)) }
+                    Button("Debug: apps unlocked") { env.triggerDebugFeedback(.appUnlocked) }
+                    Button("Debug: balance expired") { env.triggerDebugFeedback(.appLocked) }
+                    Button("Debug: error") { env.triggerDebugFeedback(.error) }
                 } header: {
                     Text("settings.debug")
                 } footer: {
                     Text("settings.debug.footer")
                 }
+                #endif
             }
             .scrollContentBackground(.hidden)
             .background(PaperBackground())
@@ -108,10 +151,10 @@ struct SettingsView: View {
                 switch destination {
                 case .apps:
                     AppSelectionView()
-                case .subscription:
-                    SubscriptionCustomerCenterView()
+                #if DEBUG
                 case .spike:
                     SpikeView()
+                #endif
                 }
             }
             .toolbar {
@@ -124,6 +167,7 @@ struct SettingsView: View {
             .onAppear {
                 stepsRequired = env.ledger.rule.amountRequired
                 rewardMinutes = env.ledger.rule.rewardMinutes
+                dailyStepGoal = env.dailyStepGoal
             }
             .confirmationDialog(
                 "settings.rule.confirmTitle",
@@ -144,6 +188,9 @@ struct SettingsView: View {
                 },
                 content: { ProPaywallView() }
             )
+            .sheet(isPresented: $isShowingCustomerCenter) {
+                SubscriptionCustomerCenterView()
+            }
         }
         .onChange(of: path) { _, path in
             onNavigationDepthChange?(!path.isEmpty)
@@ -155,20 +202,38 @@ struct SettingsView: View {
 
     private var statusLabel: String {
         let status = env.screenTime.authorizationStatus
-        if status.isApproved { return String(localized: "spike.auth.approved") }
-        if status == .denied { return String(localized: "spike.auth.denied") }
-        return String(localized: "spike.auth.notDetermined")
+        if status.isApproved {
+            return String(localized: "spike.auth.approved", locale: env.appLanguage.locale)
+        }
+        if status == .denied {
+            return String(localized: "spike.auth.denied", locale: env.appLanguage.locale)
+        }
+        return String(localized: "spike.auth.notDetermined", locale: env.appLanguage.locale)
     }
 
     private var subscriptionStatusLabel: String {
         switch env.subscriptionManager.status {
         case .unknown:
-            String(localized: "subscription.status.checking")
+            String(localized: "subscription.status.checking", locale: env.appLanguage.locale)
         case .free:
-            String(localized: "subscription.status.free")
+            String(localized: "subscription.status.free", locale: env.appLanguage.locale)
         case .pro:
-            String(localized: "subscription.status.pro")
+            String(localized: "subscription.status.pro", locale: env.appLanguage.locale)
         }
+    }
+
+    private var languageBinding: Binding<AppLanguage> {
+        Binding(
+            get: { env.appLanguage },
+            set: { env.setAppLanguage($0) }
+        )
+    }
+
+    private var hapticFeedbackBinding: Binding<Bool> {
+        Binding(
+            get: { env.hapticFeedbackEnabled },
+            set: { env.setHapticFeedbackEnabled($0) }
+        )
     }
 
     private func requestRuleChange() {
@@ -190,10 +255,22 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
+#Preview("Settings - English") {
     SettingsView()
         .environment(AppEnvironment(
             screenTime: MockScreenTimeService(status: .approved),
-            health: MockHealthKitService(hasRequested: true)
+            health: MockHealthKitService(hasRequested: true),
+            appLanguage: .english
         ))
+        .environment(\.locale, Locale(identifier: "en"))
+}
+
+#Preview("Settings - Spanish") {
+    SettingsView()
+        .environment(AppEnvironment(
+            screenTime: MockScreenTimeService(status: .approved),
+            health: MockHealthKitService(hasRequested: true),
+            appLanguage: .spanish
+        ))
+        .environment(\.locale, Locale(identifier: "es"))
 }

@@ -46,11 +46,60 @@ struct SharedStateMigrationTests {
         #expect(state.onboarding == OnboardingProfile())
         #expect(state.history.days.isEmpty)
         #expect(state.dailyStepGoal == 8_000)
-        #expect(state.schemaVersion == 4)
+        #expect(state.schemaVersion == 6)
         #expect(state.currentSession == nil)
         #expect(state.journey == nil)
+        #expect(state.ledger.dailyGoal == 0)
+        #expect(state.ledger.goalBonusSeconds == 0)
+        #expect(state.ledger.transactions.isEmpty)
+        #expect(!state.hasEarnedFirstReward)
+        #expect(state.goalProgressionCooldownUntil == nil)
         // A legacy unshielded flag cannot fabricate an access session with no fixed end.
         #expect(state.shieldsApplied == false)
+    }
+
+    @Test("A v5 active session becomes a refundable reservation without changing balance")
+    func migratesActiveReservation() throws {
+        let v5 = """
+        {
+          "schemaVersion": 5,
+          "ledger": {
+            "day": { "year": 2027, "month": 1, "day": 15 },
+            "wallet": { "earnedSeconds": 900, "consumedSeconds": 300 }
+          },
+          "currentSession": {
+            "id": "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE",
+            "startedAt": "2027-01-15T08:00:00Z",
+            "durationMinutes": 5,
+            "endsAt": "2027-01-15T08:05:00Z",
+            "status": "active",
+            "spentSeconds": 300
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v5.utf8))
+        #expect(state.ledger.wallet.availableSeconds == 600)
+        #expect(state.ledger.wallet.consumedSeconds == 0)
+        #expect(state.ledger.wallet.reservedSeconds == 300)
+        #expect(state.currentSession?.reservedSeconds == 300)
+    }
+
+    @Test("Adaptive profile, first reward, cooldown, bonus, and audit state survive a round trip")
+    func adaptiveStateRoundTrip() throws {
+        let day = DayKey(year: 2026, month: 8, day: 20)
+        var state = SharedState(
+            ledger: CreditEngine.startOfDay(day, rule: .default, dailyGoal: 2_500, goalBonusSeconds: 600),
+            onboarding: OnboardingProfile(desiredOutcomes: [.walkMore], baselineDailySteps: 2_000),
+            hasEarnedFirstReward: true,
+            goalProgressionCooldownUntil: DayKey(year: 2026, month: 8, day: 27)
+        )
+        state.ledger = CreditEngine.apply(activityAmount: 2_500, to: state.ledger).ledger
+
+        let decoded = try SharedState.decoded(from: state.encoded())
+        #expect(decoded == state)
+        #expect(decoded.ledger.goalBonusAwarded)
+        #expect(decoded.ledger.transactions.count == 2)
     }
 
     @Test("Legacy profile raw values map to outcomes, movement, and StepTarget")

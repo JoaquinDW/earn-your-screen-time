@@ -47,10 +47,10 @@ struct AppsStep: View {
                             .foregroundStyle(Theme.sageDeep)
                             .frame(width: 52, height: 52)
                             .background(Theme.sageLight, in: .circle)
-                        Text("To build your plan, Earn needs Screen Time access to show Apple’s app picker.")
+                        Text("To build your plan, Earnit needs Screen Time access to show Apple’s app picker.")
                             .font(.sans(15, weight: .semibold))
                     }
-                    Text("Your app activity stays private. Earn only stores Apple’s opaque selections on this device.")
+                    Text("Your app activity stays private. Earnit only stores Apple’s opaque selections on this device.")
                         .font(.sans(13.5))
                         .foregroundStyle(Theme.muted)
                     Button {

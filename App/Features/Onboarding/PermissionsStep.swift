@@ -15,7 +15,7 @@ struct HealthPermissionStep: View {
                 .font(.serif(42))
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 12)
-            Text("Earn uses Apple Health to automatically convert your movement into screen-time credit.")
+            Text("Earnit uses Apple Health to automatically convert your movement into screen-time credit.")
                 .font(.sans(15))
                 .foregroundStyle(Theme.muted)
                 .padding(.top, 12)
@@ -43,7 +43,11 @@ struct HealthPermissionStep: View {
             } label: {
                 HStack {
                     if isRequesting { ProgressView().tint(Theme.paper) }
-                    Text(isRequesting ? "Connecting" : "Connect Apple Health")
+                    if isRequesting {
+                        Text("Connecting")
+                    } else {
+                        Text("Connect Apple Health")
+                    }
                 }
             }
             .buttonStyle(.pill)
@@ -51,7 +55,7 @@ struct HealthPermissionStep: View {
         }
     }
 
-    private func permissionNode(icon: String, label: String, color: Color) -> some View {
+    private func permissionNode(icon: String, label: LocalizedStringKey, color: Color) -> some View {
         HStack(spacing: Theme.Space.m) {
             Image(systemName: icon)
                 .font(.system(size: 22, weight: .semibold))
@@ -77,6 +81,12 @@ struct HealthPermissionStep: View {
                 env.analytics.track(.healthKitGranted.withProperties(["read_status_verifiable": .bool(false)]))
                 let average = try? await env.health.recentAverageSteps()
                 onContinue(average ?? nil)
+            } catch HealthKitError.unavailable {
+                self.error = String(
+                    localized: "health.error.unavailable",
+                    locale: env.appLanguage.locale
+                )
+                isRequesting = false
             } catch {
                 self.error = error.localizedDescription
                 isRequesting = false

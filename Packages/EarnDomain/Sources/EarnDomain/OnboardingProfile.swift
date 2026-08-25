@@ -9,6 +9,15 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
     public var movement: MovementBand? {
         didSet { refreshRecommendationIfPossible() }
     }
+    /// Measured steps/day, when Health data is available. Nil preserves self-reported onboarding.
+    public var baselineDailySteps: Int? {
+        didSet { refreshRecommendationIfPossible() }
+    }
+    public var baselineSource: BaselineSource?
+    public var primaryGoal: UserPrimaryGoal?
+    public var onboardingCompletedAt: Date?
+    public var lastGoalRecommendationDate: Date?
+    public var pendingGoalRecommendation: Int?
     /// Persisted so a future change to recommendation rules does not silently change an existing goal.
     public var recommendedDailyStepGoal: Int?
 
@@ -16,20 +25,41 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         desiredOutcomes: Set<DesiredOutcome>,
         scrolling: ScrollingBand? = nil,
         movement: MovementBand? = nil,
-        recommendedDailyStepGoal: Int? = nil
+        recommendedDailyStepGoal: Int? = nil,
+        baselineDailySteps: Int? = nil,
+        baselineSource: BaselineSource? = nil,
+        primaryGoal: UserPrimaryGoal? = nil,
+        onboardingCompletedAt: Date? = nil,
+        lastGoalRecommendationDate: Date? = nil,
+        pendingGoalRecommendation: Int? = nil
     ) {
         self.desiredOutcomes = desiredOutcomes
         self.scrolling = scrolling
         self.movement = movement
+        self.baselineDailySteps = baselineDailySteps.map { max(0, $0) }
+        self.baselineSource = baselineSource
+        self.primaryGoal = primaryGoal
+        self.onboardingCompletedAt = onboardingCompletedAt
+        self.lastGoalRecommendationDate = lastGoalRecommendationDate
+        self.pendingGoalRecommendation = pendingGoalRecommendation
         self.recommendedDailyStepGoal = recommendedDailyStepGoal
+            ?? self.baselineDailySteps.map { GoalRecommendationEngine.recommend(forBaseline: $0) }
             ?? movement.map { Self.recommendDailyStepGoal(movement: $0, outcomes: desiredOutcomes) }
     }
 
     public var isComplete: Bool {
-        !desiredOutcomes.isEmpty && scrolling != nil && movement != nil && recommendedDailyStepGoal != nil
+        let adaptiveComplete = scrolling != nil
+            && primaryGoal != nil
+            && baselineDailySteps != nil
+            && recommendedDailyStepGoal != nil
+        let legacyComplete = !desiredOutcomes.isEmpty
+            && scrolling != nil
+            && movement != nil
+            && recommendedDailyStepGoal != nil
+        return adaptiveComplete || legacyComplete
     }
 
-    public var currentDailySteps: Int { (movement ?? .unsure).typicalSteps }
+    public var currentDailySteps: Int { baselineDailySteps ?? (movement ?? .unsure).typicalSteps }
     public var dailyStepGoal: Int { recommendedDailyStepGoal ?? 8_000 }
 
     public static func recommendDailyStepGoal(
@@ -45,6 +75,10 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
     }
 
     private mutating func refreshRecommendationIfPossible() {
+        if let baselineDailySteps {
+            recommendedDailyStepGoal = GoalRecommendationEngine.recommend(forBaseline: baselineDailySteps)
+            return
+        }
         guard let movement else { return }
         recommendedDailyStepGoal = Self.recommendDailyStepGoal(movement: movement, outcomes: desiredOutcomes)
     }
@@ -175,6 +209,12 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         desiredOutcomes = Self.outcomes(for: goal)
         self.scrolling = scrolling
         movement = walking?.movementBand
+        baselineSource = nil
+        primaryGoal = nil
+        onboardingCompletedAt = nil
+        lastGoalRecommendationDate = nil
+        pendingGoalRecommendation = nil
+        baselineDailySteps = nil
         recommendedDailyStepGoal = target?.dailySteps
             ?? movement.map { Self.recommendDailyStepGoal(movement: $0, outcomes: desiredOutcomes) }
     }
@@ -237,7 +277,9 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
     // MARK: - Tolerant persistence
 
     private enum CodingKeys: String, CodingKey {
-        case desiredOutcomes, scrolling, movement, recommendedDailyStepGoal
+        case desiredOutcomes, scrolling, movement, recommendedDailyStepGoal, baselineDailySteps
+        case baselineSource, primaryGoal, onboardingCompletedAt, lastGoalRecommendationDate
+        case pendingGoalRecommendation
         case goal, walking, target
     }
 
@@ -248,6 +290,12 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
             ?? Self.outcomes(for: legacyGoal)
         scrolling = try? container.decodeIfPresent(ScrollingBand.self, forKey: .scrolling)
         movement = try? container.decodeIfPresent(MovementBand.self, forKey: .movement)
+        baselineDailySteps = (try? container.decodeIfPresent(Int.self, forKey: .baselineDailySteps)).map { max(0, $0) }
+        baselineSource = try? container.decodeIfPresent(BaselineSource.self, forKey: .baselineSource)
+        primaryGoal = try? container.decodeIfPresent(UserPrimaryGoal.self, forKey: .primaryGoal)
+        onboardingCompletedAt = try? container.decodeIfPresent(Date.self, forKey: .onboardingCompletedAt)
+        lastGoalRecommendationDate = try? container.decodeIfPresent(Date.self, forKey: .lastGoalRecommendationDate)
+        pendingGoalRecommendation = try? container.decodeIfPresent(Int.self, forKey: .pendingGoalRecommendation)
         if movement == nil, let oldWalking = try? container.decode(WalkingBand.self, forKey: .walking) {
             movement = oldWalking.movementBand
         }
@@ -256,7 +304,9 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
            let oldTarget = try? container.decode(StepTarget.self, forKey: .target) {
             recommendedDailyStepGoal = oldTarget.dailySteps
         }
-        if recommendedDailyStepGoal == nil, let movement {
+        if recommendedDailyStepGoal == nil, let baselineDailySteps {
+            recommendedDailyStepGoal = GoalRecommendationEngine.recommend(forBaseline: baselineDailySteps)
+        } else if recommendedDailyStepGoal == nil, let movement {
             recommendedDailyStepGoal = Self.recommendDailyStepGoal(movement: movement, outcomes: desiredOutcomes)
         }
     }
@@ -267,5 +317,11 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         try container.encodeIfPresent(scrolling, forKey: .scrolling)
         try container.encodeIfPresent(movement, forKey: .movement)
         try container.encodeIfPresent(recommendedDailyStepGoal, forKey: .recommendedDailyStepGoal)
+        try container.encodeIfPresent(baselineDailySteps, forKey: .baselineDailySteps)
+        try container.encodeIfPresent(baselineSource, forKey: .baselineSource)
+        try container.encodeIfPresent(primaryGoal, forKey: .primaryGoal)
+        try container.encodeIfPresent(onboardingCompletedAt, forKey: .onboardingCompletedAt)
+        try container.encodeIfPresent(lastGoalRecommendationDate, forKey: .lastGoalRecommendationDate)
+        try container.encodeIfPresent(pendingGoalRecommendation, forKey: .pendingGoalRecommendation)
     }
 }

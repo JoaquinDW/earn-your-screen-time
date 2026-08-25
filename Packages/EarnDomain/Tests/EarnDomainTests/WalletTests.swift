@@ -27,12 +27,33 @@ struct WalletTests {
     @Test("A reservation succeeds only when the balance covers it")
     func reservationRequiresBalance() {
         var wallet = ScreenTimeWallet(earnedSeconds: 600)
-        let firstReservation = wallet.spend(seconds: 300)
-        let oversizedReservation = wallet.spend(seconds: 301)
+        let firstReservation = wallet.reserve(seconds: 300)
+        let oversizedReservation = wallet.reserve(seconds: 301)
         #expect(firstReservation)
         #expect(!oversizedReservation)
-        #expect(wallet.consumedSeconds == 300)
+        #expect(wallet.consumedSeconds == 0)
+        #expect(wallet.reservedSeconds == 300)
         #expect(wallet.availableSeconds == 300)
+    }
+
+    @Test("Settling a reservation consumes elapsed time and saves the rest")
+    func settlement() {
+        var wallet = ScreenTimeWallet(earnedSeconds: 600)
+        let reserved = wallet.reserve(seconds: 300)
+        #expect(reserved)
+        let saved = wallet.settleReservation(consuming: 120)
+        #expect(saved == 180)
+        #expect(wallet.consumedSeconds == 120)
+        #expect(wallet.reservedSeconds == 0)
+        #expect(wallet.availableSeconds == 480)
+    }
+
+    @Test("Credits stop at the fixed 180-minute capacity")
+    func capacity() {
+        var wallet = ScreenTimeWallet(earnedSeconds: 179 * 60)
+        #expect(wallet.credit(seconds: 5 * 60) == 60)
+        #expect(wallet.remainingValueSeconds == ScreenTimeWallet.maximumSavedSeconds)
+        #expect(wallet.isAtCapacity)
     }
 
     @Test("Earning after a reservation only increases available balance")

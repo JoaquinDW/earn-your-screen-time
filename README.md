@@ -1,4 +1,4 @@
-# Earn Your Screen Time
+# Earnit
 
 > Moverse primero. Scrollear después.
 
@@ -97,11 +97,16 @@ Leé `docs/ARQUITECTURA.md` para entender **por qué** las sesiones reservan tie
 
 | Archivo | Qué es |
 |---|---|
-| `Theme.swift` | La paleta: papel crema, tinta, coral (ganar) y salvia (ganado). No hay rojo en ningún estado. |
+| `Theme.swift` | La paleta: marfil (`#F6F3ED` → `#F9F6F1`), tinta y **un solo** acento, cobalto. El cobalto está ausente cuando no ganaste nada y va inundando la pantalla con el progreso: el color *es* la señal. No hay rojo en ningún estado. |
 | `Typography.swift` | **Instrument Serif** para títulos y números, **Figtree** para el texto corrido. Las dos vienen en `App/Resources/Fonts` (licencia SIL OFL) y caen al tipo del sistema si fallara el registro. |
-| `TrailView.swift` | La única ilustración de la app. Significa una sola cosa: cuánto falta para la próxima recompensa. |
-| `PaperBackground.swift` | El fondo crema con el grano de papel. |
+| `GuardianAtmosphere.swift` | El Guardián **es** la barra de progreso. Un único valor 0→1 (`AppEnvironment.dayProgress`) interpola las siete capas del Home: base, luz, lavado gris, lavado cobalto, órbitas, trazos y grano. `GuardianMark` es la misma criatura reducida a glifo para la navegación. |
+| `GuardianPortrait.swift` | El Guardián como figura pintada: cinco láminas en acuarela (`resting`, `awakening`, `rising`, `strong`, `free`) que se funden entre sí según el progreso, con la figura vectorial de respaldo mientras una lámina no exista. `GuardianHeader` y `GuardianPanel` llevan esa misma escena al onboarding, al paywall y a los momentos de logro. La dirección de arte está en [`docs/guardian-art-direction.md`](docs/guardian-art-direction.md). |
+| `PaperBackground.swift` | El fondo liso con el grano, para todo lo que no es el Home. |
 | `Controls.swift` | La píldora de acción, las líneas finas que reemplazan a las tarjetas y las filas de opción. |
+
+El Home no muestra nada que no sea hoy: el recorrido de 30 días y los totales del mes viven en
+la pestaña **Progreso**, y elegir 5/10/15 minutos es una hoja que se abre desde la fila
+*Ready to spend*.
 
 La app fija la apariencia clara (`preferredColorScheme(.light)`): el diseño es una sola paleta de
 papel y no define una variante oscura.

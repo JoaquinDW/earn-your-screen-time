@@ -3,7 +3,7 @@ import EarnDomain
 import Foundation
 import OSLog
 
-/// Runs outside the app, so blocking keeps working when Earn Your Screen Time is closed.
+/// Runs outside the app, so blocking keeps working when Earnit is closed.
 ///
 /// Keep this file cheap: the extension has a very small memory budget and is terminated
 /// if it exceeds it. No SwiftData, no networking, no heavy frameworks.

@@ -1,6 +1,23 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "shield.action.chooseTime" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose how much time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir cuánto tiempo"
+          }
+        }
+      }
+    },
     "shield.action.close" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -18,19 +35,104 @@
         }
       }
     },
+    "shield.action.earnMore" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earn more time"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganar más tiempo"
+          }
+        }
+      }
+    },
+    "shield.action.notNow" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save for later"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar para después"
+          }
+        }
+      }
+    },
     "shield.action.openEarn" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back to Earn"
+            "value" : "Open Earnit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Volver a Earn"
+            "value" : "Abrir Earnit"
+          }
+        }
+      }
+    },
+    "shield.action.useMinutes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start my %lld min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar mis %lld min"
+          }
+        }
+      }
+    },
+    "shield.almost.subtitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALMOST THERE · Earn %1$lld min in about a %2$lld min walk."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YA CASI · Gana %1$lld min caminando unos %2$lld min."
+          }
+        }
+      }
+    },
+    "shield.almost.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Just %lld steps left."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo faltan %lld pasos."
           }
         }
       }
@@ -41,13 +143,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld min available. Open Earn to start a break."
+            "value" : "TIME EARNED · Use them now, or save them for later."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tenés %lld min disponibles. Abrí Earn para iniciar una pausa."
+            "value" : "TIEMPO GANADO · Úsalos ahora o guárdalos para después."
           }
         }
       }
@@ -58,13 +160,81 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your next break is ready"
+            "value" : "You earned %lld min."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tu próxima pausa está lista"
+            "value" : "Ganaste %lld min."
+          }
+        }
+      }
+    },
+    "shield.expired.subtitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TIME'S UP · Walk toward %lld steps to earn more. Your apps are paused for now."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SE ACABÓ EL TIEMPO · Camina hasta %lld pasos para ganar más. Tus apps están en pausa."
+          }
+        }
+      }
+    },
+    "shield.expired.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You used your %lld min."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usaste tus %lld min."
+          }
+        }
+      }
+    },
+    "shield.goal.subtitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DAILY GOAL COMPLETE · %1$lld steps · %2$lld min earned"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OBJETIVO DIARIO COMPLETO · %1$lld pasos · %2$lld min ganados"
+          }
+        }
+      }
+    },
+    "shield.goal.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You earned it today."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoy te lo ganaste."
           }
         }
       }
@@ -75,13 +245,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$lld steps to unlock %2$lld min."
+            "value" : "EARN YOUR TIME · Walk %1$lld more steps to unlock %2$lld min. About a %3$lld min walk."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$lld pasos para desbloquear %2$lld min."
+            "value" : "GANA TU TIEMPO · Camina %1$lld pasos más para desbloquear %2$lld min. Unos %3$lld min caminando."
           }
         }
       }
@@ -92,13 +262,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Walk more to unlock your next scroll break."
+            "value" : "Earn before you consume. Open Earnit to see your next reward."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Caminá más para desbloquear tu próxima pausa de scroll."
+            "value" : "Gana antes de consumir. Abre Earnit para ver tu próxima recompensa."
           }
         }
       }
@@ -109,47 +279,47 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Earn your screen time"
+            "value" : "Not yet."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ganate tu tiempo de pantalla"
+            "value" : "Todavía no."
           }
         }
       }
     },
-    "shield.sessionEnded.subtitle" : {
+    "shield.updating.subtitle" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You used your earned screen time. Walk more to unlock another break."
+            "value" : "Open Earnit to get your latest progress."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usaste tu tiempo ganado. Caminá más para desbloquear otra pausa."
+            "value" : "Abre Earnit para actualizar tu progreso."
           }
         }
       }
     },
-    "shield.sessionEnded.title" : {
+    "shield.updating.title" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your break is over"
+            "value" : "Updating your steps…"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tu pausa terminó"
+            "value" : "Actualizando tus pasos…"
           }
         }
       }

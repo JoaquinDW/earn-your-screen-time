@@ -1,5 +1,5 @@
 enum Entitlements {
-    static let pro = "pro"
+    static let pro = "Earn your Screen Time Pro"
 }
 
 enum SubscriptionProducts {

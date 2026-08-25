@@ -1,6 +1,22 @@
 import Foundation
 import HealthKit
 
+struct DailyStepSample: Equatable, Sendable {
+    let date: Date
+    let steps: Int
+}
+
+struct DailyStepResult: Equatable, Sendable {
+    let samples: [DailyStepSample]
+
+    /// A zero-step day is treated like an unreadable day. Three valid days are required before
+    /// the value is useful enough to present as a baseline.
+    var baselineSteps: Int? {
+        guard samples.count >= 3 else { return nil }
+        return samples.reduce(0) { $0 + $1.steps } / samples.count
+    }
+}
+
 /// Reads the activity that earns screen time.
 ///
 /// ## A limitation worth knowing
@@ -17,8 +33,10 @@ protocol HealthKitServing: AnyObject {
     func requestAuthorization() async throws
     /// Steps recorded today, in the user's local calendar.
     func todaySteps() async throws -> Int
-    /// Average steps over the seven completed days in the user's local calendar.
-    /// Returns `nil` when HealthKit exposes no readable samples; denial is indistinguishable.
+    /// The seven most recent readable completed days found within the last 14 local days.
+    func recentDailySteps() async throws -> DailyStepResult
+    /// Average steps over the recent valid completed days in the user's local calendar.
+    /// Returns `nil` until at least three valid days are available; denial is indistinguishable.
     func recentAverageSteps() async throws -> Int?
 }
 
@@ -54,21 +72,36 @@ final class LiveHealthKitService: HealthKitServing {
     }
 
     func recentAverageSteps() async throws -> Int? {
+        try await recentDailySteps().baselineSteps
+    }
+
+    func recentDailySteps() async throws -> DailyStepResult {
         guard isAvailable else { throw HealthKitError.unavailable }
         let calendar = Calendar.current
         let end = calendar.startOfDay(for: Date())
-        guard let start = calendar.date(byAdding: .day, value: -7, to: end) else { return nil }
+        guard let start = calendar.date(byAdding: .day, value: -14, to: end) else {
+            return DailyStepResult(samples: [])
+        }
         let predicate = HKQuery.predicateForSamples(
             withStart: start,
             end: end,
             options: [.strictStartDate, .strictEndDate]
         )
-        let descriptor = HKStatisticsQueryDescriptor(
+        let descriptor = HKStatisticsCollectionQueryDescriptor(
             predicate: .quantitySample(type: stepType, predicate: predicate),
-            options: .cumulativeSum
+            options: .cumulativeSum,
+            anchorDate: end,
+            intervalComponents: DateComponents(day: 1)
         )
-        guard let sum = try await descriptor.result(for: store)?.sumQuantity() else { return nil }
-        return Int(sum.doubleValue(for: .count()) / 7)
+        let collection = try await descriptor.result(for: store)
+        let samples = collection.statistics()
+            .reversed()
+            .compactMap { statistics -> DailyStepSample? in
+                let steps = Int(statistics.sumQuantity()?.doubleValue(for: .count()) ?? 0)
+                return steps > 0 ? DailyStepSample(date: statistics.startDate, steps: steps) : nil
+            }
+            .prefix(7)
+        return DailyStepResult(samples: Array(samples))
     }
 }
 
@@ -87,25 +120,66 @@ final class MockHealthKitService: HealthKitServing {
     private(set) var hasRequestedAuthorization: Bool
     private var steps: Int?
     private var averageSteps: Int?
+    private let dailyValues: [Int]?
+    private let available: Bool
+    private let injectedError: (any Error)?
 
-    init(hasRequested: Bool = false, steps: Int? = nil, recentAverageSteps: Int? = nil) {
+    /// `dailySteps` is ordered newest completed day first.
+    init(
+        hasRequested: Bool = false,
+        steps: Int? = nil,
+        recentAverageSteps: Int? = nil,
+        dailySteps: [Int]? = nil,
+        isAvailable: Bool = true,
+        error: (any Error)? = nil
+    ) {
         self.hasRequestedAuthorization = hasRequested
         self.steps = steps
         self.averageSteps = recentAverageSteps
+        self.dailyValues = dailySteps
+        self.available = isAvailable
+        self.injectedError = error
     }
 
-    var isAvailable: Bool { true }
+    var isAvailable: Bool { available }
 
     func requestAuthorization() async throws {
+        guard isAvailable else { throw HealthKitError.unavailable }
+        if let injectedError { throw injectedError }
         try? await Task.sleep(for: .milliseconds(400))
         hasRequestedAuthorization = true
     }
 
     func todaySteps() async throws -> Int {
-        steps ?? SharedStore.shared.load().ledger.activityAmount
+        guard isAvailable else { throw HealthKitError.unavailable }
+        if let injectedError { throw injectedError }
+        return steps ?? SharedStore.shared.load().ledger.activityAmount
     }
 
     func recentAverageSteps() async throws -> Int? {
-        averageSteps
+        guard isAvailable else { throw HealthKitError.unavailable }
+        if let injectedError { throw injectedError }
+        if dailyValues != nil {
+            return try await recentDailySteps().baselineSteps
+        }
+        return averageSteps
+    }
+
+    func recentDailySteps() async throws -> DailyStepResult {
+        guard isAvailable else { throw HealthKitError.unavailable }
+        if let injectedError { throw injectedError }
+        let calendar = Calendar.current
+        let end = calendar.startOfDay(for: Date())
+        let samples = (dailyValues ?? [])
+            .prefix(14)
+            .enumerated()
+            .compactMap { offset, steps -> DailyStepSample? in
+                guard steps > 0,
+                      let date = calendar.date(byAdding: .day, value: -(offset + 1), to: end)
+                else { return nil }
+                return DailyStepSample(date: date, steps: steps)
+            }
+            .prefix(7)
+        return DailyStepResult(samples: Array(samples))
     }
 }

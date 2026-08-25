@@ -1,5 +1,6 @@
 import EarnDomain
 import Foundation
+import Darwin
 
 /// The state shared between the app and its extensions, stored in App Group `UserDefaults`.
 ///
@@ -17,9 +18,22 @@ struct SharedStore {
 
     private var defaults: UserDefaults { AppGroup.defaults }
 
+    private var lockPath: String {
+        let directory = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: AppGroup.identifier
+        )?.path ?? NSTemporaryDirectory()
+        return (directory as NSString).appendingPathComponent("shared.state.lock")
+    }
+
     /// Current state, rolled over to today if the stored ledger belongs to a previous day.
     func load(now: Date = Date()) -> SharedState {
+        withExclusiveLock { loadUnlocked(now: now) }
+    }
+
+    private func loadUnlocked(now: Date) -> SharedState {
         let today = DayKey(date: now)
+        let defaults = defaults
+        defaults.synchronize()
         guard
             let data = defaults.data(forKey: Key.state),
             let stored = try? SharedState.decoded(from: data)
@@ -29,42 +43,89 @@ struct SharedStore {
 
         guard stored.ledger.day != today else { return stored }
 
-        // New calendar day: file the day that just ended, then reset the ledger.
-        // MVP has no carry-over (PRD §17).
-        var rolled = stored
-        let finishedDay = DaySummary(ledger: stored.ledger)
+        // End access at the day boundary, then carry at most twenty minutes into the new day.
+        let boundary = Calendar.current.startOfDay(for: now)
+        var settled = ScreenTimeSessionEngine.recoverExpiredSession(in: stored, at: boundary)
+        if settled.currentSession?.status == .active {
+            settled = ScreenTimeSessionEngine.pauseActiveSession(in: settled, at: boundary)
+        }
+        var rolled = settled
+        let finishedDay = DaySummary(ledger: settled.ledger)
         rolled.history.record(finishedDay)
         if let journey = rolled.journey {
             rolled.journey = journey
                 .incorporating(finishedDay)
                 .finalizing(asOf: today)
         }
-        rolled.ledger = CreditEngine.rollOverIfNeeded(stored.ledger, to: today)
-        rolled.currentSession = stored.currentSession.map { session in
-            var cancelled = session
-            if cancelled.status == .active { cancelled.status = .cancelled }
-            return cancelled
+        let remaining = settled.ledger.wallet.remainingValueSeconds
+        let carried = min(remaining, ScreenTimeWallet.maximumCarryOverSeconds)
+        let expired = max(0, remaining - carried)
+        rolled.ledger = CreditEngine.rollOverIfNeeded(
+            settled.ledger,
+            to: today,
+            carryOverSeconds: carried
+        )
+        if expired > 0 {
+            rolled.ledger.walletTransactions.append(WalletTransaction(
+                kind: .expired,
+                amountSeconds: expired,
+                source: .dayRollover,
+                date: boundary
+            ))
         }
         rolled.schemaVersion = SharedState.currentSchemaVersion
         rolled.shieldsApplied = true
+        saveUnlocked(rolled)
         return rolled
     }
 
     func save(_ state: SharedState) {
+        withExclusiveLock { saveUnlocked(state) }
+    }
+
+    private func saveUnlocked(_ state: SharedState) {
         guard let data = try? state.encoded() else { return }
+        let defaults = defaults
         defaults.set(data, forKey: Key.state)
+        defaults.synchronize()
     }
 
     /// Loads, mutates and persists in one step. Returns the state that was written.
     @discardableResult
     func mutate(now: Date = Date(), _ body: (inout SharedState) -> Void) -> SharedState {
-        var state = load(now: now)
-        body(&state)
-        save(state)
-        return state
+        withExclusiveLock {
+            var state = loadUnlocked(now: now)
+            body(&state)
+            saveUnlocked(state)
+            return state
+        }
+    }
+
+    @discardableResult
+    func mutateThrowing(
+        now: Date = Date(),
+        _ body: (inout SharedState) throws -> Void
+    ) rethrows -> SharedState {
+        try withExclusiveLock {
+            var state = loadUnlocked(now: now)
+            try body(&state)
+            saveUnlocked(state)
+            return state
+        }
     }
 
     func reset() {
-        defaults.removeObject(forKey: Key.state)
+        withExclusiveLock { defaults.removeObject(forKey: Key.state) }
+    }
+
+    private func withExclusiveLock<T>(_ body: () throws -> T) rethrows -> T {
+        let descriptor = open(lockPath, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR)
+        guard descriptor >= 0 else { return try body() }
+        flock(descriptor, LOCK_EX)
+        defer {
+            flock(descriptor, LOCK_UN)
+            close(descriptor)
+        }
+        return try body()
     }
 }

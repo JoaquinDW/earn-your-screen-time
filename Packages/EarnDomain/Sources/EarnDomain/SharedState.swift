@@ -6,8 +6,8 @@ import Foundation
 /// under a very tight memory budget, so it reads/writes this via App Group `UserDefaults`
 /// rather than a database.
 public struct SharedState: Codable, Equatable, Sendable {
-    /// v4 adds the optional, compact 30-day journey.
-    public static let currentSchemaVersion = 4
+    /// v6 adds persistent carry-over, refundable reservations, and wallet transactions.
+    public static let currentSchemaVersion = 6
 
     public var schemaVersion: Int
     public var ledger: DailyLedger
@@ -26,6 +26,10 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// The latest access session. Only an active, unexpired session may remove shields.
     public var currentSession: ScreenTimeSession?
     public var journey: ThirtyDayJourney?
+    public var hasEarnedFirstReward: Bool
+    public var goalProgressionCooldownUntil: DayKey?
+    public var adaptiveIntroSeen: Bool
+    public var walletCreatedTracked: Bool
 
     public init(
         schemaVersion: Int = SharedState.currentSchemaVersion,
@@ -37,7 +41,11 @@ public struct SharedState: Codable, Equatable, Sendable {
         lastActivitySyncAt: Date? = nil,
         shieldsApplied: Bool = true,
         currentSession: ScreenTimeSession? = nil,
-        journey: ThirtyDayJourney? = nil
+        journey: ThirtyDayJourney? = nil,
+        hasEarnedFirstReward: Bool = false,
+        goalProgressionCooldownUntil: DayKey? = nil,
+        adaptiveIntroSeen: Bool = false,
+        walletCreatedTracked: Bool = false
     ) {
         self.schemaVersion = schemaVersion
         self.ledger = ledger
@@ -49,6 +57,10 @@ public struct SharedState: Codable, Equatable, Sendable {
         self.shieldsApplied = shieldsApplied
         self.currentSession = currentSession
         self.journey = journey
+        self.hasEarnedFirstReward = hasEarnedFirstReward
+        self.goalProgressionCooldownUntil = goalProgressionCooldownUntil
+        self.adaptiveIntroSeen = adaptiveIntroSeen
+        self.walletCreatedTracked = walletCreatedTracked
     }
 
     public static func initial(day: DayKey = .today(), rule: EarningRule = .default) -> SharedState {
@@ -72,10 +84,12 @@ public struct SharedState: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, ledger, onboardingCompleted, onboarding, history
         case restrictedItemCount, lastActivitySyncAt, shieldsApplied, currentSession, journey
+        case hasEarnedFirstReward, goalProgressionCooldownUntil, adaptiveIntroSeen, walletCreatedTracked
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let decodedSchemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
         schemaVersion = SharedState.currentSchemaVersion
         ledger = try container.decode(DailyLedger.self, forKey: .ledger)
         onboardingCompleted = try container.decodeIfPresent(Bool.self, forKey: .onboardingCompleted) ?? false
@@ -86,6 +100,20 @@ public struct SharedState: Codable, Equatable, Sendable {
         shieldsApplied = try container.decodeIfPresent(Bool.self, forKey: .shieldsApplied) ?? true
         currentSession = try container.decodeIfPresent(ScreenTimeSession.self, forKey: .currentSession)
         journey = try container.decodeIfPresent(ThirtyDayJourney.self, forKey: .journey)
+        hasEarnedFirstReward = try container.decodeIfPresent(Bool.self, forKey: .hasEarnedFirstReward) ?? false
+        goalProgressionCooldownUntil = try container.decodeIfPresent(DayKey.self, forKey: .goalProgressionCooldownUntil)
+        adaptiveIntroSeen = try container.decodeIfPresent(Bool.self, forKey: .adaptiveIntroSeen) ?? false
+        walletCreatedTracked = try container.decodeIfPresent(Bool.self, forKey: .walletCreatedTracked) ?? false
+
+        if decodedSchemaVersion < 6,
+           let currentSession,
+           currentSession.status == .active,
+           ledger.wallet.reservedSeconds == 0 {
+            ledger.wallet.migrateLegacyReservation(seconds: currentSession.reservedSeconds)
+        }
+        if decodedSchemaVersion < 6, currentSession?.status != .active {
+            currentSession?.settlementAnalyticsReported = true
+        }
     }
 
     public func encoded() throws -> Data {

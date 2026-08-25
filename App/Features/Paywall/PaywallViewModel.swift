@@ -10,26 +10,29 @@ struct PaywallPackage: Identifiable {
     var id: PaywallPlan { plan }
     var price: String { package.storeProduct.localizedPriceString }
 
-    var freeTrialDescription: String? {
+    func freeTrialDescription(locale: Locale) -> String? {
         guard isEligibleForFreeTrial,
               let discount = package.storeProduct.introductoryDiscount,
               discount.paymentMode == .freeTrial else { return nil }
         let period = discount.subscriptionPeriod
-        let unit: String
         switch period.unit {
-        case .day: unit = "day"
-        case .week: unit = "week"
-        case .month: unit = "month"
-        case .year: unit = "year"
+        case .day:
+            return String(localized: "paywall.trial.days \(period.value)", locale: locale)
+        case .week:
+            return String(localized: "paywall.trial.weeks \(period.value)", locale: locale)
+        case .month:
+            return String(localized: "paywall.trial.months \(period.value)", locale: locale)
+        case .year:
+            return String(localized: "paywall.trial.years \(period.value)", locale: locale)
         @unknown default: return nil
         }
-        return "\(period.value)-\(unit) free trial"
     }
 }
 
 struct PaywallAlert: Identifiable {
     enum Kind {
         case purchase
+        case entitlementInactive
         case restore
         case noSubscription
     }
@@ -145,6 +148,12 @@ final class PaywallViewModel {
                 "plan": .string(selectedPackage.plan.rawValue)
             ]))
             return true
+        } catch PaywallConfigurationError.entitlementInactive {
+            let error = PaywallConfigurationError.entitlementInactive
+            subscriptionManager.record(error, operation: "Purchase entitlement validation")
+            analytics.track(.purchaseFailed(selectedPackage.plan))
+            alert = PaywallAlert(kind: .entitlementInactive)
+            return false
         } catch {
             subscriptionManager.record(error, operation: "Purchase")
             analytics.track(.purchaseFailed(selectedPackage.plan))
@@ -176,7 +185,16 @@ final class PaywallViewModel {
     }
 }
 
-private enum PaywallConfigurationError: Error {
+private enum PaywallConfigurationError: LocalizedError {
     case missingPackages
     case entitlementInactive
+
+    var errorDescription: String? {
+        switch self {
+        case .missingPackages:
+            return "The current RevenueCat offering is missing its monthly or annual package."
+        case .entitlementInactive:
+            return "The purchase completed without activating the RevenueCat '\(Entitlements.pro)' entitlement."
+        }
+    }
 }

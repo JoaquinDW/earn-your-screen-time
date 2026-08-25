@@ -12,7 +12,7 @@ final class SessionNotificationService {
         _ = try? await center.requestAuthorization(options: [.alert, .sound])
     }
 
-    func schedule(for session: ScreenTimeSession) async {
+    func schedule(for session: ScreenTimeSession, language: AppLanguage) async {
         let settings = await center.notificationSettings()
         guard settings.authorizationStatus == .authorized
                 || settings.authorizationStatus == .provisional else {
@@ -22,9 +22,13 @@ final class SessionNotificationService {
         cancel(sessionID: session.id)
 
         let endContent = UNMutableNotificationContent()
-        endContent.title = String(localized: "session.notification.ended.title")
+        endContent.title = String(
+            localized: "session.notification.ended.title",
+            locale: language.locale
+        )
         endContent.body = String(
-            localized: "session.notification.ended.body \(session.durationMinutes)"
+            localized: "session.notification.ended.body \(session.durationMinutes)",
+            locale: language.locale
         )
         endContent.sound = .default
         await add(
@@ -36,8 +40,14 @@ final class SessionNotificationService {
         let warningAt = session.endsAt.addingTimeInterval(-60)
         guard warningAt > Date() else { return }
         let warningContent = UNMutableNotificationContent()
-        warningContent.title = String(localized: "session.notification.warning.title")
-        warningContent.body = String(localized: "session.notification.warning.body")
+        warningContent.title = String(
+            localized: "session.notification.warning.title",
+            locale: language.locale
+        )
+        warningContent.body = String(
+            localized: "session.notification.warning.body",
+            locale: language.locale
+        )
         warningContent.sound = .default
         await add(
             identifier: warningIdentifier(session.id),

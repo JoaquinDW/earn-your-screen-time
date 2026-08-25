@@ -1,7 +1,7 @@
 import Foundation
 
-/// DeviceActivity-independent plan for carrying a short access session in Apple's minimum
-/// 15-minute schedule. Five- and ten-minute sessions finish through the end-warning callback.
+/// DeviceActivity-independent plan. Short sessions use Apple's 15-minute minimum schedule and
+/// finish through its warning callback; longer sessions end with the schedule itself.
 public enum SessionMonitorPlan {
     public static let activityPrefix = "accessSession_"
     public static let carrierSeconds = 15 * 60
@@ -10,6 +10,7 @@ public enum SessionMonitorPlan {
         public let sessionID: UUID
         public let activityName: String
         public let remainingSeconds: Int
+        public let scheduleSeconds: Int
         /// Seconds before the carrier interval ends. `nil` means completion at interval end.
         public let warningSeconds: Int?
     }
@@ -18,13 +19,15 @@ public enum SessionMonitorPlan {
         for session: ScreenTimeSession,
         at date: Date
     ) -> Plan? {
-        let remaining = min(carrierSeconds, session.remainingSeconds(at: date))
+        let remaining = session.remainingSeconds(at: date)
         guard remaining > 0 else { return nil }
-        let warning = carrierSeconds - remaining
+        let interval = max(carrierSeconds, remaining)
+        let warning = interval - remaining
         return Plan(
             sessionID: session.id,
             activityName: activityName(for: session.id),
             remainingSeconds: remaining,
+            scheduleSeconds: interval,
             warningSeconds: warning > 0 ? warning : nil
         )
     }

@@ -12,6 +12,16 @@ struct MonitorPlanTests {
         let plan = SessionMonitorPlan.make(for: session, at: sessionNow)
         #expect(plan?.remainingSeconds == 300)
         #expect(plan?.warningSeconds == 600)
+        #expect(plan?.scheduleSeconds == 900)
+    }
+
+    @Test("Long sessions end with their own schedule")
+    func longSession() {
+        let session = ScreenTimeSession(startedAt: sessionNow, durationMinutes: 90)
+        let plan = SessionMonitorPlan.make(for: session, at: sessionNow)
+        #expect(plan?.remainingSeconds == 5_400)
+        #expect(plan?.scheduleSeconds == 5_400)
+        #expect(plan?.warningSeconds == nil)
     }
 
     @Test("Ten minutes complete five minutes before the carrier ends")
@@ -84,6 +94,8 @@ struct ScreenTimeSessionTests {
         #expect(state.ledger.wallet.availableMinutes == 5)
         #expect(state.activeSession(at: sessionNow)?.durationMinutes == 5)
         #expect(state.currentSession?.spentSeconds == 300)
+        #expect(state.ledger.wallet.reservedSeconds == 300)
+        #expect(state.ledger.wallet.consumedSeconds == 0)
     }
 
     @Test("A session cannot exceed the available balance")
@@ -138,6 +150,45 @@ struct ScreenTimeSessionTests {
         #expect(recovered.currentSession?.status == .completed)
         #expect(recovered.activeSession(at: sessionNow.addingTimeInterval(300)) == nil)
         #expect(recovered.ledger.wallet.availableMinutes == 5)
+        #expect(recovered.ledger.wallet.consumedSeconds == 300)
+    }
+
+    @Test("Pausing charges elapsed wall-clock time and returns the rest")
+    func partialPause() throws {
+        let active = try ScreenTimeSessionEngine.start(
+            durationMinutes: 5,
+            at: sessionNow,
+            in: creditedState()
+        )
+        let paused = ScreenTimeSessionEngine.pauseActiveSession(
+            in: active,
+            at: sessionNow.addingTimeInterval(120)
+        )
+        #expect(paused.currentSession?.status == .paused)
+        #expect(paused.currentSession?.consumedSeconds == 120)
+        #expect(paused.currentSession?.savedSeconds == 180)
+        #expect(paused.ledger.wallet.availableSeconds == 480)
+        #expect(paused.ledger.wallet.consumedSeconds == 120)
+        #expect(paused.ledger.wallet.reservedSeconds == 0)
+        #expect(paused.ledger.walletTransactions.last?.kind == .consumed)
+    }
+
+    @Test("Pausing twice cannot consume twice")
+    func idempotentPause() throws {
+        let active = try ScreenTimeSessionEngine.start(
+            durationMinutes: 5,
+            at: sessionNow,
+            in: creditedState()
+        )
+        let paused = ScreenTimeSessionEngine.pauseActiveSession(
+            in: active,
+            at: sessionNow.addingTimeInterval(60)
+        )
+        let repeated = ScreenTimeSessionEngine.pauseActiveSession(
+            in: paused,
+            at: sessionNow.addingTimeInterval(240)
+        )
+        #expect(repeated == paused)
     }
 
     @Test("Earning during a session does not extend its end")

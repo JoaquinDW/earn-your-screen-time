@@ -9,10 +9,13 @@ struct EarnYourScreenTimeApp: App {
         WindowGroup {
             RootView()
                 .environment(environment)
+                .environment(\.locale, environment.appLanguage.locale)
                 .tint(Theme.coralDeep)
                 // The design is one warm paper palette. Rather than invent a dark variant it
                 // does not specify, the app keeps its own appearance in both system modes.
                 .preferredColorScheme(.light)
+                .task { environment.synchronizeLiveActivity() }
+                .onOpenURL { environment.handleDeepLink($0) }
                 .onChange(of: scenePhase) { _, phase in
                     // The monitor extension may have spent credits while we were closed.
                     guard phase == .active else { return }

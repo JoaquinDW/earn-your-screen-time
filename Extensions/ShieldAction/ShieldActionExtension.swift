@@ -1,6 +1,8 @@
 import ManagedSettings
+import OSLog
 
 final class ShieldActionExtension: ShieldActionDelegate {
+    private let logger = Logger(subsystem: "EarnYourScreenTime", category: "Shield")
     override func handle(
         action: ShieldAction,
         for application: ApplicationToken,
@@ -26,9 +28,15 @@ final class ShieldActionExtension: ShieldActionDelegate {
     }
 
     private func response(for action: ShieldAction) -> ShieldActionResponse {
+        if action == .secondaryButtonPressed {
+            logger.notice("event=shield_secondary_action")
+            return .close
+        }
         guard action == .primaryButtonPressed else { return .none }
+        logger.notice("event=shield_primary_action")
 
         if #available(iOS 26.5, *) {
+            ShieldLaunchIntent.mark()
             return .openParentalControlsApp
         }
         // Before iOS 26.5 no public API can open the parent app from a shield. Closing the

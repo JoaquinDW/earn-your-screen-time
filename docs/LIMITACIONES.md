@@ -20,9 +20,10 @@ prueba en hardware real. El proyecto usa `MockScreenTimeService` en el Simulador
 siendo desarrollable.
 
 ## 4. No se puede leer el uso exacto de apps
-No hay API que devuelva minutos por app. El producto no intenta inferirlos: al iniciar una sesión
-reserva 5, 10 o 15 minutos completos y abre una ventana de reloj. El saldo se gasta aunque el usuario
-bloquee el teléfono o no abra ninguna app restringida durante esa ventana.
+No hay API que devuelva minutos por app ni avise cuando el usuario sale de ella. Al iniciar una
+sesión se reserva la duración elegida y se abre una ventana de reloj. El saldo sigue corriendo aunque
+el usuario bloquee el teléfono o cambie de app. Para conservar el resto debe volver a Earn y usar
+“Pausar y guardar”.
 
 ## 5. Los callbacks de Device Activity no son temporizadores exactos
 `intervalWillEndWarning` e `intervalDidEnd` los entrega iOS y pueden demorarse. Mitigación:
@@ -35,9 +36,9 @@ bloquee el teléfono o no abra ninguna app restringida durante esa ventana.
 el teléfono bloqueados.
 
 ## 6. Intervalo mínimo de 15 minutos
-`DeviceActivitySchedule` no admite intervalos más cortos. Para sesiones de 5 y 10 minutos usamos un
-carrier de 15 minutos y terminamos en `intervalWillEndWarning`; una sesión de 15 minutos termina en
-`intervalDidEnd`.
+`DeviceActivitySchedule` no admite intervalos más cortos. Para sesiones menores de 15 minutos usamos
+un carrier de 15 minutos y terminamos en `intervalWillEndWarning`; las sesiones de 15 minutos o más
+terminan en `intervalDidEnd`.
 
 ## 7. Un shield no expulsa de forma garantizada una app abierta
 Al vencer la sesión reaplicamos el shield, pero iOS no garantiza cerrar de inmediato una app que ya
@@ -78,3 +79,19 @@ Consecuencia: **alguien que denegó el permiso se ve exactamente igual que algui
 (0 pasos). La UI está escrita para que ambos casos se lean con sentido, y el onboarding marca el
 paso como completado cuando se mostró el diálogo del sistema, no cuando se concedió — porque eso
 último no se puede saber.
+
+## 13. Una Live Activity no es permanente
+ActivityKit limita una Live Activity a ocho horas en Dynamic Island. Después puede permanecer hasta
+cuatro horas adicionales en Lock Screen. Earn solo restaura una actividad ausente si todavía existe
+una sesión explícita de acceso; caminar, tener saldo o abrir la app no crean una actividad persistente.
+
+Los eventos de recompensa se terminan desde la app después de unos segundos. `staleDate` permite que
+el widget deje de representar una cuenta atrás vigente, pero no elimina por sí solo la actividad. Si
+la app está suspendida justo al vencer una sesión, la actividad puede mostrar temporalmente que el
+tiempo terminó y se limpia la próxima vez que Earn se ejecuta.
+
+## 14. Las recompensas exteriores dependen de ejecución de la app
+El proyecto aún no registra `HKObserverQuery` ni background delivery, por lo que caminar con Earn
+cerrada no acredita ni presenta una recompensa inmediatamente. La sesión activa sí lleva `endsAt`:
+el sistema puede dibujar su cuenta atrás y marcar el contenido vencido sin actualizaciones por segundo
+ni timers de la app.

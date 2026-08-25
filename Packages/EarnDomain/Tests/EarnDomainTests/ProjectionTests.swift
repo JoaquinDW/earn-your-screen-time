@@ -99,14 +99,70 @@ struct ProjectionTests {
             movement: .threeToFiveThousand,
             recommendedDailyStepGoal: 9_000
         )
-        #expect(Projection(profile: profile) == Projection(goalDailySteps: 9_000))
+        #expect(Projection(profile: profile) == Projection(currentDailySteps: 4_000, goalDailySteps: 9_000))
     }
 
-    @Test("Compatibility projection properties expose the new totals")
+    @Test("Compatibility projection properties expose baseline uplift")
     func compatibilityProperties() {
-        let projection = Projection(goalDailySteps: 8_000)
-        #expect(projection.extraStepsPerDay == projection.dailySteps)
-        #expect(projection.extraSteps == projection.totalSteps)
-        #expect(projection.extraKilometres == projection.totalKilometres)
+        let projection = Projection(currentDailySteps: 6_000, goalDailySteps: 8_000)
+        #expect(projection.extraStepsPerDay == 2_000)
+        #expect(projection.extraSteps == 60_000)
+        #expect(projection.extraKilometres == 45)
+        #expect(projection.walkingMinutes == 2_400)
+        #expect(projection.upliftWalkingMinutes == 600)
+    }
+}
+
+@Suite("Adaptive goal recommendation")
+struct GoalRecommendationTests {
+    @Test("Observed baselines produce conservative rounded goals", arguments: [
+        (1_500, 2_000), (2_500, 3_000), (3_500, 4_000), (5_000, 6_000),
+        (7_000, 8_000), (9_000, 10_000), (12_000, 13_000)
+    ])
+    func recommendations(baseline: Int, expected: Int) {
+        let goal = GoalRecommendationEngine.recommend(forBaseline: baseline)
+        #expect(goal == expected)
+        #expect(goal == GoalRecommendationEngine.minimumGoal || goal - baseline <= min(baseline / 4, 1_500))
+        #expect(goal.isMultiple(of: 500))
+    }
+
+    @Test("A measured baseline is persisted without breaking legacy profile behavior")
+    func profileBaselineRoundTrip() throws {
+        let profile = OnboardingProfile(
+            desiredOutcomes: [.walkMore],
+            scrolling: .oneToTwoHours,
+            movement: .underThreeThousand,
+            baselineDailySteps: 5_000
+        )
+        let decoded = try JSONDecoder().decode(OnboardingProfile.self, from: JSONEncoder().encode(profile))
+        #expect(decoded == profile)
+        #expect(decoded.currentDailySteps == 5_000)
+        #expect(decoded.dailyStepGoal == 6_000)
+    }
+}
+
+@Suite("Seven-day goal progression")
+struct GoalProgressionTests {
+    @Test("Only six or seven successful days increase and two or fewer decrease", arguments: [
+        (7, 8_500 as Int?), (6, 8_500), (5, nil), (3, nil), (2, 7_500), (0, 7_500)
+    ])
+    func progression(successes: Int, expected: Int?) {
+        let activities = (0..<7).map { offset in
+            DailyActivity(
+                day: DayKey(year: 2026, month: 8, day: offset + 1),
+                steps: offset < successes ? 8_000 : 7_999,
+                goal: 8_000
+            )
+        }
+        #expect(GoalProgressionEngine.recommendation(currentGoal: 8_000, activities: activities) == expected)
+    }
+
+    @Test("Anything other than exactly seven days is ignored and decreases stop at two thousand")
+    func exactWindowAndFloor() {
+        let missed = (0..<7).map {
+            DailyActivity(day: DayKey(year: 2026, month: 8, day: $0 + 1), steps: 0, goal: 2_000)
+        }
+        #expect(GoalProgressionEngine.recommendation(currentGoal: 2_000, activities: Array(missed.dropLast())) == nil)
+        #expect(GoalProgressionEngine.recommendation(currentGoal: 2_000, activities: missed) == 2_000)
     }
 }

@@ -9,6 +9,7 @@ struct WeekView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.locale) private var locale
 
     @State private var chartIsVisible = false
 
@@ -21,6 +22,23 @@ struct WeekView: View {
     }
 
     var body: some View {
+        ScrollView {
+            content
+        }
+        .scrollBounceBehavior(.basedOnSize)
+        .foregroundStyle(Theme.ink)
+        .paperBackground()
+        .onAppear {
+            guard !chartIsVisible else { return }
+            if reduceMotion {
+                chartIsVisible = true
+            } else {
+                withAnimation(.easeOut(duration: 0.42)) { chartIsVisible = true }
+            }
+        }
+    }
+
+    private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("week.title")
                 .font(.serif(36))
@@ -51,27 +69,114 @@ struct WeekView: View {
             }
             .padding(.top, 26)
 
+            // Home holds nothing that is not today (design v5), so the longer arcs — the 30-day
+            // journey and the month's totals — live here, where history already lives.
+            if let journey = env.journey, let progress = env.journeyProgress {
+                journeySection(journey: journey, progress: progress)
+                    .padding(.top, Theme.Space.xl)
+            }
+
+            monthSection.padding(.top, Theme.Space.xl)
+
             Spacer(minLength: 20)
 
             if showsDoneButton {
                 Button("common.done") { dismiss() }
                     .buttonStyle(.pill(.sage))
+                    .padding(.top, Theme.Space.l)
             }
         }
         .padding(.horizontal, Theme.Space.gutter)
         .padding(.top, Theme.Space.xl)
-        .padding(.bottom, Theme.Space.s)
+        .padding(.bottom, Theme.Space.l)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .foregroundStyle(Theme.ink)
-        .paperBackground()
-        .onAppear {
-            guard !chartIsVisible else { return }
-            if reduceMotion {
-                chartIsVisible = true
-            } else {
-                withAnimation(.easeOut(duration: 0.42)) { chartIsVisible = true }
+    }
+
+    // MARK: - The longer arcs
+
+    private func journeySection(
+        journey: ThirtyDayJourney,
+        progress: ThirtyDayJourney.Progress
+    ) -> some View {
+        VStack(alignment: .leading, spacing: Theme.Space.s) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(journeyTitle).font(.serif(25))
+                    Text("Day \(env.journeyDay) of 30")
+                        .font(.sans(12.5, weight: .semibold))
+                        .foregroundStyle(Theme.muted)
+                }
+                Spacer()
+                Text("\(Int((progress.fraction * 100).rounded()))%")
+                    .font(.serif(25))
+                    .foregroundStyle(Theme.cobalt)
             }
+            ProgressView(value: progress.fraction).tint(Theme.cobalt)
+            Text(
+                "\(progress.cumulativeSteps.formatted(.number.locale(locale))) / \(journey.target.formatted(.number.locale(locale))) steps"
+            )
+                .font(.sans(13.5, weight: .semibold))
+            Text(journeyMeaning)
+                .font(.serif(17, italic: true, relativeTo: .body))
+                .foregroundStyle(Theme.muted)
         }
+        .padding(Theme.Space.m)
+        .background(Theme.paper, in: .rect(cornerRadius: Theme.cornerRadius))
+        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Theme.line) }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var journeyTitle: LocalizedStringKey {
+        switch env.journeyDay {
+        case 7...13: "Week one complete"
+        case 14...20: "Halfway there"
+        case 30: "You earned your month"
+        default: "Your 30-day goal"
+        }
+    }
+
+    private var journeyMeaning: LocalizedStringKey {
+        switch env.journeyDay {
+        case 7...13: "Momentum is built one earned scroll at a time."
+        case 14...20: "Your phone is spending this month pushing you forward."
+        case 30: "Thirty days of choosing movement before scrolling."
+        default: "A month where scrolling gives you a reason to move."
+        }
+    }
+
+    private var monthSection: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
+            Text("THIS MONTH").eyebrowStyle()
+            HStack(alignment: .top, spacing: Theme.Space.s) {
+                monthMetric(
+                    Text(env.monthTotals.steps.formatted(.number.locale(locale))),
+                    Text("steps")
+                )
+                monthMetric(durationText(env.monthTotals.earnedSeconds), Text("earned"))
+                monthMetric(Text("\(env.streakDays)"), Text("day streak"))
+            }
+            Text("\(env.streakDays) days of moving before scrolling.")
+                .font(.serif(17, italic: true, relativeTo: .body))
+                .foregroundStyle(Theme.muted)
+        }
+    }
+
+    private func monthMetric(_ value: Text, _ label: Text) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            value.font(.sans(15, weight: .bold)).minimumScaleFactor(0.7).lineLimit(1)
+            label.font(.sans(11.5, weight: .semibold)).foregroundStyle(Theme.muted)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func durationText(_ seconds: Int) -> Text {
+        let hours = seconds / 3_600
+        let minutes = (seconds % 3_600) / 60
+        if hours > 0 {
+            return Text("\(hours)h \(minutes)m")
+        }
+        return Text("\(minutes)m")
     }
 
     private var chart: some View {
@@ -85,7 +190,7 @@ struct WeekView: View {
                         .animation(reduceMotion ? nil : .snappy(duration: 0.28), value: day.earnedMinutes)
 
                     Capsule()
-                        .fill(day.day == env.ledger.day ? Theme.coral : Theme.sage)
+                        .fill(day.day == env.ledger.day ? Theme.cobalt : Theme.wash.opacity(0.45))
                         .frame(height: chartIsVisible ? barHeight(for: day) : 4)
                         .animation(reduceMotion ? nil : .easeOut(duration: 0.38), value: barHeight(for: day))
 
@@ -111,12 +216,12 @@ struct WeekView: View {
 
     private func weekdayInitial(for day: DaySummary) -> String {
         guard let date = day.day.startOfDay() else { return "" }
-        return date.formatted(.dateTime.weekday(.narrow))
+        return date.formatted(.dateTime.weekday(.narrow).locale(locale))
     }
 
     private func weekdayName(for day: DaySummary) -> String {
         guard let date = day.day.startOfDay() else { return "" }
-        return date.formatted(.dateTime.weekday(.wide))
+        return date.formatted(.dateTime.weekday(.wide).locale(locale))
     }
 }
 

@@ -29,7 +29,7 @@ final class SubscriptionManager {
 
         guard self.service.isConfigured else {
             status = .free
-            log("RevenueCat SDK key is not configured; using Free access")
+            log("RevenueCat SDK key is not configured; subscription access is inactive")
             return
         }
 
@@ -72,7 +72,18 @@ final class SubscriptionManager {
         let result = try await service.purchase(package: package)
         customerInfoRevision += 1
         apply(result.customerInfo, source: "purchase")
-        lastError = nil
+
+        if !result.userCancelled, !isPro {
+            do {
+                let customerInfo = try await service.refreshCustomerInfo()
+                customerInfoRevision += 1
+                apply(customerInfo, source: "purchase reconciliation")
+            } catch {
+                record(error, operation: "Post-purchase customer info refresh")
+            }
+        }
+
+        if isPro { lastError = nil }
         return result
     }
 
@@ -101,7 +112,12 @@ final class SubscriptionManager {
             ? .pro
             : .free
         status = newStatus
-        log("Customer info applied from \(source); status: \(String(describing: newStatus))")
+        let activeEntitlements = customerInfo.entitlements.active.keys.sorted()
+        let entitlementSummary = activeEntitlements.isEmpty ? "none" : activeEntitlements.joined(separator: ", ")
+        log(
+            "Customer info applied from \(source); status: \(String(describing: newStatus)); "
+                + "active entitlements: \(entitlementSummary)"
+        )
     }
 
     private func log(_ message: String) {

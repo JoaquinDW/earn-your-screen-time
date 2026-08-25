@@ -71,7 +71,7 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
     }
 
     func refreshCustomerInfo() async throws -> CustomerInfo {
-        try await Purchases.shared.customerInfo()
+        try await Purchases.shared.customerInfo(fetchPolicy: .fetchCurrent)
     }
 
     func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {

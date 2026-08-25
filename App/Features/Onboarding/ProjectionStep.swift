@@ -6,6 +6,7 @@ struct PlanStep: View {
     let rule: EarningRule
     let onContinue: () -> Void
     let onBack: () -> Void
+    @Environment(\.locale) private var locale
 
     private var dailyMinutes: Int {
         (profile.dailyStepGoal / rule.amountRequired) * rule.rewardMinutes
@@ -20,11 +21,24 @@ struct PlanStep: View {
                 .padding(.top, 12)
 
             VStack(spacing: 0) {
-                planRow(icon: "figure.walk", value: profile.dailyStepGoal.formatted(), label: "steps each day")
+                planRow(
+                    icon: "figure.walk",
+                    value: Text(profile.dailyStepGoal.formatted(.number.locale(locale))),
+                    label: Text("steps each day")
+                )
                 Hairline()
-                planRow(icon: "timer", value: "Up to \(dailyMinutes) min", label: "earned each day", color: Theme.sageDeep)
+                planRow(
+                    icon: "timer",
+                    value: Text("Up to \(dailyMinutes) min"),
+                    label: Text("earned each day"),
+                    color: Theme.sageDeep
+                )
                 Hairline()
-                planRow(icon: "arrow.triangle.2.circlepath", value: "\(rule.rewardMinutes) min", label: "for every \(rule.amountRequired.formatted()) steps")
+                planRow(
+                    icon: "arrow.triangle.2.circlepath",
+                    value: Text("\(rule.rewardMinutes) min"),
+                    label: Text("for every \(rule.amountRequired.formatted(.number.locale(locale))) steps")
+                )
             }
             .padding(.top, Theme.Space.l)
 
@@ -36,7 +50,7 @@ struct PlanStep: View {
         }
     }
 
-    private func planRow(icon: String, value: String, label: String, color: Color = Theme.ink) -> some View {
+    private func planRow(icon: String, value: Text, label: Text, color: Color = Theme.ink) -> some View {
         HStack(spacing: Theme.Space.m) {
             Image(systemName: icon)
                 .font(.system(size: 20, weight: .semibold))
@@ -45,8 +59,8 @@ struct PlanStep: View {
                 .background(color.opacity(0.1), in: .circle)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 3) {
-                Text(value).font(.serif(27)).foregroundStyle(color)
-                Text(label).font(.sans(13.5)).foregroundStyle(Theme.muted)
+                value.font(.serif(27)).foregroundStyle(color)
+                label.font(.sans(13.5)).foregroundStyle(Theme.muted)
             }
             Spacer()
         }
@@ -62,12 +76,18 @@ struct ProjectionStep: View {
     let onBack: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.locale) private var locale
     @State private var appeared = false
 
     private var projection: Projection { Projection(profile: profile, rule: rule) }
 
     var body: some View {
         OnboardingScaffold(onBack: onBack) {
+            GuardianPortrait(progress: GuardianState.free.anchor)
+                .frame(height: 190)
+                .frame(maxWidth: .infinity)
+                .padding(.bottom, Theme.Space.m)
+
             Text("YOUR NEXT 30 DAYS").eyebrowStyle(Theme.coralDeep)
             Text("Imagine yourself 30 days from now.")
                 .font(.serif(42))
@@ -80,11 +100,26 @@ struct ProjectionStep: View {
                 .padding(.top, 12)
 
             VStack(spacing: 0) {
-                result(value: projection.totalSteps.formatted(), caption: "steps toward a more active month", color: Theme.coralDeep, delay: 0)
+                result(
+                    value: Text(projection.totalSteps.formatted(.number.locale(locale))),
+                    caption: Text("steps toward a more active month"),
+                    color: Theme.coralDeep,
+                    delay: 0
+                )
                 Hairline()
-                result(value: hoursText, caption: "of screen time turned into something you earn", color: Theme.sageDeep, delay: 0.08)
+                result(
+                    value: hoursText,
+                    caption: Text("of screen time turned into something you earn"),
+                    color: Theme.sageDeep,
+                    delay: 0.08
+                )
                 Hairline()
-                result(value: "30 days", caption: "of choosing movement before scrolling", color: Theme.ink, delay: 0.16)
+                result(
+                    value: Text("30 days"),
+                    caption: Text("of choosing movement before scrolling"),
+                    color: Theme.ink,
+                    delay: 0.16
+                )
             }
             .padding(.top, Theme.Space.m)
 
@@ -99,16 +134,18 @@ struct ProjectionStep: View {
         }
     }
 
-    private var hoursText: String {
-        projection.earnedMinutes.isMultiple(of: 60)
-            ? "\(projection.earnedMinutes / 60) hours"
-            : "\(projection.earnedMinutes) minutes"
+    private var hoursText: Text {
+        if projection.earnedMinutes.isMultiple(of: 60) {
+            Text("\(projection.earnedMinutes / 60) hours")
+        } else {
+            Text("\(projection.earnedMinutes) minutes")
+        }
     }
 
-    private func result(value: String, caption: String, color: Color, delay: Double) -> some View {
+    private func result(value: Text, caption: Text, color: Color, delay: Double) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(value).font(.serif(38)).foregroundStyle(color)
-            Text(caption).font(.sans(14)).foregroundStyle(Theme.muted)
+            value.font(.serif(38)).foregroundStyle(color)
+            caption.font(.sans(14)).foregroundStyle(Theme.muted)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 15)

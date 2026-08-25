@@ -7,26 +7,33 @@ struct OnboardingHookStep: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TrailHeader(progress: 0.28, height: 300, lip: Theme.sheetRadius) { EmptyView() }
+            GuardianHeader(
+                progress: GuardianState.awakening.anchor,
+                height: 300,
+                lip: Theme.sheetRadius
+            )
             VStack(alignment: .leading, spacing: 0) {
-                Text("What if scrolling made you healthier?")
+                Text("app.name")
+                    .eyebrowStyle(Theme.coralDeep)
+                Text("Earn your screen time.")
                     .font(.serif(48))
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 12)
                 Text("Turn the apps you already love into motivation to move.")
                     .font(.sans(17))
                     .foregroundStyle(Theme.muted)
                     .padding(.top, 14)
 
                 HStack(spacing: Theme.Space.s) {
-                    loopItem(icon: "figure.walk", text: "Walk", color: Theme.coralDeep)
+                    loopItem(icon: "figure.walk", text: "Move", color: Theme.cobaltDeep)
                     Image(systemName: "arrow.right").accessibilityHidden(true)
-                    loopItem(icon: "timer", text: "Earn", color: Theme.sageDeep)
+                    loopItem(icon: "timer", text: "Earn", color: Theme.cobaltDeep)
                     Image(systemName: "arrow.right").accessibilityHidden(true)
-                    loopItem(icon: "apps.iphone", text: "Scroll", color: Theme.ink)
+                    loopItem(icon: "apps.iphone", text: "Enjoy", color: Theme.ink)
                 }
                 .padding(.vertical, Theme.Space.l)
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("Walk, earn, then scroll")
+                .accessibilityLabel("Move, earn, then enjoy")
 
                 Spacer(minLength: Theme.Space.m)
                 Button("See what you could achieve", action: onContinue).buttonStyle(.pill)
@@ -39,7 +46,7 @@ struct OnboardingHookStep: View {
         }
     }
 
-    private func loopItem(icon: String, text: String, color: Color) -> some View {
+    private func loopItem(icon: String, text: LocalizedStringKey, color: Color) -> some View {
         VStack(spacing: 6) {
             Image(systemName: icon).font(.system(size: 21, weight: .semibold)).foregroundStyle(color)
             Text(text).font(.sans(12.5, weight: .semibold))
@@ -65,7 +72,11 @@ struct ScienceStep: View {
                 .padding(.top, 6)
 
             VStack(spacing: 0) {
-                evidence(icon: "shoeprints.fill", title: "Every step counts", body: "Any amount of physical activity is better than none.")
+                evidence(
+                    icon: "shoeprints.fill",
+                    title: "Every step counts",
+                    body: "Any amount of physical activity is better than none."
+                )
                 Hairline()
                 evidence(icon: "brain.head.profile", title: "Move for your mind", body: "Regular physical activity supports mental health and well-being.")
                 Hairline()
@@ -83,7 +94,11 @@ struct ScienceStep: View {
         .sheet(isPresented: $showsSource) { ScienceSourceView() }
     }
 
-    private func evidence(icon: String, title: String, body: String) -> some View {
+    private func evidence(
+        icon: String,
+        title: LocalizedStringKey,
+        body: LocalizedStringKey
+    ) -> some View {
         HStack(alignment: .top, spacing: Theme.Space.m) {
             Image(systemName: icon)
                 .font(.system(size: 20, weight: .semibold))
@@ -126,6 +141,7 @@ struct MechanismStep: View {
     let rule: EarningRule
     let onContinue: () -> Void
     let onBack: () -> Void
+    @Environment(\.locale) private var locale
 
     var body: some View {
         OnboardingScaffold(onBack: onBack) {
@@ -136,16 +152,31 @@ struct MechanismStep: View {
                 .padding(.top, 12)
 
             VStack(spacing: Theme.Space.m) {
-                mechanismValue(icon: "figure.walk", value: rule.amountRequired.formatted(), label: "steps", color: Theme.coralDeep)
+                mechanismValue(
+                    icon: "figure.walk",
+                    value: Text(rule.amountRequired.formatted(.number.locale(locale))),
+                    label: Text("steps"),
+                    color: Theme.coralDeep
+                )
                 Image(systemName: "arrow.down").foregroundStyle(Theme.muted).accessibilityHidden(true)
-                mechanismValue(icon: "plus", value: "\(rule.rewardMinutes)", label: "minutes", color: Theme.sageDeep)
+                mechanismValue(
+                    icon: "plus",
+                    value: Text("\(rule.rewardMinutes)"),
+                    label: Text("minutes"),
+                    color: Theme.sageDeep
+                )
                 Image(systemName: "arrow.down").foregroundStyle(Theme.muted).accessibilityHidden(true)
-                mechanismValue(icon: "apps.iphone", value: "Screen time", label: "on apps you choose", color: Theme.ink)
+                mechanismValue(
+                    icon: "apps.iphone",
+                    value: Text("Screen time"),
+                    label: Text("on apps you choose"),
+                    color: Theme.ink
+                )
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, Theme.Space.xl)
 
-            Text("Instead of blocking your favorite apps forever, Earn makes screen time something you unlock by moving.")
+            Text("Instead of blocking your favorite apps forever, Earnit makes screen time something you unlock by moving.")
                 .font(.sans(15))
                 .foregroundStyle(Theme.muted)
         } action: {
@@ -153,12 +184,12 @@ struct MechanismStep: View {
         }
     }
 
-    private func mechanismValue(icon: String, value: String, label: String, color: Color) -> some View {
+    private func mechanismValue(icon: String, value: Text, label: Text, color: Color) -> some View {
         HStack(spacing: Theme.Space.m) {
             Image(systemName: icon).font(.system(size: 21, weight: .bold)).foregroundStyle(color).frame(width: 36)
             VStack(alignment: .leading, spacing: 1) {
-                Text(value).font(.serif(29)).foregroundStyle(color)
-                Text(label).font(.sans(13)).foregroundStyle(Theme.muted)
+                value.font(.serif(29)).foregroundStyle(color)
+                label.font(.sans(13)).foregroundStyle(Theme.muted)
             }
         }
         .frame(maxWidth: 240, alignment: .leading)
@@ -172,6 +203,7 @@ struct CommitmentStep: View {
     let onContinue: () -> Void
     let onBack: () -> Void
     @Environment(AppEnvironment.self) private var env
+    @Environment(\.locale) private var locale
 
     private var dailyMinutes: Int { (profile.dailyStepGoal / rule.amountRequired) * rule.rewardMinutes }
 
@@ -182,9 +214,13 @@ struct CommitmentStep: View {
                 .font(.serif(42))
                 .padding(.top, 12)
             HStack(alignment: .center, spacing: Theme.Space.m) {
-                commitmentValue("\(profile.dailyStepGoal.formatted())", "steps/day", Theme.coralDeep)
+                commitmentValue(
+                    Text(profile.dailyStepGoal.formatted(.number.locale(locale))),
+                    Text("steps/day"),
+                    Theme.coralDeep
+                )
                 Text("=").font(.serif(30)).foregroundStyle(Theme.muted)
-                commitmentValue("\(dailyMinutes)", "minutes earned", Theme.sageDeep)
+                commitmentValue(Text("\(dailyMinutes)"), Text("minutes earned"), Theme.sageDeep)
             }
             .padding(.vertical, Theme.Space.xl)
             .accessibilityElement(children: .combine)
@@ -198,10 +234,10 @@ struct CommitmentStep: View {
         }
     }
 
-    private func commitmentValue(_ value: String, _ label: String, _ color: Color) -> some View {
+    private func commitmentValue(_ value: Text, _ label: Text, _ color: Color) -> some View {
         VStack(spacing: 4) {
-            Text(value).font(.serif(33)).foregroundStyle(color)
-            Text(label).font(.sans(12.5, weight: .semibold)).foregroundStyle(Theme.muted)
+            value.font(.serif(33)).foregroundStyle(color)
+            label.font(.sans(12.5, weight: .semibold)).foregroundStyle(Theme.muted)
         }
         .frame(maxWidth: .infinity)
     }
@@ -212,6 +248,7 @@ struct FinalPlanStep: View {
     let recentAverage: Int?
     let onContinue: () -> Void
     let onBack: () -> Void
+    @Environment(\.locale) private var locale
 
     private var projection: Projection { Projection(profile: profile) }
 
@@ -224,7 +261,7 @@ struct FinalPlanStep: View {
                 .padding(.top, 12)
 
             if let recentAverage {
-                Text("Apple Health shows a recent average of \(recentAverage.formatted()) steps/day.")
+                Text("Apple Health shows a recent average of \(recentAverage.formatted(.number.locale(locale))) steps/day.")
                     .font(.sans(15))
                     .foregroundStyle(Theme.muted)
                     .padding(.top, 12)
@@ -236,11 +273,23 @@ struct FinalPlanStep: View {
             }
 
             VStack(spacing: 0) {
-                finalRow("Daily goal", profile.dailyStepGoal.formatted(), Theme.coralDeep)
+                finalRow(
+                    Text("Daily goal"),
+                    Text(profile.dailyStepGoal.formatted(.number.locale(locale))),
+                    Theme.coralDeep
+                )
                 Hairline()
-                finalRow("30-day goal", projection.totalSteps.formatted(), Theme.ink)
+                finalRow(
+                    Text("30-day goal"),
+                    Text(projection.totalSteps.formatted(.number.locale(locale))),
+                    Theme.ink
+                )
                 Hairline()
-                finalRow("Intentional screen time", "up to \(projection.earnedHours)h", Theme.sageDeep)
+                finalRow(
+                    Text("Intentional screen time"),
+                    Text("up to \(projection.earnedHours)h"),
+                    Theme.sageDeep
+                )
             }
             .padding(.top, Theme.Space.l)
 
@@ -253,11 +302,11 @@ struct FinalPlanStep: View {
         }
     }
 
-    private func finalRow(_ label: String, _ value: String, _ color: Color) -> some View {
+    private func finalRow(_ label: Text, _ value: Text, _ color: Color) -> some View {
         HStack(alignment: .firstTextBaseline) {
-            Text(label).font(.sans(14, weight: .semibold)).foregroundStyle(Theme.muted)
+            label.font(.sans(14, weight: .semibold)).foregroundStyle(Theme.muted)
             Spacer()
-            Text(value).font(.serif(27)).foregroundStyle(color)
+            value.font(.serif(27)).foregroundStyle(color)
         }
         .padding(.vertical, Theme.Space.m)
         .accessibilityElement(children: .combine)
@@ -268,14 +317,13 @@ struct ActivationStep: View {
     let profile: OnboardingProfile
     let rule: EarningRule
     let onFinish: () -> Void
+    @Environment(\.locale) private var locale
 
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            Image(systemName: "figure.walk.circle.fill")
-                .font(.system(size: 76))
-                .foregroundStyle(Theme.coralDeep)
-                .accessibilityHidden(true)
+            GuardianPortrait(progress: GuardianState.awakening.anchor)
+                .frame(height: 200)
             Text("You’re in.").font(.serif(50)).padding(.top, Theme.Space.l)
             Text("Your first walk starts now.")
                 .font(.serif(23, italic: true, relativeTo: .title2))
@@ -283,17 +331,17 @@ struct ActivationStep: View {
                 .padding(.top, 8)
 
             VStack(spacing: Theme.Space.s) {
-                Text("0 / \(profile.dailyStepGoal.formatted()) steps")
+                Text("0 / \(profile.dailyStepGoal.formatted(.number.locale(locale))) steps")
                     .font(.sans(16, weight: .bold))
-                ProgressView(value: 0).tint(Theme.coralDeep)
-                Text("Your first \(rule.amountRequired.formatted()) steps unlock \(rule.rewardMinutes) minutes.")
+                ProgressView(value: 0).tint(Theme.cobaltDeep)
+                Text("Your first \(rule.amountRequired.formatted(.number.locale(locale))) steps unlock \(rule.rewardMinutes) minutes.")
                     .font(.sans(14))
                     .foregroundStyle(Theme.muted)
                     .multilineTextAlignment(.center)
             }
             .padding(.top, Theme.Space.xl)
             Spacer()
-            Button("Let’s earn it", action: onFinish).buttonStyle(.pill(.sage))
+            Button("Let’s earn it", action: onFinish).buttonStyle(.pill)
                 .padding(.horizontal, Theme.Space.gutter)
                 .padding(.bottom, Theme.Space.l)
         }

@@ -5,7 +5,7 @@ struct FeatureAccess: Equatable {
     var isPro: Bool { subscriptionStatus == .pro }
 
     /// `nil` means there is no product-imposed limit.
-    var maxRestrictedApps: Int? { isPro ? nil : 1 }
+    var maxRestrictedApps: Int? { isPro ? nil : 0 }
     var canUseUnlimitedApps: Bool { isPro }
     var canUseCustomRatios: Bool { isPro }
     var canUseWorkoutEarning: Bool { isPro }

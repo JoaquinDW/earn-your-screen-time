@@ -1,4 +1,4 @@
-# Earn Your Screen Time — atajos de desarrollo.
+# Earnit - atajos de desarrollo.
 # Usa el toolchain de Xcode sin tocar xcode-select (no pide contraseña).
 
 export DEVELOPER_DIR := /Applications/Xcode.app/Contents/Developer

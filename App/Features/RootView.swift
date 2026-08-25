@@ -10,13 +10,51 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if env.hasCompletedOnboarding {
-                mainContent
-            } else {
+            if !env.hasCompletedOnboarding {
                 OnboardingView()
+            } else if env.subscriptionManager.status == .unknown {
+                subscriptionLoading
+            } else if env.requiresSubscription {
+                ProPaywallView(allowsDismiss: false)
+            } else {
+                mainContent
             }
         }
         .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: env.hasCompletedOnboarding)
+        .onAppear { applyPendingRoute(env.pendingRoute) }
+        .onChange(of: env.pendingRoute) { _, route in
+            applyPendingRoute(route)
+        }
+        .fullScreenCover(isPresented: Binding(
+            get: { env.hasCompletedOnboarding && env.isPresentingBlockedAppDetail },
+            set: { if !$0 { env.dismissBlockedAppDetail() } }
+        )) {
+            BlockedAppDetailView(onDismiss: env.dismissBlockedAppDetail)
+        }
+        .sheet(isPresented: Binding(
+            get: {
+                env.hasCompletedOnboarding
+                    && env.subscriptionManager.isPro
+                    && env.profile.onboardingCompletedAt == nil
+                    && !env.state.adaptiveIntroSeen
+            },
+            set: { if !$0 { env.markAdaptiveIntroSeen() } }
+        )) {
+            AdaptiveExistingUserView()
+                .interactiveDismissDisabled()
+        }
+    }
+
+    private var subscriptionLoading: some View {
+        VStack(spacing: Theme.Space.m) {
+            ProgressView().tint(Theme.cobalt)
+            Text("Checking your subscription")
+                .font(.sans(15, weight: .semibold))
+                .foregroundStyle(Theme.muted)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .paperBackground()
+        .task { await env.subscriptionManager.refresh() }
     }
 
     @ViewBuilder
@@ -40,7 +78,7 @@ struct RootView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            if env.pendingReward == nil, !isShowingDetail {
+            if !isShowingDetail {
                 FloatingBottomNavigation(selection: Binding(
                     get: { selectedSection },
                     set: selectSection
@@ -48,7 +86,6 @@ struct RootView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.pendingReward)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: isShowingDetail)
         .onChange(of: selectedSection) { _, _ in isShowingDetail = false }
     }
@@ -67,5 +104,12 @@ struct RootView: View {
         withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .snappy(duration: 0.36)) {
             selectedSection = section
         }
+    }
+
+    private func applyPendingRoute(_ route: AppRoute?) {
+        guard route == .home, env.hasCompletedOnboarding else { return }
+        selectSection(.home)
+        isShowingDetail = false
+        env.consumePendingRoute()
     }
 }

@@ -11,23 +11,23 @@ startup and explicitly selects RevenueCat's StoreKit 2 implementation. SwiftUI r
 
 - `subscriptionManager.status`: `unknown`, `free`, or `pro`
 - `subscriptionManager.isPro`: convenience access to the active entitlement
-- `env.featureAccess`: centralized Free/Pro capabilities and limits
+- `env.featureAccess`: centralized active-subscription capabilities
 
 An unavailable network refresh does not change the last known status. RevenueCat cached
 `CustomerInfo` is applied before a refresh when available. A build with no SDK key intentionally
-runs as Free instead of trying to initialize RevenueCat.
+keeps subscription access inactive instead of trying to initialize RevenueCat.
 
 `ProPaywallView` is a fully app-owned SwiftUI paywall. `PaywallViewModel` owns its loading,
 selection, purchase, restore, and error state; `SubscriptionService` is the only layer that calls
 RevenueCat. RevenueCat supplies packages and localized prices but does not control paywall UI.
 
-`restrictedAppSelectionGate` wraps the existing Family Controls picker. Free users may persist one
-selected opaque item; an attempt to select more presents the Pro paywall. Pro users have no product
-limit. The gate never reads or derives token identities.
+`restrictedAppSelectionGate` wraps the existing Family Controls picker and never reads or derives
+token identities. Product UI is available only while the subscription entitlement is active.
 
 New users build their app selection during onboarding before seeing a mandatory personalized
-paywall. Completing onboarding requires an active `pro` entitlement from purchase or restore.
-Users who completed an earlier onboarding release remain grandfathered on the existing Free limits.
+paywall. Activating the product requires an active `Earn your Screen Time Pro` entitlement from a
+trial subscription, direct subscription, or restore. There is no permanent free tier, and expired
+subscribers return to the non-dismissible subscription screen.
 Trial copy is shown only when RevenueCat reports both a free introductory offer and eligibility for
 the selected product.
 
@@ -36,7 +36,7 @@ the selected product.
 The single entitlement is:
 
 ```text
-pro
+Earn your Screen Time Pro
 ```
 
 Expected product identifiers are currently:
@@ -51,8 +51,8 @@ StoreKit/App Store/RevenueCat product definitions if the final identifiers diffe
 
 The public RevenueCat SDK key is read from the `RevenueCatAPIKey` Info.plist value, backed by the
 `REVENUECAT_API_KEY` build setting in `project.yml`. Debug uses the project's `test_` RevenueCat Test
-Store key. Release intentionally uses an empty value and therefore runs as Free until the real Apple
-app is connected. Never submit an App Store build containing a `test_` key.
+Store key. Release intentionally uses an empty value and therefore cannot activate subscription
+access until the real Apple app is connected. Never submit an App Store build containing a `test_` key.
 
 When the Apple app is connected, set its `appl_` public SDK key for Release through CI or a local
 `.xcconfig`. Keep the generated `.xcodeproj` and any local `.xcconfig` overrides out of source
@@ -61,14 +61,14 @@ control.
 The default/current RevenueCat Offering is used. Attach monthly and annual packages to it; no
 RevenueCat-hosted paywall is required. Terms and Privacy URLs are centralized as build settings in
 `project.yml` and exposed through Info.plist rather than duplicated in views. Their checked-in
-values are intentionally empty until the app's own published legal pages are available; provide
-them through CI or an untracked `.xcconfig` for distribution.
+checked-in values point to the repository's Terms and Privacy documents. Replace them with the final
+published legal-page URLs before distribution if those locations change.
 
 For the current Test Store project:
 
 1. Create a one-month subscription product with identifier `monthly`.
 2. Create a one-year subscription product with identifier `yearly`.
-3. Attach both products to the `pro` entitlement.
+3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Add `monthly` to the monthly package and `yearly` to the annual package in the current Offering.
 5. Run the normal `EarnYourScreenTime` scheme. RevenueCat presents its Test Store purchase modal,
    where success, failure, and cancellation can be simulated.
@@ -91,14 +91,14 @@ RevenueCat must know how local products map to the entitlement before its paywal
 
 1. Create a RevenueCat project/app and configure its public SDK key.
 2. Add `monthly` and `yearly` as Apple products in RevenueCat.
-3. Attach both products to the `pro` entitlement.
+3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Add monthly and annual packages to the current Offering.
 5. In Xcode, open the `.storekit` file and use **Editor > Save Public Certificate**.
 6. Upload that certificate in the RevenueCat iOS app's StoreKit testing framework settings.
 7. Run the `EarnYourScreenTime StoreKit` scheme directly from Xcode.
 
-Without an Apple RevenueCat SDK key/product mapping, the app remains usable as Free and displays the
-non-purchasing fallback. The local StoreKit file alone cannot produce the RevenueCat Pro
+Without an Apple RevenueCat SDK key/product mapping, the app cannot activate and displays the
+non-purchasing fallback. The local StoreKit file alone cannot produce the RevenueCat
 entitlement. Xcode local tests are useful for transaction lifecycle behavior, but RevenueCat notes
 that some Xcode cancellation/refund simulations are not fully represented in its dashboard.
 
@@ -108,19 +108,19 @@ Once products exist in App Store Connect:
 
 1. Connect the App Store Connect app to the RevenueCat project.
 2. Import the monthly and yearly products into RevenueCat.
-3. Attach both products to the `pro` entitlement.
+3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Attach monthly and annual packages to the current Offering.
 5. Configure the production RevenueCat Apple SDK key for Release builds.
 
 ## Customer Center
 
-Active Pro subscribers see **Manage Pro subscription** in Settings. This presents RevenueCatUI's
+Active subscribers see **Manage subscription** in Settings. This presents RevenueCatUI's
 `CustomerCenterView` through `SubscriptionCustomerCenterView`, keeping RevenueCat APIs inside the
 monetization layer. Restore callbacks update `SubscriptionManager` immediately.
 
 Configure and publish Customer Center in the RevenueCat dashboard before production. Include the
-appropriate subscription management, cancellation, refund/support, and restore paths. Free users
-continue to use Restore Purchases from the paywall.
+appropriate subscription management, cancellation, refund/support, and restore paths. Inactive
+users continue to use Restore Purchases from the paywall.
 
 For Apple Sandbox, disable the local StoreKit configuration by using the normal
 `EarnYourScreenTime` scheme. Sign into a Sandbox Apple Account on a physical device, purchase and
@@ -128,16 +128,11 @@ restore, then test renewal, expiration, billing retry, and cancellation. Repeat 
 restore flows through TestFlight before release. Sandbox timing and prices are not production
 behavior.
 
-## Free And Pro Limits
+## Subscription Access
 
-`App/Monetization/FeatureAccess.swift` is the source of truth for product capabilities:
-
-- Free restricted selection limit: 1
-- Unlimited restricted selections: Pro
-- Custom earning ratios: Pro
-- Workout earning: Pro
-- Focus earning: Pro
-- Advanced statistics: Pro
+`App/Monetization/FeatureAccess.swift` is the source of truth for product capabilities. An active
+subscription unlocks the product; an inactive subscription has no product access. This is not a
+freemium capability matrix.
 
 Future gates should consume `FeatureAccess` rather than import RevenueCat or compare entitlement
 strings. RevenueCat code should remain confined to the monetization layer.
@@ -153,7 +148,7 @@ strings. RevenueCat code should remain confined to the monetization layer.
 - Connect the App Store Connect app to RevenueCat.
 - Import products into RevenueCat.
 - Attach products to an Offering.
-- Attach products to the `pro` entitlement.
+- Attach products to the `Earn your Screen Time Pro` entitlement.
 - Configure the production RevenueCat SDK key.
 - Confirm the production Terms of Service and Privacy Policy URLs in `project.yml`.
 - Configure and publish RevenueCat Customer Center.

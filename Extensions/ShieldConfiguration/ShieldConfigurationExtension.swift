@@ -1,21 +1,16 @@
 import EarnDomain
 import ManagedSettings
 import ManagedSettingsUI
+import OSLog
 import UIKit
 
 final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
-    private enum Presentation {
-        case sessionEnded
-        case timeAvailable(minutes: Int)
-        case moreStepsNeeded(steps: Int, rewardMinutes: Int)
-        case genericLocked
-    }
-
+    private let logger = Logger(subsystem: "EarnYourScreenTime", category: "Shield")
     private enum Palette {
-        static let background = UIColor(red: 36 / 255, green: 33 / 255, blue: 30 / 255, alpha: 1)
-        static let paper = UIColor(red: 1, green: 250 / 255, blue: 242 / 255, alpha: 1)
-        static let coral = UIColor(red: 217 / 255, green: 128 / 255, blue: 95 / 255, alpha: 1)
-        static let coralLight = UIColor(red: 243 / 255, green: 214 / 255, blue: 200 / 255, alpha: 1)
+        static let background = UIColor(red: 41 / 255, green: 40 / 255, blue: 36 / 255, alpha: 1)
+        static let paper = UIColor(red: 250 / 255, green: 248 / 255, blue: 244 / 255, alpha: 1)
+        static let cobalt = UIColor(red: 30 / 255, green: 77 / 255, blue: 247 / 255, alpha: 1)
+        static let secondary = UIColor(red: 205 / 255, green: 206 / 255, blue: 211 / 255, alpha: 1)
     }
 
     override func configuration(shielding application: Application) -> ShieldConfiguration {
@@ -41,92 +36,127 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     }
 
     private func configuration(now: Date = Date()) -> ShieldConfiguration {
-        let copy = copy(for: presentation(now: now))
-        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 52, weight: .medium)
-        let icon = UIImage(systemName: "figure.walk", withConfiguration: iconConfiguration)?
-            .withTintColor(Palette.coral, renderingMode: .alwaysOriginal)
+        let viewModel = ShieldViewModel(sharedState: SharedStore.shared.load(now: now), now: now)
+        let copy = copy(for: viewModel)
+        logger.notice(
+            "event=shield_displayed state=\(viewModel.state.rawValue, privacy: .public) available_minutes=\(viewModel.availableMinutes) steps_remaining=\(viewModel.stepsRemaining)"
+        )
 
         return ShieldConfiguration(
             backgroundBlurStyle: .systemMaterialDark,
             backgroundColor: Palette.background,
-            icon: icon,
+            icon: guardianImage,
             title: .init(text: copy.title, color: Palette.paper),
-            subtitle: .init(text: copy.subtitle, color: Palette.coralLight),
-            primaryButtonLabel: .init(text: primaryButtonTitle, color: Palette.background),
-            primaryButtonBackgroundColor: Palette.coral
+            subtitle: .init(text: copy.subtitle, color: Palette.secondary),
+            primaryButtonLabel: .init(
+                text: primaryButtonTitle(for: viewModel),
+                color: Palette.paper
+            ),
+            primaryButtonBackgroundColor: Palette.cobalt,
+            secondaryButtonLabel: secondaryButtonTitle(for: viewModel).map {
+                .init(text: $0, color: Palette.secondary)
+            }
         )
     }
 
-    private func presentation(now: Date) -> Presentation {
-        guard AppGroup.isConfigured else { return .genericLocked }
-
-        let state = SharedStore.shared.load(now: now)
-        if let session = state.currentSession {
-            let secondsFromEnd = now.timeIntervalSince(session.endsAt)
-            // The callback can arrive a few seconds around `endsAt`. This window only selects
-            // copy; it never decides whether the app is shielded.
-            if secondsFromEnd >= -5, secondsFromEnd <= 120 {
-                return .sessionEnded
-            }
+    private func copy(for viewModel: ShieldViewModel) -> (title: String, subtitle: String) {
+        guard AppGroup.isConfigured else {
+            return (localized("shield.noTime.title"), localized("shield.noTime.subtitle"))
+        }
+        guard viewModel.hasActivityData || viewModel.availableMinutes > 0 else {
+            return (localized("shield.updating.title"), localized("shield.updating.subtitle"))
         }
 
-        let availableMinutes = state.ledger.wallet.availableMinutes
-        if availableMinutes >= ScreenTimeSessionEngine.supportedDurations[0] {
-            return .timeAvailable(minutes: availableMinutes)
-        }
-
-        let next = CreditEngine.nextMilestone(in: state.ledger)
-        if state.ledger.rule.source == .steps, next.remainingAmount > 0 {
-            return .moreStepsNeeded(
-                steps: next.remainingAmount,
-                rewardMinutes: next.rewardMinutes
-            )
-        }
-        return .genericLocked
-    }
-
-    private func copy(for presentation: Presentation) -> (title: String, subtitle: String) {
-        switch presentation {
-        case .sessionEnded:
+        switch viewModel.state {
+        case .sessionExpired:
             return (
-                localized("shield.sessionEnded.title"),
-                localized("shield.sessionEnded.subtitle")
+                formatted("shield.expired.title", viewModel.sessionDurationMinutes ?? 0),
+                formatted("shield.expired.subtitle", viewModel.stepsRemaining)
             )
-        case let .timeAvailable(minutes):
+        case .rewardAvailable:
             return (
-                localized("shield.available.title"),
-                formatted("shield.available.subtitle", minutes)
+                formatted("shield.available.title", viewModel.availableMinutes),
+                localized("shield.available.subtitle")
             )
-        case let .moreStepsNeeded(steps, rewardMinutes):
+        case .almostThere:
+            return (
+                formatted("shield.almost.title", viewModel.stepsRemaining),
+                formatted(
+                    "shield.almost.subtitle",
+                    viewModel.rewardMinutes,
+                    viewModel.estimatedWalkMinutes
+                )
+            )
+        case .dailyGoalCompleted:
+            return (
+                localized("shield.goal.title"),
+                formatted(
+                    "shield.goal.subtitle",
+                    viewModel.currentSteps,
+                    viewModel.earnedMinutesToday
+                )
+            )
+        case .noTime, .progress:
             return (
                 localized("shield.noTime.title"),
-                formatted("shield.noTime.progress", steps, rewardMinutes)
-            )
-        case .genericLocked:
-            return (
-                localized("shield.noTime.title"),
-                localized("shield.noTime.subtitle")
+                formatted(
+                    "shield.noTime.progress",
+                    viewModel.stepsRemaining,
+                    viewModel.rewardMinutes,
+                    viewModel.estimatedWalkMinutes
+                )
             )
         }
     }
 
-    private var primaryButtonTitle: String {
-        if #available(iOS 26.5, *) {
-            localized("shield.action.openEarn")
-        } else {
-            localized("shield.action.close")
+    private func primaryButtonTitle(for viewModel: ShieldViewModel) -> String {
+        guard #available(iOS 26.5, *) else { return localized("shield.action.close") }
+        switch viewModel.state {
+        case .rewardAvailable:
+            return localized("shield.action.chooseTime")
+        case .sessionExpired:
+            return localized("shield.action.earnMore")
+        default:
+            return localized("shield.action.openEarn")
         }
+    }
+
+    private func secondaryButtonTitle(for viewModel: ShieldViewModel) -> String? {
+        guard #available(iOS 26.5, *), viewModel.state == .rewardAvailable else { return nil }
+        return localized("shield.action.notNow")
+    }
+
+    private var guardianImage: UIImage? {
+        UIImage(named: "guardian-resting")
     }
 
     private func localized(_ key: String) -> String {
-        NSLocalizedString(key, bundle: .main, comment: "")
+        NSLocalizedString(key, bundle: localizationBundle, comment: "")
     }
 
     private func formatted(_ key: String, _ arguments: CVarArg...) -> String {
         String(
             format: localized(key),
-            locale: Locale.current,
+            locale: AppLanguage.saved.locale,
             arguments: arguments
         )
+    }
+
+    private var localizationBundle: Bundle {
+        let resource: String
+        switch AppLanguage.saved {
+        case .system:
+            return .main
+        case .english:
+            resource = "en"
+        case .spanish:
+            resource = "es"
+        }
+
+        guard let path = Bundle.main.path(forResource: resource, ofType: "lproj"),
+              let bundle = Bundle(path: path) else {
+            return .main
+        }
+        return bundle
     }
 }

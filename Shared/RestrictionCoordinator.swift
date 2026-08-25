@@ -29,15 +29,13 @@ struct RestrictionCoordinator {
         now: Date = Date()
     ) -> SharedState {
         let selection = selectionStore.load()
-        var state = ScreenTimeSessionEngine.recoverExpiredSession(
-            in: store.load(now: now),
-            at: now
-        )
-        state.schemaVersion = SharedState.currentSchemaVersion
-        state.restrictedItemCount = selection.itemCount
-
-        if selection.isEmpty, state.activeSession(at: now) != nil {
-            state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
+        var state = store.mutate(now: now) { state in
+            state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: now)
+            state.schemaVersion = SharedState.currentSchemaVersion
+            state.restrictedItemCount = selection.itemCount
+            if selection.isEmpty, state.activeSession(at: now) != nil {
+                state = ScreenTimeSessionEngine.cancelActiveSession(in: state, at: now)
+            }
         }
 
         if refreshMonitoring {
@@ -45,19 +43,22 @@ struct RestrictionCoordinator {
                 try scheduler.refresh(state: state, selection: selection, now: now)
             } catch {
                 // Monitoring is what guarantees re-shielding while Earn is closed. Fail closed.
-                state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
+                state = store.mutate(now: now) { state in
+                    state = ScreenTimeSessionEngine.cancelActiveSession(in: state, at: now)
+                }
                 scheduler.stopAll()
             }
         }
 
-        let shouldShield = state.activeSession(at: now) == nil || selection.isEmpty
-        if shouldShield {
-            shields.apply(selection)
-        } else {
-            shields.clear()
+        state = store.mutate(now: now) { latest in
+            let shouldShield = latest.activeSession(at: now) == nil || selection.isEmpty
+            if shouldShield {
+                shields.apply(selection)
+            } else {
+                shields.clear()
+            }
+            latest.shieldsApplied = shouldShield
         }
-        state.shieldsApplied = shouldShield
-        store.save(state)
         return state
     }
 
@@ -69,62 +70,90 @@ struct RestrictionCoordinator {
         let selection = selectionStore.load()
         guard !selection.isEmpty else { throw RestrictionCoordinatorError.noSelection }
 
-        let base = ScreenTimeSessionEngine.recoverExpiredSession(
-            in: store.load(now: now),
-            at: now
-        )
-        var sessionState = try ScreenTimeSessionEngine.start(
-            durationMinutes: durationMinutes,
-            at: now,
-            in: base
-        )
-        sessionState.schemaVersion = SharedState.currentSchemaVersion
-        sessionState.restrictedItemCount = selection.itemCount
-        sessionState.shieldsApplied = true
-        store.save(sessionState)
+        var sessionState = try store.mutateThrowing(now: now) { state in
+            state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: now)
+            state = try ScreenTimeSessionEngine.start(
+                durationMinutes: durationMinutes,
+                at: now,
+                in: state
+            )
+            state.schemaVersion = SharedState.currentSchemaVersion
+            state.restrictedItemCount = selection.itemCount
+            state.shieldsApplied = true
+        }
 
         do {
             try scheduler.refresh(state: sessionState, selection: selection, now: now)
         } catch {
             scheduler.stopAll()
             shields.apply(selection)
-            var rolledBack = base
-            rolledBack.shieldsApplied = true
-            store.save(rolledBack)
+            _ = store.mutate(now: now) { state in
+                guard state.currentSession?.id == sessionState.currentSession?.id else { return }
+                state = ScreenTimeSessionEngine.cancelActiveSession(in: state, at: now)
+                state.shieldsApplied = true
+            }
             throw error
         }
 
-        shields.clear()
-        sessionState.shieldsApplied = false
-        store.save(sessionState)
+        sessionState = store.mutate(now: now) { state in
+            if state.currentSession?.id == sessionState.currentSession?.id,
+               state.currentSession?.status == .active {
+                shields.clear()
+                state.shieldsApplied = false
+            } else {
+                shields.apply(selection)
+                state.shieldsApplied = true
+            }
+        }
         return sessionState
     }
 
     /// Called by the monitor warning/end callbacks. A stale callback cannot finish a newer session.
     @discardableResult
-    func completeSession(sessionID: UUID) -> SharedState {
-        let current = store.load()
-        guard current.currentSession?.id == sessionID,
-              current.currentSession?.status == .active else {
-            return current
+    func completeSession(sessionID: UUID, now: Date = Date()) -> SharedState {
+        var didComplete = false
+        let state = store.mutate(now: now) { state in
+            guard state.currentSession?.id == sessionID,
+                  state.currentSession?.status == .active else { return }
+            state = ScreenTimeSessionEngine.complete(sessionID: sessionID, in: state, at: now)
+            state.shieldsApplied = true
+            didComplete = true
         }
-
-        var state = ScreenTimeSessionEngine.complete(sessionID: sessionID, in: current)
+        guard didComplete else {
+            if state.shieldsApplied {
+                shields.apply(selectionStore.load())
+                scheduler.stop(sessionID: sessionID)
+            }
+            return state
+        }
         shields.apply(selectionStore.load())
-        state.shieldsApplied = true
-        store.save(state)
         scheduler.stop(sessionID: sessionID)
         return state
     }
 
-    /// Ends access without refunding already reserved time.
+    /// Ends access and returns the unused reservation to the wallet.
     @discardableResult
-    func cancelActiveSession() -> SharedState {
-        var state = ScreenTimeSessionEngine.cancelActiveSession(in: store.load())
+    func cancelActiveSession(now: Date = Date()) -> SharedState {
+        let selection = selectionStore.load()
+        shields.apply(selection)
+        let state = store.mutate(now: now) { state in
+            state = ScreenTimeSessionEngine.cancelActiveSession(in: state, at: now)
+            state.shieldsApplied = true
+        }
         scheduler.stopAll()
-        shields.apply(selectionStore.load())
-        state.shieldsApplied = true
-        store.save(state)
+        return state
+    }
+
+    /// User-initiated stop. Shields are restored before accounting is settled (fail closed).
+    @discardableResult
+    func pauseActiveSession(now: Date = Date()) -> SharedState {
+        let selection = selectionStore.load()
+        shields.apply(selection)
+        let state = store.mutate(now: now) { state in
+            state = ScreenTimeSessionEngine.pauseActiveSession(in: state, at: now)
+            state.shieldsApplied = true
+        }
+        scheduler.stopAll()
         return state
     }
 
@@ -135,10 +164,9 @@ struct RestrictionCoordinator {
         store.reset()
         let selection = selectionStore.load()
         shields.apply(selection)
-        var state = store.load()
-        state.restrictedItemCount = selection.itemCount
-        state.shieldsApplied = true
-        store.save(state)
-        return state
+        return store.mutate { state in
+            state.restrictedItemCount = selection.itemCount
+            state.shieldsApplied = true
+        }
     }
 }

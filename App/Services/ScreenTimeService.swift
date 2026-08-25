@@ -15,6 +15,7 @@ protocol ScreenTimeServing: AnyObject {
     /// Applies or removes shields to match the current explicit access session.
     @discardableResult func reconcile() -> SharedState
     @discardableResult func startSession(durationMinutes: Int) throws -> SharedState
+    @discardableResult func pauseSession() -> SharedState
     @discardableResult func resetToday() -> SharedState
     var isMonitoring: Bool { get }
 }
@@ -56,6 +57,11 @@ final class LiveScreenTimeService: ScreenTimeServing {
     }
 
     @discardableResult
+    func pauseSession() -> SharedState {
+        coordinator.pauseActiveSession()
+    }
+
+    @discardableResult
     func resetToday() -> SharedState {
         coordinator.resetToday()
     }
@@ -92,27 +98,35 @@ final class MockScreenTimeService: ScreenTimeServing {
     func reconcile() -> SharedState {
         // Mirrors the live service: reconciling persists the resulting state, so the
         // Simulator exercises the same read/write path the device uses.
-        var state = SharedStore.shared.load()
-        state.restrictedItemCount = selection.itemCount
-        state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: Date())
-        shieldsApplied = state.activeSession() == nil || selection.isEmpty
-        state.shieldsApplied = shieldsApplied
-        SharedStore.shared.save(state)
-        return state
+        SharedStore.shared.mutate { state in
+            state.restrictedItemCount = selection.itemCount
+            state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: Date())
+            shieldsApplied = state.activeSession() == nil || selection.isEmpty
+            state.shieldsApplied = shieldsApplied
+        }
     }
 
     @discardableResult
     func startSession(durationMinutes: Int) throws -> SharedState {
         guard !selection.isEmpty else { throw RestrictionCoordinatorError.noSelection }
-        var state = try ScreenTimeSessionEngine.start(
-            durationMinutes: durationMinutes,
-            at: Date(),
-            in: SharedStore.shared.load()
-        )
-        shieldsApplied = false
-        state.shieldsApplied = false
-        SharedStore.shared.save(state)
-        return state
+        return try SharedStore.shared.mutateThrowing { state in
+            state = try ScreenTimeSessionEngine.start(
+                durationMinutes: durationMinutes,
+                at: Date(),
+                in: state
+            )
+            shieldsApplied = false
+            state.shieldsApplied = false
+        }
+    }
+
+    @discardableResult
+    func pauseSession() -> SharedState {
+        SharedStore.shared.mutate { state in
+            state = ScreenTimeSessionEngine.pauseActiveSession(in: state, at: Date())
+            shieldsApplied = true
+            state.shieldsApplied = true
+        }
     }
 
     @discardableResult
