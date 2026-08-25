@@ -32,7 +32,8 @@ struct EarnLiveActivityWidget: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     ExpandedDetail(context: context)
-                        .padding(.top, 6)
+                        .padding(.horizontal, 4)
+                        .padding(.top, 4)
                         .environment(\.locale, Locale(identifier: context.state.localeIdentifier))
                 }
             } compactLeading: {
@@ -111,37 +112,45 @@ private struct TemporaryStatusView: View {
             switch effectivePresentation(context) {
             case let .earned(minutes):
                 Text("liveActivity.earned \(minutes)")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundStyle(primary)
                 Text("liveActivity.available \(context.state.availableMinutes)")
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(secondary)
             case .unlocked:
                 Text("liveActivity.unlocked")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundStyle(primary)
                 if let endsAt = context.state.activeSessionEndsAt {
                     Text(endsAt, style: .timer)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
                         .monospacedDigit()
                         .foregroundStyle(secondary)
                 }
             case .goalCompleted:
                 Text("liveActivity.goalComplete")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundStyle(primary)
                 Text("liveActivity.goalSummary \(context.state.dailyGoalTarget) \(context.state.earnedMinutesToday)")
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(secondary)
             case .balanceExpired:
                 Text("liveActivity.timesUp")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
                     .foregroundStyle(primary)
                 if context.state.availableMinutes > 0 {
                     Text("liveActivity.available \(context.state.availableMinutes)")
+                        .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(secondary)
                 } else {
                     Text("liveActivity.walkToEarn")
+                        .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(secondary)
                 }
             case .normal:
                 EmptyView()
             }
         }
-        .font(.system(size: 20, weight: .bold, design: .rounded))
         .contentTransition(.opacity)
     }
 }
@@ -188,13 +197,19 @@ private struct ExpandedDetail: View {
     let context: ActivityViewContext<EarnActivityAttributes>
 
     var body: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 2) {
             if effectivePresentation(context) == .normal {
-                ActiveSessionContent(context: context, onDarkBackground: true)
+                Text("liveActivity.remaining \(context.state.stepsRemaining) \(context.state.nextRewardMinutes)")
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.68))
             } else {
                 TemporaryStatusView(context: context, onDarkBackground: true)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
+        .allowsTightening(true)
     }
 }
 
@@ -202,21 +217,7 @@ private struct CompactLeading: View {
     let context: ActivityViewContext<EarnActivityAttributes>
 
     var body: some View {
-        Group {
-            switch effectivePresentation(context) {
-            case let .earned(minutes):
-                Text("+\(minutes)m")
-                    .contentTransition(.numericText())
-            case .goalCompleted:
-                Image(systemName: "checkmark.circle.fill")
-            case .unlocked:
-                Image(systemName: "lock.open.fill")
-            case .balanceExpired:
-                Image(systemName: "hourglass.bottomhalf.filled")
-            case .normal:
-                Image(systemName: "hourglass")
-            }
-        }
+        Image(systemName: presentationSymbol(effectivePresentation(context)))
         .font(.system(size: 13, weight: .bold, design: .rounded))
         .foregroundStyle(LiveActivityPalette.cobalt)
         .accessibilityLabel(presentationAccessibilityLabel(context))
@@ -228,26 +229,21 @@ private struct CompactTrailing: View {
 
     var body: some View {
         Group {
-            switch effectivePresentation(context) {
-            case .earned, .goalCompleted:
-                Image(systemName: "checkmark")
-            case .unlocked:
-                if let endsAt = context.state.activeSessionEndsAt {
-                    Text(endsAt, style: .timer)
-                        .monospacedDigit()
-                }
-            case .balanceExpired:
-                Image(systemName: "lock.fill")
-            case .normal:
-                if let endsAt = context.state.activeSessionEndsAt {
-                    Text(endsAt, style: .timer)
-                        .monospacedDigit()
-                        .contentTransition(.numericText(countsDown: true))
-                }
+            if let endsAt = context.state.activeSessionEndsAt,
+               effectivePresentation(context) == .normal || effectivePresentation(context) == .unlocked {
+                Text(endsAt, style: .timer)
+                    .monospacedDigit()
+                    .contentTransition(.numericText(countsDown: true))
+            } else {
+                Image(systemName: presentationSymbol(effectivePresentation(context)))
             }
         }
         .font(.system(size: 13, weight: .bold, design: .rounded))
         .foregroundStyle(.white)
+        // Screen Time sessions are limited to 15 minutes, so this remains stable at `15:00`.
+        .frame(width: 44, alignment: .trailing)
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
         .accessibilityLabel(presentationAccessibilityLabel(context))
     }
 }
@@ -256,23 +252,7 @@ private struct MinimalPresentation: View {
     let context: ActivityViewContext<EarnActivityAttributes>
 
     var body: some View {
-        Group {
-            switch effectivePresentation(context) {
-            case let .earned(minutes):
-                Text("+\(minutes)m")
-            case .goalCompleted:
-                Image(systemName: "checkmark.circle.fill")
-            case .unlocked:
-                Image(systemName: "lock.open.fill")
-            case .balanceExpired:
-                Image(systemName: "hourglass.bottomhalf.filled")
-            case .normal:
-                if let endsAt = context.state.activeSessionEndsAt {
-                    Text(endsAt, style: .timer)
-                        .monospacedDigit()
-                }
-            }
-        }
+        Image(systemName: presentationSymbol(effectivePresentation(context)))
         .font(.system(size: 12, weight: .bold, design: .rounded))
         .foregroundStyle(LiveActivityPalette.cobalt)
         .accessibilityLabel(presentationAccessibilityLabel(context))
@@ -374,6 +354,20 @@ private let expiredPreviewState = EarnActivityAttributes.ContentState(
     presentation: .balanceExpired
 )
 
+private let unlockedPreviewState = EarnActivityAttributes.ContentState(
+    dayKey: "2026-08-24",
+    steps: 5_580,
+    nextMilestoneTarget: 6_000,
+    dailyGoalTarget: 8_000,
+    availableMinutes: 5,
+    earnedMinutesToday: 20,
+    nextRewardMinutes: 5,
+    milestoneStepAmount: 1_000,
+    activeSessionEndsAt: .now.addingTimeInterval(8 * 60),
+    localeIdentifier: "es",
+    presentation: .unlocked
+)
+
 #Preview("Lock Screen Events", as: .content, using: EarnActivityAttributes()) {
     EarnLiveActivityWidget()
 } contentStates: {
@@ -383,6 +377,20 @@ private let expiredPreviewState = EarnActivityAttributes.ContentState(
 }
 
 #Preview("Active Session", as: .dynamicIsland(.compact), using: EarnActivityAttributes()) {
+    EarnLiveActivityWidget()
+} contentStates: {
+    activePreviewState
+}
+
+#Preview("Compact States", as: .dynamicIsland(.compact), using: EarnActivityAttributes()) {
+    EarnLiveActivityWidget()
+} contentStates: {
+    earnedPreviewState
+    unlockedPreviewState
+    expiredPreviewState
+}
+
+#Preview("Active Session Expanded", as: .dynamicIsland(.expanded), using: EarnActivityAttributes()) {
     EarnLiveActivityWidget()
 } contentStates: {
     activePreviewState
