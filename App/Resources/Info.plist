@@ -18,8 +18,6 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
-	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -33,18 +31,22 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Earnit uses Health data to record activity-related progress when needed to calculate your earned screen time.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Earnit may update Health data to keep your activity-related progress synchronized with your earned screen time.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
-	<key>NSHealthShareUsageDescription</key>
-	<string>Earnit reads your daily step count so that walking earns you minutes of screen time. Your health data stays on this device.</string>
+	<key>PrivacyPolicyURL</key>
+	<string>$(PRIVACY_POLICY_URL)</string>
 	<key>RevenueCatAPIKey</key>
 	<string>$(REVENUECAT_API_KEY)</string>
 	<key>TermsOfUseURL</key>
 	<string>$(TERMS_OF_USE_URL)</string>
-	<key>PrivacyPolicyURL</key>
-	<string>$(PRIVACY_POLICY_URL)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>InstrumentSerif-Regular.ttf</string>

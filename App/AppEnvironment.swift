@@ -126,14 +126,14 @@ final class AppEnvironment {
     var consumedMinutesToday: Int { currentConsumedSeconds() / 60 }
     var walletBalanceMinutes: Int { currentWalletBalanceSeconds() / 60 }
     var maximumStartableMinutes: Int {
-        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))
-            ?? Date()
-        let minutesUntilTomorrow = max(0, Int(tomorrow.timeIntervalSinceNow / 60))
-        return min(wallet.availableMinutes, minutesUntilTomorrow)
+        ScreenTimeSessionEngine.maximumStartableMinutes(
+            availableMinutes: wallet.availableMinutes,
+            at: Date()
+        )
     }
 
     func currentWalletBalanceSeconds(at date: Date = Date()) -> Int {
-        wallet.availableSeconds + (activeSession?.remainingSeconds(at: date) ?? 0)
+        wallet.availableSeconds
     }
 
     func currentConsumedSeconds(at date: Date = Date()) -> Int {
@@ -358,6 +358,7 @@ final class AppEnvironment {
 
         await sessionNotifications.requestAuthorizationIfNeeded()
         do {
+            let walletBalanceBefore = wallet.availableSeconds
             state = try screenTime.startSession(durationMinutes: durationMinutes)
             if let session = activeSession {
                 await sessionNotifications.schedule(for: session, language: appLanguage)
@@ -365,7 +366,11 @@ final class AppEnvironment {
             lastError = nil
             publish(.appUnlocked)
             synchronizeLiveActivity(presentation: .unlocked)
-            analytics.track(.sessionStarted.withProperties(["duration_minutes": .int(durationMinutes)]))
+            analytics.track(.sessionStarted.withProperties([
+                "wallet_balance_before": .int(walletBalanceBefore),
+                "wallet_balance_after": .int(state.ledger.wallet.availableSeconds),
+                "session_duration": .int(durationMinutes * 60)
+            ]))
         } catch ScreenTimeSessionError.insufficientBalance {
             analytics.track(.unlockAttemptWithoutBalance.withProperties([
                 "requested_minutes": .int(durationMinutes),
@@ -385,9 +390,9 @@ final class AppEnvironment {
                 localized: "session.error.unsupportedDuration",
                 locale: appLanguage.locale
             ), haptic: .warning)
-        } catch ScreenTimeSessionError.crossesDayBoundary {
+        } catch ScreenTimeSessionError.exceedsCarryOverWindow {
             setError(String(
-                localized: "session.error.crossesDayBoundary",
+                localized: "session.error.exceedsCarryOverWindow",
                 locale: appLanguage.locale
             ), haptic: .warning)
         } catch RestrictionCoordinatorError.noSelection {
@@ -414,9 +419,6 @@ final class AppEnvironment {
     }
 
     func updateRestrictedSelection(_ selection: FamilyActivitySelection) {
-        if let session = activeSession {
-            sessionNotifications.cancel(sessionID: session.id)
-        }
         screenTime.selection = selection
         state = screenTime.reconcile()
         reportPendingSessionSettlement()
@@ -531,7 +533,7 @@ final class AppEnvironment {
                 steps: state.ledger.activityAmount,
                 nextMilestoneTarget: next.targetAmount,
                 dailyGoalTarget: state.dailyStepGoal,
-                availableMinutes: state.ledger.wallet.remainingValueMinutes,
+                availableMinutes: state.ledger.wallet.availableMinutes,
                 earnedMinutesToday: state.ledger.wallet.earnedSeconds / 60,
                 nextRewardMinutes: next.rewardMinutes,
                 milestoneStepAmount: state.ledger.rule.amountRequired,
@@ -560,13 +562,18 @@ final class AppEnvironment {
         switch pending.status {
         case .completed:
             analytics.track(.sessionExpired.withProperties([
-                "duration_minutes": .int(pending.durationMinutes)
+                "wallet_balance_after": .int(state.ledger.wallet.availableSeconds),
+                "session_duration": .int(pending.reservedSeconds),
+                "actual_session_duration": .int(pending.consumedSeconds)
             ]))
         case .paused:
             analytics.track(.sessionPaused.withProperties([
+                "wallet_balance_after": .int(state.ledger.wallet.availableSeconds),
+                "session_duration": .int(pending.reservedSeconds),
+                "actual_session_duration": .int(pending.consumedSeconds),
                 "reserved_seconds": .int(pending.reservedSeconds),
                 "consumed_seconds": .int(pending.consumedSeconds),
-                "saved_seconds": .int(pending.savedSeconds)
+                "returned_seconds": .int(pending.savedSeconds)
             ]))
         case .cancelled:
             break
@@ -576,6 +583,10 @@ final class AppEnvironment {
         analytics.track(.minutesConsumed.withProperties(["seconds": .int(pending.consumedSeconds)]))
         if pending.status == .paused {
             analytics.track(.minutesSaved.withProperties(["seconds": .int(pending.savedSeconds)]))
+            analytics.track(.sessionTimeReturned.withProperties([
+                "returned_seconds": .int(pending.savedSeconds),
+                "wallet_balance_after": .int(state.ledger.wallet.availableSeconds)
+            ]))
         }
         if state.ledger.wallet.availableSeconds == 0 {
             analytics.track(.walletEmpty)

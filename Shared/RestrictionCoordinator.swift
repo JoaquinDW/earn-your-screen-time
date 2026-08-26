@@ -33,9 +33,6 @@ struct RestrictionCoordinator {
             state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: now)
             state.schemaVersion = SharedState.currentSchemaVersion
             state.restrictedItemCount = selection.itemCount
-            if selection.isEmpty, state.activeSession(at: now) != nil {
-                state = ScreenTimeSessionEngine.cancelActiveSession(in: state, at: now)
-            }
         }
 
         if refreshMonitoring {
@@ -51,7 +48,7 @@ struct RestrictionCoordinator {
         }
 
         state = store.mutate(now: now) { latest in
-            let shouldShield = latest.activeSession(at: now) == nil || selection.isEmpty
+            let shouldShield = latest.activeSession(at: now) == nil
             if shouldShield {
                 shields.apply(selection)
             } else {

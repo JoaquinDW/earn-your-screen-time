@@ -104,7 +104,7 @@ public enum ScreenTimeSessionError: Error, Equatable, Sendable {
     case unsupportedDuration
     case insufficientBalance
     case sessionAlreadyActive
-    case crossesDayBoundary
+    case exceedsCarryOverWindow
 }
 
 /// Pure, idempotent transitions. Scheduling and shields remain in `RestrictionCoordinator`.
@@ -112,6 +112,20 @@ public enum ScreenTimeSessionEngine {
     public static let supportedDurations = [5, 10, 15]
     public static let minimumDurationMinutes = 1
     public static let maximumDurationMinutes = ScreenTimeWallet.maximumSavedSeconds / 60
+
+    /// Sessions may use the next day's carry-over allowance without stopping at midnight.
+    public static func maximumStartableMinutes(
+        availableMinutes: Int,
+        at date: Date,
+        calendar: Calendar = .current
+    ) -> Int {
+        guard let dayBoundary = calendar.dateInterval(of: .day, for: date)?.end else { return 0 }
+        let latestEnd = dayBoundary.addingTimeInterval(
+            TimeInterval(ScreenTimeWallet.maximumCarryOverSeconds)
+        )
+        let minutesUntilLatestEnd = max(0, Int(latestEnd.timeIntervalSince(date) / 60))
+        return min(availableMinutes, maximumDurationMinutes, minutesUntilLatestEnd)
+    }
 
     public static func start(
         durationMinutes: Int,
@@ -121,9 +135,11 @@ public enum ScreenTimeSessionEngine {
         guard (minimumDurationMinutes...maximumDurationMinutes).contains(durationMinutes) else {
             throw ScreenTimeSessionError.unsupportedDuration
         }
-        let proposedEnd = date.addingTimeInterval(TimeInterval(durationMinutes * 60))
-        guard Calendar.current.isDate(date, inSameDayAs: proposedEnd) else {
-            throw ScreenTimeSessionError.crossesDayBoundary
+        guard durationMinutes <= maximumStartableMinutes(
+            availableMinutes: maximumDurationMinutes,
+            at: date
+        ) else {
+            throw ScreenTimeSessionError.exceedsCarryOverWindow
         }
 
         var next = recoverExpiredSession(in: state, at: date)
@@ -165,6 +181,36 @@ public enum ScreenTimeSessionEngine {
         return complete(sessionID: session.id, in: state, at: session.endsAt)
     }
 
+    /// Charges the elapsed part of a crossing session while keeping the remainder active.
+    /// The caller can then roll the released value into the new day's wallet and reserve it again.
+    public static func settleActiveSessionThrough(
+        in state: SharedState,
+        at date: Date
+    ) -> SharedState {
+        guard let session = state.currentSession,
+              session.status == .active,
+              session.startedAt < date,
+              date < session.endsAt else {
+            return state
+        }
+
+        var next = state
+        let consumed = session.elapsedSeconds(at: date)
+        let newlyConsumed = max(0, consumed - session.consumedSeconds)
+        guard newlyConsumed > 0 else { return state }
+
+        next.ledger.wallet.settleReservation(consuming: newlyConsumed)
+        next.currentSession?.consumedSeconds = consumed
+        next.ledger.walletTransactions.append(WalletTransaction(
+            kind: .consumed,
+            amountSeconds: newlyConsumed,
+            source: .session,
+            date: date,
+            sessionID: session.id
+        ))
+        return next
+    }
+
     private static func settle(
         sessionID: UUID,
         in state: SharedState,
@@ -180,15 +226,16 @@ public enum ScreenTimeSessionEngine {
 
         var next = state
         let consumed = consumeAll ? session.reservedSeconds : session.elapsedSeconds(at: date)
-        let saved = next.ledger.wallet.settleReservation(consuming: consumed)
+        let newlyConsumed = max(0, consumed - session.consumedSeconds)
+        let saved = next.ledger.wallet.settleReservation(consuming: newlyConsumed)
         next.currentSession?.status = status
         next.currentSession?.settledAt = date
         next.currentSession?.consumedSeconds = consumed
         next.currentSession?.savedSeconds = saved
-        if consumed > 0 {
+        if newlyConsumed > 0 {
             next.ledger.walletTransactions.append(WalletTransaction(
                 kind: .consumed,
-                amountSeconds: consumed,
+                amountSeconds: newlyConsumed,
                 source: .session,
                 date: date,
                 sessionID: sessionID

@@ -44,8 +44,8 @@ struct ShieldViewModelTests {
         #expect(viewModel.availableMinutes == 15)
     }
 
-    @Test("A just-completed session takes precedence over a remaining balance")
-    func sessionExpired() {
+    @Test("A remaining wallet balance takes precedence over completion feedback")
+    func remainingBalanceAfterSession() {
         var state = state(steps: 1_000)
         state.ledger.wallet = ScreenTimeWallet(earnedSeconds: 1_200, consumedSeconds: 900)
         state.currentSession = ScreenTimeSession(
@@ -56,8 +56,24 @@ struct ShieldViewModelTests {
 
         let viewModel = ShieldViewModel(sharedState: state, now: now)
 
-        #expect(viewModel.state == .sessionExpired)
+        #expect(viewModel.state == .rewardAvailable)
+        #expect(viewModel.availableMinutes == 5)
         #expect(viewModel.sessionDurationMinutes == 15)
+    }
+
+    @Test("A just-completed session is shown when the wallet is empty")
+    func sessionExpired() {
+        var state = state(steps: 1_000)
+        state.ledger.wallet = ScreenTimeWallet(earnedSeconds: 900, consumedSeconds: 900)
+        state.currentSession = ScreenTimeSession(
+            startedAt: now.addingTimeInterval(-15 * 60 - 30),
+            durationMinutes: 15,
+            status: .completed
+        )
+
+        let viewModel = ShieldViewModel(sharedState: state, now: now)
+
+        #expect(viewModel.state == .sessionExpired)
     }
 
     @Test("A completed daily target remains meaningful after time is spent")

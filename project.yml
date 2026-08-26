@@ -16,7 +16,7 @@ configs:
 settings:
   base:
     MARKETING_VERSION: "0.1.0"
-    CURRENT_PROJECT_VERSION: "1"
+    CURRENT_PROJECT_VERSION: "4"
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
     # Keep signing here because XcodeGen replaces manual project.pbxproj changes.
@@ -74,7 +74,7 @@ targets:
         Debug:
           REVENUECAT_API_KEY: test_WQzWgKDQJvCwnbkXvlBZisaXHwE
         Release:
-          REVENUECAT_API_KEY: ""
+          REVENUECAT_API_KEY: appl_VwoOkdJRRkvyFcadPsnkQUvgvOf
 
   DeviceActivityMonitorExtension:
     type: app-extension

@@ -143,13 +143,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TIME EARNED · Use them now, or save them for later."
+            "value" : "How much do you want to spend?"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TIEMPO GANADO · Úsalos ahora o guárdalos para después."
+            "value" : "¿Cuánto tiempo quieres gastar?"
           }
         }
       }
@@ -160,13 +160,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You earned %lld min."
+            "value" : "%lld min earned"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ganaste %lld min."
+            "value" : "%lld min ganados"
           }
         }
       }
@@ -262,13 +262,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Earn before you consume. Open Earnit to see your next reward."
+            "value" : "Move to earn time before you scroll."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gana antes de consumir. Abre Earnit para ver tu próxima recompensa."
+            "value" : "Muévete para ganar tiempo antes de hacer scroll."
           }
         }
       }
@@ -279,13 +279,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not yet."
+            "value" : "No screen time available"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todavía no."
+            "value" : "No hay tiempo de pantalla disponible"
           }
         }
       }

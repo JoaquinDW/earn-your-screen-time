@@ -7,7 +7,7 @@ Apple **no le da a tu app** el uso exacto de otras apps. No existe una API que d
 cuyo contenido no puede salir de la extensión que la dibuja.
 
 Por eso el producto no intenta medir consumo real. Reserva por adelantado una ventana de reloj,
-permite pausarla explícitamente desde Earn y usa `DeviceActivityMonitorExtension` para volver a
+permite terminarla antes de tiempo desde Earn y usa `DeviceActivityMonitorExtension` para volver a
 aplicar los shields al finalizar.
 
 ## Cómo funciona una sesión de acceso
@@ -18,15 +18,17 @@ el usuario elige de forma explícita una ventana de 1 a 180 minutos.
 ```
 al iniciar       = se reserva toda la duración en la wallet
 sesión vigente   = se quitan los shields
-al pausar        = se cobra el reloj transcurrido y se devuelve el resto
+al terminar antes = se cobra el reloj transcurrido y se devuelve el resto
 al vencer        = se reaplican los shields
 ```
 
-La reserva es inmediata. Pausar o cambiar la selección liquida los segundos de reloj transcurridos
-y devuelve el resto. Si el usuario cambia de app o bloquea el teléfono, el reloj sigue hasta que
-vuelva a Earn y pause. Las sesiones no pueden cruzar medianoche.
+La reserva es inmediata. Terminar una sesión antes de tiempo liquida los segundos de reloj transcurridos
+y devuelve el resto. Cambiar la selección no cancela ni extiende la sesión global. Si el usuario
+cambia de app o bloquea el teléfono, el reloj sigue hasta que vuelva a Earn y termine la sesión.
+Una sesión puede cruzar medianoche usando hasta 20 minutos del saldo que se
+traslada al nuevo día.
 
-`ScreenTimeSessionEngine` concentra las transiciones puras: iniciar una única sesión, pausarla,
+`ScreenTimeSessionEngine` concentra las transiciones puras: iniciar una única sesión, terminarla antes,
 completarla, cancelarla y recuperar una sesión vencida. `ScreenTimeSession` persiste UUID, inicio,
 fin, duración, estado y liquidación. Los callbacks incluyen el UUID en el nombre de la actividad para que
 un callback atrasado nunca pueda completar una sesión más nueva.
@@ -41,8 +43,10 @@ actividad no repetitiva `accessSession_<UUID>`. Las sesiones cortas usan un carr
 - 15 minutos: `intervalDidEnd`.
 - más de 15 minutos: `intervalDidEnd` al final de la duración elegida.
 
-La wallet tiene un cap fijo de 180 minutos. A medianoche terminan las sesiones y se conservan como
-máximo 20 minutos; ganado y consumido del día vuelven a cero.
+La wallet tiene un cap fijo de 180 minutos. A medianoche se conservan como máximo 20 minutos,
+incluida la reserva pendiente de una sesión activa; ganado y consumido del día vuelven a cero. La
+parte de la sesión anterior a medianoche se liquida en el día que termina y el resto continúa
+reservado en el nuevo día con el mismo UUID y la misma hora de finalización.
 
 Si la app vuelve a primer plano, `RestrictionCoordinator.reconcile` conserva un monitor válido o
 lo reconstruye para el tiempo restante. Si el registro falla, la operación falla cerrada: restaura
@@ -64,9 +68,9 @@ pasa. Por eso lee y escribe `UserDefaults`, no una base de datos.
 
 La app y la extensión casi nunca están vivas a la vez. La reserva del saldo se persiste antes de
 quitar shields y antes de iniciar el monitor. Después, el estado de sesión solo avanza de `active`
-a `completed`, `paused` o `cancelled`; cada callback vuelve a cargar el blob y valida el UUID antes de escribir.
-Un lock de archivo dentro del App Group serializa `load-mutate-save` entre procesos para que una
-pausa, un callback y una acreditación concurrentes no se sobrescriban.
+a `completed`, `paused` (fin anticipado) o `cancelled`; cada callback vuelve a cargar el blob y valida
+el UUID antes de escribir. Un lock de archivo dentro del App Group serializa `load-mutate-save` entre
+procesos para que un fin anticipado, un callback y una acreditación concurrentes no se sobrescriban.
 
 ## Capas
 

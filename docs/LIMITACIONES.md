@@ -22,8 +22,8 @@ siendo desarrollable.
 ## 4. No se puede leer el uso exacto de apps
 No hay API que devuelva minutos por app ni avise cuando el usuario sale de ella. Al iniciar una
 sesión se reserva la duración elegida y se abre una ventana de reloj. El saldo sigue corriendo aunque
-el usuario bloquee el teléfono o cambie de app. Para conservar el resto debe volver a Earn y usar
-“Pausar y guardar”.
+el usuario bloquee el teléfono o cambie de app. Para conservar el resto debe volver a Earn y
+terminar la sesión antes de tiempo.
 
 ## 5. Los callbacks de Device Activity no son temporizadores exactos
 `intervalWillEndWarning` e `intervalDidEnd` los entrega iOS y pueden demorarse. Mitigación:
@@ -60,6 +60,12 @@ app. **No hay forma soportada de mejorar esto.**
 Desde iOS 26.5, `ShieldActionResponse.openParentalControlsApp` permite abrir públicamente la app que
 aplicó el shield. En iOS 18–26.4 no existe esa respuesta: el botón cierra la app restringida con
 `.close` y el usuario debe abrir Earn manualmente. No usamos URLs ni APIs privadas para esquivarlo.
+
+La configuración del shield solo admite un botón primario y uno secundario; no puede alojar tres
+acciones independientes de 5/10/15 minutos. En iOS 26.5+ el botón primario abre Earn directamente en
+el selector de duración. Después de iniciar la sesión, iOS tampoco permite relanzar la app restringida
+identificada por un token opaco, así que el usuario vuelve a tocarla; desde ese momento todo el grupo
+queda disponible durante la misma sesión.
 
 ## 10. Memoria de las extensiones
 `DeviceActivityMonitorExtension` corre con un presupuesto de memoria muy chico y el sistema la mata

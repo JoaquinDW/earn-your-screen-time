@@ -77,6 +77,16 @@ struct ScreenTimeSessionTests {
         return state
     }
 
+    private var fiveMinutesBeforeMidnight: Date {
+        Calendar.current.date(from: DateComponents(
+            year: 2027,
+            month: 1,
+            day: 15,
+            hour: 23,
+            minute: 55
+        ))!
+    }
+
     @Test("Banked credit does not create access")
     func creditDoesNotStartSession() {
         let state = creditedState()
@@ -107,6 +117,100 @@ struct ScreenTimeSessionTests {
                 in: creditedState(minutes: 5)
             )
         }
+    }
+
+    @Test("The full balance remains startable shortly before midnight")
+    func crossingMidnightIsStartable() throws {
+        let date = fiveMinutesBeforeMidnight
+        let available = ScreenTimeSessionEngine.maximumStartableMinutes(
+            availableMinutes: 20,
+            at: date
+        )
+        let active = try ScreenTimeSessionEngine.start(
+            durationMinutes: 20,
+            at: date,
+            in: creditedState(minutes: 20)
+        )
+
+        #expect(available == 20)
+        #expect(active.currentSession?.endsAt == date.addingTimeInterval(1_200))
+    }
+
+    @Test("A session cannot use more than twenty minutes after midnight")
+    func crossingMidnightCarryLimit() {
+        #expect(throws: ScreenTimeSessionError.exceedsCarryOverWindow) {
+            try ScreenTimeSessionEngine.start(
+                durationMinutes: 26,
+                at: fiveMinutesBeforeMidnight,
+                in: creditedState(minutes: 30)
+            )
+        }
+    }
+
+    @Test("A crossing session is charged once across both daily wallets")
+    func crossingMidnightSettlement() throws {
+        let startedAt = fiveMinutesBeforeMidnight
+        let boundary = Calendar.current.dateInterval(of: .day, for: startedAt)!.end
+        var active = try ScreenTimeSessionEngine.start(
+            durationMinutes: 20,
+            at: startedAt,
+            in: creditedState(minutes: 20)
+        )
+
+        active = ScreenTimeSessionEngine.settleActiveSessionThrough(in: active, at: boundary)
+        #expect(active.currentSession?.status == .active)
+        #expect(active.currentSession?.consumedSeconds == 300)
+        #expect(active.ledger.wallet.consumedSeconds == 300)
+        #expect(active.ledger.wallet.availableSeconds == 900)
+        #expect(active.ledger.wallet.reservedSeconds == 0)
+
+        active.ledger = CreditEngine.rollOverIfNeeded(
+            active.ledger,
+            to: DayKey(date: boundary),
+            carryOverSeconds: active.ledger.wallet.remainingValueSeconds
+        )
+        let didReserveRemainder = active.ledger.wallet.reserve(seconds: 900)
+        #expect(didReserveRemainder)
+
+        let completed = ScreenTimeSessionEngine.complete(
+            sessionID: active.currentSession!.id,
+            in: active,
+            at: startedAt.addingTimeInterval(1_200)
+        )
+        #expect(completed.currentSession?.consumedSeconds == 1_200)
+        #expect(completed.ledger.wallet.consumedSeconds == 900)
+        #expect(completed.ledger.wallet.reservedSeconds == 0)
+        #expect(completed.ledger.walletTransactions.last?.amountSeconds == 900)
+    }
+
+    @Test("Pausing after midnight returns the unconsumed remainder")
+    func crossingMidnightPause() throws {
+        let startedAt = fiveMinutesBeforeMidnight
+        let boundary = Calendar.current.dateInterval(of: .day, for: startedAt)!.end
+        var active = try ScreenTimeSessionEngine.start(
+            durationMinutes: 20,
+            at: startedAt,
+            in: creditedState(minutes: 20)
+        )
+
+        active = ScreenTimeSessionEngine.settleActiveSessionThrough(in: active, at: boundary)
+        active.ledger = CreditEngine.rollOverIfNeeded(
+            active.ledger,
+            to: DayKey(date: boundary),
+            carryOverSeconds: active.ledger.wallet.remainingValueSeconds
+        )
+        let didReserveRemainder = active.ledger.wallet.reserve(seconds: 900)
+        #expect(didReserveRemainder)
+
+        let paused = ScreenTimeSessionEngine.pauseActiveSession(
+            in: active,
+            at: boundary.addingTimeInterval(300)
+        )
+        #expect(paused.currentSession?.consumedSeconds == 600)
+        #expect(paused.currentSession?.savedSeconds == 600)
+        #expect(paused.ledger.wallet.consumedSeconds == 300)
+        #expect(paused.ledger.wallet.availableSeconds == 600)
+        #expect(paused.ledger.walletTransactions.last?.amountSeconds == 300)
     }
 
     @Test("Only one session can be active")

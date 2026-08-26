@@ -21,6 +21,22 @@
         }
       }
     },
+    "liveActivity.saved %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min saved"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min guardados"
+          }
+        }
+      }
+    },
     "liveActivity.availableLabel" : {
       "extractionState" : "stale",
       "localizations" : {

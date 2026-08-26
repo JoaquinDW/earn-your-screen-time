@@ -347,6 +347,11 @@ struct DashboardView: View {
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
 
+            Text("session.walletSaved \(env.wallet.availableMinutes)")
+                .font(.sans(12.5, weight: .semibold))
+                .foregroundStyle(Theme.cobaltDeep)
+                .monospacedDigit()
+
             Button {
                 Task { await env.pauseSession() }
             } label: {
@@ -354,9 +359,9 @@ struct DashboardView: View {
                     if env.isPausingSession {
                         ProgressView().controlSize(.small).accessibilityHidden(true)
                     }
-                    Text("session.pauseAndSave")
+                    Text("session.endAndSave")
                     Spacer()
-                    Image(systemName: "pause.fill").accessibilityHidden(true)
+                    Image(systemName: "stop.fill").accessibilityHidden(true)
                 }
                 .font(.sans(14, weight: .semibold))
                 .frame(minHeight: Theme.minTouchTarget)
@@ -557,6 +562,17 @@ struct SpendSheet: View {
     @Binding var selectedMinutes: Int
     var onStarted: () -> Void = {}
 
+    private var presetDurations: [Int] {
+        let maximum = env.maximumStartableMinutes
+        guard maximum > 0 else { return [] }
+        var durations = env.supportedSessionDurations.filter { $0 <= maximum }
+        if maximum < (env.supportedSessionDurations.last ?? maximum),
+           !durations.contains(maximum) {
+            durations.append(maximum)
+        }
+        return durations
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.m) {
             Text("session.chooseDuration")
@@ -566,7 +582,7 @@ struct SpendSheet: View {
                 .foregroundStyle(Theme.muted)
 
             HStack(spacing: Theme.Space.s) {
-                ForEach(env.supportedSessionDurations, id: \.self) { minutes in
+                ForEach(presetDurations, id: \.self) { minutes in
                     let isSelected = selectedMinutes == minutes
                     Button {
                         selectedMinutes = minutes
@@ -582,8 +598,6 @@ struct SpendSheet: View {
                             )
                     }
                     .buttonStyle(.plain)
-                    .disabled(minutes > env.maximumStartableMinutes)
-                    .opacity(minutes <= env.maximumStartableMinutes ? 1 : 0.35)
                     .accessibilityAddTraits(isSelected ? .isSelected : [])
                 }
             }

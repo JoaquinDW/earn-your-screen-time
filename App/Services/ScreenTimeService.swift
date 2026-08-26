@@ -34,7 +34,6 @@ final class LiveScreenTimeService: ScreenTimeServing {
     var selection: FamilyActivitySelection {
         get { selectionStore.load() }
         set {
-            coordinator.cancelActiveSession()
             selectionStore.save(newValue)
             reconcile()
         }
@@ -75,9 +74,6 @@ final class MockScreenTimeService: ScreenTimeServing {
     private(set) var status: AuthorizationStatus
     var selection = FamilyActivitySelection() {
         didSet {
-            SharedStore.shared.mutate { state in
-                state = ScreenTimeSessionEngine.cancelActiveSession(in: state)
-            }
             _ = reconcile()
         }
     }
@@ -101,7 +97,7 @@ final class MockScreenTimeService: ScreenTimeServing {
         SharedStore.shared.mutate { state in
             state.restrictedItemCount = selection.itemCount
             state = ScreenTimeSessionEngine.recoverExpiredSession(in: state, at: Date())
-            shieldsApplied = state.activeSession() == nil || selection.isEmpty
+            shieldsApplied = state.activeSession() == nil
             state.shieldsApplied = shieldsApplied
         }
     }

@@ -43,10 +43,14 @@ struct SharedStore {
 
         guard stored.ledger.day != today else { return stored }
 
-        // End access at the day boundary, then carry at most twenty minutes into the new day.
+        // A session can continue through midnight using the next day's carry-over allowance.
         let boundary = Calendar.current.startOfDay(for: now)
         var settled = ScreenTimeSessionEngine.recoverExpiredSession(in: stored, at: boundary)
-        if settled.currentSession?.status == .active {
+        let crossingSession = settled.activeSession(at: boundary)
+        if let crossingSession,
+           crossingSession.remainingSeconds(at: boundary) <= ScreenTimeWallet.maximumCarryOverSeconds {
+            settled = ScreenTimeSessionEngine.settleActiveSessionThrough(in: settled, at: boundary)
+        } else if settled.currentSession?.status == .active {
             settled = ScreenTimeSessionEngine.pauseActiveSession(in: settled, at: boundary)
         }
         var rolled = settled
@@ -65,6 +69,16 @@ struct SharedStore {
             to: today,
             carryOverSeconds: carried
         )
+        if let crossingSession,
+           crossingSession.remainingSeconds(at: boundary) <= ScreenTimeWallet.maximumCarryOverSeconds {
+            let reserved = rolled.ledger.wallet.reserve(
+                seconds: crossingSession.remainingSeconds(at: boundary)
+            )
+            if !reserved {
+                rolled.currentSession?.status = .cancelled
+                rolled.currentSession?.settledAt = boundary
+            }
+        }
         if expired > 0 {
             rolled.ledger.walletTransactions.append(WalletTransaction(
                 kind: .expired,
@@ -74,7 +88,7 @@ struct SharedStore {
             ))
         }
         rolled.schemaVersion = SharedState.currentSchemaVersion
-        rolled.shieldsApplied = true
+        rolled.shieldsApplied = rolled.activeSession(at: now) == nil
         saveUnlocked(rolled)
         return rolled
     }

@@ -93,7 +93,7 @@ private struct ActiveSessionContent: View {
             Text("liveActivity.sessionRemaining")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(secondary)
-            Text("liveActivity.remaining \(context.state.stepsRemaining) \(context.state.nextRewardMinutes)")
+            Text("liveActivity.saved \(context.state.availableMinutes)")
                 .font(.system(size: 12, weight: .medium))
                 .foregroundStyle(secondary)
         }
@@ -199,7 +199,7 @@ private struct ExpandedDetail: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             if effectivePresentation(context) == .normal {
-                Text("liveActivity.remaining \(context.state.stepsRemaining) \(context.state.nextRewardMinutes)")
+                Text("liveActivity.saved \(context.state.availableMinutes)")
                     .font(.system(size: 13, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.68))
             } else {
@@ -240,8 +240,7 @@ private struct CompactTrailing: View {
         }
         .font(.system(size: 13, weight: .bold, design: .rounded))
         .foregroundStyle(.white)
-        // Screen Time sessions are limited to 15 minutes, so this remains stable at `15:00`.
-        .frame(width: 44, alignment: .trailing)
+        .frame(width: 50, alignment: .trailing)
         .lineLimit(1)
         .minimumScaleFactor(0.8)
         .accessibilityLabel(presentationAccessibilityLabel(context))

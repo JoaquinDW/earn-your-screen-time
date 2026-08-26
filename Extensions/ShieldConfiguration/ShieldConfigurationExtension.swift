@@ -39,7 +39,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         let viewModel = ShieldViewModel(sharedState: SharedStore.shared.load(now: now), now: now)
         let copy = copy(for: viewModel)
         logger.notice(
-            "event=shield_displayed state=\(viewModel.state.rawValue, privacy: .public) available_minutes=\(viewModel.availableMinutes) steps_remaining=\(viewModel.stepsRemaining)"
+            "event=screen_time_session_prompt_shown state=\(viewModel.state.rawValue, privacy: .public) available_minutes=\(viewModel.availableMinutes) steps_remaining=\(viewModel.stepsRemaining)"
         )
 
         return ShieldConfiguration(
@@ -68,43 +68,15 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         }
 
         switch viewModel.state {
-        case .sessionExpired:
-            return (
-                formatted("shield.expired.title", viewModel.sessionDurationMinutes ?? 0),
-                formatted("shield.expired.subtitle", viewModel.stepsRemaining)
-            )
         case .rewardAvailable:
             return (
                 formatted("shield.available.title", viewModel.availableMinutes),
                 localized("shield.available.subtitle")
             )
-        case .almostThere:
-            return (
-                formatted("shield.almost.title", viewModel.stepsRemaining),
-                formatted(
-                    "shield.almost.subtitle",
-                    viewModel.rewardMinutes,
-                    viewModel.estimatedWalkMinutes
-                )
-            )
-        case .dailyGoalCompleted:
-            return (
-                localized("shield.goal.title"),
-                formatted(
-                    "shield.goal.subtitle",
-                    viewModel.currentSteps,
-                    viewModel.earnedMinutesToday
-                )
-            )
-        case .noTime, .progress:
+        case .sessionExpired, .almostThere, .dailyGoalCompleted, .noTime, .progress:
             return (
                 localized("shield.noTime.title"),
-                formatted(
-                    "shield.noTime.progress",
-                    viewModel.stepsRemaining,
-                    viewModel.rewardMinutes,
-                    viewModel.estimatedWalkMinutes
-                )
+                localized("shield.noTime.subtitle")
             )
         }
     }
@@ -114,8 +86,6 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         switch viewModel.state {
         case .rewardAvailable:
             return localized("shield.action.chooseTime")
-        case .sessionExpired:
-            return localized("shield.action.earnMore")
         default:
             return localized("shield.action.openEarn")
         }

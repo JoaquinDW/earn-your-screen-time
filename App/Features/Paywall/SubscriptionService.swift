@@ -74,7 +74,9 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
         try await Purchases.shared.customerInfo(fetchPolicy: .fetchCurrent)
     }
 
-    func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
-        customerInfoUpdateHandler?(customerInfo)
+    nonisolated func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
+        Task { @MainActor [weak self] in
+            self?.customerInfoUpdateHandler?(customerInfo)
+        }
     }
 }

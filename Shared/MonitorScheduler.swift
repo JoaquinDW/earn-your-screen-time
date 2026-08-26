@@ -34,8 +34,7 @@ struct MonitorScheduler {
         selection: FamilyActivitySelection,
         now: Date = Date()
     ) throws {
-        guard !selection.isEmpty,
-              let session = state.activeSession(at: now),
+        guard let session = state.activeSession(at: now),
               let plan = SessionMonitorPlan.make(for: session, at: now) else {
             stopAll()
             return

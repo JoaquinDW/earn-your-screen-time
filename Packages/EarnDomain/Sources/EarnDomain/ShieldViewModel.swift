@@ -53,13 +53,13 @@ public struct ShieldViewModel: Equatable, Sendable {
         consumedMinutesToday = ledger.wallet.consumedSeconds / 60
         hasActivityData = sharedState.lastActivitySyncAt != nil
 
-        if let session = sharedState.currentSession,
+        if availableMinutes > 0 {
+            state = .rewardAvailable
+        } else if let session = sharedState.currentSession,
            session.status == .completed,
            now.timeIntervalSince(session.endsAt) >= 0,
            now.timeIntervalSince(session.endsAt) <= 120 {
             state = .sessionExpired
-        } else if availableMinutes > 0 {
-            state = .rewardAvailable
         } else if isDailyGoalComplete {
             state = .dailyGoalCompleted
         } else if milestoneProgress >= 0.75 {
