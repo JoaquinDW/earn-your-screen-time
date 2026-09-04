@@ -20,6 +20,10 @@ struct RootView: View {
                 mainContent
             }
         }
+        // v6 is one nocturnal palette, deliberately the same in both system appearances: the
+        // illustrations are painted at dusk and there is no light variant of them to switch to.
+        .preferredColorScheme(.dark)
+        .tint(Night.cobalt)
         .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: env.hasCompletedOnboarding)
         .onAppear { applyPendingRoute(env.pendingRoute) }
         .onChange(of: env.pendingRoute) { _, route in
@@ -63,7 +67,7 @@ struct RootView: View {
             Group {
                 switch selectedSection {
                 case .home:
-                    DashboardView(onNavigate: selectSection)
+                    DashboardView(onNavigationDepthChange: { isShowingDetail = $0 })
                 case .week:
                     WeekView(showsDoneButton: false)
                 case .settings:
@@ -79,11 +83,10 @@ struct RootView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if !isShowingDetail {
-                FloatingBottomNavigation(selection: Binding(
-                    get: { selectedSection },
-                    set: selectSection
-                ))
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                FloatingBottomNavigation(
+                    selection: Binding(get: { selectedSection }, set: selectSection)
+                )
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: isShowingDetail)

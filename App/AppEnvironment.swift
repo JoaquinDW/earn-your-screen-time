@@ -113,7 +113,7 @@ final class AppEnvironment {
 
     /// 0…1 through today's step goal.
     ///
-    /// This is what the Home screen's Guardian and its whole atmosphere read from. It has to be
+    /// This is what Home's illustration and Earn time's meter read from. It has to be
     /// the *day*, not `milestoneProgress`: the milestone resets every few hundred steps, so a
     /// screen driven by it would saw up and down all day instead of waking once.
     var dayProgress: Double {
@@ -545,6 +545,17 @@ final class AppEnvironment {
     }
 
     #if DEBUG
+    func replayOnboarding() {
+        OnboardingRouteStorage.reset()
+        isPresentingBlockedAppDetail = false
+        presentationFeedback = nil
+        state = SharedStore.shared.mutate { state in
+            state.onboarding = OnboardingProfile()
+            state.onboardingCompleted = false
+        }
+        synchronizeLiveActivity()
+    }
+
     func triggerDebugFeedback(_ event: EarnPresentationEvent) {
         publish(event)
     }

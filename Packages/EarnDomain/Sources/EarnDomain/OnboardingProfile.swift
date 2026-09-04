@@ -6,6 +6,7 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         didSet { refreshRecommendationIfPossible() }
     }
     public var scrolling: ScrollingBand?
+    public var previousAttempt: PreviousAttempt?
     public var movement: MovementBand? {
         didSet { refreshRecommendationIfPossible() }
     }
@@ -31,10 +32,12 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         primaryGoal: UserPrimaryGoal? = nil,
         onboardingCompletedAt: Date? = nil,
         lastGoalRecommendationDate: Date? = nil,
-        pendingGoalRecommendation: Int? = nil
+        pendingGoalRecommendation: Int? = nil,
+        previousAttempt: PreviousAttempt? = nil
     ) {
         self.desiredOutcomes = desiredOutcomes
         self.scrolling = scrolling
+        self.previousAttempt = previousAttempt
         self.movement = movement
         self.baselineDailySteps = baselineDailySteps.map { max(0, $0) }
         self.baselineSource = baselineSource
@@ -90,6 +93,14 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         case beMoreActive
         case beMoreIntentional
         case stopLosingHours
+    }
+
+    public enum PreviousAttempt: String, Codable, Sendable, CaseIterable {
+        case appleLimits
+        case blockingApps
+        case deletingApps
+        case willpower
+        case nothingYet
     }
 
     public enum ScrollingBand: String, Codable, Sendable, CaseIterable {
@@ -204,10 +215,12 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         goal: Goal? = nil,
         scrolling: ScrollingBand? = nil,
         walking: WalkingBand? = nil,
-        target: StepTarget? = nil
+        target: StepTarget? = nil,
+        previousAttempt: PreviousAttempt? = nil
     ) {
         desiredOutcomes = Self.outcomes(for: goal)
         self.scrolling = scrolling
+        self.previousAttempt = previousAttempt
         movement = walking?.movementBand
         baselineSource = nil
         primaryGoal = nil
@@ -279,7 +292,7 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case desiredOutcomes, scrolling, movement, recommendedDailyStepGoal, baselineDailySteps
         case baselineSource, primaryGoal, onboardingCompletedAt, lastGoalRecommendationDate
-        case pendingGoalRecommendation
+        case pendingGoalRecommendation, previousAttempt
         case goal, walking, target
     }
 
@@ -289,6 +302,7 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         desiredOutcomes = (try? container.decodeIfPresent(Set<DesiredOutcome>.self, forKey: .desiredOutcomes))
             ?? Self.outcomes(for: legacyGoal)
         scrolling = try? container.decodeIfPresent(ScrollingBand.self, forKey: .scrolling)
+        previousAttempt = try? container.decodeIfPresent(PreviousAttempt.self, forKey: .previousAttempt)
         movement = try? container.decodeIfPresent(MovementBand.self, forKey: .movement)
         baselineDailySteps = (try? container.decodeIfPresent(Int.self, forKey: .baselineDailySteps)).map { max(0, $0) }
         baselineSource = try? container.decodeIfPresent(BaselineSource.self, forKey: .baselineSource)
@@ -315,6 +329,7 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(desiredOutcomes, forKey: .desiredOutcomes)
         try container.encodeIfPresent(scrolling, forKey: .scrolling)
+        try container.encodeIfPresent(previousAttempt, forKey: .previousAttempt)
         try container.encodeIfPresent(movement, forKey: .movement)
         try container.encodeIfPresent(recommendedDailyStepGoal, forKey: .recommendedDailyStepGoal)
         try container.encodeIfPresent(baselineDailySteps, forKey: .baselineDailySteps)

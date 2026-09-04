@@ -3,8 +3,11 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 import UIKit
 
-/// The cream ground every screen sits on, with the paper grain that keeps large flat areas
-/// from reading as flat digital colour.
+/// The ground every screen sits on, with a grain that keeps large flat areas from banding.
+///
+/// v6's ground is near-black, so the grain now *lifts* instead of multiplying: on a dark screen a
+/// multiply blend is invisible, while the smooth gradients the design leans on band visibly
+/// without a little noise under them.
 ///
 /// The grain is generated once at launch and tiled; it is decorative, so it is hidden from
 /// accessibility and never intercepts touches.
@@ -19,7 +22,7 @@ struct PaperBackground: View {
 }
 
 struct GrainTexture: View {
-    var opacity: Double = 0.35
+    var opacity: Double = 0.05
 
     var body: some View {
         GeometryReader { geometry in
@@ -27,7 +30,7 @@ struct GrainTexture: View {
                 Image(uiImage: grain)
                     .resizable(resizingMode: .tile)
                     .frame(width: geometry.size.width, height: geometry.size.height)
-                    .blendMode(.multiply)
+                    .blendMode(.plusLighter)
                     .opacity(opacity)
             }
         }

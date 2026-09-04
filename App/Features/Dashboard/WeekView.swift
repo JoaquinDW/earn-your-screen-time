@@ -1,10 +1,15 @@
 import EarnDomain
 import SwiftUI
 
-/// The last seven days, in minutes earned.
+/// The last seven days, in minutes earned (design v6).
 ///
 /// Earned, not spent: how the time was used is the user's business. A day the app was never
 /// opened is a real zero rather than a gap, so the shape of the week is honest.
+///
+/// This is a **Tier 2** screen: the data is the subject and the artwork is a footnote under it.
+/// The illustration is a close crop of feet on a path — deliberately partial, deliberately at the
+/// bottom — saying only that the numbers above came from actual walking. It is never a hero here,
+/// because a chart with a hero over it becomes a fitness app.
 struct WeekView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
@@ -23,11 +28,14 @@ struct WeekView: View {
 
     var body: some View {
         ScrollView {
-            content
+            VStack(spacing: 0) {
+                content
+                footerScene
+            }
         }
         .scrollBounceBehavior(.basedOnSize)
         .foregroundStyle(Theme.ink)
-        .paperBackground()
+        .background(Night.ground.ignoresSafeArea())
         .onAppear {
             guard !chartIsVisible else { return }
             if reduceMotion {
@@ -36,6 +44,28 @@ struct WeekView: View {
                 withAnimation(.easeOut(duration: 0.42)) { chartIsVisible = true }
             }
         }
+    }
+
+    /// The one piece of artwork on this screen, and the last thing on it.
+    ///
+    /// It hangs from the top of its own crop (`IllustratedScene.progressPath`), so the walking
+    /// figure is what shows and the grass runs off the bottom into the ground.
+    private var footerScene: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer(minLength: 0)
+            Text("week.footerNote")
+                .font(.serif(21, italic: true, relativeTo: .title3))
+                .foregroundStyle(Night.textSoft)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, Theme.Space.gutter)
+        .padding(.bottom, Theme.Space.l)
+        .frame(maxWidth: .infinity, alignment: .bottomLeading)
+        .containerRelativeFrame(.vertical) { height, _ in height * 0.34 }
+        .background {
+            SceneBackdrop(scene: .progressPath, fill: .band, veil: 0.10)
+        }
+        .padding(.top, Theme.Space.xl)
     }
 
     private var content: some View {
@@ -57,13 +87,13 @@ struct WeekView: View {
                 StatPair(
                     value: Text("week.streakValue \(env.streakDays)"),
                     caption: "week.streakCaption",
-                    color: Theme.coralDeep,
+                    color: Night.text,
                     numericValue: Double(env.streakDays)
                 )
                 StatPair(
                     value: Text("week.distanceValue \(kilometres, specifier: "%.1f")"),
                     caption: "week.distanceCaption",
-                    color: Theme.sageDeep,
+                    color: Night.textSoft,
                     numericValue: kilometres
                 )
             }
@@ -82,7 +112,7 @@ struct WeekView: View {
 
             if showsDoneButton {
                 Button("common.done") { dismiss() }
-                    .buttonStyle(.pill(.sage))
+                    .buttonStyle(.pill)
                     .padding(.top, Theme.Space.l)
             }
         }
@@ -111,7 +141,7 @@ struct WeekView: View {
                     .font(.serif(25))
                     .foregroundStyle(Theme.cobalt)
             }
-            ProgressView(value: progress.fraction).tint(Theme.cobalt)
+            TickMeter(progress: progress.fraction, height: 12)
             Text(
                 "\(progress.cumulativeSteps.formatted(.number.locale(locale))) / \(journey.target.formatted(.number.locale(locale))) steps"
             )
@@ -121,8 +151,8 @@ struct WeekView: View {
                 .foregroundStyle(Theme.muted)
         }
         .padding(Theme.Space.m)
-        .background(Theme.paper, in: .rect(cornerRadius: Theme.cornerRadius))
-        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Theme.line) }
+        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
+        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
         .accessibilityElement(children: .combine)
     }
 
@@ -185,12 +215,12 @@ struct WeekView: View {
                 VStack(spacing: 9) {
                     Text("\(day.earnedMinutes)")
                         .font(.sans(11.5, weight: .bold))
-                        .foregroundStyle(Theme.muted)
+                        .foregroundStyle(day.earnedMinutes > 0 ? Night.textSoft : Night.textGhost)
                         .contentTransition(.numericText(value: Double(day.earnedMinutes)))
                         .animation(reduceMotion ? nil : .snappy(duration: 0.28), value: day.earnedMinutes)
 
                     Capsule()
-                        .fill(day.day == env.ledger.day ? Theme.cobalt : Theme.wash.opacity(0.45))
+                        .fill(day.day == env.ledger.day ? Night.cobalt : Night.forest)
                         .frame(height: chartIsVisible ? barHeight(for: day) : 4)
                         .animation(reduceMotion ? nil : .easeOut(duration: 0.38), value: barHeight(for: day))
 

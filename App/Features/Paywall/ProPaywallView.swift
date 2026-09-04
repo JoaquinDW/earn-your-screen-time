@@ -63,13 +63,6 @@ private struct ProPaywallContent: View {
         ZStack(alignment: .topTrailing) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    GuardianPanel(
-                        progress: GuardianState.free.anchor,
-                        height: 176,
-                        cornerRadius: Theme.sheetRadius
-                    )
-                    .padding(.horizontal, Theme.Space.m)
-
                     hero
                     if let profile {
                         personalizedPlan(profile)
@@ -81,10 +74,10 @@ private struct ProPaywallContent: View {
                     purchaseButton
                     legalLinks
                 }
-                .padding(.top, Theme.Space.m)
                 .padding(.bottom, Theme.Space.l)
             }
             .scrollIndicators(.hidden)
+            .ignoresSafeArea(edges: .top)
 
             if allowsDismiss {
                 Button {
@@ -93,9 +86,11 @@ private struct ProPaywallContent: View {
                 } label: {
                     Image(systemName: "xmark")
                         .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(Theme.ink)
+                        .foregroundStyle(Night.text)
                         .frame(width: Theme.minTouchTarget, height: Theme.minTouchTarget)
-                        .background(Theme.paper.opacity(0.92), in: .circle)
+                        .background(.ultraThinMaterial, in: .circle)
+                        .background(Night.groundDeep.opacity(0.5), in: .circle)
+                        .environment(\.colorScheme, .dark)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Close paywall")
@@ -104,36 +99,43 @@ private struct ProPaywallContent: View {
             }
         }
         .foregroundStyle(Theme.ink)
-        .paperBackground()
+        .background(Night.ground.ignoresSafeArea())
         .task { await viewModel.viewAppeared() }
         .alert(item: $viewModel.alert, content: alert(for:))
     }
 
-    @ViewBuilder
+    /// The one emotional beat on a screen that otherwise has to be commercially plain.
+    ///
+    /// The artwork's sky is enormous and empty, so the headline sets straight into it and the
+    /// prices below stay on solid ground where nothing competes with them. The share is
+    /// deliberately under half the screen: the brief is that the illustration must never push
+    /// the price out of the first scroll.
     private var hero: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.s) {
-            if profile == nil {
-                Text("EARNIT MEMBERSHIP").eyebrowStyle(Theme.coralDeep)
-                Text("Make your scrolling\ncost something.")
-                    .font(.serif(42, relativeTo: .largeTitle))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityAddTraits(.isHeader)
-                Text("Move more. Scroll less. Feel better.")
-                    .font(.sans(17))
-                    .foregroundStyle(Theme.muted)
-            } else {
-                Text("YOUR PLAN IS READY").eyebrowStyle(Theme.coralDeep)
-                Text("Start your 30-day change.")
-                    .font(.serif(42, relativeTo: .largeTitle))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityAddTraits(.isHeader)
-                Text("Your personalized Earnit plan is ready.")
-                    .font(.sans(17))
-                    .foregroundStyle(Theme.muted)
+        SceneHero(scene: .freedomRidge, share: 0.42) {
+            VStack(alignment: .leading, spacing: Theme.Space.s) {
+                if profile == nil {
+                    Text("paywall.eyebrow").eyebrowStyle(Night.textSoft)
+                    Text("paywall.headline")
+                        .font(.serif(40, relativeTo: .largeTitle))
+                        .foregroundStyle(Night.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
+                    Text("paywall.subtitle")
+                        .font(.sans(16))
+                        .foregroundStyle(Night.textSoft)
+                } else {
+                    Text("paywall.plan.eyebrow").eyebrowStyle(Night.textSoft)
+                    Text("paywall.plan.headline")
+                        .font(.serif(40, relativeTo: .largeTitle))
+                        .foregroundStyle(Night.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
+                    Text("paywall.plan.subtitle")
+                        .font(.sans(16))
+                        .foregroundStyle(Night.textSoft)
+                }
             }
         }
-        .padding(.horizontal, Theme.Space.gutter)
-        .padding(.top, Theme.Space.l)
     }
 
     private func personalizedPlan(_ profile: OnboardingProfile) -> some View {
@@ -152,15 +154,15 @@ private struct ProPaywallContent: View {
             )
         }
         .padding(Theme.Space.m)
-        .background(Theme.paper, in: .rect(cornerRadius: Theme.cornerRadius))
-        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Theme.line) }
+        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
+        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
         .padding(.horizontal, Theme.Space.gutter)
         .padding(.top, Theme.Space.l)
     }
 
     private func paywallPlanRow(icon: String, text: Text) -> some View {
         HStack(spacing: Theme.Space.s) {
-            Image(systemName: icon).foregroundStyle(Theme.coralDeep).frame(width: 24)
+            Image(systemName: icon).foregroundStyle(Night.cobaltText).frame(width: 24)
             text.font(.sans(15, weight: .semibold))
         }
         .accessibilityElement(children: .combine)
@@ -182,9 +184,10 @@ private struct ProPaywallContent: View {
 
     private func benefit(_ title: LocalizedStringKey) -> some View {
         HStack(spacing: Theme.Space.m) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 19, weight: .semibold))
-                .foregroundStyle(Theme.sageDeep)
+            Image(systemName: "checkmark")
+                .font(.sans(14, weight: .semibold))
+                .foregroundStyle(Night.moss)
+                .frame(width: 20)
                 .accessibilityHidden(true)
             Text(title)
                 .font(.sans(16, weight: .semibold))
@@ -211,6 +214,17 @@ private struct ProPaywallContent: View {
                         Task { await viewModel.loadOffering() }
                     }
                     .buttonStyle(.quietLink)
+
+                    // Sandbox/TestFlight only: names the actual configuration fault instead
+                    // of leaving an unreproducible "try again" loop.
+                    if let diagnostic = viewModel.loadDiagnostic {
+                        Text(verbatim: diagnostic)
+                            .font(.sans(12))
+                            .foregroundStyle(Theme.muted)
+                            .multilineTextAlignment(.center)
+                            .textSelection(.enabled)
+                            .padding(.top, Theme.Space.s)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, Theme.Space.l)
@@ -239,7 +253,7 @@ private struct ProPaywallContent: View {
         } label: {
             HStack(spacing: Theme.Space.s) {
                 if viewModel.isPurchasing {
-                    ProgressView().tint(Theme.paper)
+                    ProgressView().tint(Color.white)
                 }
                 purchaseButtonTitle
             }
@@ -257,7 +271,7 @@ private struct ProPaywallContent: View {
             return Text("Choose a subscription")
         }
         if package.freeTrialDescription(locale: locale) != nil {
-            return Text("Start My Free Trial")
+            return Text("Start My 3-Day Free Trial")
         }
         return Text("Subscribe for \(package.price) \(billingPeriod(for: package))")
     }
@@ -281,6 +295,9 @@ private struct ProPaywallContent: View {
                     .foregroundStyle(Theme.muted)
             }
             .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Theme.Space.m)
+            .background(Night.panel.opacity(0.55), in: .rect(cornerRadius: Theme.cornerRadius))
             .padding(.horizontal, Theme.Space.gutter)
             .padding(.top, Theme.Space.m)
             .accessibilityElement(children: .combine)
@@ -420,10 +437,10 @@ private struct PlanRow: View {
                         if package.plan == .yearly {
                             Text("Best value")
                                 .font(.sans(11, weight: .bold))
-                                .foregroundStyle(Theme.coralDeep)
+                                .foregroundStyle(Night.cobaltText)
                                 .padding(.horizontal, Theme.Space.s)
                                 .padding(.vertical, Theme.Space.xs)
-                                .background(Theme.coralLight, in: .capsule)
+                                .background(Night.cobaltWash, in: .capsule)
                         }
                     }
                     Text(period)
@@ -432,21 +449,26 @@ private struct PlanRow: View {
                     if let trial = package.freeTrialDescription(locale: locale) {
                         Text(trial)
                             .font(.sans(12.5, weight: .semibold))
-                            .foregroundStyle(Theme.sageDeep)
+                            .foregroundStyle(Night.moss)
                     }
                 }
                 Spacer(minLength: Theme.Space.s)
                 Text(package.price)
-                    .font(.serif(24, relativeTo: .title3))
-                    .foregroundStyle(isSelected ? Theme.coralDeep : Theme.ink)
+                    .font(.serif(26, relativeTo: .title3))
+                    .foregroundStyle(isSelected ? Night.text : Night.textSoft)
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
             .padding(.horizontal, Theme.Space.m)
             .frame(minHeight: 76)
-            .background(isSelected ? Theme.paper : Theme.background, in: .rect(cornerRadius: Theme.cornerRadius))
+            .background(
+                isSelected ? Night.panel : Night.panel.opacity(0.45),
+                in: .rect(cornerRadius: Theme.cornerRadius)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: Theme.cornerRadius)
-                    .stroke(isSelected ? Theme.coralDeep : Theme.line, lineWidth: isSelected ? 2 : 1)
+                    .stroke(isSelected ? Night.cobalt : Night.edge, lineWidth: isSelected ? 1.5 : 1)
             }
             .contentShape(.rect)
         }
@@ -461,20 +483,20 @@ private struct PlanSkeleton: View {
     var body: some View {
         HStack(spacing: Theme.Space.m) {
             Circle()
-                .fill(Theme.line)
+                .fill(Night.text.opacity(0.1))
                 .frame(width: 20, height: 20)
             VStack(alignment: .leading, spacing: Theme.Space.s) {
-                Capsule().fill(Theme.line).frame(width: 92, height: 14)
-                Capsule().fill(Theme.line).frame(width: 64, height: 10)
+                Capsule().fill(Night.text.opacity(0.1)).frame(width: 92, height: 14)
+                Capsule().fill(Night.text.opacity(0.1)).frame(width: 64, height: 10)
             }
             Spacer()
-            Capsule().fill(Theme.line).frame(width: 72, height: 18)
+            Capsule().fill(Night.text.opacity(0.1)).frame(width: 72, height: 18)
         }
         .padding(.horizontal, Theme.Space.m)
         .frame(minHeight: 76)
         .overlay {
             RoundedRectangle(cornerRadius: Theme.cornerRadius)
-                .stroke(Theme.line, lineWidth: 1)
+                .stroke(Night.edge, lineWidth: 1)
         }
         .accessibilityElement()
         .accessibilityLabel("Loading subscription option")

@@ -36,12 +36,14 @@ struct OnboardingProfileTests {
         let profile = OnboardingProfile(
             desiredOutcomes: [.walkMore, .beMoreIntentional],
             scrolling: .twoToFourHours,
-            movement: .underThreeThousand
+            movement: .underThreeThousand,
+            previousAttempt: .blockingApps
         )
         let data = try JSONEncoder().encode(profile)
         let decoded = try JSONDecoder().decode(OnboardingProfile.self, from: data)
         #expect(decoded == profile)
         #expect(decoded.recommendedDailyStepGoal == 8_000)
+        #expect(decoded.previousAttempt == .blockingApps)
         #expect(String(decoding: data, as: UTF8.self).contains("twoToFourHours"))
     }
 
@@ -67,6 +69,33 @@ struct OnboardingProfileTests {
             scrolling: .underOneHour,
             movement: .unsure
         ).isComplete)
+    }
+}
+
+@Suite("Screen-time cost ranges")
+struct ScreenTimeCostRangeTests {
+    @Test("Closed scrolling categories retain their conservative bounds", arguments: [
+        (OnboardingProfile.ScrollingBand.underOneHour, 0.0, 7.0, 0.0, 365.0 / 24.0),
+        (.oneToTwoHours, 7.0, 14.0, 365.0 / 24.0, 730.0 / 24.0),
+        (.twoToFourHours, 14.0, 28.0, 730.0 / 24.0, 1_460.0 / 24.0)
+    ])
+    func boundedCategories(
+        band: OnboardingProfile.ScrollingBand,
+        weeklyLower: Double,
+        weeklyUpper: Double,
+        annualLower: Double,
+        annualUpper: Double
+    ) {
+        let cost = ScreenTimeCostRange(scrollingBand: band)
+        #expect(cost.weeklyHours == .init(lowerBound: weeklyLower, upperBound: weeklyUpper))
+        #expect(cost.annualDays == .init(lowerBound: annualLower, upperBound: annualUpper))
+    }
+
+    @Test("Four hours plus remains a lower-bound estimate")
+    func lowerBoundCategory() {
+        let cost = ScreenTimeCostRange(scrollingBand: .fourHoursPlus)
+        #expect(cost.weeklyHours == .init(lowerBound: 28, upperBound: nil))
+        #expect(cost.annualDays == .init(lowerBound: 1_460.0 / 24.0, upperBound: nil))
     }
 }
 

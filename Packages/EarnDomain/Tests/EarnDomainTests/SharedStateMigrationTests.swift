@@ -117,6 +117,32 @@ struct SharedStateMigrationTests {
         #expect(profile.scrolling == .twoToFourHours)
         #expect(profile.movement == .fiveToEightThousand)
         #expect(profile.recommendedDailyStepGoal == 9_000)
+        #expect(profile.previousAttempt == nil)
+    }
+
+    @Test("A profile written before previous-attempt tracking keeps every existing field")
+    func profileWithoutPreviousAttempt() throws {
+        let json = """
+        {
+          "desiredOutcomes": ["walkMore", "feelInControl"],
+          "scrolling": "oneToTwoHours",
+          "movement": "threeToFiveThousand",
+          "recommendedDailyStepGoal": 9000,
+          "baselineDailySteps": 4200,
+          "baselineSource": "selfReported",
+          "primaryGoal": "moveMore"
+        }
+        """
+
+        let profile = try JSONDecoder().decode(OnboardingProfile.self, from: Data(json.utf8))
+        #expect(profile.previousAttempt == nil)
+        #expect(profile.desiredOutcomes == [.walkMore, .feelInControl])
+        #expect(profile.scrolling == .oneToTwoHours)
+        #expect(profile.movement == .threeToFiveThousand)
+        #expect(profile.recommendedDailyStepGoal == 9_000)
+        #expect(profile.baselineDailySteps == 4_200)
+        #expect(profile.baselineSource == .selfReported)
+        #expect(profile.primaryGoal == .moveMore)
     }
 
     @Test("Every legacy StepTarget keeps its old numeric meaning", arguments: [

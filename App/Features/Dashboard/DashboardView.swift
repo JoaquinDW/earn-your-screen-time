@@ -2,51 +2,62 @@ import EarnDomain
 import FamilyControls
 import SwiftUI
 
-/// Home (design v5) — the Guardian *is* the progress.
+/// The Home tab's host (design v6).
 ///
-/// There is no ring, no percentage and no card. How much of the day has been earned is read off
-/// the figure and the air around it: how low it sits, how much of the frame it takes, how far the
-/// wings reach, how much cobalt has escaped. See `GuardianAtmosphere` for the layers.
-///
-/// The copy leads with the reward loop — *680 steps until your next 5 minutes* — because that is
-/// the only question the screen is here to answer. The daily total drops to one hairline below
-/// it, and the blocked apps stop being a status row of circles: they are now what the balance
-/// buys. History lives in the Progress tab; this screen holds nothing that is not today.
+/// The screen itself is `DashboardHome`; this type keeps everything that is not drawing —
+/// refresh, the session lifecycle, the sheets, the goal recommendation, the deep-link route —
+/// unchanged from v5, and adds the one new destination v6 introduces: `EarnTimeView`.
 struct DashboardView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.locale) private var locale
 
-    var onNavigate: ((AppSection) -> Void)? = nil
+    /// Lets `RootView` pull the tab bar away while a destination is pushed, the same way
+    /// `SettingsView` already does.
+    var onNavigationDepthChange: ((Bool) -> Void)? = nil
 
-    @State private var isShowingSettings = false
-    @State private var isShowingWeek = false
+    private enum HomeDestination: Hashable {
+        case earnTime
+    }
+
+    @State private var path: [HomeDestination] = []
     @State private var isShowingApps = false
     @State private var isShowingSpend = false
     @State private var isShowingJourneyResult = false
     @State private var selection = FamilyActivitySelection()
     @State private var selectedSessionMinutes = 5
-    @State private var guardianEmphasis: CGFloat = 0
-
-    /// The one value the whole screen interpolates from.
-    private var progress: Double { env.dayProgress }
 
     var body: some View {
-        ZStack {
-            GuardianAtmosphere(progress: progress)
+        NavigationStack(path: $path) {
+            ZStack {
+                // The evening is the ground, not a decoration behind a card: it owns the whole
+                // screen and `SceneBackdrop` washes its edges back into `Night.ground`.
+                SceneBackdrop(scene: .homeEvening).ignoresSafeArea()
 
-            home
-
-            if let feedback = env.presentationFeedback {
-                EarnFeedbackOverlay(
-                    feedback: feedback,
-                    onFinished: { env.dismissPresentationFeedback(feedback) }
+                DashboardHome(
+                    selection: selection,
+                    onChooseApps: { isShowingApps = true },
+                    onSpend: {
+                        guard env.wallet.availableMinutes > 0 else { return }
+                        isShowingSpend = true
+                    },
+                    onEarnMore: { path.append(.earnTime) }
                 )
+
+                if let feedback = env.presentationFeedback {
+                    EarnFeedbackOverlay(
+                        feedback: feedback,
+                        onFinished: { env.dismissPresentationFeedback(feedback) }
+                    )
                     .zIndex(1)
+                }
+            }
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(for: HomeDestination.self) { destination in
+                switch destination {
+                case .earnTime: EarnTimeView()
+                }
             }
         }
-        .foregroundStyle(Theme.ink)
-        .animation(reduceMotion ? nil : .easeInOut(duration: EarnMotion.reward), value: progress)
         .animation(reduceMotion ? nil : .snappy(duration: EarnMotion.standard), value: env.isLocked)
         .task {
             await env.refresh()
@@ -60,32 +71,23 @@ struct DashboardView: View {
             guard !Task.isCancelled else { return }
             env.reload()
         }
-        .task(id: env.presentationFeedback?.id) {
-            guardianEmphasis = 0
-            guard !reduceMotion, guardianAmplitude > 0 else { return }
-
-            await Task.yield()
-            withAnimation(.smooth(duration: 0.30)) {
-                guardianEmphasis = 1
-            }
-            try? await Task.sleep(for: .milliseconds(260))
-            guard !Task.isCancelled else { return }
-            withAnimation(.smooth(duration: 0.44)) {
-                guardianEmphasis = 0
-            }
-        }
         .onAppear {
+            // Report the depth on entry too, not only when it changes: coming back to the tab
+            // with a destination still pushed has to keep the tab bar away.
+            onNavigationDepthChange?(!path.isEmpty)
             selection = env.screenTime.selection
             isShowingJourneyResult = env.journey?.finalizedResult != nil
                 && env.journey?.completionAcknowledged == false
         }
+        .onChange(of: path) { _, path in
+            onNavigationDepthChange?(!path.isEmpty)
+        }
+        .onDisappear { onNavigationDepthChange?(false) }
         .onChange(of: env.wallet.availableMinutes) { _, availableMinutes in
             if selectedSessionMinutes > availableMinutes {
                 selectedSessionMinutes = max(1, availableMinutes)
             }
         }
-        .sheet(isPresented: $isShowingSettings) { SettingsView() }
-        .sheet(isPresented: $isShowingWeek) { WeekView() }
         .sheet(isPresented: $isShowingApps, onDismiss: { selection = env.screenTime.selection }) {
             AppSelectionView()
         }
@@ -108,300 +110,6 @@ struct DashboardView: View {
         )) {
             GoalRecommendationView()
                 .interactiveDismissDisabled()
-        }
-    }
-
-    // MARK: - Home
-    //
-    // Three bands: a hairline header, an elastic stage the Guardian is anchored to the bottom of,
-    // and a copy block fixed to its own content height. The figure takes the upper screen back as
-    // the day is earned because the stage is whatever the copy leaves it.
-
-    private var home: some View {
-        VStack(spacing: 0) {
-            header
-
-            GuardianStage(progress: progress)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .scaleEffect(guardianScale)
-                .offset(y: guardianOffset)
-
-            copy
-        }
-    }
-
-    private var header: some View {
-        HStack {
-            Text(Date.now.formatted(.dateTime.weekday(.wide).locale(locale)))
-            Spacer()
-            if env.streakDays > 0 {
-                Text("dashboard.streak \(env.streakDays)")
-                    .foregroundStyle(progress > 0.2 ? Theme.cobalt : Theme.muted)
-                    .contentTransition(.numericText(value: Double(env.streakDays)))
-            }
-        }
-        .font(.sans(12.5, weight: .semibold))
-        .foregroundStyle(Theme.muted)
-        .padding(.horizontal, 26)
-        .padding(.top, 2)
-    }
-
-    // MARK: - Copy
-
-    private var copy: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            headline
-
-            Hairline().padding(.top, ramp(progress, [(0.06, 26), (1.00, 20)]))
-
-            totals.padding(.top, ramp(progress, [(0.06, 15), (1.00, 13)]))
-
-            walletSummary.padding(.top, Theme.Space.m)
-
-            if let error = env.lastError {
-                Text(error)
-                    .font(.sans(12.5))
-                    .foregroundStyle(Theme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, Theme.Space.s)
-                    .transition(.opacity)
-            }
-
-            Spacer(minLength: ramp(progress, [(0.06, 20), (1.00, 12)]))
-
-            spendBand.padding(.top, Theme.Space.m)
-
-            if onNavigate == nil {
-                footerLinks.padding(.top, Theme.Space.s)
-            }
-        }
-        .padding(.horizontal, 28)
-        .padding(.bottom, Theme.Space.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.lastError)
-    }
-
-    /// The reward loop, in the largest type on the screen.
-    ///
-    /// At a full day it has nothing left to ask for, so it states what was earned instead.
-    @ViewBuilder
-    private var headline: some View {
-        let display = ramp(progress, [(0.06, 62), (0.47, 58), (0.92, 56), (1.00, 56)])
-        let aside = ramp(progress, [(0.06, 25), (0.47, 24), (0.92, 23), (1.00, 23)])
-
-        if progress >= 1 {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("home.minutesEarnedHeadline \(env.earnedMinutesToday)")
-                    .font(.serif(display))
-                    .foregroundStyle(Theme.cobalt)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                Text("home.spendHowever")
-                    .font(.serif(aside, italic: true, relativeTo: .title2))
-                    .foregroundStyle(Theme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 8)
-            }
-            .accessibilityElement(children: .combine)
-        } else {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("dashboard.stepsToGo \(env.nextMilestone.remainingAmount)")
-                    .font(.serif(display))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                    .contentTransition(.numericText(value: Double(env.nextMilestone.remainingAmount)))
-                Text(env.isFinalMilestoneOfDay ? "home.untilYourLast" : "home.untilYourNext")
-                    .font(.serif(aside, italic: true, relativeTo: .title2))
-                    .foregroundStyle(Theme.muted)
-                    .padding(.top, ramp(progress, [(0.06, 8), (1.00, 6)]))
-                    .padding(.bottom, 2)
-                Text("dashboard.minutesReward \(env.nextMilestone.rewardMinutes)")
-                    .font(.serif(display))
-                    // Cobalt only once the day has actually paid out: at zero earned it is still
-                    // a promise, not a reward.
-                    .foregroundStyle(env.earnedMinutesToday > 0 ? Theme.cobalt : Theme.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-            }
-            .accessibilityElement(children: .combine)
-        }
-    }
-
-    /// The day's totals, demoted to one hairline row — and the only place to pull fresh steps
-    /// from, since this screen has no scroll to refresh.
-    private var totals: some View {
-        Button {
-            Task { await env.refresh() }
-        } label: {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                // Pre-formatted so the count keeps its locale's thousands separators.
-                Text("home.stepsTodayCount \(env.ledger.activityAmount.formatted(.number.locale(locale)))")
-                    .contentTransition(.numericText(value: Double(env.ledger.activityAmount)))
-                Text(verbatim: "·").opacity(0.45)
-                if progress >= 1 {
-                    Text("home.fullDay")
-                } else {
-                    Text("home.minutesEarnedCount \(env.earnedMinutesToday)")
-                        .foregroundStyle(env.earnedMinutesToday > 0 ? Theme.cobalt : Theme.muted)
-                        .fontWeight(env.earnedMinutesToday > 0 ? .semibold : .regular)
-                        .contentTransition(.numericText(value: Double(env.earnedMinutesToday)))
-                }
-                if env.isRefreshing {
-                    ProgressView()
-                        .controlSize(.mini)
-                        .tint(Theme.muted)
-                        .accessibilityHidden(true)
-                }
-            }
-            .font(.sans(13))
-            .foregroundStyle(Theme.muted)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(.rect)
-        }
-        .buttonStyle(.plain)
-        .disabled(env.isRefreshing)
-        .accessibilityHint(Text("dashboard.refreshSteps"))
-    }
-
-    private var walletSummary: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            let balance = env.currentWalletBalanceSeconds(at: context.date) / 60
-            let consumed = env.currentConsumedSeconds(at: context.date) / 60
-            HStack(alignment: .firstTextBaseline, spacing: Theme.Space.m) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("wallet.title")
-                        .font(.sans(10.5, weight: .semibold))
-                        .textCase(.uppercase)
-                        .kerning(1.3)
-                        .foregroundStyle(Theme.muted)
-                    Text("common.minutesValue \(balance)")
-                        .font(.serif(31))
-                        .foregroundStyle(Theme.cobalt)
-                        .monospacedDigit()
-                        .contentTransition(.numericText(value: Double(balance)))
-                }
-                Spacer(minLength: Theme.Space.s)
-                walletMetric("wallet.earnedToday", value: "+\(env.earnedMinutesToday)")
-                walletMetric("wallet.consumedToday", value: "−\(consumed)")
-            }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(Text("wallet.summary \(balance) \(env.earnedMinutesToday) \(consumed)"))
-        }
-    }
-
-    private func walletMetric(_ title: LocalizedStringKey, value: String) -> some View {
-        VStack(alignment: .trailing, spacing: 3) {
-            Text(title)
-                .font(.sans(10.5))
-                .foregroundStyle(Theme.muted)
-            Text(value)
-                .font(.sans(15, weight: .semibold))
-                .foregroundStyle(Theme.ink)
-                .monospacedDigit()
-        }
-    }
-
-    /// The slot below the hairline: what the balance buys, or the session already running.
-    @ViewBuilder
-    private var spendBand: some View {
-        if let session = env.activeSession {
-            activeSessionView(session).transition(.opacity)
-        } else {
-            ReadyToSpendRow(
-                selection: selection,
-                availableMinutes: env.wallet.availableMinutes,
-                minimumSpendMinutes: 1,
-                onChoose: { isShowingApps = true },
-                onSpend: {
-                    guard env.wallet.availableMinutes > 0 else { return }
-                    isShowingSpend = true
-                }
-            )
-            .transition(.opacity)
-        }
-    }
-
-    private func activeSessionView(_ session: ScreenTimeSession) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(alignment: .firstTextBaseline) {
-                Label("session.active", systemImage: "lock.open.fill")
-                    .labelStyle(.titleAndIcon)
-                    .font(.sans(11))
-                    .textCase(.uppercase)
-                    .kerning(1.5)
-                    .foregroundStyle(Theme.cobaltDeep)
-                    .contentTransition(.symbolEffect(.replace))
-                Spacer()
-                TimelineView(.periodic(from: .now, by: 1)) { context in
-                    Text(sessionTime(session.remainingSeconds(at: context.date)))
-                        .font(.sans(22, weight: .bold))
-                        .monospacedDigit()
-                        .foregroundStyle(Theme.cobalt)
-                        .contentTransition(.numericText())
-                }
-            }
-            Text("session.active.explanation")
-                .font(.sans(12.5))
-                .foregroundStyle(Theme.muted)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Text("session.walletSaved \(env.wallet.availableMinutes)")
-                .font(.sans(12.5, weight: .semibold))
-                .foregroundStyle(Theme.cobaltDeep)
-                .monospacedDigit()
-
-            Button {
-                Task { await env.pauseSession() }
-            } label: {
-                HStack {
-                    if env.isPausingSession {
-                        ProgressView().controlSize(.small).accessibilityHidden(true)
-                    }
-                    Text("session.endAndSave")
-                    Spacer()
-                    Image(systemName: "stop.fill").accessibilityHidden(true)
-                }
-                .font(.sans(14, weight: .semibold))
-                .frame(minHeight: Theme.minTouchTarget)
-                .foregroundStyle(Theme.cobaltDeep)
-                .contentShape(.rect)
-            }
-            .buttonStyle(.plain)
-            .disabled(env.isPausingSession)
-        }
-        .padding(.vertical, 10)
-    }
-
-    private func sessionTime(_ seconds: Int) -> String {
-        String(format: "%d:%02d", seconds / 60, seconds % 60)
-    }
-
-    private var guardianScale: CGFloat {
-        0.9 * (1 + guardianAmplitude * guardianEmphasis)
-    }
-
-    private var guardianOffset: CGFloat {
-        -16 - 3 * guardianEmphasis
-    }
-
-    private var guardianAmplitude: CGFloat {
-        guard !reduceMotion else { return 0 }
-        return switch env.presentationFeedback?.event {
-        case .screenTimeEarned: 0.012
-        case .firstRewardEarned: 0.032
-        case .dailyGoalCompleted: 0.025
-        default: 0
-        }
-    }
-
-    private var footerLinks: some View {
-        HStack(spacing: Theme.Space.l) {
-            Button("dashboard.thisWeek") { isShowingWeek = true }
-                .buttonStyle(.quietLink)
-            Button("settings.title") { isShowingSettings = true }
-                .buttonStyle(.quietLink)
         }
     }
 }
@@ -448,15 +156,16 @@ private struct EarnFeedbackOverlay: View {
                         .font(.sans(12, weight: .bold))
                         .textCase(.uppercase)
                         .kerning(1.2)
-                        .foregroundStyle(Theme.cobaltDeep)
+                        .foregroundStyle(Night.cobaltText)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 9)
-                        .background(Theme.paper.opacity(0.94), in: .capsule)
+                        .background(.ultraThinMaterial, in: .capsule)
+                        .background(Night.panel.opacity(0.9), in: .capsule)
                         .overlay {
                             Capsule()
-                                .stroke(Theme.cobalt.opacity(borderOpacity), lineWidth: 1)
+                                .stroke(Night.cobalt.opacity(borderOpacity), lineWidth: 1)
                         }
-                        .shadow(color: Theme.cobalt.opacity(shadowOpacity), radius: 14, y: 5)
+                        .shadow(color: Night.cobalt.opacity(shadowOpacity), radius: 14, y: 5)
                         .opacity(opacity)
                         .scaleEffect(scale)
                         .offset(y: offset)
@@ -505,14 +214,14 @@ private struct EarnFeedbackOverlay: View {
     private var borderOpacity: Double {
         switch phase {
         case .hidden, .exiting: 0
-        case .arrived: 0.32
-        case .settled: 0.14
+        case .arrived: 0.55
+        case .settled: 0.22
         }
     }
 
     private var shadowOpacity: Double {
         switch phase {
-        case .arrived: 0.10
+        case .arrived: 0.22
         default: 0
         }
     }
@@ -589,11 +298,11 @@ struct SpendSheet: View {
                     } label: {
                         Text("common.minutesValue \(minutes)")
                             .font(.sans(15, weight: .semibold))
-                            .foregroundStyle(isSelected ? Color.white : Theme.ink)
+                            .foregroundStyle(isSelected ? Color.white : Night.textSoft)
                             .frame(maxWidth: .infinity)
                             .frame(minHeight: Theme.minTouchTarget)
                             .background(
-                                isSelected ? Theme.cobalt : Theme.stone.opacity(0.7),
+                                isSelected ? Night.cobalt : Night.forestLift,
                                 in: .capsule
                             )
                     }
@@ -635,7 +344,7 @@ struct SpendSheet: View {
                     Text("session.start \(selectedMinutes)")
                 }
             }
-            .buttonStyle(.pill(.sage))
+            .buttonStyle(.pill)
             .disabled(env.isStartingSession || selectedMinutes > env.maximumStartableMinutes)
 
             if let error = env.lastError {
@@ -652,7 +361,7 @@ struct SpendSheet: View {
         .padding(.bottom, Theme.Space.l)
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundStyle(Theme.ink)
-        .background(Theme.background.ignoresSafeArea())
+        .background(Night.ground.ignoresSafeArea())
         .onAppear {
             selectedMinutes = min(max(1, selectedMinutes), max(1, env.maximumStartableMinutes))
         }
@@ -712,7 +421,7 @@ private struct JourneyResultView: View {
     let result: ThirtyDayJourney.FinalizedResult
     let onDone: () -> Void
 
-    /// How far the month actually got — the Guardian the whole sheet is painted at.
+    /// How far the month actually got.
     private var progress: Double {
         result.reachedTarget
             ? 1
@@ -720,35 +429,36 @@ private struct JourneyResultView: View {
     }
 
     var body: some View {
-        ZStack {
-            GuardianAtmosphere(progress: progress)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    GuardianPortrait(progress: progress)
-                        .frame(height: 220)
-                        .frame(maxWidth: .infinity)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                // Thirty days is the one completion moment the product has, so it gets the
+                // aspirational frame — and it is the only place outside onboarding and the
+                // paywall that does.
+                SceneHero(scene: .freedomRidge, share: 0.40) {
+                    Text("YOU EARNED YOUR MONTH").eyebrowStyle(Night.textSoft)
+                }
 
-                    Text("YOU EARNED YOUR MONTH").eyebrowStyle(Theme.cobaltDeep).padding(.top, Theme.Space.l)
+                VStack(alignment: .leading, spacing: 0) {
                     Text("That’s what happens when your phone gives you a reason to move.")
-                        .font(.serif(39))
+                        .font(.serif(36))
                         .fixedSize(horizontal: false, vertical: true)
-                        .padding(.top, 10)
+                        .padding(.top, Theme.Space.l)
 
                     VStack(spacing: 0) {
                         resultRow(
                             "figure.walk",
                             Text(result.cumulativeSteps.formatted(.number.locale(locale))),
                             Text("steps"),
-                            Theme.cobaltDeep
+                            Night.text
                         )
                         Hairline()
-                        resultRow("timer", durationText(result.earnedSeconds), Text("earned"), Theme.cobaltDeep)
+                        resultRow("timer", durationText(result.earnedSeconds), Text("earned"), Night.cobaltText)
                         Hairline()
                         resultRow(
                             "flame.fill",
                             Text("\(result.activeDays)"),
                             Text("active days"),
-                            Theme.cobaltDeep
+                            Night.text
                         )
                         Hairline()
                         resultRow(
@@ -768,6 +478,10 @@ private struct JourneyResultView: View {
                 .padding(.bottom, Theme.Space.xl)
             }
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .ignoresSafeArea(edges: .top)
+        .background(Night.ground.ignoresSafeArea())
+        .foregroundStyle(Night.text)
     }
 
     private func resultRow(_ icon: String, _ value: Text, _ label: Text, _ color: Color) -> some View {
@@ -798,7 +512,7 @@ private struct JourneyResultView: View {
 
 #Preview("Earned feedback") {
     ZStack {
-        PaperBackground()
+        SceneBackdrop(scene: .homeEvening).ignoresSafeArea()
         EarnFeedbackOverlay(
             feedback: EarnPresentationFeedback(event: .screenTimeEarned(minutes: 5)),
             onFinished: {}
@@ -808,7 +522,7 @@ private struct JourneyResultView: View {
 
 #Preview("Goal feedback - Reduce Motion") {
     ZStack {
-        PaperBackground()
+        SceneBackdrop(scene: .homeEvening).ignoresSafeArea()
         EarnFeedbackOverlay(
             feedback: EarnPresentationFeedback(event: .dailyGoalCompleted(minutes: 5)),
             onFinished: {},

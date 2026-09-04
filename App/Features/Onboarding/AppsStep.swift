@@ -22,12 +22,12 @@ struct AppsStep: View {
 
     var body: some View {
         OnboardingScaffold(onBack: onBack) {
-            Text("BUILD YOUR PLAN").eyebrowStyle(Theme.coralDeep)
-            Text("Which apps should you earn?")
+            Text("BUILD YOUR PLAN").eyebrowStyle(Night.textMuted)
+            Text("Which apps should pause until you've earned time?")
                 .font(.serif(41))
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 12)
-            Text("Pick the apps that steal more time than you would like.")
+            Text("Pick the apps you tend to open on autopilot. You can change this later.")
                 .font(.sans(15))
                 .foregroundStyle(Theme.muted)
                 .padding(.top, 12)
@@ -57,7 +57,7 @@ struct AppsStep: View {
                         requestAuthorization()
                     } label: {
                         HStack {
-                            if isRequesting { ProgressView().tint(Theme.paper) }
+                            if isRequesting { ProgressView().tint(Color.white) }
                             Text(isRequesting ? "Requesting access" : "Enable Screen Time")
                         }
                     }

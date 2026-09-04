@@ -1,3 +1,4 @@
+import Foundation
 import Observation
 import RevenueCat
 
@@ -15,6 +16,7 @@ final class SubscriptionManager {
     var isPro: Bool { status == .pro }
     var featureAccess: FeatureAccess { FeatureAccess(subscriptionStatus: status) }
     var isRevenueCatConfigured: Bool { service.isConfigured }
+    var configurationSummary: String { service.configurationSummary }
 
     init(
         configuration: RevenueCatConfiguration = RevenueCatConfiguration(),
@@ -104,7 +106,7 @@ final class SubscriptionManager {
 
     func record(_ error: Error, operation: String) {
         lastError = error.localizedDescription
-        log("\(operation) failed: \(error.localizedDescription)")
+        MonetizationLog.error("\(operation) failed: \(error.localizedDescription)")
     }
 
     private func apply(_ customerInfo: CustomerInfo, source: String) {
@@ -118,15 +120,30 @@ final class SubscriptionManager {
             "Customer info applied from \(source); status: \(String(describing: newStatus)); "
                 + "active entitlements: \(entitlementSummary)"
         )
+
+        // A subscriber with some other active entitlement means the dashboard identifier
+        // does not match `Entitlements.pro` (a common display-name-vs-identifier mistake),
+        // which silently locks paying users out of the product.
+        if newStatus != .pro, !activeEntitlements.isEmpty {
+            MonetizationLog.error(
+                "Entitlement mismatch: expected '\(Entitlements.pro)' but RevenueCat reports "
+                    + "active entitlements: \(entitlementSummary)"
+            )
+        }
     }
 
     private func log(_ message: String) {
-        #if DEBUG
-        print("[Monetization] \(message)")
-        #endif
+        MonetizationLog.info(message)
     }
 }
 
-private enum SubscriptionServiceError: Error {
+private enum SubscriptionServiceError: LocalizedError {
     case notConfigured
+
+    var errorDescription: String? {
+        switch self {
+        case .notConfigured:
+            return "RevenueCat is not configured; the RevenueCatAPIKey Info.plist value is missing or invalid."
+        }
+    }
 }

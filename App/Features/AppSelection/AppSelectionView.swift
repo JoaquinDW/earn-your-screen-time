@@ -68,7 +68,7 @@ struct AppSelectionView: View {
         .padding(.bottom, Theme.Space.s)
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundStyle(Theme.ink)
-        .paperBackground()
+        .background(Night.ground.ignoresSafeArea())
         .restrictedAppSelectionGate(
             isPickerPresented: $isPickerPresented,
             selection: $selection

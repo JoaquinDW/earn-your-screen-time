@@ -48,7 +48,7 @@
           "introductoryOffer" : {
             "internalID" : "0FDF0B1A-427A-49B7-870E-EDDA5C63F447",
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P1W"
+            "subscriptionPeriod" : "P3D"
           },
           "localizations" : [
             {
@@ -85,7 +85,7 @@
           "introductoryOffer" : {
             "internalID" : "B27AFBB7-A705-47B6-8338-479977359634",
             "paymentMode" : "free",
-            "subscriptionPeriod" : "P1W"
+            "subscriptionPeriod" : "P3D"
           },
           "localizations" : [
             {

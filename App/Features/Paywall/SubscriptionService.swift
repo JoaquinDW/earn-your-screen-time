@@ -4,6 +4,7 @@ import RevenueCat
 @MainActor
 protocol SubscriptionServiceProtocol: AnyObject {
     var isConfigured: Bool { get }
+    var configurationSummary: String { get }
     var cachedCustomerInfo: CustomerInfo? { get }
     var customerInfoUpdateHandler: ((CustomerInfo) -> Void)? { get set }
 
@@ -32,11 +33,15 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
         self.configuration = configuration
         super.init()
 
-        guard let apiKey = configuration.apiKey else { return }
+        guard let apiKey = configuration.apiKey else {
+            MonetizationLog.error("RevenueCat API key missing from Info.plist; paywall cannot load products")
+            return
+        }
 
-        #if DEBUG
-        Purchases.logLevel = .debug
-        #endif
+        // Verbose logging in TestFlight/Sandbox too: RevenueCat's own log states how many
+        // products it asked StoreKit for and how many Apple actually returned, which is the
+        // only way to tell an App Store Connect misconfiguration from a network failure.
+        Purchases.logLevel = MonetizationBuild.isSandbox ? .verbose : .error
 
         if !Purchases.isConfigured {
             Purchases.configure(
@@ -46,6 +51,16 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
             )
         }
         Purchases.shared.delegate = self
+        MonetizationLog.info(
+            "RevenueCat configured; key prefix: \(apiKey.prefix(5)); bundle: "
+                + "\(Bundle.main.bundleIdentifier ?? "unknown"); sandbox: \(MonetizationBuild.isSandbox)"
+        )
+    }
+
+    var configurationSummary: String {
+        let keyPrefix = configuration.apiKey.map { String($0.prefix(5)) } ?? "none"
+        return "key: \(keyPrefix); configured: \(Purchases.isConfigured); "
+            + "bundle: \(Bundle.main.bundleIdentifier ?? "unknown")"
     }
 
     func loadOfferings() async throws -> Offerings {

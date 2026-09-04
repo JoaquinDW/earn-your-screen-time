@@ -2,32 +2,56 @@ import SwiftUI
 
 // MARK: - Buttons
 
-/// The one primary action per screen: a full-width pill, label set in the display serif.
+/// The one primary action per screen: a cobalt capsule with a white label.
+///
+/// v5 set this label in the display serif on an ivory ground. v6 gives the serif to the numerals
+/// alone — a button is a control, not a headline — so the label steps back into Figtree and the
+/// capsule carries the accent instead.
+///
+/// The `Tint` cases are v5's two-accent vocabulary. There is only one accent now, so they resolve
+/// to the same cobalt; they are kept so the ~20 call sites authored against them still read.
 struct PillButtonStyle: ButtonStyle {
     enum Tint {
-        /// Moving forward — the colour of earning.
         case coral
-        /// Arriving — the colour of time already earned.
         case sage
-
-        var fill: Color { self == .coral ? Theme.coralDeep : Theme.sageDeep }
-        var pressedFill: Color { self == .coral ? Theme.coralPressed : Theme.sagePressed }
     }
 
     var tint: Tint = .coral
+    /// Full-width when the button owns the row, hugging when it sits beside something.
+    var isProminent = true
+
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.serif(20, relativeTo: .title3))
-            .foregroundStyle(Theme.paper)
-            .frame(maxWidth: .infinity)
-            .frame(minHeight: Theme.buttonHeight)
-            .background(configuration.isPressed ? tint.pressedFill : tint.fill, in: .capsule)
+            .font(.sans(16, weight: .semibold))
+            .foregroundStyle(Color.white)
+            .padding(.horizontal, isProminent ? Theme.Space.l : 20)
+            .padding(.vertical, isProminent ? 0 : 13)
+            .frame(maxWidth: isProminent ? .infinity : nil)
+            .frame(minHeight: isProminent ? Theme.buttonHeight : Theme.minTouchTarget)
+            .background(configuration.isPressed ? Night.cobaltLift : Night.cobalt, in: .capsule)
+            .shadow(color: Night.cobalt.opacity(isEnabled ? 0.34 : 0), radius: 18, y: 8)
             .opacity(isEnabled ? 1 : 0.4)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.985 : 1)
             .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+    }
+}
+
+/// The secondary action beside a pill: the same shape, drawn as a hairline instead of a fill.
+struct OutlineButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.sans(16, weight: .medium))
+            .foregroundStyle(Night.textSoft)
+            .frame(maxWidth: .infinity)
+            .frame(minHeight: Theme.buttonHeight)
+            .background(configuration.isPressed ? Night.text.opacity(0.06) : .clear, in: .capsule)
+            .overlay { Capsule().stroke(Night.edge, lineWidth: 1) }
+            .opacity(isEnabled ? 1 : 0.4)
     }
 }
 
@@ -39,8 +63,8 @@ struct QuietButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.sans(14, weight: .semibold))
-            .foregroundStyle(Theme.muted)
-            .underline(underlined)
+            .foregroundStyle(underlined ? Night.cobaltText : Night.textMuted)
+            .underline(false)
             .frame(minHeight: Theme.minTouchTarget)
             .opacity(configuration.isPressed ? 0.6 : 1)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
@@ -51,6 +75,12 @@ struct QuietButtonStyle: ButtonStyle {
 extension ButtonStyle where Self == PillButtonStyle {
     static var pill: PillButtonStyle { PillButtonStyle() }
     static func pill(_ tint: PillButtonStyle.Tint) -> PillButtonStyle { PillButtonStyle(tint: tint) }
+    /// The hugging variant, for a button that sits inside a composition rather than owning a row.
+    static var pillCompact: PillButtonStyle { PillButtonStyle(isProminent: false) }
+}
+
+extension ButtonStyle where Self == OutlineButtonStyle {
+    static var outline: OutlineButtonStyle { OutlineButtonStyle() }
 }
 
 extension ButtonStyle where Self == QuietButtonStyle {
@@ -79,10 +109,10 @@ struct SelectionDot: View {
         Group {
             if isSelected {
                 Circle()
-                    .fill(Theme.coral)
-                    .overlay(Circle().fill(Theme.paper).frame(width: 6, height: 6))
+                    .fill(Night.cobalt)
+                    .overlay(Circle().fill(Color.white).frame(width: 6, height: 6))
             } else {
-                Circle().strokeBorder(Theme.line, lineWidth: 1.5)
+                Circle().strokeBorder(Night.text.opacity(0.22), lineWidth: 1.5)
             }
         }
         .frame(width: 20, height: 20)
@@ -127,12 +157,12 @@ struct Monogram: View {
 
     var body: some View {
         Circle()
-            .fill(Theme.sageLight)
+            .fill(Night.forestLift)
             .frame(width: diameter, height: diameter)
             .overlay(
                 Text(letter)
                     .font(.serif(diameter * 0.43, relativeTo: .body))
-                    .foregroundStyle(Theme.sageDeep)
+                    .foregroundStyle(Night.textSoft)
             )
             .accessibilityHidden(true)
     }
@@ -150,12 +180,28 @@ struct StepDots: View {
         HStack(spacing: 4) {
             ForEach(0..<total, id: \.self) { index in
                 Capsule()
-                    .fill(index < completed ? Theme.coral : Theme.line)
+                    .fill(index < completed ? Night.cobalt : Night.text.opacity(0.14))
                     .frame(height: 3)
             }
         }
         .accessibilityElement()
         .accessibilityLabel(Text("onboarding.progress.a11y \(completed) \(total)"))
         .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: completed)
+    }
+}
+
+// MARK: - Forms
+
+extension View {
+    /// The v6 surface for a native `Form`: forest rows on the night ground.
+    ///
+    /// Kept as a modifier over a real `Form` rather than a hand-rolled list, so `Stepper`,
+    /// `Picker` and `Toggle` stay the actual controls with their actual behaviour — a settings
+    /// screen is the wrong place to reinvent iOS.
+    func settingsSurface() -> some View {
+        self
+            .listSectionSpacing(20)
+            .environment(\.defaultMinListRowHeight, 48)
+            .scrollIndicators(.hidden)
     }
 }

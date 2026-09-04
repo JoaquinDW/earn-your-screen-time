@@ -97,19 +97,27 @@ Leé `docs/ARQUITECTURA.md` para entender **por qué** las sesiones reservan tie
 
 | Archivo | Qué es |
 |---|---|
-| `Theme.swift` | La paleta: marfil (`#F6F3ED` → `#F9F6F1`), tinta y **un solo** acento, cobalto. El cobalto está ausente cuando no ganaste nada y va inundando la pantalla con el progreso: el color *es* la señal. No hay rojo en ningún estado. |
+| `NightTheme.swift` | La paleta cruda de v6: negro casi puro (`#070E0D`), verde bosque y **un solo** acento, cobalto (`#2E5CE6`). El cobalto está ausente cuando no ganaste nada y aparece con el progreso: el color *es* la señal, y su escasez es parte de la identidad. No hay rojo en ningún estado. |
+| `Theme.swift` | La capa semántica que leen las pantallas (`ink`, `muted`, `background`, `line`, espaciados). Resuelve sobre `Night`, así que cambiar la paleta es un solo archivo. |
 | `Typography.swift` | **Instrument Serif** para títulos y números, **Figtree** para el texto corrido. Las dos vienen en `App/Resources/Fonts` (licencia SIL OFL) y caen al tipo del sistema si fallara el registro. |
-| `GuardianAtmosphere.swift` | El Guardián **es** la barra de progreso. Un único valor 0→1 (`AppEnvironment.dayProgress`) interpola las siete capas del Home: base, luz, lavado gris, lavado cobalto, órbitas, trazos y grano. `GuardianMark` es la misma criatura reducida a glifo para la navegación. |
-| `GuardianPortrait.swift` | El Guardián como figura pintada: cinco láminas en acuarela (`resting`, `awakening`, `rising`, `strong`, `free`) que se funden entre sí según el progreso, con la figura vectorial de respaldo mientras una lámina no exista. `GuardianHeader` y `GuardianPanel` llevan esa misma escena al onboarding, al paywall y a los momentos de logro. La dirección de arte está en [`docs/guardian-art-direction.md`](docs/guardian-art-direction.md). |
-| `PaperBackground.swift` | El fondo liso con el grano, para todo lo que no es el Home. |
-| `Controls.swift` | La píldora de acción, las líneas finas que reemplazan a las tarjetas y las filas de opción. |
+| `SceneBackdrop.swift` | El único lugar donde la ilustración se encuentra con la UI. `IllustratedScene` nombra las cinco láminas y guarda lo que el archivo no puede decir: de qué borde recorta y dónde está la persona (`figureBand`). `SceneBackdrop` hace el `aspectFill` y el degradado que funde la lámina en el fondo; `SceneHero` es la banda superior; `.clearOfFigure(in:)` corta una columna de UI donde empieza la figura. |
+| `PaperBackground.swift` | El fondo liso con el grano que evita el *banding* en los degradados oscuros. |
+| `Controls.swift` | La píldora de acción, las líneas finas que reemplazan a las tarjetas, las filas de opción y `TickMeter`, la regla de guiones que mide el progreso en toda la app. |
 
 El Home no muestra nada que no sea hoy: el recorrido de 30 días y los totales del mes viven en
 la pestaña **Progreso**, y elegir 5/10/15 minutos es una hoja que se abre desde la fila
 *Ready to spend*.
 
-La app fija la apariencia clara (`preferredColorScheme(.light)`): el diseño es una sola paleta de
-papel y no define una variante oscura.
+La app fija la apariencia oscura (`preferredColorScheme(.dark)`): v6 es una sola paleta nocturna,
+igual en ambos modos del sistema, porque las láminas están pintadas al anochecer y no existe una
+variante clara de ellas.
+
+**Las ilustraciones se usan en tres niveles.** Fuertes en Home, Ganar tiempo, Bloqueado, el arranque
+del onboarding y el paywall; secundarias en Progreso y en el cierre de los 30 días; y **ninguna** en
+Ajustes, selección de apps, reglas, permisos o suscripción — esas pantallas tienen que sostener la
+identidad con tipografía, color y espaciado. El ícono de la app se genera con
+`swift scripts/make-app-icon.swift design/earnit-logo.png …` (recorta el margen, rellena las esquinas
+y escribe un PNG de 1024×1024 sin canal alfa, que es lo que exige App Store).
 
 ---
 

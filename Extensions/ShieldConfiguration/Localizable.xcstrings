@@ -109,13 +109,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ALMOST THERE · Earn %1$lld min in about a %2$lld min walk."
+            "value" : "About a %2$lld min walk from earning your next %1$lld min."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "YA CASI · Gana %1$lld min caminando unos %2$lld min."
+            "value" : "A unos %2$lld min caminando de ganar tus próximos %1$lld min."
           }
         }
       }
@@ -143,13 +143,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "How much do you want to spend?"
+            "value" : "Choose a session. The rest stays yours."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Cuánto tiempo quieres gastar?"
+            "value" : "Elige una sesión. El resto sigue siendo tuyo."
           }
         }
       }
@@ -177,13 +177,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TIME'S UP · Walk toward %lld steps to earn more. Your apps are paused for now."
+            "value" : "Walk toward %lld steps to earn more. Your apps are paused for now."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SE ACABÓ EL TIEMPO · Camina hasta %lld pasos para ganar más. Tus apps están en pausa."
+            "value" : "Camina hasta %lld pasos para ganar más. Tus apps están en pausa."
           }
         }
       }
@@ -211,13 +211,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DAILY GOAL COMPLETE · %1$lld steps · %2$lld min earned"
+            "value" : "%1$lld steps today · %2$lld min earned"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBJETIVO DIARIO COMPLETO · %1$lld pasos · %2$lld min ganados"
+            "value" : "%1$lld pasos hoy · %2$lld min ganados"
           }
         }
       }
@@ -245,13 +245,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EARN YOUR TIME · Walk %1$lld more steps to unlock %2$lld min. About a %3$lld min walk."
+            "value" : "Walk %1$lld more steps · earn %2$lld min in about %3$lld min."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GANA TU TIEMPO · Camina %1$lld pasos más para desbloquear %2$lld min. Unos %3$lld min caminando."
+            "value" : "Camina %1$lld pasos más · gana %2$lld min en unos %3$lld min."
           }
         }
       }
@@ -279,13 +279,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No screen time available"
+            "value" : "Your apps are paused"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No hay tiempo de pantalla disponible"
+            "value" : "Tus apps están en pausa"
           }
         }
       }

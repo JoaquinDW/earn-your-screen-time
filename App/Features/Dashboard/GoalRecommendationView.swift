@@ -9,13 +9,9 @@ struct GoalRecommendationView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
-            GuardianPanel(
-                progress: isIncrease ? GuardianState.rising.anchor : GuardianState.awakening.anchor,
-                height: 190,
-                cornerRadius: Theme.sheetRadius
-            )
+            Spacer(minLength: 0)
             Text(isIncrease ? "READY FOR A LITTLE MORE" : "LET'S MAKE THIS ACHIEVABLE")
-                .eyebrowStyle(Theme.coralDeep)
+                .eyebrowStyle(Night.textMuted)
             Text(isIncrease ? "Your walking rhythm is getting stronger." : "Your current goal looks ambitious right now.")
                 .font(.serif(34, relativeTo: .largeTitle))
                 .fixedSize(horizontal: false, vertical: true)
@@ -28,7 +24,7 @@ struct GoalRecommendationView: View {
                 goal(env.dailyStepGoal, label: "Current")
                 Image(systemName: isIncrease ? "arrow.up.right" : "arrow.down.right")
                     .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(Theme.cobaltDeep)
+                    .foregroundStyle(Night.cobaltText)
                 goal(recommendation, label: "Suggested")
             }
             Spacer(minLength: Theme.Space.m)
@@ -44,7 +40,7 @@ struct GoalRecommendationView: View {
             .buttonStyle(.quiet)
         }
         .padding(Theme.Space.gutter)
-        .paperBackground()
+        .background(Night.ground.ignoresSafeArea())
     }
 
     private func goal(_ value: Int, label: LocalizedStringKey) -> some View {
@@ -55,7 +51,7 @@ struct GoalRecommendationView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(Theme.Space.m)
-        .background(Theme.paper, in: .rect(cornerRadius: Theme.cornerRadius))
-        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Theme.line) }
+        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
+        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
     }
 }

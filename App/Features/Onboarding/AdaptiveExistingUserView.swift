@@ -12,12 +12,7 @@ struct AdaptiveExistingUserView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Space.l) {
-                    GuardianPanel(
-                        progress: GuardianState.awakening.anchor,
-                        height: 190,
-                        cornerRadius: Theme.sheetRadius
-                    )
-                    Text("EARNIT NOW ADAPTS TO YOU").eyebrowStyle(Theme.coralDeep)
+                    Text("EARNIT NOW ADAPTS TO YOU").eyebrowStyle(Night.textMuted)
                     Text("Start where you are. Get slightly better over time.")
                         .font(.serif(38, relativeTo: .largeTitle))
                         .fixedSize(horizontal: false, vertical: true)
@@ -28,18 +23,18 @@ struct AdaptiveExistingUserView: View {
                     if let recommendation {
                         HStack {
                             goalValue(env.dailyStepGoal, label: "Current")
-                            Image(systemName: "arrow.right").foregroundStyle(Theme.cobaltDeep)
+                            Image(systemName: "arrow.right").foregroundStyle(Night.cobaltText)
                             goalValue(recommendation, label: "Suggested")
                         }
                         .padding(Theme.Space.m)
-                        .background(Theme.paper, in: .rect(cornerRadius: Theme.cornerRadius))
-                        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Theme.line) }
+                        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
+                        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
                     } else if let message {
                         Text(message)
                             .font(.sans(14.5))
                             .foregroundStyle(Theme.muted)
                             .padding(Theme.Space.m)
-                            .background(Theme.sageLight, in: .rect(cornerRadius: Theme.cornerRadius))
+                            .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
                     }
                 }
                 .padding(Theme.Space.gutter)
@@ -57,7 +52,7 @@ struct AdaptiveExistingUserView: View {
                             calculateRecommendation()
                         } label: {
                             HStack {
-                                if isLoading { ProgressView().tint(Theme.paper) }
+                                if isLoading { ProgressView().tint(Color.white) }
                                 Text(isLoading ? "Checking your activity" : "Create my recommendation")
                             }
                         }
@@ -71,7 +66,7 @@ struct AdaptiveExistingUserView: View {
                 .padding(.vertical, Theme.Space.s)
                 .background(Theme.background)
             }
-            .paperBackground()
+            .background(Night.ground.ignoresSafeArea())
         }
     }
 

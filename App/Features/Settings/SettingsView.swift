@@ -9,6 +9,12 @@ private enum SettingsDestination: Hashable {
 }
 
 /// Rule configuration (PRD §16) plus the developer tools for the remaining phases.
+///
+/// **Tier 3: no artwork.** Settings is where the identity has to hold up on typography, surface
+/// and spacing alone — if it only looks like Earnit when there is an illustration on it, the
+/// system is not doing its job. So this screen keeps native `Form` controls (a Stepper is a
+/// Stepper; reimplementing one would be worse, not more designed) and changes only what it sits
+/// on: forest rows on the night ground, eyebrow section headers, one cobalt accent.
 struct SettingsView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
@@ -36,6 +42,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack(path: $path) {
             Form {
+              Group {
                 Section {
                     Picker("settings.language", selection: languageBinding) {
                         Text("settings.language.system").tag(AppLanguage.system)
@@ -43,7 +50,7 @@ struct SettingsView: View {
                         Text("settings.language.spanish").tag(AppLanguage.spanish)
                     }
                 } header: {
-                    Text("settings.language.section")
+                    sectionHeader("settings.language.section")
                 } footer: {
                     Text("settings.language.footer")
                 }
@@ -65,7 +72,7 @@ struct SettingsView: View {
                         Button("Save daily goal") { env.updateDailyGoal(dailyStepGoal) }
                     }
                 } header: {
-                    Text("Movement goal")
+                    sectionHeader("Movement goal")
                 } footer: {
                     Text("Your goal tracks daily progress. It does not change how quickly you earn minutes.")
                 }
@@ -82,7 +89,7 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("settings.rule")
+                    sectionHeader("settings.rule")
                 } footer: {
                     Text("settings.rule.footer \(stepsRequired) \(rewardMinutes)")
                 }
@@ -100,12 +107,12 @@ struct SettingsView: View {
                 Section {
                     NavigationLink("settings.apps", value: SettingsDestination.apps)
                 } header: {
-                    Text("settings.apps.section")
+                    sectionHeader("settings.apps.section")
                 } footer: {
                     Text("settings.apps.footer")
                 }
 
-                Section("settings.subscription.section") {
+                Section {
                     LabeledContent("settings.subscription.status", value: subscriptionStatusLabel)
 
                     if env.subscriptionManager.isPro,
@@ -116,37 +123,47 @@ struct SettingsView: View {
                     } else {
                         Button("settings.subscription.upgrade") { isShowingPaywall = true }
                     }
+                } header: {
+                    sectionHeader("settings.subscription.section")
                 }
 
                 #if DEBUG
-                Section("settings.developer") {
+                Section {
                     LabeledContent("settings.screenTimeStatus", value: statusLabel)
                     LabeledContent("settings.monitoring", value: env.screenTime.isMonitoring
                         ? String(localized: "common.yes", locale: env.appLanguage.locale)
                         : String(localized: "common.no", locale: env.appLanguage.locale))
                     NavigationLink("settings.spike", value: SettingsDestination.spike)
+                } header: {
+                    sectionHeader("settings.developer")
                 }
 
                 Section {
                     Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
                     Button("settings.resetDay", role: .destructive) { env.resetToday() }
+                    Button("settings.replayOnboarding", role: .destructive) { env.replayOnboarding() }
                     Button("Debug: +5 min earned") { env.triggerDebugFeedback(.screenTimeEarned(minutes: 5)) }
                     Button("Debug: goal complete") { env.triggerDebugFeedback(.dailyGoalCompleted(minutes: 5)) }
                     Button("Debug: apps unlocked") { env.triggerDebugFeedback(.appUnlocked) }
                     Button("Debug: balance expired") { env.triggerDebugFeedback(.appLocked) }
                     Button("Debug: error") { env.triggerDebugFeedback(.error) }
                 } header: {
-                    Text("settings.debug")
+                    sectionHeader("settings.debug")
                 } footer: {
                     Text("settings.debug.footer")
                 }
                 #endif
+              }
+              .listRowBackground(Night.panel)
             }
             .scrollContentBackground(.hidden)
-            .background(PaperBackground())
-            .tint(Theme.coralDeep)
+            .contentMargins(.bottom, Theme.Space.xxl, for: .scrollContent)
+            .background(Night.ground.ignoresSafeArea())
+            .settingsSurface()
+            .tint(Night.cobalt)
             .navigationTitle("settings.title")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Night.ground, for: .navigationBar)
             .navigationDestination(for: SettingsDestination.self) { destination in
                 switch destination {
                 case .apps:
@@ -198,6 +215,17 @@ struct SettingsView: View {
         .onDisappear {
             onNavigationDepthChange?(false)
         }
+    }
+
+    /// Section headers in the design's eyebrow rather than the system's grey caps — the one
+    /// piece of Earnit's voice a settings screen gets to keep.
+    private func sectionHeader(_ key: LocalizedStringKey) -> some View {
+        Text(key)
+            .font(.sans(11, weight: .medium))
+            .textCase(.uppercase)
+            .kerning(1.9)
+            .foregroundStyle(Night.textMuted)
+            .padding(.bottom, 2)
     }
 
     private var statusLabel: String {

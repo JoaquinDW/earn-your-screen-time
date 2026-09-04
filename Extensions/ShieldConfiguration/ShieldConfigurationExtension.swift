@@ -6,11 +6,18 @@ import UIKit
 
 final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     private let logger = Logger(subsystem: "EarnYourScreenTime", category: "Shield")
+    /// The v6 night palette, restated in `UIColor` because the extension cannot import the app's
+    /// design system. Keep these in step with `Night` in `App/DesignSystem/NightTheme.swift` —
+    /// this is the one surface where the two have to be maintained by hand.
     private enum Palette {
-        static let background = UIColor(red: 41 / 255, green: 40 / 255, blue: 36 / 255, alpha: 1)
-        static let paper = UIColor(red: 250 / 255, green: 248 / 255, blue: 244 / 255, alpha: 1)
-        static let cobalt = UIColor(red: 30 / 255, green: 77 / 255, blue: 247 / 255, alpha: 1)
-        static let secondary = UIColor(red: 205 / 255, green: 206 / 255, blue: 211 / 255, alpha: 1)
+        /// `Night.ground` — #070E0D.
+        static let background = UIColor(red: 7 / 255, green: 14 / 255, blue: 13 / 255, alpha: 1)
+        /// `Night.text` — #ECF3EE.
+        static let paper = UIColor(red: 236 / 255, green: 243 / 255, blue: 238 / 255, alpha: 1)
+        /// `Night.cobalt` — #2E5CE6.
+        static let cobalt = UIColor(red: 46 / 255, green: 92 / 255, blue: 230 / 255, alpha: 1)
+        /// `Night.textMuted` — #93A79D.
+        static let secondary = UIColor(red: 147 / 255, green: 167 / 255, blue: 157 / 255, alpha: 1)
     }
 
     override func configuration(shielding application: Application) -> ShieldConfiguration {
@@ -43,9 +50,9 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         )
 
         return ShieldConfiguration(
-            backgroundBlurStyle: .systemMaterialDark,
+            backgroundBlurStyle: nil,
             backgroundColor: Palette.background,
-            icon: guardianImage,
+            icon: UIImage(named: "app-logo"),
             title: .init(text: copy.title, color: Palette.paper),
             subtitle: .init(text: copy.subtitle, color: Palette.secondary),
             primaryButtonLabel: .init(
@@ -73,10 +80,41 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 formatted("shield.available.title", viewModel.availableMinutes),
                 localized("shield.available.subtitle")
             )
-        case .sessionExpired, .almostThere, .dailyGoalCompleted, .noTime, .progress:
+        case .sessionExpired:
+            return (
+                formatted(
+                    "shield.expired.title",
+                    viewModel.sessionDurationMinutes ?? viewModel.consumedMinutesToday
+                ),
+                formatted("shield.expired.subtitle", viewModel.targetSteps)
+            )
+        case .almostThere:
+            return (
+                formatted("shield.almost.title", viewModel.stepsRemaining),
+                formatted(
+                    "shield.almost.subtitle",
+                    viewModel.rewardMinutes,
+                    viewModel.estimatedWalkMinutes
+                )
+            )
+        case .dailyGoalCompleted:
+            return (
+                localized("shield.goal.title"),
+                formatted(
+                    "shield.goal.subtitle",
+                    viewModel.currentSteps,
+                    viewModel.earnedMinutesToday
+                )
+            )
+        case .noTime, .progress:
             return (
                 localized("shield.noTime.title"),
-                localized("shield.noTime.subtitle")
+                formatted(
+                    "shield.noTime.progress",
+                    viewModel.stepsRemaining,
+                    viewModel.rewardMinutes,
+                    viewModel.estimatedWalkMinutes
+                )
             )
         }
     }
@@ -94,10 +132,6 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     private func secondaryButtonTitle(for viewModel: ShieldViewModel) -> String? {
         guard #available(iOS 26.5, *), viewModel.state == .rewardAvailable else { return nil }
         return localized("shield.action.notNow")
-    }
-
-    private var guardianImage: UIImage? {
-        UIImage(named: "guardian-resting")
     }
 
     private func localized(_ key: String) -> String {

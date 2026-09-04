@@ -2,12 +2,19 @@ import ActivityKit
 import SwiftUI
 import WidgetKit
 
+/// The v6 night palette, restated here because a widget extension cannot import the app's
+/// design system. Keep in step with `Night` in `App/DesignSystem/NightTheme.swift`.
 private enum LiveActivityPalette {
-    static let cobalt = Color(red: 30 / 255, green: 77 / 255, blue: 247 / 255)
-    static let cobaltDeep = Color(red: 20 / 255, green: 57 / 255, blue: 200 / 255)
-    static let ivory = Color(red: 246 / 255, green: 243 / 255, blue: 237 / 255)
-    static let ink = Color(red: 27 / 255, green: 28 / 255, blue: 30 / 255)
-    static let muted = Color(red: 111 / 255, green: 111 / 255, blue: 116 / 255)
+    /// `Night.cobalt` — #2E5CE6.
+    static let cobalt = Color(red: 46 / 255, green: 92 / 255, blue: 230 / 255)
+    /// `Night.cobaltText` — #6E97FF. Cobalt at text weight on a dark card.
+    static let cobaltText = Color(red: 110 / 255, green: 151 / 255, blue: 255 / 255)
+    /// `Night.ground` — #070E0D.
+    static let ground = Color(red: 7 / 255, green: 14 / 255, blue: 13 / 255)
+    /// `Night.text` — #ECF3EE.
+    static let ink = Color(red: 236 / 255, green: 243 / 255, blue: 238 / 255)
+    /// `Night.textMuted` — #93A79D.
+    static let muted = Color(red: 147 / 255, green: 167 / 255, blue: 157 / 255)
 }
 
 struct EarnLiveActivityWidget: Widget {
@@ -17,8 +24,8 @@ struct EarnLiveActivityWidget: Widget {
         ActivityConfiguration(for: EarnActivityAttributes.self) { context in
             EarnLockScreenView(context: context)
                 .environment(\.locale, Locale(identifier: context.state.localeIdentifier))
-                .activityBackgroundTint(LiveActivityPalette.ivory)
-                .activitySystemActionForegroundColor(LiveActivityPalette.cobaltDeep)
+                .activityBackgroundTint(LiveActivityPalette.ground)
+                .activitySystemActionForegroundColor(LiveActivityPalette.cobaltText)
                 .widgetURL(deepLink)
         } dynamicIsland: { context in
             DynamicIsland {
@@ -59,7 +66,7 @@ private struct EarnLockScreenView: View {
         VStack(alignment: .leading, spacing: 10) {
             Label("liveActivity.title", systemImage: "hourglass")
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(LiveActivityPalette.cobaltDeep)
+                .foregroundStyle(LiveActivityPalette.cobaltText)
 
             if effectivePresentation(context) == .normal {
                 ActiveSessionContent(context: context, onDarkBackground: false)
@@ -78,7 +85,7 @@ private struct ActiveSessionContent: View {
     let context: ActivityViewContext<EarnActivityAttributes>
     let onDarkBackground: Bool
 
-    private var primary: Color { onDarkBackground ? .white : LiveActivityPalette.cobaltDeep }
+    private var primary: Color { onDarkBackground ? .white : LiveActivityPalette.cobaltText }
     private var secondary: Color { onDarkBackground ? .white.opacity(0.62) : LiveActivityPalette.muted }
 
     var body: some View {
@@ -104,7 +111,7 @@ private struct TemporaryStatusView: View {
     let context: ActivityViewContext<EarnActivityAttributes>
     let onDarkBackground: Bool
 
-    private var primary: Color { onDarkBackground ? .white : LiveActivityPalette.cobaltDeep }
+    private var primary: Color { onDarkBackground ? .white : LiveActivityPalette.cobaltText }
     private var secondary: Color { onDarkBackground ? .white.opacity(0.68) : LiveActivityPalette.muted }
 
     var body: some View {

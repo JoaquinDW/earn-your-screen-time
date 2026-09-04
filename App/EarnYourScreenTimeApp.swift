@@ -10,10 +10,7 @@ struct EarnYourScreenTimeApp: App {
             RootView()
                 .environment(environment)
                 .environment(\.locale, environment.appLanguage.locale)
-                .tint(Theme.coralDeep)
-                // The design is one warm paper palette. Rather than invent a dark variant it
-                // does not specify, the app keeps its own appearance in both system modes.
-                .preferredColorScheme(.light)
+                .tint(Night.cobalt)
                 .task { environment.synchronizeLiveActivity() }
                 .onOpenURL { environment.handleDeepLink($0) }
                 .onChange(of: scenePhase) { _, phase in

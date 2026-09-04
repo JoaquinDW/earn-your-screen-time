@@ -28,8 +28,8 @@ New users build their app selection during onboarding before seeing a mandatory 
 paywall. Activating the product requires an active `Earn your Screen Time Pro` entitlement from a
 trial subscription, direct subscription, or restore. There is no permanent free tier, and expired
 subscribers return to the non-dismissible subscription screen.
-Trial copy is shown only when RevenueCat reports both a free introductory offer and eligibility for
-the selected product.
+The free trial lasts three days. Trial copy is shown only when RevenueCat reports a three-day free
+introductory offer and eligibility for the selected product.
 
 ## RevenueCat Configuration
 
@@ -70,7 +70,8 @@ For the current Test Store project:
 2. Create a one-year subscription product with identifier `yearly`.
 3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Add `monthly` to the monthly package and `yearly` to the annual package in the current Offering.
-5. Run the normal `EarnYourScreenTime` scheme. RevenueCat presents its Test Store purchase modal,
+5. Configure a three-day free trial for both products.
+6. Run the normal `EarnYourScreenTime` scheme. RevenueCat presents its Test Store purchase modal,
    where success, failure, and cancellation can be simulated.
 
 Test Store purchases update `CustomerInfo` and renew on accelerated schedules. A monthly product
@@ -79,7 +80,8 @@ renews every five minutes and a yearly product every hour, up to five renewals.
 ## Local StoreKit Testing
 
 `StoreKit/EarnYourScreenTime.storekit` separately defines `monthly` and `yearly` Apple
-auto-renewable subscriptions in one subscription group. It is not used by RevenueCat Test Store:
+auto-renewable subscriptions with three-day introductory offers in one subscription group. It is
+not used by RevenueCat Test Store:
 the current Debug `test_` key intentionally bypasses Apple's purchase flow.
 
 Once an Apple `appl_` SDK key and Apple product mappings are available, regenerate with `make gen`,
@@ -110,7 +112,32 @@ Once products exist in App Store Connect:
 2. Import the monthly and yearly products into RevenueCat.
 3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Attach monthly and annual packages to the current Offering.
-5. Configure the production RevenueCat Apple SDK key for Release builds.
+5. Configure a three-day free trial for both products in App Store Connect.
+6. Configure the production RevenueCat Apple SDK key for Release builds.
+
+## Diagnosing An Empty Paywall
+
+An empty paywall in TestFlight and in App Review is the same failure, and it blocks the reviewer
+behind the non-dismissible subscription screen (Guideline 2.1 rejection). `PaywallViewModel`
+distinguishes the causes instead of reporting one generic "missing packages" error:
+
+| Diagnostic | Cause |
+| --- | --- |
+| `RevenueCat is not configured` | `REVENUECAT_API_KEY` did not reach Info.plist for this configuration. |
+| `no current offering` | No offering is marked Current in the RevenueCat dashboard. |
+| `zero available packages` | RevenueCat has the offering, but StoreKit returned no products for this bundle. Almost always the Paid Applications Agreement, a product still in "Missing Metadata", or a product identifier that differs from App Store Connect. |
+| `no $rc_monthly / $rc_annual package` | Products are attached to custom packages instead of the monthly and annual package slots the paywall reads. |
+| `timed out after 20s` | StoreKit never answered the product request. |
+
+The message is shown on the paywall itself in DEBUG, Apple Sandbox and TestFlight builds
+(`MonetizationBuild.isSandbox`) and hidden in App Store builds. It is always written to the
+unified log: connect the device and filter Console.app by the `Monetization` category, or by the
+`RevenueCat` subsystem for the SDK's own verbose product-request log, which is enabled in sandbox
+builds and reduced to `.error` in App Store builds.
+
+A mismatch between `Entitlements.pro` and the RevenueCat entitlement **identifier** (not its
+display name) logs `Entitlement mismatch` whenever a customer has some other active entitlement.
+That fault lets the purchase succeed while leaving the app locked.
 
 ## Customer Center
 
@@ -142,6 +169,7 @@ strings. RevenueCat code should remain confined to the monetization layer.
 - Create a subscription group in App Store Connect.
 - Create the monthly subscription.
 - Create the annual subscription.
+- Configure a three-day free trial for both subscriptions.
 - Add localization and pricing.
 - Complete required subscription metadata and review information.
 - Accept paid-app agreements and complete tax/banking requirements.
