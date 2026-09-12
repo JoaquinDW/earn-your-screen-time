@@ -35,8 +35,9 @@ final class AppEnvironment {
         health: HealthKitServing? = nil,
         subscriptionManager: SubscriptionManager? = nil,
         appLanguage: AppLanguage? = nil,
-        analytics: any AnalyticsTracking = OSLogAnalytics()
+        analytics: (any AnalyticsTracking)? = nil
     ) {
+        let analytics = analytics ?? AppAnalytics.make()
         self.screenTime = screenTime ?? AppEnvironment.makeScreenTimeService()
         self.health = health ?? AppEnvironment.makeHealthService()
         self.subscriptionManager = subscriptionManager ?? SubscriptionManager()
