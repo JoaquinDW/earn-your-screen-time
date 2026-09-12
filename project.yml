@@ -30,6 +30,9 @@ packages:
   RevenueCat:
     url: https://github.com/RevenueCat/purchases-ios-spm.git
     from: 5.85.0
+  Facebook:
+    url: https://github.com/facebook/facebook-ios-sdk.git
+    from: 18.1.1
 
 fileGroups:
   - StoreKit/EarnYourScreenTime.storekit
@@ -48,6 +51,8 @@ targets:
         product: RevenueCat
       - package: RevenueCat
         product: RevenueCatUI
+      - package: Facebook
+        product: FacebookCore
       - target: DeviceActivityMonitorExtension
         embed: true
       - target: ShieldConfigurationExtension
@@ -69,6 +74,10 @@ targets:
         # Supply the app's published legal pages through CI or an untracked xcconfig.
         TERMS_OF_USE_URL: "https://github.com/JoaquinDW/earn-your-screen-time/blob/main/TERMS.md"
         PRIVACY_POLICY_URL: "https://github.com/JoaquinDW/earn-your-screen-time/blob/main/PRIVACY.md"
+        # Public client-side identifiers from Meta's App Dashboard. Override these build
+        # settings locally or in CI; Meta attribution stays disabled while either is empty.
+        FACEBOOK_APP_ID: "1100763575706407"
+        FACEBOOK_CLIENT_TOKEN: "5107bcf3d3155c327ad61e02496232cb"
       configs:
         # Public Test Store key. Release intentionally has no key until the Apple app is connected.
         Debug:

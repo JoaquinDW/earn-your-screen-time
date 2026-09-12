@@ -1,2 +1,3 @@
 "CFBundleDisplayName" = "Earnit";
 "NSHealthShareUsageDescription" = "Earnit reads your daily step count so walking can earn screen time. Your health data stays on this device.";
+"NSUserTrackingUsageDescription" = "Your permission allows us to link app activity with advertising data to measure campaign results and improve future ads.";

@@ -11,12 +11,16 @@ struct EarnYourScreenTimeApp: App {
                 .environment(environment)
                 .environment(\.locale, environment.appLanguage.locale)
                 .tint(Night.cobalt)
-                .task { environment.synchronizeLiveActivity() }
+                .task {
+                    environment.synchronizeLiveActivity()
+                    await MetaAttribution.requestTrackingAuthorizationIfNeeded()
+                }
                 .onOpenURL { environment.handleDeepLink($0) }
                 .onChange(of: scenePhase) { _, phase in
                     // The monitor extension may have spent credits while we were closed.
                     guard phase == .active else { return }
                     Task {
+                        await MetaAttribution.requestTrackingAuthorizationIfNeeded()
                         await environment.refreshAfterBecomingActive()
                         await environment.subscriptionManager.refresh()
                     }
