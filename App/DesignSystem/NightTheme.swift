@@ -129,9 +129,10 @@ struct TickMeter: View {
 struct NightEyebrow: View {
     let text: LocalizedStringKey
     var color: Color = Night.textMuted
+    var tableName: String? = nil
 
     var body: some View {
-        Text(text)
+        Text(text, tableName: tableName)
             .font(.sans(11, weight: .medium))
             .textCase(.uppercase)
             .kerning(1.9)

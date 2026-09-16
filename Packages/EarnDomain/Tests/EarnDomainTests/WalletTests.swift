@@ -102,9 +102,10 @@ struct EarningRuleTests {
         #expect(huge.rewardSeconds == EarningRule.maximumReward)
     }
 
-    @Test("Only steps are implemented for the MVP")
+    @Test("Steps and Pushups are implemented earning sources")
     func implementedSources() {
         #expect(EarningSource.steps.isImplemented)
+        #expect(EarningSource.pushups.isImplemented)
         #expect(!EarningSource.workout.isImplemented)
     }
 }

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 PRIV = "https://www.earnitscreen.com/privacy.html"
+# Required on every appStoreVersionLocalization or the version cannot be submitted.
+SUPPORT = "https://www.earnitscreen.com/support"
 
 BODY = {
 "en-US":("Earnit requires a subscription to unlock app blocking and time earning. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel anytime in your Apple Account settings.","Terms of Use (EULA)","Privacy Policy"),

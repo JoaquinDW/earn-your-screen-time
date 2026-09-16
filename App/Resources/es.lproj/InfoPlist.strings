@@ -1,3 +1,5 @@
 "CFBundleDisplayName" = "Earnit";
 "NSHealthShareUsageDescription" = "Earnit lee tu recuento diario de pasos para convertir tus caminatas en tiempo de pantalla. Tus datos de salud permanecen en este dispositivo.";
+"NSHealthUpdateUsageDescription" = "Earnit puede actualizar datos de Salud para mantener tu progreso de actividad sincronizado con el tiempo de pantalla que ganaste.";
+"NSCameraUsageDescription" = "Earnit usa la cámara para leer material de estudio o contar repeticiones de ejercicio en vivo en tu dispositivo. No se guardan imágenes ni video.";
 "NSUserTrackingUsageDescription" = "Tu permiso nos permite vincular la actividad de la app con datos publicitarios para medir los resultados de las campañas y mejorar futuros anuncios.";

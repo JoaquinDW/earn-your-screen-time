@@ -36,8 +36,12 @@ struct OnboardingView: View {
         .onAppear {
             profile = env.profile
             env.analytics.track(.onboardingStarted)
+            env.analytics.track(.screenViewed("onboarding_" + route.rawValue))
         }
         .onChange(of: profile) { _, updated in env.saveProfile(updated) }
+        .onChange(of: route) { _, newRoute in
+            env.analytics.track(.screenViewed("onboarding_" + newRoute.rawValue))
+        }
         .sheet(isPresented: $isShowingScienceSource) {
             ScienceSourceSheet()
                 .presentationDetents([.medium, .large])
@@ -202,7 +206,7 @@ struct OnboardingView: View {
     private var mechanismStep: some View {
         adaptiveLayout("THIS IS EARNIT", "Your apps stop opening on autopilot.", back: goBack) {
             VStack(spacing: Theme.Space.s) {
-                mechanismRow("figure.walk", "Walk 500 steps", "Do something good for yourself")
+                mechanismRow("figure.walk", "Walk 500 steps", "Or do push-ups: the camera counts them")
                 mechanismConnector
                 mechanismRow("timer", "Earn 5 minutes", "Your movement becomes a balance")
                 mechanismConnector
@@ -419,6 +423,11 @@ struct OnboardingView: View {
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Space.l)
+            Text("In a hurry? A set of push-ups in front of the camera earns minutes right now.")
+                .font(.sans(15))
+                .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Theme.Space.s)
         } action: {
             Button {
                 guard !isActivating else { return }

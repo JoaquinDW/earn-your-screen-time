@@ -89,6 +89,36 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let unlockAttemptWithoutBalance = AnalyticsEvent("unlock_attempt_without_balance")
     static let sessionPaused = AnalyticsEvent("screen_time_session_ended_early")
     static let sessionTimeReturned = AnalyticsEvent("screen_time_session_time_returned")
+    static let studyToEarnOpened = AnalyticsEvent("study_to_earn_opened")
+    static let studyScanStarted = AnalyticsEvent("study_scan_started")
+    static let studyScanCaptured = AnalyticsEvent("study_scan_captured")
+    static let studyOCRSucceeded = AnalyticsEvent("study_ocr_succeeded")
+    static let studyOCRFailed = AnalyticsEvent("study_ocr_failed")
+    static let studyQuestionGenerated = AnalyticsEvent("study_question_generated")
+    static let studyQuestionRegenerated = AnalyticsEvent("study_question_regenerated")
+    static let studyAnswerSubmitted = AnalyticsEvent("study_answer_submitted")
+    static let studyAnswerPassed = AnalyticsEvent("study_answer_passed")
+    static let studyAnswerFailed = AnalyticsEvent("study_answer_failed")
+    static let studyRewardGranted = AnalyticsEvent("study_reward_granted")
+    static let studyDailyCapReached = AnalyticsEvent("study_daily_cap_reached")
+    static let studyFlowAbandoned = AnalyticsEvent("study_flow_abandoned")
+    static let pushupsIntroShown = AnalyticsEvent("pushups_intro_shown")
+    static let pushupsIntroAccepted = AnalyticsEvent("pushups_intro_accepted")
+    static let pushupsIntroDismissed = AnalyticsEvent("pushups_intro_dismissed")
+    static let pushupsToEarnOpened = AnalyticsEvent("pushups_to_earn_opened")
+    static let pushupsChallengeSelected = AnalyticsEvent("pushups_challenge_selected")
+    static let pushupsCameraPermissionRequested = AnalyticsEvent("pushups_camera_permission_requested")
+    static let pushupsCameraPermissionGranted = AnalyticsEvent("pushups_camera_permission_granted")
+    static let pushupsSetupCompleted = AnalyticsEvent("pushups_setup_completed")
+    static let pushupsSessionStarted = AnalyticsEvent("pushups_session_started")
+    static let pushupsPoseDetected = AnalyticsEvent("pushups_pose_detected")
+    static let pushupsPoseLost = AnalyticsEvent("pushups_pose_lost")
+    static let pushupsRepCounted = AnalyticsEvent("pushups_rep_counted")
+    static let pushupsSessionCompleted = AnalyticsEvent("pushups_session_completed")
+    static let pushupsRewardClaimed = AnalyticsEvent("pushups_reward_claimed")
+    static let pushupsRewardRejected = AnalyticsEvent("pushups_reward_rejected")
+    static let pushupsDailyCapReached = AnalyticsEvent("pushups_daily_cap_reached")
+    static let pushupsSessionAbandoned = AnalyticsEvent("pushups_session_abandoned")
 
     static let paywallClosed = AnalyticsEvent("paywall_closed")
     static func planSelected(_ plan: AnalyticsPlan) -> AnalyticsEvent {
@@ -114,6 +144,10 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let restoreStarted = AnalyticsEvent("restore_started")
     static let restoreCompleted = AnalyticsEvent("restore_completed")
     static let restoreFailed = AnalyticsEvent("restore_failed")
+
+    static func screenViewed(_ screen: String) -> AnalyticsEvent {
+        AnalyticsEvent("screen_viewed", properties: ["screen_name": .string(screen)])
+    }
 
     var plan: AnalyticsPlan? {
         guard case let .string(rawValue) = properties["plan"] else { return nil }

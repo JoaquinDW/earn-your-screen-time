@@ -45,9 +45,9 @@ struct SettingsView: View {
               Group {
                 Section {
                     Picker("settings.language", selection: languageBinding) {
-                        Text("settings.language.system").tag(AppLanguage.system)
-                        Text("settings.language.english").tag(AppLanguage.english)
-                        Text("settings.language.spanish").tag(AppLanguage.spanish)
+                        ForEach(AppLanguage.allCases) { language in
+                            languageLabel(language).tag(language)
+                        }
                     }
                 } header: {
                     sectionHeader("settings.language.section")
@@ -142,6 +142,7 @@ struct SettingsView: View {
                     Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
                     Button("settings.resetDay", role: .destructive) { env.resetToday() }
                     Button("settings.replayOnboarding", role: .destructive) { env.replayOnboarding() }
+                    Button("Debug: replay push-ups intro") { env.replayPushupsIntro() }
                     Button("Debug: +5 min earned") { env.triggerDebugFeedback(.screenTimeEarned(minutes: 5)) }
                     Button("Debug: goal complete") { env.triggerDebugFeedback(.dailyGoalCompleted(minutes: 5)) }
                     Button("Debug: apps unlocked") { env.triggerDebugFeedback(.appUnlocked) }
@@ -215,6 +216,7 @@ struct SettingsView: View {
         .onDisappear {
             onNavigationDepthChange?(false)
         }
+        .trackScreen("settings", analytics: env.analytics)
     }
 
     /// Section headers in the design's eyebrow rather than the system's grey caps — the one
@@ -247,6 +249,18 @@ struct SettingsView: View {
             String(localized: "subscription.status.free", locale: env.appLanguage.locale)
         case .pro:
             String(localized: "subscription.status.pro", locale: env.appLanguage.locale)
+        }
+    }
+
+    /// Every language but "System" names itself, the way iOS Settings does: someone hunting
+    /// for their own language recognises "Deutsch" without already reading the current one.
+    @ViewBuilder
+    private func languageLabel(_ language: AppLanguage) -> some View {
+        if let identifier = language.localeIdentifier {
+            let locale = Locale(identifier: identifier)
+            Text(locale.localizedString(forIdentifier: identifier)?.capitalized(with: locale) ?? identifier)
+        } else {
+            Text("settings.language.system")
         }
     }
 

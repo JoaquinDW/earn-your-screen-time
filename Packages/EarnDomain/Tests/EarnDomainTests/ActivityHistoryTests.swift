@@ -113,4 +113,21 @@ struct ActivityHistoryTests {
         #expect(totals.earnedSeconds == 900)
         #expect(totals.activeDays == 2)
     }
+
+    @Test("Day summaries round-trip Pushups without classifying them as steps")
+    func pushupCodableRoundTrip() throws {
+        let summary = DaySummary(
+            day: today,
+            activityAmount: 2_000,
+            stepEarnedSeconds: 600,
+            studyEarnedSeconds: 300,
+            pushupEarnedSeconds: 900
+        )
+
+        let decoded = try JSONDecoder().decode(DaySummary.self, from: JSONEncoder().encode(summary))
+        #expect(decoded == summary)
+        #expect(decoded.earnedSeconds == 1_800)
+        #expect(decoded.stepEarnedSeconds == 600)
+        #expect(decoded.pushupEarnedSeconds == 900)
+    }
 }

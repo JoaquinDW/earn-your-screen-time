@@ -59,6 +59,7 @@ el saldo anterior, cancela la sesión y mantiene los shields.
 | `UserDefaults` del App Group (`SharedStore`) | saldo, regla, día y sesión actual | la app **y** las extensiones |
 | `UserDefaults` del App Group (`MonitorScheduler`) | registro del monitor de la sesión | la app y la extensión de monitoreo |
 | `FamilyActivitySelection` codificada (`SelectionStore`) | los tokens opacos de las apps elegidas | la app y las extensiones |
+| Supabase Postgres | identidad anónima, entitlement, sesiones Study/Pushups y recompensas | Edge Functions con service role |
 | SwiftData *(Fase 5)* | ajustes e historial diario | solo la app |
 
 `DeviceActivityMonitorExtension` corre con un presupuesto de memoria muy chico y se muere si se
@@ -90,6 +91,31 @@ solo lo representa y nunca calcula crédito, saldo o shields.
 `RestrictionCoordinator` es el **único** lugar que decide BLOQUEADO vs DISPONIBLE. Tanto la app
 como la extensión pasan por él, así la regla no puede divergir entre los dos.
 
+## Study to Earn
+
+La cámara entrega una imagen transitoria a `VisionStudyOCRService`. Vision extrae texto en el
+dispositivo; la imagen no se persiste ni se envía. `SupabaseStudyService` autentica una cuenta
+anónima y envía solamente el texto OCR a una Edge Function. La función valida longitud, locale,
+entitlement, feature flag y capacidad diaria antes de pedir a OpenAI una respuesta estructurada.
+El texto OCR se trata siempre como datos no confiables, nunca como instrucciones.
+
+Supabase guarda temporalmente texto OCR, respuesta de referencia y criterios mientras la sesión
+está activa. Esos campos se ponen en `NULL` al aprobar, abandonar o expirar. La respuesta escrita
+por el usuario se evalúa sin insertarla en Postgres. Cancelar el flujo cancela la petición HTTP y
+el fetch a OpenAI; una sesión ya creada se abandona explícitamente.
+
+`grant_study_reward` es la autoridad de recompensas Study: corre como `security definer`, serializa
+por usuario/día UTC, vuelve a validar entitlement y cap, y crea como máximo una transacción por
+sesión. El cliente no tiene permisos directos sobre tablas ni sobre esta función. El recibo UUID se
+aplica a la wallet dentro del lock de `SharedStore`; `SharedState.appliedStudyReceiptIDs` sobrevive
+rollovers para que reintentos de red no acrediten dos veces. `RewardTransaction` audita método,
+segundos, fecha y sesión externa. El cap local de 180 minutos se valida antes de empezar y de aplicar
+el recibo; nunca se acredita una recompensa parcial.
+
+El UUID de Supabase también se entrega a RevenueCat como App User ID. La app comprueba Pro para la
+UI y el backend lo vuelve a comprobar mediante estado sincronizado por API/webhook. Ninguna clave
+OpenAI, RevenueCat secreta o Supabase service-role entra en el binario iOS.
+
 `ScreenTimeServing` es un protocolo con implementación real y mock: en el Simulador se usa el mock
 (donde Screen Time no existe), en el iPhone la real.
 
@@ -105,5 +131,32 @@ suplementarios y nunca revierten una sesión ni una acreditación.
 Al cambiar la regla, el baseline salta a los pasos actuales y los milestones vuelven a cero, así
 que **la actividad ya pagada nunca se vuelve a pagar** (PRD §16). Cubierto por `RuleChangeTests`.
 
-`EarningSource` ya contempla `workout`, `focusSession`, `runningDistance`, etc., pero solo `steps`
-está implementado (`EarningSource.implemented`).
+`EarningSource` ya contempla `workout`, `focusSession`, `runningDistance`, etc. `steps` y el flujo
+discreto de Pushups están implementados; las demás fuentes siguen fuera de alcance
+(`EarningSource.implemented`).
+
+## Pushups to Earn
+
+`VisionPushupDetector` usa la cámara trasera con `AVCaptureVideoDataOutput`, descarta frames tardíos y
+analiza como máximo unos 12 frames por segundo con `VNDetectHumanBodyPoseRequest`. Convierte
+inmediatamente las observaciones de Vision a `BodyPose`, un tipo pequeño y sin frameworks de Apple,
+y las pasa a `PushupRepCounter` en `EarnDomain`. Ningún frame, imagen o landmark se persiste, se sube
+o entra en analítica.
+
+`PushupRepCounter` exige confianza suficiente, cuerpo completo, alineación básica de hombro-cadera-
+tobillo y el ciclo completo arriba → abajo → arriba. La pérdida prolongada de pose reinicia el ciclo;
+la histéresis, duración mínima y debounce evitan contar ruido dos veces. Los umbrales llegan desde
+Supabase y quedan limitados por constraints del esquema.
+
+Supabase crea una `exercise_session` antes de contar y `claim_exercise_reward` concede como máximo un
+recibo por sesión. El servidor vuelve a comprobar target, entitlement Pro, versión del detector y cap
+de 30 minutos por día UTC dentro de una transacción serializada. Para el MVP acepta el resumen local
+de repeticiones: App Attest puede reforzar integridad en el futuro, pero no demostraría por sí solo el
+movimiento físico.
+
+El saldo gastable sigue siendo la wallet del App Group. Supabase autoriza la recompensa, no decide los
+shields ni conoce pasos o consumo local. `PendingExerciseClaimStore` guarda solo el resumen necesario
+para reintentar; `completed_at` permite reclamar tras recuperar conexión si el reto terminó dentro de
+la ventana original. El recibo se aplica con `ServerRewardEngine` dentro del lock de `SharedStore` y
+solo entonces se elimina el pendiente. Un cierre entre cualquiera de esos pasos no pierde ni duplica
+minutos.

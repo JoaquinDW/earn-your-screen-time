@@ -43,8 +43,13 @@ struct OSLogAnalytics: AnalyticsTracking {
 @MainActor
 enum AppAnalytics {
     static func make() -> any AnalyticsTracking {
-        let local = OSLogAnalytics()
-        guard MetaAttribution.configureIfAvailable() else { return local }
-        return CompositeAnalytics([local, MetaAnalytics()])
+        var trackers: [any AnalyticsTracking] = [OSLogAnalytics()]
+        if MetaAttribution.configureIfAvailable() {
+            trackers.append(MetaAnalytics())
+        }
+        if PostHogAttribution.configureIfAvailable() {
+            trackers.append(PostHogAnalytics())
+        }
+        return trackers.count == 1 ? trackers[0] : CompositeAnalytics(trackers)
     }
 }

@@ -23,6 +23,7 @@ for loc in LOCALES:
         "promotional_text": src["promo"],
         "description": src["desc"] + gen_legal.block(loc),
         "privacy_url": gen_legal.PRIV,
+        "support_url": gen_legal.SUPPORT,
     }
 
 if "--write" in sys.argv:

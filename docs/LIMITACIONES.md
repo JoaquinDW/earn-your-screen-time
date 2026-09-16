@@ -101,3 +101,27 @@ El proyecto aún no registra `HKObserverQuery` ni background delivery, por lo qu
 cerrada no acredita ni presenta una recompensa inmediatamente. La sesión activa sí lleva `endsAt`:
 el sistema puede dibujar su cuenta atrás y marcar el contenido vencido sin actualizaciones por segundo
 ni timers de la app.
+
+## 15. Study to Earn necesita cámara y red
+El OCR ocurre en el dispositivo y la foto no se sube, pero generar y evaluar la pregunta requiere
+Supabase, OpenAI y una suscripción Pro verificable. Sin cámara, permiso, conexión o configuración
+del backend no se puede completar una misión Study. Vision puede fallar con texto manuscrito,
+borroso, corto o en un idioma no soportado; la app pide otra captura en vez de inventar contenido.
+
+El backend limita la recompensa a 15 minutos por misión y 30 minutos por día UTC, sin parciales.
+La app también rechaza iniciar si no cabe la recompensa completa en el saldo local de 180 minutos.
+El Simulador permite compilar y recorrer estados no dependientes de cámara real, pero la captura y
+el flujo productivo deben validarse en un iPhone con credenciales Supabase configuradas.
+
+## 16. Pushups to Earn necesita cámara, cuerpo completo y red para cobrar
+
+La detección ocurre en el iPhone y no graba ni sube vídeo, pero Vision necesita ver de perfil hombro,
+codo, muñeca, cadera y tobillo con luz suficiente. Ropa, oclusiones, fondos, distancia, movimiento del
+móvil y diferencias entre dispositivos afectan la detección. El contador valida un ciclo básico; no
+evalúa técnica profesional, seguridad ni riesgo de lesión.
+
+El reto se completa sin red, pero Supabase debe autorizar la recompensa. El resumen del claim se guarda
+localmente y se reintenta de forma idempotente. Para el MVP el servidor confía en las repeticiones que
+reporta el cliente y se limita a imponer entitlement, configuración, caducidad, cap UTC y no duplicación.
+La cámara, la orientación landscape, consumo de batería y falsos positivos deben calibrarse en iPhones
+reales; el Simulador solo valida compilación y estados de UI.

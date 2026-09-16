@@ -147,17 +147,8 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     }
 
     private var localizationBundle: Bundle {
-        let resource: String
-        switch AppLanguage.saved {
-        case .system:
-            return .main
-        case .english:
-            resource = "en"
-        case .spanish:
-            resource = "es"
-        }
-
-        guard let path = Bundle.main.path(forResource: resource, ofType: "lproj"),
+        guard let resource = AppLanguage.saved.localeIdentifier,
+              let path = Bundle.main.path(forResource: resource, ofType: "lproj"),
               let bundle = Bundle(path: path) else {
             return .main
         }

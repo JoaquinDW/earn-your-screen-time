@@ -9,24 +9,77 @@ public struct DaySummary: Codable, Equatable, Sendable {
     public let day: DayKey
     public let activityAmount: Int
     public let earnedSeconds: Int
+    public let stepEarnedSeconds: Int
+    public let studyEarnedSeconds: Int
+    public let pushupEarnedSeconds: Int
 
     public init(day: DayKey, activityAmount: Int, earnedSeconds: Int) {
+        self.init(
+            day: day,
+            activityAmount: activityAmount,
+            stepEarnedSeconds: earnedSeconds,
+            studyEarnedSeconds: 0,
+            pushupEarnedSeconds: 0
+        )
+    }
+
+    public init(
+        day: DayKey,
+        activityAmount: Int,
+        stepEarnedSeconds: Int,
+        studyEarnedSeconds: Int,
+        pushupEarnedSeconds: Int = 0
+    ) {
         self.day = day
         self.activityAmount = max(0, activityAmount)
-        self.earnedSeconds = max(0, earnedSeconds)
+        self.stepEarnedSeconds = max(0, stepEarnedSeconds)
+        self.studyEarnedSeconds = max(0, studyEarnedSeconds)
+        self.pushupEarnedSeconds = max(0, pushupEarnedSeconds)
+        earnedSeconds = self.stepEarnedSeconds + self.studyEarnedSeconds + self.pushupEarnedSeconds
     }
 
     public init(ledger: DailyLedger) {
+        let studySeconds = ledger.walletTransactions.reduce(into: 0) { total, transaction in
+            if transaction.kind == .earned, transaction.source == .study {
+                total += transaction.amountSeconds
+            }
+        }
+        let pushupSeconds = ledger.walletTransactions.reduce(into: 0) { total, transaction in
+            if transaction.kind == .earned, transaction.source == .pushups {
+                total += transaction.amountSeconds
+            }
+        }
         self.init(
             day: ledger.day,
             activityAmount: ledger.activityAmount,
-            earnedSeconds: ledger.wallet.earnedSeconds
+            stepEarnedSeconds: max(0, ledger.wallet.earnedSeconds - studySeconds - pushupSeconds),
+            studyEarnedSeconds: studySeconds,
+            pushupEarnedSeconds: pushupSeconds
         )
     }
 
     public var earnedMinutes: Int { earnedSeconds / 60 }
     /// A day only counts toward a streak if it actually earned something.
     public var didEarn: Bool { earnedSeconds > 0 }
+
+    private enum CodingKeys: String, CodingKey {
+        case day, activityAmount, earnedSeconds, stepEarnedSeconds, studyEarnedSeconds, pushupEarnedSeconds
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let historicalEarnedSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .earnedSeconds) ?? 0)
+        let studySeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .studyEarnedSeconds) ?? 0)
+        let pushupSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .pushupEarnedSeconds) ?? 0)
+        self.init(
+            day: try container.decode(DayKey.self, forKey: .day),
+            activityAmount: try container.decodeIfPresent(Int.self, forKey: .activityAmount) ?? 0,
+            stepEarnedSeconds: try container.decodeIfPresent(Int.self, forKey: .stepEarnedSeconds)
+                ?? max(0, historicalEarnedSeconds - studySeconds - pushupSeconds),
+            studyEarnedSeconds: studySeconds,
+            pushupEarnedSeconds: pushupSeconds
+        )
+    }
 }
 
 /// A rolling calendar-month-sized window of finished days.

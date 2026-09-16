@@ -21,3 +21,6 @@ Packages/*/.build/
 
 # macOS
 .DS_Store
+
+# Catalog backups written by aso/l10n/merge.py.
+aso/l10n/backup/

@@ -98,6 +98,14 @@ final class SubscriptionManager {
         return customerInfo
     }
 
+    func identify(appUserID: String) async throws {
+        guard isRevenueCatConfigured else { throw SubscriptionIdentityError.notConfigured }
+        let customerInfo = try await service.identify(appUserID: appUserID)
+        customerInfoRevision += 1
+        apply(customerInfo, source: "Supabase identity")
+        lastError = nil
+    }
+
     func applyCustomerInfo(_ customerInfo: CustomerInfo, source: String) {
         customerInfoRevision += 1
         apply(customerInfo, source: source)
@@ -135,6 +143,12 @@ final class SubscriptionManager {
     private func log(_ message: String) {
         MonetizationLog.info(message)
     }
+}
+
+private enum SubscriptionIdentityError: LocalizedError {
+    case notConfigured
+
+    var errorDescription: String? { "RevenueCat is not configured." }
 }
 
 private enum SubscriptionServiceError: LocalizedError {

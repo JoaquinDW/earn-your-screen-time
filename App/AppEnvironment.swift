@@ -5,6 +5,8 @@ import SwiftUI
 
 enum AppRoute: Equatable {
     case home
+    /// Home, with the push-up camera pushed on top of it.
+    case pushups
 }
 
 /// Wires the services together and owns the state the UI observes.
@@ -15,6 +17,10 @@ final class AppEnvironment {
     let health: HealthKitServing
     let subscriptionManager: SubscriptionManager
     let analytics: any AnalyticsTracking
+    let study: any StudyServing
+    let studyOCR: any StudyOCRServing
+    let exercise: any ExerciseServing
+    let pendingExerciseClaims: PendingExerciseClaimStore
     private let sessionNotifications = SessionNotificationService()
     private let liveActivities = EarnLiveActivityManager()
 
@@ -29,19 +35,28 @@ final class AppEnvironment {
     /// This is deliberately never persisted: reopening Home must not replay a celebration.
     private(set) var presentationFeedback: EarnPresentationFeedback?
     private(set) var pendingRoute: AppRoute?
+    private var identifiedBackendUserID: UUID?
 
     init(
         screenTime: ScreenTimeServing? = nil,
         health: HealthKitServing? = nil,
         subscriptionManager: SubscriptionManager? = nil,
         appLanguage: AppLanguage? = nil,
-        analytics: (any AnalyticsTracking)? = nil
+        analytics: (any AnalyticsTracking)? = nil,
+        study: (any StudyServing)? = nil,
+        studyOCR: (any StudyOCRServing)? = nil,
+        exercise: (any ExerciseServing)? = nil,
+        pendingExerciseClaims: PendingExerciseClaimStore? = nil
     ) {
         let analytics = analytics ?? AppAnalytics.make()
         self.screenTime = screenTime ?? AppEnvironment.makeScreenTimeService()
         self.health = health ?? AppEnvironment.makeHealthService()
         self.subscriptionManager = subscriptionManager ?? SubscriptionManager()
         self.analytics = analytics
+        self.study = study ?? AppEnvironment.makeStudyService()
+        self.studyOCR = studyOCR ?? VisionStudyOCRService()
+        self.exercise = exercise ?? AppEnvironment.makeExerciseService()
+        self.pendingExerciseClaims = pendingExerciseClaims ?? PendingExerciseClaimStore()
         self.appLanguage = appLanguage ?? .saved
         var shouldTrackWalletCreation = false
         let loaded = SharedStore.shared.mutate { state in
@@ -79,6 +94,14 @@ final class AppEnvironment {
         #else
         LiveHealthKitService()
         #endif
+    }
+
+    private static func makeStudyService() -> any StudyServing {
+        SupabaseStudyService() ?? UnconfiguredStudyService()
+    }
+
+    private static func makeExerciseService() -> any ExerciseServing {
+        SupabaseExerciseService() ?? UnconfiguredExerciseService()
     }
 
     // MARK: - Derived state
@@ -133,6 +156,10 @@ final class AppEnvironment {
         )
     }
 
+    func canFitStudyReward(seconds: Int) -> Bool {
+        seconds > 0 && wallet.remainingValueSeconds <= ScreenTimeWallet.maximumSavedSeconds - seconds
+    }
+
     func currentWalletBalanceSeconds(at date: Date = Date()) -> Int {
         wallet.availableSeconds
     }
@@ -155,6 +182,118 @@ final class AppEnvironment {
     }
 
     // MARK: - Actions
+
+    func prepareStudyConfiguration() async throws -> StudyConfiguration {
+        guard featureAccess.canUseFocusEarning else { throw StudyAccessError.subscriptionRequired }
+        let userID = try await study.ensureIdentity()
+        if identifiedBackendUserID != userID {
+            try await subscriptionManager.identify(appUserID: userID.uuidString.lowercased())
+            identifiedBackendUserID = userID
+        }
+        let configuration = try await study.configuration()
+        guard configuration.enabled else { throw StudyAccessError.disabled }
+        guard configuration.entitled else { throw StudyAccessError.subscriptionRequired }
+        return configuration
+    }
+
+    func prepareExerciseConfiguration() async throws -> ExerciseConfiguration {
+        guard featureAccess.canUseWorkoutEarning else { throw ExerciseAccessError.subscriptionRequired }
+        let userID = try await exercise.ensureIdentity()
+        if identifiedBackendUserID != userID {
+            try await subscriptionManager.identify(appUserID: userID.uuidString.lowercased())
+            identifiedBackendUserID = userID
+        }
+        let configuration = try await exercise.configuration()
+        guard configuration.enabled else { throw ExerciseAccessError.disabled }
+        guard configuration.entitled else { throw ExerciseAccessError.subscriptionRequired }
+        guard configuration.updateRequired != true else { throw ExerciseAccessError.updateRequired }
+        return configuration
+    }
+
+    func canFitExerciseReward(seconds: Int) -> Bool {
+        seconds > 0 && wallet.remainingValueSeconds <= ScreenTimeWallet.maximumSavedSeconds - seconds
+    }
+
+    @discardableResult
+    func applyExerciseReward(_ reward: ExerciseReward) throws -> Bool {
+        let receipt = ServerRewardReceipt(
+            id: reward.id,
+            method: .pushups,
+            rewardSeconds: reward.amountSeconds,
+            issuedAt: reward.createdAt,
+            externalReference: reward.sessionID.uuidString.lowercased()
+        )
+        var result = ServerRewardEngine.Result.invalidReward
+        state = SharedStore.shared.mutate { state in
+            let outcome = ServerRewardEngine.apply(receipt, to: state)
+            state = outcome.state
+            result = outcome.result
+        }
+        switch result {
+        case .applied:
+            analytics.track(.pushupsRewardClaimed.withProperties([
+                "reward_seconds": .int(reward.amountSeconds)
+            ]))
+            analytics.track(.rewardCompleted.withProperties([
+                "reward_minutes": .int(reward.amountSeconds / 60),
+                "earning_method": .string(EarningMethod.pushups.rawValue)
+            ]))
+            analytics.track(.minutesEarned.withProperties([
+                "seconds": .int(reward.amountSeconds),
+                "balance_seconds": .int(state.ledger.wallet.remainingValueSeconds),
+                "earning_method": .string(EarningMethod.pushups.rawValue)
+            ]))
+            HapticManager.trigger(.earned)
+            synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
+            return true
+        case .duplicate:
+            return true
+        case .insufficientWalletCapacity:
+            throw ExerciseAccessError.walletCapacity
+        case .invalidReward:
+            throw ExerciseAccessError.invalidReward
+        }
+    }
+
+    @discardableResult
+    func applyStudyReward(_ reward: StudyAPIReturnedReward) throws -> Bool {
+        let receipt = StudyRewardReceipt(
+            id: reward.id,
+            rewardSeconds: reward.amountSeconds,
+            issuedAt: reward.issuedAt,
+            externalReference: reward.sessionID.uuidString.lowercased()
+        )
+        var result = StudyRewardEngine.Result.invalidReward
+        state = SharedStore.shared.mutate { state in
+            let outcome = StudyRewardEngine.apply(receipt, to: state)
+            state = outcome.state
+            result = outcome.result
+        }
+        switch result {
+        case .applied:
+            analytics.track(.studyRewardGranted.withProperties([
+                "reward_seconds": .int(reward.amountSeconds)
+            ]))
+            analytics.track(.rewardCompleted.withProperties([
+                "reward_minutes": .int(reward.amountSeconds / 60),
+                "earning_method": .string(EarningMethod.study.rawValue)
+            ]))
+            analytics.track(.minutesEarned.withProperties([
+                "seconds": .int(reward.amountSeconds),
+                "balance_seconds": .int(state.ledger.wallet.remainingValueSeconds),
+                "earning_method": .string(EarningMethod.study.rawValue)
+            ]))
+            HapticManager.trigger(.earned)
+            synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
+            return true
+        case .duplicate:
+            return true
+        case .insufficientWalletCapacity:
+            throw StudyAccessError.walletCapacity
+        case .invalidReward:
+            throw StudyAccessError.invalidReward
+        }
+    }
 
     /// Reads today's activity, awards any milestone reached, and makes the shields match.
     func refresh() async {
@@ -274,6 +413,8 @@ final class AppEnvironment {
             state.onboarding = finalizedProfile
             state.onboardingCompleted = true
             state.adaptiveIntroSeen = true
+            // Onboarding introduces push-ups itself, so a fresh user is never owed the announcement.
+            state.pushupsIntroSeen = true
             state.hasEarnedFirstReward = false
             state.goalProgressionCooldownUntil = today.adding(days: 7)
             state.ledger.rule = adaptiveRule
@@ -328,6 +469,10 @@ final class AppEnvironment {
         guard hasCompletedOnboarding else { return }
         isPresentingBlockedAppDetail = false
         pendingRoute = .home
+    }
+
+    func requestRoute(_ route: AppRoute) {
+        pendingRoute = route
     }
 
     func consumePendingRoute() {
@@ -493,6 +638,10 @@ final class AppEnvironment {
         state = SharedStore.shared.mutate { $0.adaptiveIntroSeen = true }
     }
 
+    func markPushupsIntroSeen() {
+        state = SharedStore.shared.mutate { $0.pushupsIntroSeen = true }
+    }
+
     // MARK: - Debug helpers (Phase 2 spike)
 
     func grantDebugCredit(seconds: Int) {
@@ -557,6 +706,10 @@ final class AppEnvironment {
         synchronizeLiveActivity()
     }
 
+    func replayPushupsIntro() {
+        state = SharedStore.shared.mutate { $0.pushupsIntroSeen = false }
+    }
+
     func triggerDebugFeedback(_ event: EarnPresentationEvent) {
         publish(event)
     }
@@ -615,5 +768,39 @@ final class AppEnvironment {
         guard lastError != message else { return }
         lastError = message
         publish(.error, haptic: haptic)
+    }
+}
+
+enum StudyAccessError: LocalizedError {
+    case subscriptionRequired
+    case disabled
+    case walletCapacity
+    case invalidReward
+
+    var errorDescription: String? {
+        switch self {
+        case .subscriptionRequired: "Study to Earn requires an active Pro subscription."
+        case .disabled: "Study to Earn is temporarily unavailable."
+        case .walletCapacity: "Use some minutes before starting. The full study reward must fit in your balance."
+        case .invalidReward: "Earnit could not verify the study reward."
+        }
+    }
+}
+
+enum ExerciseAccessError: LocalizedError {
+    case subscriptionRequired
+    case disabled
+    case updateRequired
+    case walletCapacity
+    case invalidReward
+
+    var errorDescription: String? {
+        switch self {
+        case .subscriptionRequired: "Pushups to Earn requires an active Pro subscription."
+        case .disabled: "Pushups to Earn is temporarily unavailable."
+        case .updateRequired: "Update Earnit to use Pushups to Earn."
+        case .walletCapacity: "Use some minutes first. The full push-up reward must fit in your balance."
+        case .invalidReward: "Earnit could not verify the push-up reward."
+        }
     }
 }

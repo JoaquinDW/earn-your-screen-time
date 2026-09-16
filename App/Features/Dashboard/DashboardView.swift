@@ -17,6 +17,7 @@ struct DashboardView: View {
 
     private enum HomeDestination: Hashable {
         case earnTime
+        case pushups
     }
 
     @State private var path: [HomeDestination] = []
@@ -54,11 +55,20 @@ struct DashboardView: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(for: HomeDestination.self) { destination in
                 switch destination {
-                case .earnTime: EarnTimeView()
+                case .earnTime:
+                    EarnTimeView(
+                        onPushups: { path.append(.pushups) }
+                    )
+                case .pushups:
+                    PushupsToEarnView(onUseMinutes: {
+                        path.removeAll()
+                        isShowingSpend = true
+                    })
                 }
             }
         }
         .animation(reduceMotion ? nil : .snappy(duration: EarnMotion.standard), value: env.isLocked)
+        .trackScreen("dashboard", analytics: env.analytics)
         .task {
             await env.refresh()
             if env.state.adaptiveIntroSeen {
@@ -71,7 +81,11 @@ struct DashboardView: View {
             guard !Task.isCancelled else { return }
             env.reload()
         }
+        .onChange(of: env.pendingRoute) { _, route in
+            applyPendingRoute(route)
+        }
         .onAppear {
+            applyPendingRoute(env.pendingRoute)
             // Report the depth on entry too, not only when it changes: coming back to the tab
             // with a destination still pushed has to keep the tab bar away.
             onNavigationDepthChange?(!path.isEmpty)
@@ -111,6 +125,14 @@ struct DashboardView: View {
             GoalRecommendationView()
                 .interactiveDismissDisabled()
         }
+    }
+
+    /// The push-up route is deep in this stack, so it is resolved here rather than in `RootView`.
+    private func applyPendingRoute(_ route: AppRoute?) {
+        guard route == .pushups else { return }
+        isShowingSpend = false
+        path = [.earnTime, .pushups]
+        env.consumePendingRoute()
     }
 }
 

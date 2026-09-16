@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "Earnit";
+"NSHealthShareUsageDescription" = "Earnit は、歩いてスクリーンタイムを稼げるように1日の歩数を読み取ります。ヘルスケアのデータはこの端末から出ません。";
+"NSHealthUpdateUsageDescription" = "Earnit は、活動の記録と獲得したスクリーンタイムを揃えておくために、ヘルスケアのデータを更新することがあります。";
+"NSCameraUsageDescription" = "Earnit は、学習教材を読み取ったり運動の回数を数えたりするためにカメラを使います。処理はこの端末の中で行われ、画像や動画は保存しません。";
+"NSUserTrackingUsageDescription" = "許可をいただくと、アプリの利用状況と広告のデータを結び付けて、配信の成果を測り、今後の広告を改善できます。";

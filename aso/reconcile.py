@@ -46,7 +46,8 @@ for loc in B.LOCALES:
     if c not in ("200", "201"): bad.append((loc, "info", json.dumps(p, ensure_ascii=False)[:300]))
 
     vattrs = {"description": f["description"], "keywords": f["keywords"],
-              "promotionalText": f["promotional_text"], "whatsNew": whatsnew.W[loc]}
+              "promotionalText": f["promotional_text"], "whatsNew": whatsnew.W[loc],
+              "supportUrl": f["support_url"]}
     if loc not in ver_map:
         ver_map = emap("/v1/appStoreVersions/%s/appStoreVersionLocalizations?limit=200" % VERSION_ID)
     if loc in ver_map:

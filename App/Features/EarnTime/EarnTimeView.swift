@@ -16,6 +16,7 @@ struct EarnTimeView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.locale) private var locale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    var onPushups: () -> Void = {}
 
     private static let heroShare: CGFloat = 0.54
 
@@ -52,6 +53,7 @@ struct EarnTimeView: View {
             }
         }
         .task { await env.refresh() }
+        .trackScreen("earn_time", analytics: env.analytics)
     }
 
     // MARK: - Hero
@@ -133,21 +135,17 @@ struct EarnTimeView: View {
                 )
             )
 
-            // The domain models these sources but cannot measure them yet (`EarningSource`), so
-            // they are shown as what they are rather than as a zero that reads like a failure.
-            EarningRuleCard(
-                title: "earn.source.workout",
-                detail: Text("earn.comingSoon"),
-                glyph: "figure.run",
-                state: .planned
-            )
-
-            EarningRuleCard(
-                title: "earn.source.focus",
-                detail: Text("earn.comingSoon"),
-                glyph: "hourglass",
-                state: .planned
-            )
+            Button(action: onPushups) {
+                EarningRuleCard(
+                    title: "pushups.title",
+                    titleTableName: PushupsLocalization.tableName,
+                    detail: Text("pushups.entry.detail", tableName: PushupsLocalization.tableName),
+                    glyph: "figure.strengthtraining.traditional",
+                    state: .available
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("pushups.entry.hint", tableName: PushupsLocalization.tableName))
         }
         .padding(.horizontal, Theme.Space.l)
     }
@@ -178,10 +176,12 @@ struct EarnTimeView: View {
 private struct EarningRuleCard: View {
     enum State {
         case active(trailingLabel: LocalizedStringKey, trailingValue: Text, progress: Double)
+        case available
         case planned
     }
 
     let title: LocalizedStringKey
+    var titleTableName: String? = nil
     let detail: Text
     let glyph: String
     let state: State
@@ -189,8 +189,10 @@ private struct EarningRuleCard: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var isActive: Bool {
-        if case .active = state { return true }
-        return false
+        switch state {
+        case .active, .available: true
+        case .planned: false
+        }
     }
 
     private var progress: Double {
@@ -211,7 +213,7 @@ private struct EarningRuleCard: View {
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(title)
+                    Text(title, tableName: titleTableName)
                         .font(.sans(15.5, weight: .semibold))
                         .foregroundStyle(isActive ? Night.text : Night.textSoft)
                     detail
@@ -234,6 +236,11 @@ private struct EarningRuleCard: View {
                             .monospacedDigit()
                     }
                     .layoutPriority(1)
+                } else if case .available = state {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Night.cobaltText)
+                        .accessibilityHidden(true)
                 }
             }
 

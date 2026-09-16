@@ -49,6 +49,8 @@
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Earnit uses Health data to record activity-related progress when needed to calculate your earned screen time.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Earnit uses the camera to read study material or count exercise repetitions live on your device. Images and video are not saved.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Earnit may update Health data to keep your activity-related progress synchronized with your earned screen time.</string>
 	<key>NSSupportsLiveActivities</key>
@@ -68,8 +70,16 @@
 			<string>n38lu8286q.skadnetwork</string>
 		</dict>
 	</array>
+	<key>PostHogAPIKey</key>
+	<string>$(POSTHOG_API_KEY)</string>
+	<key>PostHogHost</key>
+	<string>$(POSTHOG_HOST)</string>
 	<key>RevenueCatAPIKey</key>
 	<string>$(REVENUECAT_API_KEY)</string>
+	<key>SupabaseURL</key>
+	<string>$(SUPABASE_URL)</string>
+	<key>SupabasePublishableKey</key>
+	<string>$(SUPABASE_PUBLISHABLE_KEY)</string>
 	<key>TermsOfUseURL</key>
 	<string>$(TERMS_OF_USE_URL)</string>
 	<key>UIAppFonts</key>

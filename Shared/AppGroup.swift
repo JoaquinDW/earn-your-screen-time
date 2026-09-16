@@ -1,20 +1,39 @@
 import Foundation
 
+/// The languages Earnit ships strings for. A case may only be added once the matching
+/// `.lproj` directory exists under `App/Resources`, because that directory is what makes
+/// XcodeGen register the region and what the Screen Time extensions load their bundle from.
 enum AppLanguage: String, CaseIterable, Identifiable {
     case system
     case english
     case spanish
+    case german
+    case french
+    case italian
+    case portugueseBrazil
+    case japanese
 
     static let defaultsKey = "app.language.preference.v1"
 
     var id: Self { self }
 
-    var locale: Locale {
+    /// The `.lproj` resource name, or `nil` when the system's own choice wins.
+    var localeIdentifier: String? {
         switch self {
-        case .system: .autoupdatingCurrent
-        case .english: Locale(identifier: "en")
-        case .spanish: Locale(identifier: "es")
+        case .system: nil
+        case .english: "en"
+        case .spanish: "es"
+        case .german: "de"
+        case .french: "fr"
+        case .italian: "it"
+        case .portugueseBrazil: "pt-BR"
+        case .japanese: "ja"
         }
+    }
+
+    var locale: Locale {
+        guard let localeIdentifier else { return .autoupdatingCurrent }
+        return Locale(identifier: localeIdentifier)
     }
 
     static var saved: AppLanguage {

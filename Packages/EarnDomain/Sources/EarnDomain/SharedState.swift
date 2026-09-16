@@ -6,8 +6,8 @@ import Foundation
 /// under a very tight memory budget, so it reads/writes this via App Group `UserDefaults`
 /// rather than a database.
 public struct SharedState: Codable, Equatable, Sendable {
-    /// v6 adds persistent carry-over, refundable reservations, and wallet transactions.
-    public static let currentSchemaVersion = 6
+    /// v10 adds the one-time announcement flag for Pushups to Earn.
+    public static let currentSchemaVersion = 10
 
     public var schemaVersion: Int
     public var ledger: DailyLedger
@@ -29,7 +29,13 @@ public struct SharedState: Codable, Equatable, Sendable {
     public var hasEarnedFirstReward: Bool
     public var goalProgressionCooldownUntil: DayKey?
     public var adaptiveIntroSeen: Bool
+    /// Whether the Pushups to Earn announcement has been shown. Users who onboard after the
+    /// feature shipped meet it inside onboarding and start with this already true.
+    public var pushupsIntroSeen: Bool
     public var walletCreatedTracked: Bool
+    /// Successful reward receipts retained across rollover so a server replay cannot credit twice.
+    public private(set) var appliedRewardIDs: [UUID]
+    public var appliedStudyReceiptIDs: [UUID] { appliedRewardIDs }
 
     public init(
         schemaVersion: Int = SharedState.currentSchemaVersion,
@@ -45,7 +51,10 @@ public struct SharedState: Codable, Equatable, Sendable {
         hasEarnedFirstReward: Bool = false,
         goalProgressionCooldownUntil: DayKey? = nil,
         adaptiveIntroSeen: Bool = false,
-        walletCreatedTracked: Bool = false
+        pushupsIntroSeen: Bool = false,
+        walletCreatedTracked: Bool = false,
+        appliedRewardIDs: [UUID] = [],
+        appliedStudyReceiptIDs: [UUID] = []
     ) {
         self.schemaVersion = schemaVersion
         self.ledger = ledger
@@ -60,7 +69,9 @@ public struct SharedState: Codable, Equatable, Sendable {
         self.hasEarnedFirstReward = hasEarnedFirstReward
         self.goalProgressionCooldownUntil = goalProgressionCooldownUntil
         self.adaptiveIntroSeen = adaptiveIntroSeen
+        self.pushupsIntroSeen = pushupsIntroSeen
         self.walletCreatedTracked = walletCreatedTracked
+        self.appliedRewardIDs = appliedRewardIDs + appliedStudyReceiptIDs.filter { !appliedRewardIDs.contains($0) }
     }
 
     public static func initial(day: DayKey = .today(), rule: EarningRule = .default) -> SharedState {
@@ -84,11 +95,18 @@ public struct SharedState: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, ledger, onboardingCompleted, onboarding, history
         case restrictedItemCount, lastActivitySyncAt, shieldsApplied, currentSession, journey
-        case hasEarnedFirstReward, goalProgressionCooldownUntil, adaptiveIntroSeen, walletCreatedTracked
+        case hasEarnedFirstReward, goalProgressionCooldownUntil, adaptiveIntroSeen, pushupsIntroSeen
+        case walletCreatedTracked
+        case appliedRewardIDs
+    }
+
+    private enum LegacyCodingKeys: String, CodingKey {
+        case appliedStudyReceiptIDs
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let legacyContainer = try decoder.container(keyedBy: LegacyCodingKeys.self)
         let decodedSchemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
         schemaVersion = SharedState.currentSchemaVersion
         ledger = try container.decode(DailyLedger.self, forKey: .ledger)
@@ -103,7 +121,12 @@ public struct SharedState: Codable, Equatable, Sendable {
         hasEarnedFirstReward = try container.decodeIfPresent(Bool.self, forKey: .hasEarnedFirstReward) ?? false
         goalProgressionCooldownUntil = try container.decodeIfPresent(DayKey.self, forKey: .goalProgressionCooldownUntil)
         adaptiveIntroSeen = try container.decodeIfPresent(Bool.self, forKey: .adaptiveIntroSeen) ?? false
+        // A state written before v10 belongs to someone who has never seen the announcement.
+        pushupsIntroSeen = try container.decodeIfPresent(Bool.self, forKey: .pushupsIntroSeen) ?? false
         walletCreatedTracked = try container.decodeIfPresent(Bool.self, forKey: .walletCreatedTracked) ?? false
+        let genericIDs = (try? container.decodeIfPresent([UUID].self, forKey: .appliedRewardIDs)) ?? []
+        let v8StudyIDs = (try? legacyContainer.decodeIfPresent([UUID].self, forKey: .appliedStudyReceiptIDs)) ?? []
+        appliedRewardIDs = genericIDs + v8StudyIDs.filter { !genericIDs.contains($0) }
 
         if decodedSchemaVersion < 6,
            let currentSession,
@@ -114,6 +137,11 @@ public struct SharedState: Codable, Equatable, Sendable {
         if decodedSchemaVersion < 6, currentSession?.status != .active {
             currentSession?.settlementAnalyticsReported = true
         }
+    }
+
+    mutating func recordAppliedReward(_ id: UUID) {
+        guard !appliedRewardIDs.contains(id) else { return }
+        appliedRewardIDs.append(id)
     }
 
     public func encoded() throws -> Data {

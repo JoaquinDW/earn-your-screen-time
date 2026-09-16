@@ -54,7 +54,7 @@ public struct ThirtyDayJourney: Codable, Equatable, Sendable {
         var copy = self
         copy.incorporatedDays.insert(summary.day)
         copy.cumulativeSteps += summary.activityAmount
-        copy.earnedSeconds += summary.earnedSeconds
+        copy.earnedSeconds += summary.stepEarnedSeconds
         if summary.activityAmount > 0 { copy.activeDays += 1 }
         if summary.activityAmount >= dailyGoal { copy.goalHitDays += 1 }
         return copy
@@ -103,7 +103,7 @@ public struct ThirtyDayJourney: Codable, Equatable, Sendable {
     public func progress(includingToday summary: DaySummary?) -> Progress {
         let include = summary.map { contains($0.day) && !incorporatedDays.contains($0.day) } == true
         let steps = cumulativeSteps + (include ? summary?.activityAmount ?? 0 : 0)
-        let seconds = earnedSeconds + (include ? summary?.earnedSeconds ?? 0 : 0)
+        let seconds = earnedSeconds + (include ? summary?.stepEarnedSeconds ?? 0 : 0)
         let displayedActiveDays = activeDays + (include && (summary?.activityAmount ?? 0) > 0 ? 1 : 0)
         let displayedGoalDays = goalHitDays + (include && (summary?.activityAmount ?? 0) >= dailyGoal ? 1 : 0)
         let fraction = target > 0 ? min(1, Double(steps) / Double(target)) : 0

@@ -46,7 +46,7 @@ struct SharedStateMigrationTests {
         #expect(state.onboarding == OnboardingProfile())
         #expect(state.history.days.isEmpty)
         #expect(state.dailyStepGoal == 8_000)
-        #expect(state.schemaVersion == 6)
+        #expect(state.schemaVersion == 10)
         #expect(state.currentSession == nil)
         #expect(state.journey == nil)
         #expect(state.ledger.dailyGoal == 0)
@@ -54,6 +54,8 @@ struct SharedStateMigrationTests {
         #expect(state.ledger.transactions.isEmpty)
         #expect(!state.hasEarnedFirstReward)
         #expect(state.goalProgressionCooldownUntil == nil)
+        // An install from before Pushups to Earn must still be owed the announcement.
+        #expect(!state.pushupsIntroSeen)
         // A legacy unshielded flag cannot fabricate an access session with no fixed end.
         #expect(state.shieldsApplied == false)
     }
@@ -179,5 +181,67 @@ struct SharedStateMigrationTests {
         let decoded = try SharedState.decoded(from: state.encoded())
         #expect(decoded == state)
         #expect(decoded.ledger.wallet.availableSeconds == 900)
+    }
+
+    @Test("A v6 state defaults study fields without changing its wallet")
+    func migratesV6PreservingWallet() throws {
+        let v6 = """
+        {
+          "schemaVersion": 6,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 10 },
+            "activityAmount": 2000,
+            "milestonesRewarded": 2,
+            "wallet": {
+              "carriedSeconds": 300,
+              "earnedSeconds": 1200,
+              "consumedSeconds": 600,
+              "reservedSeconds": 300
+            }
+          },
+          "history": {
+            "days": [{
+              "day": { "year": 2027, "month": 2, "day": 9 },
+              "activityAmount": 4000,
+              "earnedSeconds": 1200
+            }]
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v6.utf8))
+        #expect(state.schemaVersion == 10)
+        #expect(state.ledger.wallet.carriedSeconds == 300)
+        #expect(state.ledger.wallet.earnedSeconds == 1_200)
+        #expect(state.ledger.wallet.consumedSeconds == 600)
+        #expect(state.ledger.wallet.reservedSeconds == 300)
+        #expect(state.ledger.wallet.availableSeconds == 600)
+        #expect(state.appliedStudyReceiptIDs.isEmpty)
+        #expect(state.ledger.rewardTransactions.isEmpty)
+        #expect(state.history.days.first?.stepEarnedSeconds == 1_200)
+        #expect(state.history.days.first?.studyEarnedSeconds == 0)
+        #expect(state.history.days.first?.pushupEarnedSeconds == 0)
+    }
+
+    @Test("A v8 Study receipt list migrates to generic IDs despite malformed optional fields")
+    func migratesV8RewardIDsTolerantly() throws {
+        let receiptID = UUID(uuidString: "AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE")!
+        let v8 = """
+        {
+          "schemaVersion": 8,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 10 },
+            "wallet": { "earnedSeconds": 900 }
+          },
+          "appliedStudyReceiptIDs": ["\(receiptID.uuidString)"],
+          "appliedRewardIDs": "not-an-array"
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v8.utf8))
+        #expect(state.schemaVersion == 10)
+        #expect(state.ledger.wallet.earnedSeconds == 900)
+        #expect(state.appliedRewardIDs == [receiptID])
+        #expect(state.appliedStudyReceiptIDs == [receiptID])
     }
 }

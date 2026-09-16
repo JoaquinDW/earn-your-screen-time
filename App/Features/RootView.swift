@@ -36,17 +36,33 @@ struct RootView: View {
             BlockedAppDetailView(onDismiss: env.dismissBlockedAppDetail)
         }
         .sheet(isPresented: Binding(
-            get: {
-                env.hasCompletedOnboarding
-                    && env.subscriptionManager.isPro
-                    && env.profile.onboardingCompletedAt == nil
-                    && !env.state.adaptiveIntroSeen
-            },
+            get: { isAdaptiveIntroPending },
             set: { if !$0 { env.markAdaptiveIntroSeen() } }
         )) {
             AdaptiveExistingUserView()
                 .interactiveDismissDisabled()
         }
+        // Only one sheet can be presented from here, so someone owed both meets the adaptive
+        // intro first and this one on the next launch.
+        .sheet(isPresented: Binding(
+            get: {
+                env.hasCompletedOnboarding
+                    && env.subscriptionManager.isPro
+                    && !env.state.pushupsIntroSeen
+                    && !isAdaptiveIntroPending
+            },
+            set: { if !$0 { env.markPushupsIntroSeen() } }
+        )) {
+            PushupsIntroView(onStart: { env.requestRoute(.pushups) })
+        }
+    }
+
+    /// Existing users from before the onboarding rewrite, who have not acknowledged it yet.
+    private var isAdaptiveIntroPending: Bool {
+        env.hasCompletedOnboarding
+            && env.subscriptionManager.isPro
+            && env.profile.onboardingCompletedAt == nil
+            && !env.state.adaptiveIntroSeen
     }
 
     private var subscriptionLoading: some View {
@@ -110,9 +126,11 @@ struct RootView: View {
     }
 
     private func applyPendingRoute(_ route: AppRoute?) {
-        guard route == .home, env.hasCompletedOnboarding else { return }
+        guard let route, env.hasCompletedOnboarding else { return }
         selectSection(.home)
         isShowingDetail = false
+        // `.pushups` needs the Dashboard's navigation stack, so it consumes that one itself.
+        guard route == .home else { return }
         env.consumePendingRoute()
     }
 }

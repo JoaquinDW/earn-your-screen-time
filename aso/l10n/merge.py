@@ -3,6 +3,11 @@
 never removes a key. Refuses to write if any assertion fails."""
 import json, os, shutil, sys
 
+# Backups live outside the source tree on purpose: XcodeGen globs App/Resources and
+# Extensions, so a .bak sitting next to a catalog gets compiled into the project as a
+# resource and the build then fails on a file that was cleaned up afterwards.
+BACKUP_DIR = "aso/l10n/backup"
+
 LOCALES = ["de","fr","it","pt-BR","nl","pl","tr","ru","ja","ko","zh-Hans","ar"]
 CATS = {"Localizable":"App/Resources/Localizable.xcstrings",
         "Study":"App/Resources/StudyLocalizable.xcstrings",
@@ -52,9 +57,10 @@ for cat, path in CATS.items():
     report.append("%-13s %4d keys | +%5d translations | locales: %s"
                   % (cat, len(before), added, ",".join(locs_done)))
     if not DRY:
-        shutil.copy(path, path + ".bak")
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        shutil.copy(path, os.path.join(BACKUP_DIR, os.path.basename(path) + ".bak"))
         json.dump(doc, open(path, "w"), ensure_ascii=False, indent=2)
         wrote += 1
 
 print("\n".join(report))
-print("\nMODE:", "WROTE %d catalogs (.bak saved next to each)" % wrote if not DRY else "DRY RUN — pass --write to apply")
+print("\nMODE:", "WROTE %d catalogs (backups in %s)" % (wrote, BACKUP_DIR) if not DRY else "DRY RUN — pass --write to apply")

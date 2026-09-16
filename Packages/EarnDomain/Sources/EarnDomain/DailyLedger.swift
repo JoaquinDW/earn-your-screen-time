@@ -21,6 +21,7 @@ public struct DailyLedger: Codable, Equatable, Sendable {
     public var goalBonusAwarded: Bool
     public var transactions: [EarnTransaction]
     public var walletTransactions: [WalletTransaction]
+    public var rewardTransactions: [RewardTransaction]
 
     public init(
         day: DayKey,
@@ -33,7 +34,8 @@ public struct DailyLedger: Codable, Equatable, Sendable {
         goalBonusSeconds: Int = 0,
         goalBonusAwarded: Bool = false,
         transactions: [EarnTransaction] = [],
-        walletTransactions: [WalletTransaction] = []
+        walletTransactions: [WalletTransaction] = [],
+        rewardTransactions: [RewardTransaction] = []
     ) {
         self.day = day
         self.rule = rule
@@ -46,6 +48,7 @@ public struct DailyLedger: Codable, Equatable, Sendable {
         self.goalBonusAwarded = goalBonusAwarded
         self.transactions = transactions
         self.walletTransactions = walletTransactions
+        self.rewardTransactions = rewardTransactions
     }
 
     /// Activity that counts toward the current rule.
@@ -54,6 +57,7 @@ public struct DailyLedger: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case day, rule, activityAmount, baselineAmount, milestonesRewarded, wallet
         case dailyGoal, goalBonusSeconds, goalBonusAwarded, transactions, walletTransactions
+        case rewardTransactions
     }
 
     public init(from decoder: Decoder) throws {
@@ -69,7 +73,8 @@ public struct DailyLedger: Codable, Equatable, Sendable {
             goalBonusSeconds: try container.decodeIfPresent(Int.self, forKey: .goalBonusSeconds) ?? 0,
             goalBonusAwarded: try container.decodeIfPresent(Bool.self, forKey: .goalBonusAwarded) ?? false,
             transactions: try container.decodeIfPresent([EarnTransaction].self, forKey: .transactions) ?? [],
-            walletTransactions: try container.decodeIfPresent([WalletTransaction].self, forKey: .walletTransactions) ?? []
+            walletTransactions: try container.decodeIfPresent([WalletTransaction].self, forKey: .walletTransactions) ?? [],
+            rewardTransactions: try container.decodeIfPresent([RewardTransaction].self, forKey: .rewardTransactions) ?? []
         )
     }
 }
@@ -83,10 +88,22 @@ public struct WalletTransaction: Codable, Equatable, Sendable {
 
     public enum Source: String, Codable, Sendable {
         case steps
+        case study
+        case pushups
         case dailyGoalBonus
         case session
         case dayRollover
         case debug
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            self = Self(rawValue: try container.decode(String.self)) ?? .debug
+        }
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(rawValue)
+        }
     }
 
     public let kind: Kind

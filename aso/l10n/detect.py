@@ -9,7 +9,7 @@ KEPT = ["Earnit","Apple Health","Apple Account","App Store","iPhone","iOS","Face
 SPEC = re.compile(r'%(?:(\d+)\$)?[-+ #0]*[\d*]*(?:\.\d+)?(hh|h|ll|l|q|L|z|t|j)?([@dDuUxXoOfeEgGcCsSpaAF])|%(%)')
 COGNATE_OK = {"minutes","session","Holding the Hunger Games hostage at the gym",
               "Milkman, Minson & Volpp \u00b7 Management Science \u00b7 2014","System","%lld apps","%lld minutes",
-              "OK","Pro","km","Earnit","Apple Health","Total","Start","Stop","Reset","Debug",
+              "OK","Pro","km","Earnit","Apple Health","Total","Start","Stop","Reset","Debug","%lld minutes.",
               "Test","Premium","Standard","Detox","Fitness","Timer","App","Apps","Live","min"}
 
 def specs(s):
@@ -64,7 +64,8 @@ def main():
                     p.append("POSITIONAL %s/%s %r: indices %s"%(scope,cat,k,pos))
                 if v==en and en not in COGNATE_OK and len(en)>3 and re.search(r'[A-Za-z]{4,}',en):
                     p.append("SAME-AS-EN %s/%s %r = %r"%(scope,cat,k,en[:48]))
-                if loc in NONLATIN:
+                # A citation kept in its original language is deliberate, not a leak.
+                if loc in NONLATIN and not (v==en and en in COGNATE_OK):
                     lr=latin_runs(v)
                     if lr: p.append("LATIN-LEAK %s/%s %r: %s"%(scope,cat,k,lr[:4]))
                 if loc=="zh-Hans":

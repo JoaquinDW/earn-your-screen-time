@@ -13,6 +13,7 @@ protocol SubscriptionServiceProtocol: AnyObject {
     func purchase(package: Package) async throws -> PurchaseResultData
     func restorePurchases() async throws -> CustomerInfo
     func refreshCustomerInfo() async throws -> CustomerInfo
+    func identify(appUserID: String) async throws -> CustomerInfo
 }
 
 @MainActor
@@ -89,9 +90,29 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
         try await Purchases.shared.customerInfo(fetchPolicy: .fetchCurrent)
     }
 
+    func identify(appUserID: String) async throws -> CustomerInfo {
+        try await withCheckedThrowingContinuation { continuation in
+            Purchases.shared.logIn(appUserID) { customerInfo, _, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if let customerInfo {
+                    continuation.resume(returning: customerInfo)
+                } else {
+                    continuation.resume(throwing: SubscriptionIdentificationError.missingCustomerInfo)
+                }
+            }
+        }
+    }
+
     nonisolated func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
         Task { @MainActor [weak self] in
             self?.customerInfoUpdateHandler?(customerInfo)
         }
     }
+}
+
+private enum SubscriptionIdentificationError: LocalizedError {
+    case missingCustomerInfo
+
+    var errorDescription: String? { "RevenueCat did not return customer information." }
 }
