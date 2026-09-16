@@ -1,0 +1,201 @@
+{
+ "dead": [
+  "pushups.active.camera_note",
+  "pushups.active.of %lld",
+  "pushups.active.reward %lld",
+  "pushups.active.started",
+  "pushups.challenge.reps %lld",
+  "pushups.challenge.reward %lld",
+  "pushups.claiming.detail",
+  "pushups.claiming.title",
+  "pushups.countdown.accessibility %lld",
+  "pushups.countdown.started",
+  "pushups.entry.detail",
+  "pushups.entry.hint",
+  "pushups.error.eyebrow",
+  "pushups.error.retry",
+  "pushups.error.title",
+  "pushups.guidance.find_body",
+  "pushups.guidance.improve_lighting",
+  "pushups.guidance.keep_going",
+  "pushups.guidance.lower_body",
+  "pushups.guidance.move_into_frame",
+  "pushups.guidance.push_up",
+  "pushups.guidance.slow_down",
+  "pushups.guidance.start_at_top",
+  "pushups.guidance.straighten_body",
+  "pushups.intro.cta",
+  "pushups.intro.detail",
+  "pushups.intro.eyebrow",
+  "pushups.intro.later",
+  "pushups.intro.privacy",
+  "pushups.intro.step.camera",
+  "pushups.intro.step.camera.detail",
+  "pushups.intro.step.reps",
+  "pushups.intro.step.reps.detail",
+  "pushups.intro.step.reward",
+  "pushups.intro.step.reward.detail",
+  "pushups.intro.title",
+  "pushups.limit.detail %@",
+  "pushups.limit.detail.fallback",
+  "pushups.limit.eyebrow",
+  "pushups.limit.title",
+  "pushups.loading.accessibility",
+  "pushups.loading.title",
+  "pushups.mission",
+  "pushups.pending.detail",
+  "pushups.pending.eyebrow",
+  "pushups.pending.retry",
+  "pushups.pending.title",
+  "pushups.permission.settings",
+  "pushups.permission.title",
+  "pushups.picker.cta",
+  "pushups.picker.detail",
+  "pushups.picker.title",
+  "pushups.privacy.detail",
+  "pushups.privacy.title",
+  "pushups.setup.cta",
+  "pushups.setup.framing",
+  "pushups.setup.hold",
+  "pushups.setup.move_back",
+  "pushups.setup.place_phone",
+  "pushups.setup.ready.front",
+  "pushups.setup.ready.side",
+  "pushups.setup.title",
+  "pushups.starting.detail",
+  "pushups.starting.title",
+  "pushups.success.again",
+  "pushups.success.announcement %lld",
+  "pushups.success.detail %lld",
+  "pushups.success.eyebrow",
+  "pushups.success.title %lld",
+  "pushups.success.use",
+  "pushups.title",
+  "study.answer.cta",
+  "study.answer.placeholder",
+  "study.camera.cta",
+  "study.camera.detail",
+  "study.camera.guide",
+  "study.camera.title",
+  "study.checking.detail",
+  "study.checking.title",
+  "study.error.eyebrow",
+  "study.error.retry",
+  "study.error.title",
+  "study.intro.detail %lld",
+  "study.intro.examples",
+  "study.intro.title",
+  "study.limit.detail %@",
+  "study.limit.detail.fallback",
+  "study.limit.eyebrow",
+  "study.limit.title",
+  "study.mission",
+  "study.preparing.detail",
+  "study.preparing.title",
+  "study.privacy.detail",
+  "study.privacy.title",
+  "study.processing.detail",
+  "study.processing.title",
+  "study.question.different",
+  "study.question.eyebrow",
+  "study.question.title",
+  "study.retry.cta",
+  "study.retry.eyebrow",
+  "study.retry.title",
+  "study.scan.another",
+  "study.scan.cta",
+  "study.success.again",
+  "study.success.detail",
+  "study.success.eyebrow",
+  "study.success.title %lld",
+  "study.success.use",
+  "study.title"
+ ],
+ "atoms": [
+  [
+   "Localizable",
+   "",
+   ""
+  ],
+  [
+   "Localizable",
+   "·",
+   "·"
+  ],
+  [
+   "Localizable",
+   "%@, %@, %@",
+   "%1$@, %2$@, %3$@"
+  ],
+  [
+   "Localizable",
+   "%lld",
+   "%lld"
+  ],
+  [
+   "Localizable",
+   "%lld–%lld",
+   "%1$lld–%2$lld"
+  ],
+  [
+   "Localizable",
+   "%lld%%",
+   "%lld%%"
+  ],
+  [
+   "Localizable",
+   "≈ %@",
+   "≈ %@"
+  ],
+  [
+   "Localizable",
+   "app.name",
+   "Earnit"
+  ],
+  [
+   "Localizable",
+   "Apple Health",
+   "Apple Health"
+  ],
+  [
+   "Localizable",
+   "dashboard.ofGoal %lld",
+   "/ %lld"
+  ],
+  [
+   "Localizable",
+   "Earnit",
+   "Earnit"
+  ],
+  [
+   "Localizable",
+   "EARNIT PRO",
+   "EARNIT PRO"
+  ],
+  [
+   "Localizable",
+   "onboarding.projection.steps.value %lld",
+   "+%lld"
+  ],
+  [
+   "Localizable",
+   "Paluch et al. · The Lancet Public Health · 2022",
+   "Paluch et al. · The Lancet Public Health · 2022"
+  ],
+  [
+   "Localizable",
+   "settings.debug",
+   "Debug"
+  ],
+  [
+   "Localizable",
+   "subscription.eyebrow",
+   "EARNIT PRO"
+  ],
+  [
+   "Localizable",
+   "subscription.status.pro",
+   "Pro"
+  ]
+ ]
+}

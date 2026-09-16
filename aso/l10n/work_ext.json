@@ -1,0 +1,314 @@
+{
+"Shield": {
+"shield.action.chooseTime": {
+"en": "Choose how much time",
+"es": "Elegir cuánto tiempo",
+"specs": []
+},
+"shield.action.close": {
+"en": "Close app",
+"es": "Cerrar app",
+"specs": []
+},
+"shield.action.earnMore": {
+"en": "Earn more time",
+"es": "Ganar más tiempo",
+"specs": []
+},
+"shield.action.notNow": {
+"en": "Save for later",
+"es": "Guardar para después",
+"specs": []
+},
+"shield.action.openEarn": {
+"en": "Open Earnit",
+"es": "Abrir Earnit",
+"specs": []
+},
+"shield.action.useMinutes": {
+"en": "Start my %lld min",
+"es": "Empezar mis %lld min",
+"specs": [
+"%lld"
+]
+},
+"shield.almost.subtitle": {
+"en": "About a %2$lld min walk from earning your next %1$lld min.",
+"es": "A unos %2$lld min caminando de ganar tus próximos %1$lld min.",
+"specs": [
+"%2$lld",
+"%1$lld"
+]
+},
+"shield.almost.title": {
+"en": "Just %lld steps left.",
+"es": "Solo faltan %lld pasos.",
+"specs": [
+"%lld"
+]
+},
+"shield.available.subtitle": {
+"en": "Choose a session. The rest stays yours.",
+"es": "Elige una sesión. El resto sigue siendo tuyo.",
+"specs": []
+},
+"shield.available.title": {
+"en": "%lld min earned",
+"es": "%lld min ganados",
+"specs": [
+"%lld"
+]
+},
+"shield.expired.subtitle": {
+"en": "Walk toward %lld steps to earn more. Your apps are paused for now.",
+"es": "Camina hasta %lld pasos para ganar más. Tus apps están en pausa.",
+"specs": [
+"%lld"
+]
+},
+"shield.expired.title": {
+"en": "You used your %lld min.",
+"es": "Usaste tus %lld min.",
+"specs": [
+"%lld"
+]
+},
+"shield.goal.subtitle": {
+"en": "%1$lld steps today · %2$lld min earned",
+"es": "%1$lld pasos hoy · %2$lld min ganados",
+"specs": [
+"%1$lld",
+"%2$lld"
+]
+},
+"shield.goal.title": {
+"en": "You earned it today.",
+"es": "Hoy te lo ganaste.",
+"specs": []
+},
+"shield.noTime.progress": {
+"en": "Walk %1$lld more steps · earn %2$lld min in about %3$lld min.",
+"es": "Camina %1$lld pasos más · gana %2$lld min en unos %3$lld min.",
+"specs": [
+"%1$lld",
+"%2$lld",
+"%3$lld"
+]
+},
+"shield.noTime.subtitle": {
+"en": "Move to earn time before you scroll.",
+"es": "Muévete para ganar tiempo antes de hacer scroll.",
+"specs": []
+},
+"shield.noTime.title": {
+"en": "Your apps are paused",
+"es": "Tus apps están en pausa",
+"specs": []
+},
+"shield.updating.subtitle": {
+"en": "Open Earnit to get your latest progress.",
+"es": "Abre Earnit para actualizar tu progreso.",
+"specs": []
+},
+"shield.updating.title": {
+"en": "Updating your steps…",
+"es": "Actualizando tus pasos…",
+"specs": []
+}
+},
+"LiveActivity": {
+"+%lldm": {
+"en": "+%lldm",
+"es": null,
+"specs": [
+"%lld"
+]
+},
+"liveActivity.available %lld": {
+"en": "%lld min available",
+"es": "%lld min disponibles",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.availableLabel": {
+"en": "Available",
+"es": "Disponible",
+"specs": []
+},
+"liveActivity.availableShort": {
+"en": "available",
+"es": "disponibles",
+"specs": []
+},
+"liveActivity.earned %lld": {
+"en": "+%lld min earned",
+"es": "+%lld min ganados",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.earnedToday %lld": {
+"en": "%lld min earned today",
+"es": "%lld min ganados hoy",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.goalComplete": {
+"en": "Daily goal complete",
+"es": "Meta diaria completa",
+"specs": []
+},
+"liveActivity.goalShort": {
+"en": "Goal complete",
+"es": "Meta completa",
+"specs": []
+},
+"liveActivity.goalSummary %lld %lld": {
+"en": "%lld steps · %lld min earned today",
+"es": "%lld pasos · %lld min ganados hoy",
+"specs": [
+"%lld",
+"%lld"
+]
+},
+"liveActivity.minutesValue %lld": {
+"en": "%lld min",
+"es": "%lld min",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.nextReward": {
+"en": "Next reward",
+"es": "Próxima recompensa",
+"specs": []
+},
+"liveActivity.progress": {
+"en": "Progress to next reward",
+"es": "Progreso hacia la próxima recompensa",
+"specs": []
+},
+"liveActivity.remaining %lld %lld": {
+"en": "%lld steps until +%lld min",
+"es": "%lld pasos para +%lld min",
+"specs": [
+"%lld",
+"%lld"
+]
+},
+"liveActivity.rewardBadge %lld": {
+"en": "+%lld MIN",
+"es": "+%lld MIN",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.saved %lld": {
+"en": "%lld min saved",
+"es": "%lld min guardados",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.session": {
+"en": "session",
+"es": "sesión",
+"specs": []
+},
+"liveActivity.sessionEnds %@": {
+"en": "Session ends at %@",
+"es": "La sesión termina a las %@",
+"specs": [
+"%@"
+]
+},
+"liveActivity.sessionLeft": {
+"en": "Session left",
+"es": "Sesión restante",
+"specs": []
+},
+"liveActivity.sessionRemaining": {
+"en": "session remaining",
+"es": "de sesión restante",
+"specs": []
+},
+"liveActivity.stepFraction %lld %lld": {
+"en": "%lld / %lld steps",
+"es": "%lld / %lld pasos",
+"specs": [
+"%lld",
+"%lld"
+]
+},
+"liveActivity.stepsCompact %lld": {
+"en": "%lld steps",
+"es": "%lld pasos",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.stepsToGo %lld": {
+"en": "%lld steps to go",
+"es": "Faltan %lld pasos",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.stepsValue %lld": {
+"en": "%lld steps",
+"es": "%lld pasos",
+"specs": [
+"%lld"
+]
+},
+"liveActivity.timesUp": {
+"en": "Time’s up",
+"es": "Se acabó el tiempo",
+"specs": []
+},
+"liveActivity.title": {
+"en": "Earnit",
+"es": "Earnit",
+"specs": []
+},
+"liveActivity.unlocked": {
+"en": "Apps unlocked",
+"es": "Apps desbloqueadas",
+"specs": []
+},
+"liveActivity.walked": {
+"en": "Walked",
+"es": "Caminado",
+"specs": []
+},
+"liveActivity.walkToEarn": {
+"en": "Walk to earn more",
+"es": "Camina para ganar más",
+"specs": []
+}
+},
+"InfoPlist": {
+"NSHealthShareUsageDescription": {
+"en": "Earnit reads your daily step count so walking can earn screen time. Your health data stays on this device.",
+"es": "Earnit lee tu recuento diario de pasos para convertir tus caminatas en tiempo de pantalla. Tus datos de salud permanecen en este dispositivo.",
+"specs": []
+},
+"NSHealthUpdateUsageDescription": {
+"en": "Earnit may update Health data to keep your activity-related progress synchronized with your earned screen time.",
+"es": null,
+"specs": []
+},
+"NSCameraUsageDescription": {
+"en": "Earnit uses the camera to read study material or count exercise repetitions live on your device. Images and video are not saved.",
+"es": null,
+"specs": []
+},
+"NSUserTrackingUsageDescription": {
+"en": "Your permission allows us to link app activity with advertising data to measure campaign results and improve future ads.",
+"es": "Tu permiso nos permite vincular la actividad de la app con datos publicitarios para medir los resultados de las campañas y mejorar futuros anuncios.",
+"specs": []
+}
+}
+}

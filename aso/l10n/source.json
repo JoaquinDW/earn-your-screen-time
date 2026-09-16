@@ -1,0 +1,7474 @@
+{
+"Localizable␟": {
+"cat": "Localizable",
+"key": "",
+"en": "",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟·": {
+"cat": "Localizable",
+"key": "·",
+"en": "·",
+"plural": false,
+"specs": [],
+"comment": "A non-breaking space character."
+},
+"Localizable␟%@ / %@ steps": {
+"cat": "Localizable",
+"key": "%@ / %@ steps",
+"en": "%1$@ / %2$@ steps",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$@"
+],
+"comment": "A label that shows the user how many steps they've taken today, relative to their goal. The first argument is the number of steps taken today. The second argument is the number of steps in the user's daily goal."
+},
+"Localizable␟%@ %@.": {
+"cat": "Localizable",
+"key": "%@ %@.",
+"en": "%@ %@.",
+"plural": false,
+"specs": [
+"%@",
+"%@"
+],
+"comment": null
+},
+"Localizable␟%@ steps": {
+"cat": "Localizable",
+"key": "%@ steps",
+"en": "%@ steps",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": "A large, monospaced text view displaying the user's daily step goal."
+},
+"Localizable␟%@ steps. Just %@ more than now.": {
+"cat": "Localizable",
+"key": "%@ steps. Just %@ more than now.",
+"en": "%1$@ steps. Just %2$@ more than now.",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$@"
+],
+"comment": null
+},
+"Localizable␟%@ steps/day": {
+"cat": "Localizable",
+"key": "%@ steps/day",
+"en": "%@ steps/day",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟%@-step 30-day goal": {
+"cat": "Localizable",
+"key": "%@-step 30-day goal",
+"en": "%@-step 30-day goal",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟%@, %@, %@": {
+"cat": "Localizable",
+"key": "%@, %@, %@",
+"en": "%1$@, %2$@, %3$@",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$@",
+"%3$@"
+],
+"comment": "A button that lists a subscription plan with a title, price, and billing period. The first argument is the string “Monthly” or the value of the localized string key “Yearly”. The third argument is the string “per month” or the string “per year”."
+},
+"Localizable␟%@. Then %@ %@.": {
+"cat": "Localizable",
+"key": "%@. Then %@ %@.",
+"en": "%@. Then %@ %@.",
+"plural": false,
+"specs": [
+"%@",
+"%@",
+"%@"
+],
+"comment": null
+},
+"Localizable␟%lld": {
+"cat": "Localizable",
+"key": "%lld",
+"en": "%lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A small label showing the number of minutes earned on a given day. The value is animated."
+},
+"Localizable␟%lld days of moving before scrolling.": {
+"cat": "Localizable",
+"key": "%lld days of moving before scrolling.",
+"en": "%lld days of moving before scrolling.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label below the month's metrics, describing the streak of days the user has been active."
+},
+"Localizable␟%lld hours": {
+"cat": "Localizable",
+"key": "%lld hours",
+"en": "%lld hours",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟%lld min": {
+"cat": "Localizable",
+"key": "%lld min",
+"en": "%lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟%lld minutes": {
+"cat": "Localizable",
+"key": "%lld minutes",
+"en": "%lld minutes",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟%lld selected items": {
+"cat": "Localizable",
+"key": "%lld selected items",
+"en": "%lld selected items",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟%lld–%lld": {
+"cat": "Localizable",
+"key": "%lld–%lld",
+"en": "%1$lld–%2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟%lld%%": {
+"cat": "Localizable",
+"key": "%lld%%",
+"en": "%lld%%",
+"plural": false,
+"specs": [
+"%lld",
+"%%"
+],
+"comment": "A percentage indicating how far the user has walked towards their next reward."
+},
+"Localizable␟%lld+": {
+"cat": "Localizable",
+"key": "%lld+",
+"en": "%lld+",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟%lldh %lldm": {
+"cat": "Localizable",
+"key": "%lldh %lldm",
+"en": "%1$lldh %2$lldm",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟%lldm": {
+"cat": "Localizable",
+"key": "%lldm",
+"en": "%lldm",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟+10 bonus min": {
+"cat": "Localizable",
+"key": "+10 bonus min",
+"en": "+10 bonus min",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟≈ %@": {
+"cat": "Localizable",
+"key": "≈ %@",
+"en": "≈ %@",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟≈ %lld hours": {
+"cat": "Localizable",
+"key": "≈ %lld hours",
+"en": "≈ %lld hours",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟0 / %@ steps": {
+"cat": "Localizable",
+"key": "0 / %@ steps",
+"en": "0 / %@ steps",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": "A label showing the user's current step count and their daily goal. The argument is the user's current step count, and the second argument is their daily step goal."
+},
+"Localizable␟0 steps": {
+"cat": "Localizable",
+"key": "0 steps",
+"en": "0 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟2,000–5,000 steps/day": {
+"cat": "Localizable",
+"key": "2,000–5,000 steps/day",
+"en": "2,000–5,000 steps/day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟3-day free trial": {
+"cat": "Localizable",
+"key": "3-day free trial",
+"en": "3-day free trial",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟5 min / 1,000 steps": {
+"cat": "Localizable",
+"key": "5 min / 1,000 steps",
+"en": "5 min / 1,000 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟5 min / 500 steps": {
+"cat": "Localizable",
+"key": "5 min / 500 steps",
+"en": "5 min / 500 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟5,000–8,000 steps/day": {
+"cat": "Localizable",
+"key": "5,000–8,000 steps/day",
+"en": "5,000–8,000 steps/day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟8,000+ steps/day": {
+"cat": "Localizable",
+"key": "8,000+ steps/day",
+"en": "8,000+ steps/day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟10,000 isn't a magic number.": {
+"cat": "Localizable",
+"key": "10,000 isn't a magic number.",
+"en": "10,000 isn't a magic number.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟30 days": {
+"cat": "Localizable",
+"key": "30 days",
+"en": "30 days",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟30 DAYS FROM NOW": {
+"cat": "Localizable",
+"key": "30 DAYS FROM NOW",
+"en": "30 DAYS FROM NOW",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟30-day goal": {
+"cat": "Localizable",
+"key": "30-day goal",
+"en": "30-day goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟500 steps": {
+"cat": "Localizable",
+"key": "500 steps",
+"en": "500 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A 2022 meta-analysis of 15 international studies found that health benefits were associated with step counts below 10,000, and the pattern differed by age.": {
+"cat": "Localizable",
+"key": "A 2022 meta-analysis of 15 international studies found that health benefits were associated with step counts below 10,000, and the pattern differed by age.",
+"en": "A 2022 meta-analysis of 15 international studies found that health benefits were associated with step counts below 10,000, and the pattern differed by age.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A blocking app": {
+"cat": "Localizable",
+"key": "A blocking app",
+"en": "A blocking app",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A DIFFERENT APPROACH": {
+"cat": "Localizable",
+"key": "A DIFFERENT APPROACH",
+"en": "A DIFFERENT APPROACH",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A field experiment on temptation bundling: linking a desired experience to exercise. It supports the behavioral principle behind pairing movement with access, not a claim that Earnit itself has been clinically validated.": {
+"cat": "Localizable",
+"key": "A field experiment on temptation bundling: linking a desired experience to exercise. It supports the behavioral principle behind pairing movement with access, not a claim that Earnit itself has been clinically validated.",
+"en": "A field experiment on temptation bundling: linking a desired experience to exercise. It supports the behavioral principle behind pairing movement with access, not a claim that Earnit itself has been clinically validated.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A goal built around where you are today.": {
+"cat": "Localizable",
+"key": "A goal built around where you are today.",
+"en": "A goal built around where you are today.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A GOAL THAT FITS": {
+"cat": "Localizable",
+"key": "A GOAL THAT FITS",
+"en": "A GOAL THAT FITS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A limit is easy to override in the moment.": {
+"cat": "Localizable",
+"key": "A limit is easy to override in the moment.",
+"en": "A limit is easy to override in the moment.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A LITTLE ABOUT YOU": {
+"cat": "Localizable",
+"key": "A LITTLE ABOUT YOU",
+"en": "A LITTLE ABOUT YOU",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A meta-analysis of 15 international cohorts. It supports the statement that 10,000 steps is not a universal threshold and that the observed dose-response pattern varies by age.": {
+"cat": "Localizable",
+"key": "A meta-analysis of 15 international cohorts. It supports the statement that 10,000 steps is not a universal threshold and that the observed dose-response pattern varies by age.",
+"en": "A meta-analysis of 15 international cohorts. It supports the statement that 10,000 steps is not a universal threshold and that the observed dose-response pattern varies by age.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A month where scrolling gives you a reason to move.": {
+"cat": "Localizable",
+"key": "A month where scrolling gives you a reason to move.",
+"en": "A month where scrolling gives you a reason to move.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A smaller target can help you build momentum without giving up.": {
+"cat": "Localizable",
+"key": "A smaller target can help you build momentum without giving up.",
+"en": "A smaller target can help you build momentum without giving up.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟A total block can feel too rigid.": {
+"cat": "Localizable",
+"key": "A total block can feel too rigid.",
+"en": "A total block can feel too rigid.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟About how much do you usually walk?": {
+"cat": "Localizable",
+"key": "About how much do you usually walk?",
+"en": "About how much do you usually walk?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟About the science": {
+"cat": "Localizable",
+"key": "About the science",
+"en": "About the science",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Activating your plan": {
+"cat": "Localizable",
+"key": "Activating your plan",
+"en": "Activating your plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟active days": {
+"cat": "Localizable",
+"key": "active days",
+"en": "active days",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Adjust goal": {
+"cat": "Localizable",
+"key": "Adjust goal",
+"en": "Adjust goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Adjust your daily goal": {
+"cat": "Localizable",
+"key": "Adjust your daily goal",
+"en": "Adjust your daily goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟An estimate based on the range you selected. The point isn't guilt. It's seeing what autopilot can cost.": {
+"cat": "Localizable",
+"key": "An estimate based on the range you selected. The point isn't guilt. It's seeing what autopilot can cost.",
+"en": "An estimate based on the range you selected. The point isn't guilt. It's seeing what autopilot can cost.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟An estimate is enough. You can adjust your plan later.": {
+"cat": "Localizable",
+"key": "An estimate is enough. You can adjust your plan later.",
+"en": "An estimate is enough. You can adjust your plan later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Any amount of physical activity is better than none.": {
+"cat": "Localizable",
+"key": "Any amount of physical activity is better than none.",
+"en": "Any amount of physical activity is better than none.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟app.name": {
+"cat": "Localizable",
+"key": "app.name",
+"en": "Earnit",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Apple Health": {
+"cat": "Localizable",
+"key": "Apple Health",
+"en": "Apple Health",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Apple Health shows a recent average of %@ steps/day.": {
+"cat": "Localizable",
+"key": "Apple Health shows a recent average of %@ steps/day.",
+"en": "Apple Health shows a recent average of %@ steps/day.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": "A paragraph below the title of the view, providing context about the user's health data."
+},
+"Localizable␟Apple's app limits": {
+"cat": "Localizable",
+"key": "Apple's app limits",
+"en": "Apple's app limits",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.change": {
+"cat": "Localizable",
+"key": "appSelection.change",
+"en": "Add or remove apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.choose": {
+"cat": "Localizable",
+"key": "appSelection.choose",
+"en": "Choose apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.count %lld": {
+"cat": "Localizable",
+"key": "appSelection.count %lld",
+"en": "%lld selected",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟appSelection.empty": {
+"cat": "Localizable",
+"key": "appSelection.empty",
+"en": "Nothing is blocked yet. Choose the apps whose minutes should come out of your balance.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.explanation": {
+"cat": "Localizable",
+"key": "appSelection.explanation",
+"en": "Only these spend your minutes. Everything else on your phone is untouched.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.needsAuthorization": {
+"cat": "Localizable",
+"key": "appSelection.needsAuthorization",
+"en": "Screen Time access is needed to choose apps. Grant it in Settings.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.removal.confirm": {
+"cat": "Localizable",
+"key": "appSelection.removal.confirm",
+"en": "Remove from the list",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.removal.keep": {
+"cat": "Localizable",
+"key": "appSelection.removal.keep",
+"en": "Keep protected",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.removal.message": {
+"cat": "Localizable",
+"key": "appSelection.removal.message",
+"en": "Sometimes we change the plan just to resolve the impulse of the moment. Pause for a second before deciding.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.removal.title": {
+"cat": "Localizable",
+"key": "appSelection.removal.title",
+"en": "Are you trying to bypass your own block?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.remove.a11y": {
+"cat": "Localizable",
+"key": "appSelection.remove.a11y",
+"en": "Double tap to remove",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.title": {
+"cat": "Localizable",
+"key": "appSelection.title",
+"en": "The apps you",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟appSelection.title.emphasis": {
+"cat": "Localizable",
+"key": "appSelection.title.emphasis",
+"en": "earn.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟AUTOMATIC EARNING": {
+"cat": "Localizable",
+"key": "AUTOMATIC EARNING",
+"en": "AUTOMATIC EARNING",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟AVAILABLE BECAUSE YOU EARNED IT": {
+"cat": "Localizable",
+"key": "AVAILABLE BECAUSE YOU EARNED IT",
+"en": "AVAILABLE BECAUSE YOU EARNED IT",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Back": {
+"cat": "Localizable",
+"key": "Back",
+"en": "Back",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Based on WHO physical activity guidelines": {
+"cat": "Localizable",
+"key": "Based on WHO physical activity guidelines",
+"en": "Based on WHO physical activity guidelines",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Best value": {
+"cat": "Localizable",
+"key": "Best value",
+"en": "Best value",
+"plural": false,
+"specs": [],
+"comment": "A label indicating that a plan is the best value."
+},
+"Localizable␟Build a healthier routine": {
+"cat": "Localizable",
+"key": "Build a healthier routine",
+"en": "Build a healthier routine",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Build my plan": {
+"cat": "Localizable",
+"key": "Build my plan",
+"en": "Build my plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Build my starting point": {
+"cat": "Localizable",
+"key": "Build my starting point",
+"en": "Build my starting point",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟BUILD YOUR PLAN": {
+"cat": "Localizable",
+"key": "BUILD YOUR PLAN",
+"en": "BUILD YOUR PLAN",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟BUILT FROM YOUR BASELINE": {
+"cat": "Localizable",
+"key": "BUILT FROM YOUR BASELINE",
+"en": "BUILT FROM YOUR BASELINE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Calculated as %@ additional steps × 30 days. Walking time assumes about 100 steps per minute.": {
+"cat": "Localizable",
+"key": "Calculated as %@ additional steps × 30 days. Walking time assumes about 100 steps per minute.",
+"en": "Calculated as %@ additional steps × 30 days. Walking time assumes about 100 steps per minute.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟Checking your activity": {
+"cat": "Localizable",
+"key": "Checking your activity",
+"en": "Checking your activity",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Checking your subscription": {
+"cat": "Localizable",
+"key": "Checking your subscription",
+"en": "Checking your subscription",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Choose a subscription": {
+"cat": "Localizable",
+"key": "Choose a subscription",
+"en": "Choose a subscription",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Choose when to use them": {
+"cat": "Localizable",
+"key": "Choose when to use them",
+"en": "Choose when to use them",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Close paywall": {
+"cat": "Localizable",
+"key": "Close paywall",
+"en": "Close paywall",
+"plural": false,
+"specs": [],
+"comment": "An accessibility label for the button that closes the paywall."
+},
+"Localizable␟common.cancel": {
+"cat": "Localizable",
+"key": "common.cancel",
+"en": "Cancel",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟common.close": {
+"cat": "Localizable",
+"key": "common.close",
+"en": "Close",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟common.done": {
+"cat": "Localizable",
+"key": "common.done",
+"en": "Done",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟common.minutesValue %lld": {
+"cat": "Localizable",
+"key": "common.minutesValue %lld",
+"en": "%lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟common.no": {
+"cat": "Localizable",
+"key": "common.no",
+"en": "No",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟common.yes": {
+"cat": "Localizable",
+"key": "common.yes",
+"en": "Yes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Connect Apple Health": {
+"cat": "Localizable",
+"key": "Connect Apple Health",
+"en": "Connect Apple Health",
+"plural": false,
+"specs": [],
+"comment": "A button label that initiates the process of connecting to Apple Health."
+},
+"Localizable␟Connecting": {
+"cat": "Localizable",
+"key": "Connecting",
+"en": "Connecting",
+"plural": false,
+"specs": [],
+"comment": "The text displayed while connecting to Apple Health."
+},
+"Localizable␟Continue": {
+"cat": "Localizable",
+"key": "Continue",
+"en": "Continue",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Continue with my plan": {
+"cat": "Localizable",
+"key": "Continue with my plan",
+"en": "Continue with my plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Couldn't complete purchase": {
+"cat": "Localizable",
+"key": "Couldn't complete purchase",
+"en": "Couldn't complete purchase",
+"plural": false,
+"specs": [],
+"comment": "An error message displayed when a purchase attempt fails."
+},
+"Localizable␟Couldn't restore purchases": {
+"cat": "Localizable",
+"key": "Couldn't restore purchases",
+"en": "Couldn't restore purchases",
+"plural": false,
+"specs": [],
+"comment": "An alert title when a user tries to restore purchases but something goes wrong."
+},
+"Localizable␟Create my recommendation": {
+"cat": "Localizable",
+"key": "Create my recommendation",
+"en": "Create my recommendation",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Current": {
+"cat": "Localizable",
+"key": "Current",
+"en": "Current",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Custom earning rules": {
+"cat": "Localizable",
+"key": "Custom earning rules",
+"en": "Custom earning rules",
+"plural": false,
+"specs": [],
+"comment": "A benefit listed in the ProPaywall."
+},
+"Localizable␟Customize": {
+"cat": "Localizable",
+"key": "Customize",
+"en": "Customize",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Daily goal": {
+"cat": "Localizable",
+"key": "Daily goal",
+"en": "Daily goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Daily movement goal": {
+"cat": "Localizable",
+"key": "Daily movement goal",
+"en": "Daily movement goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Daily steps and all-cause mortality": {
+"cat": "Localizable",
+"key": "Daily steps and all-cause mortality",
+"en": "Daily steps and all-cause mortality",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.available": {
+"cat": "Localizable",
+"key": "dashboard.available",
+"en": "available",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.fromYourNext": {
+"cat": "Localizable",
+"key": "dashboard.fromYourNext",
+"en": "from your next",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.minutesReward %lld": {
+"cat": "Localizable",
+"key": "dashboard.minutesReward %lld",
+"en": "%lld minutes.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟dashboard.noAppsSelected": {
+"cat": "Localizable",
+"key": "dashboard.noAppsSelected",
+"en": "Choose the apps you want to earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.ofGoal %lld": {
+"cat": "Localizable",
+"key": "dashboard.ofGoal %lld",
+"en": "/ %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟dashboard.readyToSpend": {
+"cat": "Localizable",
+"key": "dashboard.readyToSpend",
+"en": "ready to spend",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.refreshingSteps": {
+"cat": "Localizable",
+"key": "dashboard.refreshingSteps",
+"en": "Updating steps…",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.refreshSteps": {
+"cat": "Localizable",
+"key": "dashboard.refreshSteps",
+"en": "Update my steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.state.available": {
+"cat": "Localizable",
+"key": "dashboard.state.available",
+"en": "Session active",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.state.locked": {
+"cat": "Localizable",
+"key": "dashboard.state.locked",
+"en": "Apps are locked",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.stepsToday": {
+"cat": "Localizable",
+"key": "dashboard.stepsToday",
+"en": "steps today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.stepsToGo %lld": {
+"cat": "Localizable",
+"key": "dashboard.stepsToGo %lld",
+"en": "%lld steps",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟dashboard.streak %lld": {
+"cat": "Localizable",
+"key": "dashboard.streak %lld",
+"en": "%lld-day streak",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟dashboard.thisWeek": {
+"cat": "Localizable",
+"key": "dashboard.thisWeek",
+"en": "This week",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟dashboard.upToMinutes %lld": {
+"cat": "Localizable",
+"key": "dashboard.upToMinutes %lld",
+"en": "up to %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟Day %lld of 30": {
+"cat": "Localizable",
+"key": "Day %lld of 30",
+"en": "Day %lld of 30",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label below the main title of a 30-day journey, indicating the current day of the journey."
+},
+"Localizable␟day streak": {
+"cat": "Localizable",
+"key": "day streak",
+"en": "day streak",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟days hitting your goal": {
+"cat": "Localizable",
+"key": "days hitting your goal",
+"en": "days hitting your goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Debug: replay push-ups intro": {
+"cat": "Localizable",
+"key": "Debug: replay push-ups intro",
+"en": "Debug: replay push-ups intro",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Deleting an app doesn't change the impulse.": {
+"cat": "Localizable",
+"key": "Deleting an app doesn't change the impulse.",
+"en": "Deleting an app doesn't change the impulse.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Deleting the apps": {
+"cat": "Localizable",
+"key": "Deleting the apps",
+"en": "Deleting the apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Do something good for yourself": {
+"cat": "Localizable",
+"key": "Do something good for yourself",
+"en": "Do something good for yourself",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Done": {
+"cat": "Localizable",
+"key": "Done",
+"en": "Done",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earn": {
+"cat": "Localizable",
+"key": "Earn",
+"en": "Earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earn 5 minutes": {
+"cat": "Localizable",
+"key": "Earn 5 minutes",
+"en": "Earn 5 minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earn rate": {
+"cat": "Localizable",
+"key": "Earn rate",
+"en": "Earn rate",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earn screen time from your steps": {
+"cat": "Localizable",
+"key": "Earn screen time from your steps",
+"en": "Earn screen time from your steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earn your screen time.": {
+"cat": "Localizable",
+"key": "Earn your screen time.",
+"en": "Earn your screen time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.chooseHowToEarn": {
+"cat": "Localizable",
+"key": "earn.chooseHowToEarn",
+"en": "Choose how to earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.comingSoon": {
+"cat": "Localizable",
+"key": "earn.comingSoon",
+"en": "Coming soon",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.footnote %lld": {
+"cat": "Localizable",
+"key": "earn.footnote %lld",
+"en": "Minutes land in your balance as you go. Up to %lld carry over past midnight.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟earn.goalProgress %@": {
+"cat": "Localizable",
+"key": "earn.goalProgress %@",
+"en": "%@ step goal",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟earn.minutesEarnedToday %lld": {
+"cat": "Localizable",
+"key": "earn.minutesEarnedToday %lld",
+"en": "+%lld min earned today",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟earn.nextReward %lld %lld": {
+"cat": "Localizable",
+"key": "earn.nextReward %lld %lld",
+"en": "%1$lld steps until your next %2$lld minutes",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟earn.rule %@ %lld": {
+"cat": "Localizable",
+"key": "earn.rule %@ %lld",
+"en": "%1$@ steps = %2$lld min",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟earn.source.focus": {
+"cat": "Localizable",
+"key": "earn.source.focus",
+"en": "Focus",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.source.steps": {
+"cat": "Localizable",
+"key": "earn.source.steps",
+"en": "Steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.source.workout": {
+"cat": "Localizable",
+"key": "earn.source.workout",
+"en": "Workout",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.stepsToday %@": {
+"cat": "Localizable",
+"key": "earn.stepsToday %@",
+"en": "%@ steps today",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟earn.stepsUnit": {
+"cat": "Localizable",
+"key": "earn.stepsUnit",
+"en": "steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.title": {
+"cat": "Localizable",
+"key": "earn.title",
+"en": "Earn time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earn.today": {
+"cat": "Localizable",
+"key": "earn.today",
+"en": "Today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earned": {
+"cat": "Localizable",
+"key": "earned",
+"en": "earned",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟earned each day": {
+"cat": "Localizable",
+"key": "earned each day",
+"en": "earned each day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earned minutes": {
+"cat": "Localizable",
+"key": "Earned minutes",
+"en": "Earned minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit": {
+"cat": "Localizable",
+"key": "Earnit",
+"en": "Earnit",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit changes the default: protected apps stay paused until your movement creates a balance you choose to use.": {
+"cat": "Localizable",
+"key": "Earnit changes the default: protected apps stay paused until your movement creates a balance you choose to use.",
+"en": "Earnit changes the default: protected apps stay paused until your movement creates a balance you choose to use.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit keeps the pause, but gives you a clear way to earn intentional access instead of banning the apps forever.": {
+"cat": "Localizable",
+"key": "Earnit keeps the pause, but gives you a clear way to earn intentional access instead of banning the apps forever.",
+"en": "Earnit keeps the pause, but gives you a clear way to earn intentional access instead of banning the apps forever.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟EARNIT MEMBERSHIP": {
+"cat": "Localizable",
+"key": "EARNIT MEMBERSHIP",
+"en": "EARNIT MEMBERSHIP",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit moves the decision earlier: walk, build a balance, then choose a short session without negotiating with yourself.": {
+"cat": "Localizable",
+"key": "Earnit moves the decision earlier: walk, build a balance, then choose a short session without negotiating with yourself.",
+"en": "Earnit moves the decision earlier: walk, build a balance, then choose a short session without negotiating with yourself.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟EARNIT NOW ADAPTS TO YOU": {
+"cat": "Localizable",
+"key": "EARNIT NOW ADAPTS TO YOU",
+"en": "EARNIT NOW ADAPTS TO YOU",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟EARNIT PRO": {
+"cat": "Localizable",
+"key": "EARNIT PRO",
+"en": "EARNIT PRO",
+"plural": false,
+"specs": [],
+"comment": "The title of the \"Earnit Pro\" section in the paywall."
+},
+"Localizable␟Earnit puts a pause before the app opens and turns that moment into a choice you have already earned.": {
+"cat": "Localizable",
+"key": "Earnit puts a pause before the app opens and turns that moment into a choice you have already earned.",
+"en": "Earnit puts a pause before the app opens and turns that moment into a choice you have already earned.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit starts from your average and changes the goal only after a full week of activity. You decide whether to accept each change.": {
+"cat": "Localizable",
+"key": "Earnit starts from your average and changes the goal only after a full week of activity. You decide whether to accept each change.",
+"en": "Earnit starts from your average and changes the goal only after a full week of activity. You decide whether to accept each change.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit uses Apple Health to automatically convert your movement into screen-time credit.": {
+"cat": "Localizable",
+"key": "Earnit uses Apple Health to automatically convert your movement into screen-time credit.",
+"en": "Earnit uses Apple Health to automatically convert your movement into screen-time credit.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit uses your walking activity to create a goal that actually fits you.": {
+"cat": "Localizable",
+"key": "Earnit uses your walking activity to create a goal that actually fits you.",
+"en": "Earnit uses your walking activity to create a goal that actually fits you.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Earnit's reward loop also draws on “temptation bundling”: pairing something you want with an activity that benefits you. It is a behavioral principle, not a guarantee.": {
+"cat": "Localizable",
+"key": "Earnit's reward loop also draws on “temptation bundling”: pairing something you want with an activity that benefits you. It is a behavioral principle, not a guarantee.",
+"en": "Earnit's reward loop also draws on “temptation bundling”: pairing something you want with an activity that benefits you. It is a behavioral principle, not a guarantee.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Enable Screen Time": {
+"cat": "Localizable",
+"key": "Enable Screen Time",
+"en": "Enable Screen Time",
+"plural": false,
+"specs": [],
+"comment": "A button label that prompts the user to enable Screen Time access."
+},
+"Localizable␟Enjoy": {
+"cat": "Localizable",
+"key": "Enjoy",
+"en": "Enjoy",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Estimated extra walking": {
+"cat": "Localizable",
+"key": "Estimated extra walking",
+"en": "Estimated extra walking",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Every step counts": {
+"cat": "Localizable",
+"key": "Every step counts",
+"en": "Every step counts",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Evidence behind the plan": {
+"cat": "Localizable",
+"key": "Evidence behind the plan",
+"en": "Evidence behind the plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Extra steps": {
+"cat": "Localizable",
+"key": "Extra steps",
+"en": "Extra steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Extra walking": {
+"cat": "Localizable",
+"key": "Extra walking",
+"en": "Extra walking",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟feedback.appsLocked": {
+"cat": "Localizable",
+"key": "feedback.appsLocked",
+"en": "Apps locked",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟feedback.appsUnlocked": {
+"cat": "Localizable",
+"key": "feedback.appsUnlocked",
+"en": "Apps unlocked",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟feedback.balanceEmpty": {
+"cat": "Localizable",
+"key": "feedback.balanceEmpty",
+"en": "No time available",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟feedback.earned %lld": {
+"cat": "Localizable",
+"key": "feedback.earned %lld",
+"en": "+%lld MIN EARNED",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟feedback.firstReward %lld": {
+"cat": "Localizable",
+"key": "feedback.firstReward %lld",
+"en": "YOUR FIRST %lld MIN ARE READY",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟feedback.goalComplete %lld": {
+"cat": "Localizable",
+"key": "feedback.goalComplete %lld",
+"en": "DAILY GOAL COMPLETE · +%lld MIN",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟feedback.streak %lld": {
+"cat": "Localizable",
+"key": "feedback.streak %lld",
+"en": "%lld DAY STREAK",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟feedback.timeSaved %lld": {
+"cat": "Localizable",
+"key": "feedback.timeSaved %lld",
+"en": "YOU SAVED %lld MIN",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟feedback.timeSavedLessThanMinute": {
+"cat": "Localizable",
+"key": "feedback.timeSavedLessThanMinute",
+"en": "YOU SAVED THE LAST SECONDS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟feedback.walletFull": {
+"cat": "Localizable",
+"key": "feedback.walletFull",
+"en": "WALLET FULL · 180 MIN",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Feel more in control": {
+"cat": "Localizable",
+"key": "Feel more in control",
+"en": "Feel more in control",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟First goal": {
+"cat": "Localizable",
+"key": "First goal",
+"en": "First goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟for every %@ steps": {
+"cat": "Localizable",
+"key": "for every %@ steps",
+"en": "for every %@ steps",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟full days every year": {
+"cat": "Localizable",
+"key": "full days every year",
+"en": "full days every year",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Goal reward": {
+"cat": "Localizable",
+"key": "Goal reward",
+"en": "Goal reward",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Halfway there": {
+"cat": "Localizable",
+"key": "Halfway there",
+"en": "Halfway there",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Health data stays in Apple Health and on your device.": {
+"cat": "Localizable",
+"key": "Health data stays in Apple Health and on your device.",
+"en": "Health data stays in Apple Health and on your device.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Health guidelines recommend reducing sedentary behavior.": {
+"cat": "Localizable",
+"key": "Health guidelines recommend reducing sedentary behavior.",
+"en": "Health guidelines recommend reducing sedentary behavior.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟health.error.unavailable": {
+"cat": "Localizable",
+"key": "health.error.unavailable",
+"en": "Health data is not available on this device.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Holding the Hunger Games hostage at the gym": {
+"cat": "Localizable",
+"key": "Holding the Hunger Games hostage at the gym",
+"en": "Holding the Hunger Games hostage at the gym",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.appsPaused": {
+"cat": "Localizable",
+"key": "home.appsPaused",
+"en": "Your selected apps stay paused until you earn time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.availableTime": {
+"cat": "Localizable",
+"key": "home.availableTime",
+"en": "Available time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.chooseAppsForReward": {
+"cat": "Localizable",
+"key": "home.chooseAppsForReward",
+"en": "Choose which apps your earned time will unlock.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.earnMoreTime": {
+"cat": "Localizable",
+"key": "home.earnMoreTime",
+"en": "Earn more time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.edit": {
+"cat": "Localizable",
+"key": "home.edit",
+"en": "Edit",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.fullDay": {
+"cat": "Localizable",
+"key": "home.fullDay",
+"en": "full day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.minutesAvailable %lld": {
+"cat": "Localizable",
+"key": "home.minutesAvailable %lld",
+"en": "%lld min available",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.minutesEarnedCount %lld": {
+"cat": "Localizable",
+"key": "home.minutesEarnedCount %lld",
+"en": "%lld min earned",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.minutesEarnedHeadline %lld": {
+"cat": "Localizable",
+"key": "home.minutesEarnedHeadline %lld",
+"en": "%lld minutes",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.minutesUsed %lld": {
+"cat": "Localizable",
+"key": "home.minutesUsed %lld",
+"en": "%lld min used",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.nextRewardTitle": {
+"cat": "Localizable",
+"key": "home.nextRewardTitle",
+"en": "Next reward",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.rewardValue %lld": {
+"cat": "Localizable",
+"key": "home.rewardValue %lld",
+"en": "+%lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.spend.a11y": {
+"cat": "Localizable",
+"key": "home.spend.a11y",
+"en": "Choose how long to spend",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.spendHowever": {
+"cat": "Localizable",
+"key": "home.spendHowever",
+"en": "earned today. Spend them\nhowever you like.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.stepsTodayCount %@": {
+"cat": "Localizable",
+"key": "home.stepsTodayCount %@",
+"en": "%@ steps today",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟home.stepsUntilReward %lld": {
+"cat": "Localizable",
+"key": "home.stepsUntilReward %lld",
+"en": "%lld steps to go",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟home.toSpendOnYourApps": {
+"cat": "Localizable",
+"key": "home.toSpendOnYourApps",
+"en": "to spend on your apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.unit.minutes": {
+"cat": "Localizable",
+"key": "home.unit.minutes",
+"en": "min",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.untilYourLast": {
+"cat": "Localizable",
+"key": "home.untilYourLast",
+"en": "until your last",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟home.untilYourNext": {
+"cat": "Localizable",
+"key": "home.untilYourNext",
+"en": "until your next",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟hours every week": {
+"cat": "Localizable",
+"key": "hours every week",
+"en": "hours every week",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟How much time do you think you spend scrolling each day?": {
+"cat": "Localizable",
+"key": "How much time do you think you spend scrolling each day?",
+"en": "How much time do you think you spend scrolling each day?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟I want some of that time back": {
+"cat": "Localizable",
+"key": "I want some of that time back",
+"en": "I want some of that time back",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟I want this": {
+"cat": "Localizable",
+"key": "I want this",
+"en": "I want this",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟I’m in": {
+"cat": "Localizable",
+"key": "I’m in",
+"en": "I’m in",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟IF YOU REACH YOUR GOAL FOR 30 DAYS": {
+"cat": "Localizable",
+"key": "IF YOU REACH YOUR GOAL FOR 30 DAYS",
+"en": "IF YOU REACH YOUR GOAL FOR 30 DAYS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟If you stick with your plan, this is what you are working toward.": {
+"cat": "Localizable",
+"key": "If you stick with your plan, this is what you are working toward.",
+"en": "If you stick with your plan, this is what you are working toward.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Imagine where small walks could take you.": {
+"cat": "Localizable",
+"key": "Imagine where small walks could take you.",
+"en": "Imagine where small walks could take you.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Imagine yourself 30 days from now.": {
+"cat": "Localizable",
+"key": "Imagine yourself 30 days from now.",
+"en": "Imagine yourself 30 days from now.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟In a hurry? A set of push-ups in front of the camera earns minutes right now.": {
+"cat": "Localizable",
+"key": "In a hurry? A set of push-ups in front of the camera earns minutes right now.",
+"en": "In a hurry? A set of push-ups in front of the camera earns minutes right now.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Increase goal": {
+"cat": "Localizable",
+"key": "Increase goal",
+"en": "Increase goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Instead of blocking your favorite apps forever, Earnit makes screen time something you unlock by moving.": {
+"cat": "Localizable",
+"key": "Instead of blocking your favorite apps forever, Earnit makes screen time something you unlock by moving.",
+"en": "Instead of blocking your favorite apps forever, Earnit makes screen time something you unlock by moving.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Intentional screen time": {
+"cat": "Localizable",
+"key": "Intentional screen time",
+"en": "Intentional screen time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Keep current goal": {
+"cat": "Localizable",
+"key": "Keep current goal",
+"en": "Keep current goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Keep current setup": {
+"cat": "Localizable",
+"key": "Keep current setup",
+"en": "Keep current setup",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Keep earning": {
+"cat": "Localizable",
+"key": "Keep earning",
+"en": "Keep earning",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Keep saying no": {
+"cat": "Localizable",
+"key": "Keep saying no",
+"en": "Keep saying no",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Let’s earn it": {
+"cat": "Localizable",
+"key": "Let’s earn it",
+"en": "Let’s earn it",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Let’s make it do the opposite.": {
+"cat": "Localizable",
+"key": "Let’s make it do the opposite.",
+"en": "Let’s make it do the opposite.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟LET'S MAKE THIS ACHIEVABLE": {
+"cat": "Localizable",
+"key": "LET'S MAKE THIS ACHIEVABLE",
+"en": "LET'S MAKE THIS ACHIEVABLE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Let's see where you're starting from.": {
+"cat": "Localizable",
+"key": "Let's see where you're starting from.",
+"en": "Let's see where you're starting from.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Loading subscription option": {
+"cat": "Localizable",
+"key": "Loading subscription option",
+"en": "Loading subscription option",
+"plural": false,
+"specs": [],
+"comment": "An accessibility label for a loading subscription option in the Pro paywall."
+},
+"Localizable␟locked.cta": {
+"cat": "Localizable",
+"key": "locked.cta",
+"en": "Check my steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟locked.eyebrow": {
+"cat": "Localizable",
+"key": "locked.eyebrow",
+"en": "paused",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟locked.progress.a11y": {
+"cat": "Localizable",
+"key": "locked.progress.a11y",
+"en": "Progress to your next reward",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟locked.restingApps %lld": {
+"cat": "Localizable",
+"key": "locked.restingApps %lld",
+"en": "%lld apps are resting. Everything else works as normal.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟locked.stepsToReward %lld": {
+"cat": "Localizable",
+"key": "locked.stepsToReward %lld",
+"en": "steps → +%lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟locked.subtitle": {
+"cat": "Localizable",
+"key": "locked.subtitle",
+"en": "You're closer than you think.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟locked.title": {
+"cat": "Localizable",
+"key": "locked.title",
+"en": "Come back",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟locked.title.emphasis": {
+"cat": "Localizable",
+"key": "locked.title.emphasis",
+"en": "after a walk.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Make a deal with yourself.": {
+"cat": "Localizable",
+"key": "Make a deal with yourself.",
+"en": "Make a deal with yourself.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟MAKE IT YOURS": {
+"cat": "Localizable",
+"key": "MAKE IT YOURS",
+"en": "MAKE IT YOURS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Make your screen time work for you.": {
+"cat": "Localizable",
+"key": "Make your screen time work for you.",
+"en": "Make your screen time work for you.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Make your scrolling\ncost something.": {
+"cat": "Localizable",
+"key": "Make your scrolling\ncost something.",
+"en": "Make your scrolling\ncost something.",
+"plural": false,
+"specs": [],
+"comment": "A description of the Pro paywall."
+},
+"Localizable␟Measured from recent Health activity or the estimate you selected.": {
+"cat": "Localizable",
+"key": "Measured from recent Health activity or the estimate you selected.",
+"en": "Measured from recent Health activity or the estimate you selected.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Milkman, Minson & Volpp · Management Science · 2014": {
+"cat": "Localizable",
+"key": "Milkman, Minson & Volpp · Management Science · 2014",
+"en": "Milkman, Minson & Volpp · Management Science · 2014",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟minutes": {
+"cat": "Localizable",
+"key": "minutes",
+"en": "minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟minutes earned": {
+"cat": "Localizable",
+"key": "minutes earned",
+"en": "minutes earned",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Momentum is built one earned scroll at a time.": {
+"cat": "Localizable",
+"key": "Momentum is built one earned scroll at a time.",
+"en": "Momentum is built one earned scroll at a time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Monthly": {
+"cat": "Localizable",
+"key": "Monthly",
+"en": "Monthly",
+"plural": false,
+"specs": [],
+"comment": "Localized string for the title of a plan row in the Pro paywall."
+},
+"Localizable␟Most tools ask you to resist the same impulse again and again. Earnit changes what happens before an app opens.": {
+"cat": "Localizable",
+"key": "Most tools ask you to resist the same impulse again and again. Earnit changes what happens before an app opens.",
+"en": "Most tools ask you to resist the same impulse again and again. Earnit changes what happens before an app opens.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Most tools ask you to resist the same impulse repeatedly. Earnit changes what happens before a protected app opens.": {
+"cat": "Localizable",
+"key": "Most tools ask you to resist the same impulse repeatedly. Earnit changes what happens before a protected app opens.",
+"en": "Most tools ask you to resist the same impulse repeatedly. Earnit changes what happens before a protected app opens.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move": {
+"cat": "Localizable",
+"key": "Move",
+"en": "Move",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move first. Scroll later.": {
+"cat": "Localizable",
+"key": "Move first. Scroll later.",
+"en": "Move first. Scroll later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move for your mind": {
+"cat": "Localizable",
+"key": "Move for your mind",
+"en": "Move for your mind",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move more": {
+"cat": "Localizable",
+"key": "Move more",
+"en": "Move more",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move more. Scroll less. Feel better.": {
+"cat": "Localizable",
+"key": "Move more. Scroll less. Feel better.",
+"en": "Move more. Scroll less. Feel better.",
+"plural": false,
+"specs": [],
+"comment": "A description of the benefits of becoming a Pro member."
+},
+"Localizable␟Move once, choose later": {
+"cat": "Localizable",
+"key": "Move once, choose later",
+"en": "Move once, choose later",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move once. Choose later.": {
+"cat": "Localizable",
+"key": "Move once. Choose later.",
+"en": "Move once. Choose later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Move, earn, then enjoy": {
+"cat": "Localizable",
+"key": "Move, earn, then enjoy",
+"en": "Move, earn, then enjoy",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Movement goal": {
+"cat": "Localizable",
+"key": "Movement goal",
+"en": "Movement goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟nav.home": {
+"cat": "Localizable",
+"key": "nav.home",
+"en": "Today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟nav.settings": {
+"cat": "Localizable",
+"key": "nav.settings",
+"en": "Settings",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟nav.week": {
+"cat": "Localizable",
+"key": "nav.week",
+"en": "Progress",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟No 10,000-step goals overnight.": {
+"cat": "Localizable",
+"key": "No 10,000-step goals overnight.",
+"en": "No 10,000-step goals overnight.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟No judgment. Just a realistic place to begin.": {
+"cat": "Localizable",
+"key": "No judgment. Just a realistic place to begin.",
+"en": "No judgment. Just a realistic place to begin.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟No subscription found": {
+"cat": "Localizable",
+"key": "No subscription found",
+"en": "No subscription found",
+"plural": false,
+"specs": [],
+"comment": "An alert title when no active Pro subscription is found for the user's Apple Account."
+},
+"Localizable␟Not a permanent ban. Not another limit to ignore. A pause between impulse and choice.": {
+"cat": "Localizable",
+"key": "Not a permanent ban. Not another limit to ignore. A pause between impulse and choice.",
+"en": "Not a permanent ban. Not another limit to ignore. A pause between impulse and choice.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Nothing yet": {
+"cat": "Localizable",
+"key": "Nothing yet",
+"en": "Nothing yet",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟of choosing movement before scrolling": {
+"cat": "Localizable",
+"key": "of choosing movement before scrolling",
+"en": "of choosing movement before scrolling",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟of screen time turned into something you earn": {
+"cat": "Localizable",
+"key": "of screen time turned into something you earn",
+"en": "of screen time turned into something you earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟OK": {
+"cat": "Localizable",
+"key": "OK",
+"en": "OK",
+"plural": false,
+"specs": [],
+"comment": "A label for an \"OK\" button."
+},
+"Localizable␟on apps you choose": {
+"cat": "Localizable",
+"key": "on apps you choose",
+"en": "on apps you choose",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Onboarding progress": {
+"cat": "Localizable",
+"key": "Onboarding progress",
+"en": "Onboarding progress",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.apps.needsAuthorization": {
+"cat": "Localizable",
+"key": "onboarding.apps.needsAuthorization",
+"en": "Screen Time access comes next — you can pick your apps right after it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.apps.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.apps.subtitle",
+"en": "Only these spend your minutes. Everything else on your phone is untouched.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.apps.title": {
+"cat": "Localizable",
+"key": "onboarding.apps.title",
+"en": "Which apps do you",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.apps.title.emphasis": {
+"cat": "Localizable",
+"key": "onboarding.apps.title.emphasis",
+"en": "want to earn?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.back": {
+"cat": "Localizable",
+"key": "onboarding.back",
+"en": "Back",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.continue": {
+"cat": "Localizable",
+"key": "onboarding.continue",
+"en": "Continue",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.goal.everything": {
+"cat": "Localizable",
+"key": "onboarding.goal.everything",
+"en": "A bit of everything",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.goal.healthierHabits": {
+"cat": "Localizable",
+"key": "onboarding.goal.healthierHabits",
+"en": "Build healthier habits",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.goal.intentional": {
+"cat": "Localizable",
+"key": "onboarding.goal.intentional",
+"en": "Be more intentional with my phone",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.goal.scrollLess": {
+"cat": "Localizable",
+"key": "onboarding.goal.scrollLess",
+"en": "Spend less time scrolling",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.goal.walkMore": {
+"cat": "Localizable",
+"key": "onboarding.goal.walkMore",
+"en": "Walk more every day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.action": {
+"cat": "Localizable",
+"key": "onboarding.hook.action",
+"en": "Get started",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.headline": {
+"cat": "Localizable",
+"key": "onboarding.hook.headline",
+"en": "There is a life outside the screen.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.point.choice": {
+"cat": "Localizable",
+"key": "onboarding.hook.point.choice",
+"en": "Freedom you chose, not defaulted into",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.point.move": {
+"cat": "Localizable",
+"key": "onboarding.hook.point.move",
+"en": "More movement, every day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.point.scroll": {
+"cat": "Localizable",
+"key": "onboarding.hook.point.scroll",
+"en": "Less scrolling on autopilot",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.hook.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.hook.subtitle",
+"en": "Earnit turns screen time into something you earn. Walk, and the minutes are yours.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.granted": {
+"cat": "Localizable",
+"key": "onboarding.permission.granted",
+"en": "Granted",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.health.denied": {
+"cat": "Localizable",
+"key": "onboarding.permission.health.denied",
+"en": "Without step access, walking cannot earn screen time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.health.title": {
+"cat": "Localizable",
+"key": "onboarding.permission.health.title",
+"en": "Activity",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.health.why": {
+"cat": "Localizable",
+"key": "onboarding.permission.health.why",
+"en": "Lets us count the movement that earns your time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.retry": {
+"cat": "Localizable",
+"key": "onboarding.permission.retry",
+"en": "Try again",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.screenTime.denied": {
+"cat": "Localizable",
+"key": "onboarding.permission.screenTime.denied",
+"en": "Without Screen Time access, blocking cannot work.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.screenTime.title": {
+"cat": "Localizable",
+"key": "onboarding.permission.screenTime.title",
+"en": "Screen Time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permission.screenTime.why": {
+"cat": "Localizable",
+"key": "onboarding.permission.screenTime.why",
+"en": "Lets us pause the apps you chose when your wallet is empty.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.cta": {
+"cat": "Localizable",
+"key": "onboarding.permissions.cta",
+"en": "Activate my plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.footnote": {
+"cat": "Localizable",
+"key": "onboarding.permissions.footnote",
+"en": "iOS will ask you to confirm each one",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.ready": {
+"cat": "Localizable",
+"key": "onboarding.permissions.ready",
+"en": "All set — you can change these any time in Settings",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.permissions.subtitle",
+"en": "Both stay on your phone. Nothing leaves it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.title": {
+"cat": "Localizable",
+"key": "onboarding.permissions.title",
+"en": "Two switches",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.permissions.title.emphasis": {
+"cat": "Localizable",
+"key": "onboarding.permissions.title.emphasis",
+"en": "and you're set.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.control": {
+"cat": "Localizable",
+"key": "onboarding.plan.control",
+"en": "control",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.control.value %lld": {
+"cat": "Localizable",
+"key": "onboarding.plan.control.value %lld",
+"en": "%lld apps",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.plan.cta": {
+"cat": "Localizable",
+"key": "onboarding.plan.cta",
+"en": "Build my plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.earn": {
+"cat": "Localizable",
+"key": "onboarding.plan.earn",
+"en": "earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.earn.unit %lld": {
+"cat": "Localizable",
+"key": "onboarding.plan.earn.unit %lld",
+"en": "every %lld steps",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.plan.pitch": {
+"cat": "Localizable",
+"key": "onboarding.plan.pitch",
+"en": "You don't have to quit scrolling. Just earn it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.title": {
+"cat": "Localizable",
+"key": "onboarding.plan.title",
+"en": "Your 90-day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.title.emphasis": {
+"cat": "Localizable",
+"key": "onboarding.plan.title.emphasis",
+"en": "plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.walk": {
+"cat": "Localizable",
+"key": "onboarding.plan.walk",
+"en": "walk",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.plan.walk.unit": {
+"cat": "Localizable",
+"key": "onboarding.plan.walk.unit",
+"en": "steps a day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.progress.a11y %lld %lld": {
+"cat": "Localizable",
+"key": "onboarding.progress.a11y %lld %lld",
+"en": "Step %1$lld of %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.cta": {
+"cat": "Localizable",
+"key": "onboarding.projection.cta",
+"en": "I'm in",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.distance.caption %lld": {
+"cat": "Localizable",
+"key": "onboarding.projection.distance.caption %lld",
+"en": "of extra walking — roughly %lld marathons, spread over three months",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.distance.value %lld": {
+"cat": "Localizable",
+"key": "onboarding.projection.distance.value %lld",
+"en": "~%lld km",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.eyebrow": {
+"cat": "Localizable",
+"key": "onboarding.projection.eyebrow",
+"en": "your next 90 days",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.footnote": {
+"cat": "Localizable",
+"key": "onboarding.projection.footnote",
+"en": "Based only on the numbers you just picked.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.lead %lld %lld %lld": {
+"cat": "Localizable",
+"key": "onboarding.projection.lead %lld %lld %lld",
+"en": "Going from %1$lld to %2$lld steps a day — about %3$lld more.",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld",
+"%3$lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.steps.caption": {
+"cat": "Localizable",
+"key": "onboarding.projection.steps.caption",
+"en": "extra steps, on top of what you walk today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.steps.value %lld": {
+"cat": "Localizable",
+"key": "onboarding.projection.steps.value %lld",
+"en": "+%lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.time.caption": {
+"cat": "Localizable",
+"key": "onboarding.projection.time.caption",
+"en": "of screen time, earned through movement",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.time.value %lld": {
+"cat": "Localizable",
+"key": "onboarding.projection.time.value %lld",
+"en": "%lld hours",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.projection.title": {
+"cat": "Localizable",
+"key": "onboarding.projection.title",
+"en": "See how far",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.projection.title.emphasis": {
+"cat": "Localizable",
+"key": "onboarding.projection.title.emphasis",
+"en": "you could go.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.goal.sub": {
+"cat": "Localizable",
+"key": "onboarding.q.goal.sub",
+"en": "No wrong answer — it just shapes how we talk to you.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.goal.title": {
+"cat": "Localizable",
+"key": "onboarding.q.goal.title",
+"en": "What would you like to change?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.scrolling.sub": {
+"cat": "Localizable",
+"key": "onboarding.q.scrolling.sub",
+"en": "We're not going to ask you to quit the apps you enjoy.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.scrolling.title": {
+"cat": "Localizable",
+"key": "onboarding.q.scrolling.title",
+"en": "How much time do you spend scrolling each day?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.target.sub": {
+"cat": "Localizable",
+"key": "onboarding.q.target.sub",
+"en": "Pick a destination, not a setting.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.target.title": {
+"cat": "Localizable",
+"key": "onboarding.q.target.title",
+"en": "Where would you like to get to?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.walking.sub": {
+"cat": "Localizable",
+"key": "onboarding.q.walking.sub",
+"en": "We can read this from Health later — this is just a starting point.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.q.walking.title": {
+"cat": "Localizable",
+"key": "onboarding.q.walking.title",
+"en": "How much do you usually walk?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.question.counter %lld %lld": {
+"cat": "Localizable",
+"key": "onboarding.question.counter %lld %lld",
+"en": "Question %1$lld of %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.ready.cta": {
+"cat": "Localizable",
+"key": "onboarding.ready.cta",
+"en": "Start earning",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.ready.footnote": {
+"cat": "Localizable",
+"key": "onboarding.ready.footnote",
+"en": "One walk at a time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.ready.subtitle %lld %lld": {
+"cat": "Localizable",
+"key": "onboarding.ready.subtitle %lld %lld",
+"en": "Your first %1$lld steps will earn +%2$lld minutes.",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟onboarding.ready.title": {
+"cat": "Localizable",
+"key": "onboarding.ready.title",
+"en": "You're ready.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.scrolling.fourPlus": {
+"cat": "Localizable",
+"key": "onboarding.scrolling.fourPlus",
+"en": "4+ hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.scrolling.oneToTwo": {
+"cat": "Localizable",
+"key": "onboarding.scrolling.oneToTwo",
+"en": "1–2 hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.scrolling.threeToFour": {
+"cat": "Localizable",
+"key": "onboarding.scrolling.threeToFour",
+"en": "3–4 hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.scrolling.twoToThree": {
+"cat": "Localizable",
+"key": "onboarding.scrolling.twoToThree",
+"en": "2–3 hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.scrolling.underOneHour": {
+"cat": "Localizable",
+"key": "onboarding.scrolling.underOneHour",
+"en": "Less than 1 hour",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.target.6000": {
+"cat": "Localizable",
+"key": "onboarding.target.6000",
+"en": "6,000 steps a day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.target.8000": {
+"cat": "Localizable",
+"key": "onboarding.target.8000",
+"en": "8,000 steps a day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.target.10000": {
+"cat": "Localizable",
+"key": "onboarding.target.10000",
+"en": "10,000 steps a day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.target.other": {
+"cat": "Localizable",
+"key": "onboarding.target.other",
+"en": "Something else",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.movement.eightPlus": {
+"cat": "Localizable",
+"key": "onboarding.v2.movement.eightPlus",
+"en": "8,000+ steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.movement.fiveToEight": {
+"cat": "Localizable",
+"key": "onboarding.v2.movement.fiveToEight",
+"en": "5,000–8,000 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.movement.threeToFive": {
+"cat": "Localizable",
+"key": "onboarding.v2.movement.threeToFive",
+"en": "3,000–5,000 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.movement.underThree": {
+"cat": "Localizable",
+"key": "onboarding.v2.movement.underThree",
+"en": "Under 3,000 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.movement.unsure": {
+"cat": "Localizable",
+"key": "onboarding.v2.movement.unsure",
+"en": "I’m not sure",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.active": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.active",
+"en": "Be more active",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.control": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.control",
+"en": "Feel more in control",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.hours": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.hours",
+"en": "Stop losing hours to scrolling",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.intentional": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.intentional",
+"en": "Use my phone intentionally",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.scrollLess": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.scrollLess",
+"en": "Scroll less",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.outcome.walkMore": {
+"cat": "Localizable",
+"key": "onboarding.v2.outcome.walkMore",
+"en": "Walk more",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.movement.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.movement.subtitle",
+"en": "An estimate is enough. We can use Apple Health later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.movement.title": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.movement.title",
+"en": "How much do you move on a typical day?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.outcomes.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.outcomes.subtitle",
+"en": "Choose everything that feels important to you.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.outcomes.title": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.outcomes.title",
+"en": "What would you like your phone to help you do?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.scrolling.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.scrolling.subtitle",
+"en": "No judgment. This gives your plan a useful starting point.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.question.scrolling.title": {
+"cat": "Localizable",
+"key": "onboarding.v2.question.scrolling.title",
+"en": "How much time do you spend scrolling each day?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.scrolling.fourPlus": {
+"cat": "Localizable",
+"key": "onboarding.v2.scrolling.fourPlus",
+"en": "4+ hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.scrolling.oneToTwo": {
+"cat": "Localizable",
+"key": "onboarding.v2.scrolling.oneToTwo",
+"en": "1–2 hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.scrolling.twoToFour": {
+"cat": "Localizable",
+"key": "onboarding.v2.scrolling.twoToFour",
+"en": "2–4 hours",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.v2.scrolling.underOne": {
+"cat": "Localizable",
+"key": "onboarding.v2.scrolling.underOne",
+"en": "Less than 1 hour",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.walking.2500to5000": {
+"cat": "Localizable",
+"key": "onboarding.walking.2500to5000",
+"en": "2,500–5,000",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.walking.5000to7500": {
+"cat": "Localizable",
+"key": "onboarding.walking.5000to7500",
+"en": "5,000–7,500",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.walking.7500to10000": {
+"cat": "Localizable",
+"key": "onboarding.walking.7500to10000",
+"en": "7,500–10,000",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.walking.10000plus": {
+"cat": "Localizable",
+"key": "onboarding.walking.10000plus",
+"en": "10,000+",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.walking.under2500": {
+"cat": "Localizable",
+"key": "onboarding.walking.under2500",
+"en": "Under 2,500 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.welcome.cta": {
+"cat": "Localizable",
+"key": "onboarding.welcome.cta",
+"en": "Get started",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.welcome.footnote": {
+"cat": "Localizable",
+"key": "onboarding.welcome.footnote",
+"en": "Four questions. Under a minute.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.welcome.subtitle": {
+"cat": "Localizable",
+"key": "onboarding.welcome.subtitle",
+"en": "Turn everyday movement into time for the apps you love.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.welcome.title": {
+"cat": "Localizable",
+"key": "onboarding.welcome.title",
+"en": "Move first.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟onboarding.welcome.title.emphasis": {
+"cat": "Localizable",
+"key": "onboarding.welcome.title.emphasis",
+"en": "Scroll later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Open a 5, 10, or 15-minute session": {
+"cat": "Localizable",
+"key": "Open a 5, 10, or 15-minute session",
+"en": "Open a 5, 10, or 15-minute session",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Open published study": {
+"cat": "Localizable",
+"key": "Open published study",
+"en": "Open published study",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Or do push-ups: the camera counts them": {
+"cat": "Localizable",
+"key": "Or do push-ups: the camera counts them",
+"en": "Or do push-ups: the camera counts them",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Paluch et al. · The Lancet Public Health · 2022": {
+"cat": "Localizable",
+"key": "Paluch et al. · The Lancet Public Health · 2022",
+"en": "Paluch et al. · The Lancet Public Health · 2022",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.eyebrow": {
+"cat": "Localizable",
+"key": "paywall.eyebrow",
+"en": "Earnit membership",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.headline": {
+"cat": "Localizable",
+"key": "paywall.headline",
+"en": "Make your scrolling cost something.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.plan.eyebrow": {
+"cat": "Localizable",
+"key": "paywall.plan.eyebrow",
+"en": "Your plan is ready",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.plan.headline": {
+"cat": "Localizable",
+"key": "paywall.plan.headline",
+"en": "A coffee lasts minutes. A habit can change your days.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.plan.subtitle": {
+"cat": "Localizable",
+"key": "paywall.plan.subtitle",
+"en": "For the price of one coffee a month, Earnit helps you move more, reclaim time, and use your apps intentionally.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟paywall.subtitle": {
+"cat": "Localizable",
+"key": "paywall.subtitle",
+"en": "Move more. Scroll less. Feel better.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟per month": {
+"cat": "Localizable",
+"key": "per month",
+"en": "per month",
+"plural": false,
+"specs": [],
+"comment": "A string describing the billing period of a subscription plan."
+},
+"Localizable␟per year": {
+"cat": "Localizable",
+"key": "per year",
+"en": "per year",
+"plural": false,
+"specs": [],
+"comment": "A string indicating the billing period of a subscription plan."
+},
+"Localizable␟Pick the apps that steal more time than you would like.": {
+"cat": "Localizable",
+"key": "Pick the apps that steal more time than you would like.",
+"en": "Pick the apps that steal more time than you would like.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Pick the apps you tend to open on autopilot. You can change this later.": {
+"cat": "Localizable",
+"key": "Pick the apps you tend to open on autopilot. You can change this later.",
+"en": "Pick the apps you tend to open on autopilot. You can change this later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Please try again.": {
+"cat": "Localizable",
+"key": "Please try again.",
+"en": "Please try again.",
+"plural": false,
+"specs": [],
+"comment": "A message displayed when loading subscription options fails."
+},
+"Localizable␟Privacy Policy": {
+"cat": "Localizable",
+"key": "Privacy Policy",
+"en": "Privacy Policy",
+"plural": false,
+"specs": [],
+"comment": "A link to the privacy policy of the app."
+},
+"Localizable␟Pro access wasn't activated": {
+"cat": "Localizable",
+"key": "Pro access wasn't activated",
+"en": "Pro access wasn't activated",
+"plural": false,
+"specs": [],
+"comment": "An alert message displayed when Pro access cannot be verified after a successful purchase."
+},
+"Localizable␟Processing purchase": {
+"cat": "Localizable",
+"key": "Processing purchase",
+"en": "Processing purchase",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Progress insights": {
+"cat": "Localizable",
+"key": "Progress insights",
+"en": "Progress insights",
+"plural": false,
+"specs": [],
+"comment": "A benefit listed in the ProPaywallBenefits view."
+},
+"Localizable␟Protect the apps that take your time": {
+"cat": "Localizable",
+"key": "Protect the apps that take your time",
+"en": "Protect the apps that take your time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Protected apps": {
+"cat": "Localizable",
+"key": "Protected apps",
+"en": "Protected apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Protected apps stay paused until you deliberately start a 5, 10, or 15-minute session with the balance you've earned.": {
+"cat": "Localizable",
+"key": "Protected apps stay paused until you deliberately start a 5, 10, or 15-minute session with the balance you've earned.",
+"en": "Protected apps stay paused until you deliberately start a 5, 10, or 15-minute session with the balance you've earned.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Purchases the selected subscription through the App Store": {
+"cat": "Localizable",
+"key": "Purchases the selected subscription through the App Store",
+"en": "Purchases the selected subscription through the App Store",
+"plural": false,
+"specs": [],
+"comment": "A hint that describes the action of purchasing a subscription."
+},
+"Localizable␟pushups.active.camera_note": {
+"cat": "Localizable",
+"key": "pushups.active.camera_note",
+"en": "pushups.active.camera_note",
+"plural": false,
+"specs": [],
+"comment": "A note displayed in the camera view when the user is actively doing pushups."
+},
+"Localizable␟pushups.active.of %lld": {
+"cat": "Localizable",
+"key": "pushups.active.of %lld",
+"en": "pushups.active.of %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label that shows the user how many pushups they've done out of their target."
+},
+"Localizable␟pushups.active.progress %lld %lld": {
+"cat": "Localizable",
+"key": "pushups.active.progress %lld %lld",
+"en": "pushups.active.progress %1$lld %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": "A label that announces the current pushup count and the target count."
+},
+"Localizable␟pushups.active.rep_announcement %lld %lld": {
+"cat": "Localizable",
+"key": "pushups.active.rep_announcement %lld %lld",
+"en": "pushups.active.rep_announcement %1$lld %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": "Voiceover announcement when a pushup is detected. The first argument is the current repetition. The second argument is the target repetition."
+},
+"Localizable␟pushups.active.reward %lld": {
+"cat": "Localizable",
+"key": "pushups.active.reward %lld",
+"en": "pushups.active.reward %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label that shows the number of minutes of exercise that the user will receive for completing the current pushup round. The argument is the number of minutes."
+},
+"Localizable␟pushups.active.started": {
+"cat": "Localizable",
+"key": "pushups.active.started",
+"en": "pushups.active.started",
+"plural": false,
+"specs": [],
+"comment": "Voiceover announcement for the start of the pushups exercise."
+},
+"Localizable␟pushups.challenge.accessibility %lld %lld": {
+"cat": "Localizable",
+"key": "pushups.challenge.accessibility %lld %lld",
+"en": "pushups.challenge.accessibility %1$lld %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": "A button that selects a pushup challenge. The label is a combination of the number of pushups required and the reward time in seconds."
+},
+"Localizable␟pushups.challenge.reps %lld": {
+"cat": "Localizable",
+"key": "pushups.challenge.reps %lld",
+"en": "pushups.challenge.reps %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label displaying the number of repetitions a user needs to complete a challenge. The argument is the number of repetitions."
+},
+"Localizable␟pushups.challenge.reward %lld": {
+"cat": "Localizable",
+"key": "pushups.challenge.reward %lld",
+"en": "pushups.challenge.reward %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A label that shows the reward time for a pushup challenge. The argument is the reward time in seconds."
+},
+"Localizable␟pushups.claiming.detail": {
+"cat": "Localizable",
+"key": "pushups.claiming.detail",
+"en": "pushups.claiming.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the pushups claiming process."
+},
+"Localizable␟pushups.claiming.title": {
+"cat": "Localizable",
+"key": "pushups.claiming.title",
+"en": "pushups.claiming.title",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟pushups.countdown.accessibility %lld": {
+"cat": "Localizable",
+"key": "pushups.countdown.accessibility %lld",
+"en": "pushups.countdown.accessibility %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A countdown timer in the pushups view. The argument is the countdown value."
+},
+"Localizable␟pushups.countdown.started": {
+"cat": "Localizable",
+"key": "pushups.countdown.started",
+"en": "pushups.countdown.started",
+"plural": false,
+"specs": [],
+"comment": "Announcement spoken by VoiceOver when the countdown to starting the exercise is about to start."
+},
+"Localizable␟pushups.entry.detail": {
+"cat": "Localizable",
+"key": "pushups.entry.detail",
+"en": "pushups.entry.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the pushups rule."
+},
+"Localizable␟pushups.entry.hint": {
+"cat": "Localizable",
+"key": "pushups.entry.hint",
+"en": "pushups.entry.hint",
+"plural": false,
+"specs": [],
+"comment": "A hint for the user to get up and do pushups."
+},
+"Localizable␟pushups.error.eyebrow": {
+"cat": "Localizable",
+"key": "pushups.error.eyebrow",
+"en": "pushups.error.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Title of the eyebrow for the error view."
+},
+"Localizable␟pushups.error.retry": {
+"cat": "Localizable",
+"key": "pushups.error.retry",
+"en": "pushups.error.retry",
+"plural": false,
+"specs": [],
+"comment": "A button that retries if the pushups feature fails."
+},
+"Localizable␟pushups.error.title": {
+"cat": "Localizable",
+"key": "pushups.error.title",
+"en": "pushups.error.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the error screen."
+},
+"Localizable␟pushups.guidance.find_body": {
+"cat": "Localizable",
+"key": "pushups.guidance.find_body",
+"en": "pushups.guidance.find_body",
+"plural": false,
+"specs": [],
+"comment": "A label displayed in the center of the screen during the pushup"
+},
+"Localizable␟pushups.guidance.improve_lighting": {
+"cat": "Localizable",
+"key": "pushups.guidance.improve_lighting",
+"en": "pushups.guidance.improve_lighting",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to improve lighting."
+},
+"Localizable␟pushups.guidance.keep_going": {
+"cat": "Localizable",
+"key": "pushups.guidance.keep_going",
+"en": "pushups.guidance.keep_going",
+"plural": false,
+"specs": [],
+"comment": "A label displayed in the pushup guidance view."
+},
+"Localizable␟pushups.guidance.lower_body": {
+"cat": "Localizable",
+"key": "pushups.guidance.lower_body",
+"en": "pushups.guidance.lower_body",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to lower the body."
+},
+"Localizable␟pushups.guidance.move_into_frame": {
+"cat": "Localizable",
+"key": "pushups.guidance.move_into_frame",
+"en": "pushups.guidance.move_into_frame",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to move into the camera frame."
+},
+"Localizable␟pushups.guidance.push_up": {
+"cat": "Localizable",
+"key": "pushups.guidance.push_up",
+"en": "pushups.guidance.push_up",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to instruct the user to push up."
+},
+"Localizable␟pushups.guidance.slow_down": {
+"cat": "Localizable",
+"key": "pushups.guidance.slow_down",
+"en": "pushups.guidance.slow_down",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to slow down."
+},
+"Localizable␟pushups.guidance.start_at_top": {
+"cat": "Localizable",
+"key": "pushups.guidance.start_at_top",
+"en": "pushups.guidance.start_at_top",
+"plural": false,
+"specs": [],
+"comment": "A guidance message to start the pushup at the top of the screen."
+},
+"Localizable␟pushups.guidance.straighten_body": {
+"cat": "Localizable",
+"key": "pushups.guidance.straighten_body",
+"en": "pushups.guidance.straighten_body",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟pushups.intro.cta": {
+"cat": "Localizable",
+"key": "pushups.intro.cta",
+"en": "pushups.intro.cta",
+"plural": false,
+"specs": [],
+"comment": "Button text for starting the pushups flow."
+},
+"Localizable␟pushups.intro.detail": {
+"cat": "Localizable",
+"key": "pushups.intro.detail",
+"en": "pushups.intro.detail",
+"plural": false,
+"specs": [],
+"comment": "Detail text for the pushups intro screen."
+},
+"Localizable␟pushups.intro.eyebrow": {
+"cat": "Localizable",
+"key": "pushups.intro.eyebrow",
+"en": "pushups.intro.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "The eyebrow text for the pushups intro view."
+},
+"Localizable␟pushups.intro.later": {
+"cat": "Localizable",
+"key": "pushups.intro.later",
+"en": "pushups.intro.later",
+"plural": false,
+"specs": [],
+"comment": "Button text for skipping the pushups intro."
+},
+"Localizable␟pushups.intro.privacy": {
+"cat": "Localizable",
+"key": "pushups.intro.privacy",
+"en": "pushups.intro.privacy",
+"plural": false,
+"specs": [],
+"comment": "Text displayed in a section that explains how push-ups data is collected and used."
+},
+"Localizable␟pushups.intro.step.camera": {
+"cat": "Localizable",
+"key": "pushups.intro.step.camera",
+"en": "pushups.intro.step.camera",
+"plural": false,
+"specs": [],
+"comment": "Title of a step in the pushups intro."
+},
+"Localizable␟pushups.intro.step.camera.detail": {
+"cat": "Localizable",
+"key": "pushups.intro.step.camera.detail",
+"en": "pushups.intro.step.camera.detail",
+"plural": false,
+"specs": [],
+"comment": "Detail text for the first step in the pushups intro."
+},
+"Localizable␟pushups.intro.step.reps": {
+"cat": "Localizable",
+"key": "pushups.intro.step.reps",
+"en": "pushups.intro.step.reps",
+"plural": false,
+"specs": [],
+"comment": "Title of a step in the pushups intro."
+},
+"Localizable␟pushups.intro.step.reps.detail": {
+"cat": "Localizable",
+"key": "pushups.intro.step.reps.detail",
+"en": "pushups.intro.step.reps.detail",
+"plural": false,
+"specs": [],
+"comment": "Detail text for the \"Pushups\" step in the onboarding flow."
+},
+"Localizable␟pushups.intro.step.reward": {
+"cat": "Localizable",
+"key": "pushups.intro.step.reward",
+"en": "pushups.intro.step.reward",
+"plural": false,
+"specs": [],
+"comment": "Step in the pushups intro that describes the reward."
+},
+"Localizable␟pushups.intro.step.reward.detail": {
+"cat": "Localizable",
+"key": "pushups.intro.step.reward.detail",
+"en": "pushups.intro.step.reward.detail",
+"plural": false,
+"specs": [],
+"comment": "Detail text for the last step of the pushups intro."
+},
+"Localizable␟pushups.intro.title": {
+"cat": "Localizable",
+"key": "pushups.intro.title",
+"en": "pushups.intro.title",
+"plural": false,
+"specs": [],
+"comment": "Title of the pushups intro screen."
+},
+"Localizable␟pushups.limit.detail %@": {
+"cat": "Localizable",
+"key": "pushups.limit.detail %@",
+"en": "pushups.limit.detail %@",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": "A message that informs the user that they've hit their daily pushup goal, and when their pushup streak will reset. The argument is the date when the user's pushup streak will reset."
+},
+"Localizable␟pushups.limit.detail.fallback": {
+"cat": "Localizable",
+"key": "pushups.limit.detail.fallback",
+"en": "pushups.limit.detail.fallback",
+"plural": false,
+"specs": [],
+"comment": "A fallback message for the pushups limit."
+},
+"Localizable␟pushups.limit.eyebrow": {
+"cat": "Localizable",
+"key": "pushups.limit.eyebrow",
+"en": "pushups.limit.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Eyebrow text for the pushups limit view."
+},
+"Localizable␟pushups.limit.title": {
+"cat": "Localizable",
+"key": "pushups.limit.title",
+"en": "pushups.limit.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed when the user has reached their daily pushup limit."
+},
+"Localizable␟pushups.loading.accessibility": {
+"cat": "Localizable",
+"key": "pushups.loading.accessibility",
+"en": "pushups.loading.accessibility",
+"plural": false,
+"specs": [],
+"comment": "A label for the loading screen."
+},
+"Localizable␟pushups.loading.title": {
+"cat": "Localizable",
+"key": "pushups.loading.title",
+"en": "pushups.loading.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed when the pushup counter is loading."
+},
+"Localizable␟pushups.mission": {
+"cat": "Localizable",
+"key": "pushups.mission",
+"en": "pushups.mission",
+"plural": false,
+"specs": [],
+"comment": "Title and description of the pushups picker screen."
+},
+"Localizable␟pushups.pending.detail": {
+"cat": "Localizable",
+"key": "pushups.pending.detail",
+"en": "pushups.pending.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the pending pushup state."
+},
+"Localizable␟pushups.pending.eyebrow": {
+"cat": "Localizable",
+"key": "pushups.pending.eyebrow",
+"en": "pushups.pending.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Eyebrow text for the pending state."
+},
+"Localizable␟pushups.pending.retry": {
+"cat": "Localizable",
+"key": "pushups.pending.retry",
+"en": "pushups.pending.retry",
+"plural": false,
+"specs": [],
+"comment": "A button that retries claiming a pushup."
+},
+"Localizable␟pushups.pending.title": {
+"cat": "Localizable",
+"key": "pushups.pending.title",
+"en": "pushups.pending.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the pending state."
+},
+"Localizable␟pushups.permission.settings": {
+"cat": "Localizable",
+"key": "pushups.permission.settings",
+"en": "pushups.permission.settings",
+"plural": false,
+"specs": [],
+"comment": "A button that opens the app's settings to allow pushups to access the camera."
+},
+"Localizable␟pushups.permission.title": {
+"cat": "Localizable",
+"key": "pushups.permission.title",
+"en": "pushups.permission.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed when the user has denied access to the camera."
+},
+"Localizable␟pushups.picker.cta": {
+"cat": "Localizable",
+"key": "pushups.picker.cta",
+"en": "pushups.picker.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that starts a pushup challenge."
+},
+"Localizable␟pushups.picker.detail": {
+"cat": "Localizable",
+"key": "pushups.picker.detail",
+"en": "pushups.picker.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the benefits of using the pushups feature."
+},
+"Localizable␟pushups.picker.title": {
+"cat": "Localizable",
+"key": "pushups.picker.title",
+"en": "pushups.picker.title",
+"plural": false,
+"specs": [],
+"comment": "A title describing the benefits of using the pushups feature."
+},
+"Localizable␟pushups.privacy.detail": {
+"cat": "Localizable",
+"key": "pushups.privacy.detail",
+"en": "pushups.privacy.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the app's data usage policy."
+},
+"Localizable␟pushups.privacy.title": {
+"cat": "Localizable",
+"key": "pushups.privacy.title",
+"en": "pushups.privacy.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the privacy information."
+},
+"Localizable␟pushups.setup.cta": {
+"cat": "Localizable",
+"key": "pushups.setup.cta",
+"en": "pushups.setup.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that starts a pushup session."
+},
+"Localizable␟pushups.setup.framing": {
+"cat": "Localizable",
+"key": "pushups.setup.framing",
+"en": "pushups.setup.framing",
+"plural": false,
+"specs": [],
+"comment": "A description of the setup process."
+},
+"Localizable␟pushups.setup.hold": {
+"cat": "Localizable",
+"key": "pushups.setup.hold",
+"en": "pushups.setup.hold",
+"plural": false,
+"specs": [],
+"comment": "A description of how to position the camera to get the best results."
+},
+"Localizable␟pushups.setup.move_back": {
+"cat": "Localizable",
+"key": "pushups.setup.move_back",
+"en": "pushups.setup.move_back",
+"plural": false,
+"specs": [],
+"comment": "A description of how to position the camera to get the best results."
+},
+"Localizable␟pushups.setup.place_phone": {
+"cat": "Localizable",
+"key": "pushups.setup.place_phone",
+"en": "pushups.setup.place_phone",
+"plural": false,
+"specs": [],
+"comment": "A description of how to position the camera in order to start a pushup session."
+},
+"Localizable␟pushups.setup.ready.front": {
+"cat": "Localizable",
+"key": "pushups.setup.ready.front",
+"en": "pushups.setup.ready.front",
+"plural": false,
+"specs": [],
+"comment": "Text displayed in a warning banner at the top of the screen when the setup is ready."
+},
+"Localizable␟pushups.setup.ready.side": {
+"cat": "Localizable",
+"key": "pushups.setup.ready.side",
+"en": "pushups.setup.ready.side",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟pushups.setup.title": {
+"cat": "Localizable",
+"key": "pushups.setup.title",
+"en": "pushups.setup.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the setup screen."
+},
+"Localizable␟pushups.starting.detail": {
+"cat": "Localizable",
+"key": "pushups.starting.detail",
+"en": "pushups.starting.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the countdown before the pushup timer starts."
+},
+"Localizable␟pushups.starting.title": {
+"cat": "Localizable",
+"key": "pushups.starting.title",
+"en": "pushups.starting.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the countdown screen."
+},
+"Localizable␟pushups.success.again": {
+"cat": "Localizable",
+"key": "pushups.success.again",
+"en": "pushups.success.again",
+"plural": false,
+"specs": [],
+"comment": "A button that lets the user try again."
+},
+"Localizable␟pushups.success.announcement %lld": {
+"cat": "Localizable",
+"key": "pushups.success.announcement %lld",
+"en": "pushups.success.announcement %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A text to be announced to the user when they earn pushups. The argument is the number of minutes of pushups earned."
+},
+"Localizable␟pushups.success.detail %lld": {
+"cat": "Localizable",
+"key": "pushups.success.detail %lld",
+"en": "pushups.success.detail %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A description of the reward for completing a pushup challenge. The argument is the number of minutes of pushups that the user will earn."
+},
+"Localizable␟pushups.success.eyebrow": {
+"cat": "Localizable",
+"key": "pushups.success.eyebrow",
+"en": "pushups.success.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Eyebrow text for the success view."
+},
+"Localizable␟pushups.success.title %lld": {
+"cat": "Localizable",
+"key": "pushups.success.title %lld",
+"en": "pushups.success.title %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A title that shows the number of minutes of pushups the user has earned. The argument is the number of minutes of pushups the user has earned."
+},
+"Localizable␟pushups.success.use": {
+"cat": "Localizable",
+"key": "pushups.success.use",
+"en": "pushups.success.use",
+"plural": false,
+"specs": [],
+"comment": "A button that is used to redeem the pushups."
+},
+"Localizable␟pushups.title": {
+"cat": "Localizable",
+"key": "pushups.title",
+"en": "pushups.title",
+"plural": false,
+"specs": [],
+"comment": "Title of a pushups earning rule."
+},
+"Localizable␟Read the WHO physical activity guidance": {
+"cat": "Localizable",
+"key": "Read the WHO physical activity guidance",
+"en": "Read the WHO physical activity guidance",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟READY FOR A LITTLE MORE": {
+"cat": "Localizable",
+"key": "READY FOR A LITTLE MORE",
+"en": "READY FOR A LITTLE MORE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Recommended earn rate": {
+"cat": "Localizable",
+"key": "Recommended earn rate",
+"en": "Recommended earn rate",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Regular physical activity supports mental health and well-being.": {
+"cat": "Localizable",
+"key": "Regular physical activity supports mental health and well-being.",
+"en": "Regular physical activity supports mental health and well-being.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Requesting access": {
+"cat": "Localizable",
+"key": "Requesting access",
+"en": "Requesting access",
+"plural": false,
+"specs": [],
+"comment": "The text displayed while requesting Screen Time authorization."
+},
+"Localizable␟Restore Purchases": {
+"cat": "Localizable",
+"key": "Restore Purchases",
+"en": "Restore Purchases",
+"plural": false,
+"specs": [],
+"comment": "A button label that allows users to restore their in-app purchases."
+},
+"Localizable␟Restoring": {
+"cat": "Localizable",
+"key": "Restoring",
+"en": "Restoring",
+"plural": false,
+"specs": [],
+"comment": "A label describing the process of restoring purchases."
+},
+"Localizable␟Restriction alone is hard to sustain.": {
+"cat": "Localizable",
+"key": "Restriction alone is hard to sustain.",
+"en": "Restriction alone is hard to sustain.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Retry": {
+"cat": "Localizable",
+"key": "Retry",
+"en": "Retry",
+"plural": false,
+"specs": [],
+"comment": "A button label that says \"Retry\"."
+},
+"Localizable␟reward.amount %lld": {
+"cat": "Localizable",
+"key": "reward.amount %lld",
+"en": "+%lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟reward.cta": {
+"cat": "Localizable",
+"key": "reward.cta",
+"en": "Keep going",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟reward.footnote %lld %lld": {
+"cat": "Localizable",
+"key": "reward.footnote %lld %lld",
+"en": "%1$lld of %2$lld unlocks today",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟reward.title": {
+"cat": "Localizable",
+"key": "reward.title",
+"en": "You made it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟reward.walletReady %lld": {
+"cat": "Localizable",
+"key": "reward.walletReady %lld",
+"en": "%lld minutes ready",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟Same phone. Different relationship with it.": {
+"cat": "Localizable",
+"key": "Same phone. Different relationship with it.",
+"en": "Same phone. Different relationship with it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Save daily goal": {
+"cat": "Localizable",
+"key": "Save daily goal",
+"en": "Save daily goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Save plan": {
+"cat": "Localizable",
+"key": "Save plan",
+"en": "Save plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Screen time": {
+"cat": "Localizable",
+"key": "Screen time",
+"en": "Screen time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Scroll less": {
+"cat": "Localizable",
+"key": "Scroll less",
+"en": "Scroll less",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Scrolling rarely feels this long in the moment.": {
+"cat": "Localizable",
+"key": "Scrolling rarely feels this long in the moment.",
+"en": "Scrolling rarely feels this long in the moment.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟See the study": {
+"cat": "Localizable",
+"key": "See the study",
+"en": "See the study",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟See what you could achieve": {
+"cat": "Localizable",
+"key": "See what you could achieve",
+"en": "See what you could achieve",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.active": {
+"cat": "Localizable",
+"key": "session.active",
+"en": "Active session",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.active.explanation": {
+"cat": "Localizable",
+"key": "session.active.explanation",
+"en": "The clock keeps running until this session ends or you end it early.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.chooseDuration": {
+"cat": "Localizable",
+"key": "session.chooseDuration",
+"en": "Choose a session",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.clockDisclaimer": {
+"cat": "Localizable",
+"key": "session.clockDisclaimer",
+"en": "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.customDuration": {
+"cat": "Localizable",
+"key": "session.customDuration",
+"en": "Custom amount",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.endAndSave": {
+"cat": "Localizable",
+"key": "session.endAndSave",
+"en": "End session and save the rest",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.error.alreadyActive": {
+"cat": "Localizable",
+"key": "session.error.alreadyActive",
+"en": "A screen time session is already active.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.error.exceedsCarryOverWindow": {
+"cat": "Localizable",
+"key": "session.error.exceedsCarryOverWindow",
+"en": "Choose a shorter session. At most 20 minutes can continue after midnight.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.error.insufficientBalance": {
+"cat": "Localizable",
+"key": "session.error.insufficientBalance",
+"en": "You don't have enough earned time for that session.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.error.noSelection": {
+"cat": "Localizable",
+"key": "session.error.noSelection",
+"en": "Choose at least one restricted app first.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.error.unsupportedDuration": {
+"cat": "Localizable",
+"key": "session.error.unsupportedDuration",
+"en": "That session duration isn't supported.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.notification.ended.body %lld": {
+"cat": "Localizable",
+"key": "session.notification.ended.body %lld",
+"en": "Your %lld-minute screen time session is over.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟session.notification.ended.title": {
+"cat": "Localizable",
+"key": "session.notification.ended.title",
+"en": "Time's up",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.notification.warning.body": {
+"cat": "Localizable",
+"key": "session.notification.warning.body",
+"en": "Your screen time session is almost over.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.notification.warning.title": {
+"cat": "Localizable",
+"key": "session.notification.warning.title",
+"en": "1 minute left",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟session.start %lld": {
+"cat": "Localizable",
+"key": "session.start %lld",
+"en": "Use blocked apps for %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟session.walletSaved %lld": {
+"cat": "Localizable",
+"key": "session.walletSaved %lld",
+"en": "%lld min saved",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟settings.apps": {
+"cat": "Localizable",
+"key": "settings.apps",
+"en": "Apps you control",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.apps.footer": {
+"cat": "Localizable",
+"key": "settings.apps.footer",
+"en": "Only these apps spend your earned minutes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.apps.section": {
+"cat": "Localizable",
+"key": "settings.apps.section",
+"en": "Apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.debug": {
+"cat": "Localizable",
+"key": "settings.debug",
+"en": "Debug",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.debug.footer": {
+"cat": "Localizable",
+"key": "settings.debug.footer",
+"en": "Temporary tools for testing the loop without walking.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.debugCredit": {
+"cat": "Localizable",
+"key": "settings.debugCredit",
+"en": "Add 5 minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.developer": {
+"cat": "Localizable",
+"key": "settings.developer",
+"en": "Developer",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.haptics": {
+"cat": "Localizable",
+"key": "settings.haptics",
+"en": "Haptic Feedback",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.haptics.footer": {
+"cat": "Localizable",
+"key": "settings.haptics.footer",
+"en": "Feel important changes without interrupting your day.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language": {
+"cat": "Localizable",
+"key": "settings.language",
+"en": "Language",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language.english": {
+"cat": "Localizable",
+"key": "settings.language.english",
+"en": "English",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language.footer": {
+"cat": "Localizable",
+"key": "settings.language.footer",
+"en": "Choose the language used in Earnit.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language.section": {
+"cat": "Localizable",
+"key": "settings.language.section",
+"en": "Language",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language.spanish": {
+"cat": "Localizable",
+"key": "settings.language.spanish",
+"en": "Spanish",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.language.system": {
+"cat": "Localizable",
+"key": "settings.language.system",
+"en": "System",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.monitoring": {
+"cat": "Localizable",
+"key": "settings.monitoring",
+"en": "Usage monitoring",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.replayOnboarding": {
+"cat": "Localizable",
+"key": "settings.replayOnboarding",
+"en": "Replay onboarding",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.resetDay": {
+"cat": "Localizable",
+"key": "settings.resetDay",
+"en": "Reset today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.reward": {
+"cat": "Localizable",
+"key": "settings.reward",
+"en": "Reward",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule": {
+"cat": "Localizable",
+"key": "settings.rule",
+"en": "Earning rule",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule.changeWarning": {
+"cat": "Localizable",
+"key": "settings.rule.changeWarning",
+"en": "The new rule applies from now on. Steps you already earned credit for are not counted again.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule.confirmApply": {
+"cat": "Localizable",
+"key": "settings.rule.confirmApply",
+"en": "Change rule",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule.confirmMessage": {
+"cat": "Localizable",
+"key": "settings.rule.confirmMessage",
+"en": "Your current balance is kept. Only future steps use the new rule.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule.confirmTitle": {
+"cat": "Localizable",
+"key": "settings.rule.confirmTitle",
+"en": "Change the rule?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.rule.footer %lld %lld": {
+"cat": "Localizable",
+"key": "settings.rule.footer %lld %lld",
+"en": "%1$lld steps earn you %2$lld minutes.",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟settings.saveRule": {
+"cat": "Localizable",
+"key": "settings.saveRule",
+"en": "Save rule",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.screenTimeStatus": {
+"cat": "Localizable",
+"key": "settings.screenTimeStatus",
+"en": "Screen Time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.spike": {
+"cat": "Localizable",
+"key": "settings.spike",
+"en": "Phase 1 spike",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.stepsRequired": {
+"cat": "Localizable",
+"key": "settings.stepsRequired",
+"en": "Steps required",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.subscription.manage": {
+"cat": "Localizable",
+"key": "settings.subscription.manage",
+"en": "Manage Pro subscription",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.subscription.section": {
+"cat": "Localizable",
+"key": "settings.subscription.section",
+"en": "Plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.subscription.status": {
+"cat": "Localizable",
+"key": "settings.subscription.status",
+"en": "Current plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.subscription.upgrade": {
+"cat": "Localizable",
+"key": "settings.subscription.upgrade",
+"en": "Explore Pro",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟settings.title": {
+"cat": "Localizable",
+"key": "settings.title",
+"en": "Settings",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.action.connectHealth": {
+"cat": "Localizable",
+"key": "shield.detail.action.connectHealth",
+"en": "Connect Health",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.action.restore": {
+"cat": "Localizable",
+"key": "shield.detail.action.restore",
+"en": "Restore access",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.action.update": {
+"cat": "Localizable",
+"key": "shield.detail.action.update",
+"en": "Update my steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.action.use %lld": {
+"cat": "Localizable",
+"key": "shield.detail.action.use %lld",
+"en": "Use my %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.availableA11y %lld": {
+"cat": "Localizable",
+"key": "shield.detail.availableA11y %lld",
+"en": "%lld minutes available",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.availableBadge %lld": {
+"cat": "Localizable",
+"key": "shield.detail.availableBadge %lld",
+"en": "%lld MIN AVAILABLE",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.connectHealth": {
+"cat": "Localizable",
+"key": "shield.detail.connectHealth",
+"en": "Allow step access to earn time by walking.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.eyebrow.almost": {
+"cat": "Localizable",
+"key": "shield.detail.eyebrow.almost",
+"en": "ALMOST THERE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.eyebrow.earn": {
+"cat": "Localizable",
+"key": "shield.detail.eyebrow.earn",
+"en": "EARN YOUR TIME",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.eyebrow.expired": {
+"cat": "Localizable",
+"key": "shield.detail.eyebrow.expired",
+"en": "TIME'S UP",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.eyebrow.goal": {
+"cat": "Localizable",
+"key": "shield.detail.eyebrow.goal",
+"en": "DAILY GOAL COMPLETE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.eyebrow.reward": {
+"cat": "Localizable",
+"key": "shield.detail.eyebrow.reward",
+"en": "TIME EARNED",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.headline.almost %lld": {
+"cat": "Localizable",
+"key": "shield.detail.headline.almost %lld",
+"en": "Just %lld steps left.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.headline.expired %lld": {
+"cat": "Localizable",
+"key": "shield.detail.headline.expired %lld",
+"en": "You used your %lld min.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.headline.goal": {
+"cat": "Localizable",
+"key": "shield.detail.headline.goal",
+"en": "You earned it today.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.headline.notYet": {
+"cat": "Localizable",
+"key": "shield.detail.headline.notYet",
+"en": "Not yet.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.headline.reward %lld": {
+"cat": "Localizable",
+"key": "shield.detail.headline.reward %lld",
+"en": "You earned %lld min.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.notNow": {
+"cat": "Localizable",
+"key": "shield.detail.notNow",
+"en": "Save for later",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.progress %@ %@": {
+"cat": "Localizable",
+"key": "shield.detail.progress %@ %@",
+"en": "%1$@ / %2$@ steps",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$@"
+],
+"comment": null
+},
+"Localizable␟shield.detail.remaining %lld %lld": {
+"cat": "Localizable",
+"key": "shield.detail.remaining %lld %lld",
+"en": "%1$lld steps left · ~%2$lld min walk",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.restoreAccess": {
+"cat": "Localizable",
+"key": "shield.detail.restoreAccess",
+"en": "Earnit needs Screen Time access to protect your selected apps.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.reward %lld": {
+"cat": "Localizable",
+"key": "shield.detail.reward %lld",
+"en": "+%lld MIN",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.support.almost %lld": {
+"cat": "Localizable",
+"key": "shield.detail.support.almost %lld",
+"en": "Finish the walk and earn %lld min. Your apps can wait.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.support.expired %lld": {
+"cat": "Localizable",
+"key": "shield.detail.support.expired %lld",
+"en": "Walk toward %lld steps to earn more. Your apps are paused for now.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.support.goal %lld %lld": {
+"cat": "Localizable",
+"key": "shield.detail.support.goal %lld %lld",
+"en": "%1$lld steps · %2$lld min earned",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.support.progress %lld %lld": {
+"cat": "Localizable",
+"key": "shield.detail.support.progress %lld %lld",
+"en": "Walk %1$lld more steps to unlock %2$lld min.",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Localizable␟shield.detail.support.reward": {
+"cat": "Localizable",
+"key": "shield.detail.support.reward",
+"en": "Use them now, or save them for later.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.updating": {
+"cat": "Localizable",
+"key": "shield.detail.updating",
+"en": "Updating your steps...",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟shield.detail.updatingSupport": {
+"cat": "Localizable",
+"key": "shield.detail.updatingSupport",
+"en": "We'll show your next reward as soon as Health finishes syncing.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Show me how": {
+"cat": "Localizable",
+"key": "Show me how",
+"en": "Show me how",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Show me my results": {
+"cat": "Localizable",
+"key": "Show me my results",
+"en": "Show me my results",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Show my first goal": {
+"cat": "Localizable",
+"key": "Show my first goal",
+"en": "Show my first goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Sit less. Move more.": {
+"cat": "Localizable",
+"key": "Sit less. Move more.",
+"en": "Sit less. Move more.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Small changes are easier to stick with. You always choose whether your goal changes.": {
+"cat": "Localizable",
+"key": "Small changes are easier to stick with. You always choose whether your goal changes.",
+"en": "Small changes are easier to stick with. You always choose whether your goal changes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟SMALL STEPS, REAL PROGRESS": {
+"cat": "Localizable",
+"key": "SMALL STEPS, REAL PROGRESS",
+"en": "SMALL STEPS, REAL PROGRESS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Something went wrong while processing your subscription. Please try again.": {
+"cat": "Localizable",
+"key": "Something went wrong while processing your subscription. Please try again.",
+"en": "Something went wrong while processing your subscription. Please try again.",
+"plural": false,
+"specs": [],
+"comment": "An error message displayed when a purchase fails."
+},
+"Localizable␟Something went wrong while restoring your subscription. Please try again.": {
+"cat": "Localizable",
+"key": "Something went wrong while restoring your subscription. Please try again.",
+"en": "Something went wrong while restoring your subscription. Please try again.",
+"plural": false,
+"specs": [],
+"comment": "An error message displayed when restoring purchases fails."
+},
+"Localizable␟Sounds good": {
+"cat": "Localizable",
+"key": "Sounds good",
+"en": "Sounds good",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.appGroupMissing": {
+"cat": "Localizable",
+"key": "spike.appGroupMissing",
+"en": "App Group not configured yet — the extension cannot share data.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.auth.approved": {
+"cat": "Localizable",
+"key": "spike.auth.approved",
+"en": "Approved",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.auth.denied": {
+"cat": "Localizable",
+"key": "spike.auth.denied",
+"en": "Denied",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.auth.failed %@": {
+"cat": "Localizable",
+"key": "spike.auth.failed %@",
+"en": "Screen Time authorization failed: %@\nThis never works in the Simulator — test on a real iPhone.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟spike.auth.notDetermined": {
+"cat": "Localizable",
+"key": "spike.auth.notDetermined",
+"en": "Not requested",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.available": {
+"cat": "Localizable",
+"key": "spike.available",
+"en": "Available",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.blockNow": {
+"cat": "Localizable",
+"key": "spike.blockNow",
+"en": "Block now",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.chooseApps": {
+"cat": "Localizable",
+"key": "spike.chooseApps",
+"en": "Choose apps to block",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.earned": {
+"cat": "Localizable",
+"key": "spike.earned",
+"en": "Earned today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.grantAccess": {
+"cat": "Localizable",
+"key": "spike.grantAccess",
+"en": "Grant Screen Time access",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.manualShieldHint": {
+"cat": "Localizable",
+"key": "spike.manualShieldHint",
+"en": "Leave the app and open one of the selected apps to verify the shield appears.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.screenTimeAccess": {
+"cat": "Localizable",
+"key": "spike.screenTimeAccess",
+"en": "Screen Time access",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.section.manualShield": {
+"cat": "Localizable",
+"key": "spike.section.manualShield",
+"en": "Manual shield",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.section.permissions": {
+"cat": "Localizable",
+"key": "spike.section.permissions",
+"en": "Permissions",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.section.restrictedApps": {
+"cat": "Localizable",
+"key": "spike.section.restrictedApps",
+"en": "Restricted apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.section.wallet": {
+"cat": "Localizable",
+"key": "spike.section.wallet",
+"en": "Screen time wallet",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.selectedCount": {
+"cat": "Localizable",
+"key": "spike.selectedCount",
+"en": "Selected",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.state": {
+"cat": "Localizable",
+"key": "spike.state",
+"en": "State",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.title": {
+"cat": "Localizable",
+"key": "spike.title",
+"en": "Phase 1 spike",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.unblockNow": {
+"cat": "Localizable",
+"key": "spike.unblockNow",
+"en": "Unblock now",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟spike.used": {
+"cat": "Localizable",
+"key": "spike.used",
+"en": "Used today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start earning your screen time": {
+"cat": "Localizable",
+"key": "Start earning your screen time",
+"en": "Start earning your screen time",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start my %@": {
+"cat": "Localizable",
+"key": "Start my %@",
+"en": "Start my %@",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟Start My 3-Day Free Trial": {
+"cat": "Localizable",
+"key": "Start My 3-Day Free Trial",
+"en": "Start My 3-Day Free Trial",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start my 30-day change": {
+"cat": "Localizable",
+"key": "Start my 30-day change",
+"en": "Start my 30-day change",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start my plan": {
+"cat": "Localizable",
+"key": "Start my plan",
+"en": "Start my plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start where you are. Get slightly better over time.": {
+"cat": "Localizable",
+"key": "Start where you are. Get slightly better over time.",
+"en": "Start where you are. Get slightly better over time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Start your 30-day change.": {
+"cat": "Localizable",
+"key": "Start your 30-day change.",
+"en": "Start your 30-day change.",
+"plural": false,
+"specs": [],
+"comment": "A label describing the action a user can take to access their Earn plan."
+},
+"Localizable␟steps": {
+"cat": "Localizable",
+"key": "steps",
+"en": "steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Steps above your current average": {
+"cat": "Localizable",
+"key": "Steps above your current average",
+"en": "Steps above your current average",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟steps each day": {
+"cat": "Localizable",
+"key": "steps each day",
+"en": "steps each day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟steps toward a more active month": {
+"cat": "Localizable",
+"key": "steps toward a more active month",
+"en": "steps toward a more active month",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟steps/day": {
+"cat": "Localizable",
+"key": "steps/day",
+"en": "steps/day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟study.answer.cta": {
+"cat": "Localizable",
+"key": "study.answer.cta",
+"en": "study.answer.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that submits the user's answer to a study question."
+},
+"Localizable␟study.answer.placeholder": {
+"cat": "Localizable",
+"key": "study.answer.placeholder",
+"en": "study.answer.placeholder",
+"plural": false,
+"specs": [],
+"comment": "A placeholder for the user's answer to a study question."
+},
+"Localizable␟study.camera.cta": {
+"cat": "Localizable",
+"key": "study.camera.cta",
+"en": "study.camera.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that takes a photo for study."
+},
+"Localizable␟study.camera.detail": {
+"cat": "Localizable",
+"key": "study.camera.detail",
+"en": "study.camera.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the study camera."
+},
+"Localizable␟study.camera.guide": {
+"cat": "Localizable",
+"key": "study.camera.guide",
+"en": "study.camera.guide",
+"plural": false,
+"specs": [],
+"comment": "A label displayed on top of a rectangle that guides the user to focus on a study."
+},
+"Localizable␟study.camera.title": {
+"cat": "Localizable",
+"key": "study.camera.title",
+"en": "study.camera.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed in the study camera view."
+},
+"Localizable␟study.checking.detail": {
+"cat": "Localizable",
+"key": "study.checking.detail",
+"en": "study.checking.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the study process."
+},
+"Localizable␟study.checking.title": {
+"cat": "Localizable",
+"key": "study.checking.title",
+"en": "study.checking.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the study-to-earn screen when the app is checking the image."
+},
+"Localizable␟study.error.eyebrow": {
+"cat": "Localizable",
+"key": "study.error.eyebrow",
+"en": "study.error.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Title of the eyebrow for the error view."
+},
+"Localizable␟study.error.retry": {
+"cat": "Localizable",
+"key": "study.error.retry",
+"en": "study.error.retry",
+"plural": false,
+"specs": [],
+"comment": "A button that retries a failed operation."
+},
+"Localizable␟study.error.title": {
+"cat": "Localizable",
+"key": "study.error.title",
+"en": "study.error.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed when an error occurs during a study session."
+},
+"Localizable␟study.intro.detail %lld": {
+"cat": "Localizable",
+"key": "study.intro.detail %lld",
+"en": "study.intro.detail %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A description of the study, including the number of minutes of study time that will be rewarded."
+},
+"Localizable␟study.intro.examples": {
+"cat": "Localizable",
+"key": "study.intro.examples",
+"en": "study.intro.examples",
+"plural": false,
+"specs": [],
+"comment": "A description of the study process."
+},
+"Localizable␟study.intro.title": {
+"cat": "Localizable",
+"key": "study.intro.title",
+"en": "study.intro.title",
+"plural": false,
+"specs": [],
+"comment": "A title of the study intro screen."
+},
+"Localizable␟study.limit.detail %@": {
+"cat": "Localizable",
+"key": "study.limit.detail %@",
+"en": "study.limit.detail %@",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": "A label that shows the user that they've reached their study limit, and when they can try again. The argument is the date when the user can try again."
+},
+"Localizable␟study.limit.detail.fallback": {
+"cat": "Localizable",
+"key": "study.limit.detail.fallback",
+"en": "study.limit.detail.fallback",
+"plural": false,
+"specs": [],
+"comment": "A fallback message displayed when the user has reached their study limit."
+},
+"Localizable␟study.limit.eyebrow": {
+"cat": "Localizable",
+"key": "study.limit.eyebrow",
+"en": "study.limit.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Title of a warning banner displayed when the user has reached their study limit."
+},
+"Localizable␟study.limit.title": {
+"cat": "Localizable",
+"key": "study.limit.title",
+"en": "study.limit.title",
+"plural": false,
+"specs": [],
+"comment": "A title displayed when the user has reached their study limit."
+},
+"Localizable␟study.mission": {
+"cat": "Localizable",
+"key": "study.mission",
+"en": "study.mission",
+"plural": false,
+"specs": [],
+"comment": "Title of the study mission."
+},
+"Localizable␟study.preparing.detail": {
+"cat": "Localizable",
+"key": "study.preparing.detail",
+"en": "study.preparing.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the study process."
+},
+"Localizable␟study.preparing.title": {
+"cat": "Localizable",
+"key": "study.preparing.title",
+"en": "study.preparing.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the study-to-earn process."
+},
+"Localizable␟study.privacy.detail": {
+"cat": "Localizable",
+"key": "study.privacy.detail",
+"en": "study.privacy.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the privacy policy of the app."
+},
+"Localizable␟study.privacy.title": {
+"cat": "Localizable",
+"key": "study.privacy.title",
+"en": "study.privacy.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the privacy policy."
+},
+"Localizable␟study.processing.detail": {
+"cat": "Localizable",
+"key": "study.processing.detail",
+"en": "study.processing.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the study process."
+},
+"Localizable␟study.processing.title": {
+"cat": "Localizable",
+"key": "study.processing.title",
+"en": "study.processing.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the study-to-earn process."
+},
+"Localizable␟study.question.different": {
+"cat": "Localizable",
+"key": "study.question.different",
+"en": "study.question.different",
+"plural": false,
+"specs": [],
+"comment": "A button that generates a new study question."
+},
+"Localizable␟study.question.eyebrow": {
+"cat": "Localizable",
+"key": "study.question.eyebrow",
+"en": "study.question.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "The eyebrow text for the study question view."
+},
+"Localizable␟study.question.title": {
+"cat": "Localizable",
+"key": "study.question.title",
+"en": "study.question.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the study question view."
+},
+"Localizable␟study.retry.cta": {
+"cat": "Localizable",
+"key": "study.retry.cta",
+"en": "study.retry.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that lets the user retry the study."
+},
+"Localizable␟study.retry.eyebrow": {
+"cat": "Localizable",
+"key": "study.retry.eyebrow",
+"en": "study.retry.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "The eyebrow text for the retry screen."
+},
+"Localizable␟study.retry.title": {
+"cat": "Localizable",
+"key": "study.retry.title",
+"en": "study.retry.title",
+"plural": false,
+"specs": [],
+"comment": "A title for the retry screen."
+},
+"Localizable␟study.scan.another": {
+"cat": "Localizable",
+"key": "study.scan.another",
+"en": "study.scan.another",
+"plural": false,
+"specs": [],
+"comment": "A button that shows a new camera view when pressed."
+},
+"Localizable␟study.scan.cta": {
+"cat": "Localizable",
+"key": "study.scan.cta",
+"en": "study.scan.cta",
+"plural": false,
+"specs": [],
+"comment": "A button that scans a QR code to earn study time."
+},
+"Localizable␟study.success.again": {
+"cat": "Localizable",
+"key": "study.success.again",
+"en": "study.success.again",
+"plural": false,
+"specs": [],
+"comment": "A button that lets the user study again."
+},
+"Localizable␟study.success.detail": {
+"cat": "Localizable",
+"key": "study.success.detail",
+"en": "study.success.detail",
+"plural": false,
+"specs": [],
+"comment": "A description of the reward for completing a study."
+},
+"Localizable␟study.success.eyebrow": {
+"cat": "Localizable",
+"key": "study.success.eyebrow",
+"en": "study.success.eyebrow",
+"plural": false,
+"specs": [],
+"comment": "Title of the eyebrow for the study success view."
+},
+"Localizable␟study.success.title %lld": {
+"cat": "Localizable",
+"key": "study.success.title %lld",
+"en": "study.success.title %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": "A title that shows the number of minutes the user will earn for completing a study question. The argument is the number of minutes."
+},
+"Localizable␟study.success.use": {
+"cat": "Localizable",
+"key": "study.success.use",
+"en": "study.success.use",
+"plural": false,
+"specs": [],
+"comment": "A button that lets the user use the reward."
+},
+"Localizable␟study.title": {
+"cat": "Localizable",
+"key": "study.title",
+"en": "study.title",
+"plural": false,
+"specs": [],
+"comment": "Title of a study-related earning rule."
+},
+"Localizable␟Subscribe for %@ %@": {
+"cat": "Localizable",
+"key": "Subscribe for %@ %@",
+"en": "Subscribe for %@ %@",
+"plural": false,
+"specs": [
+"%@",
+"%@"
+],
+"comment": null
+},
+"Localizable␟Subscription plans": {
+"cat": "Localizable",
+"key": "Subscription plans",
+"en": "Subscription plans",
+"plural": false,
+"specs": [],
+"comment": "The accessibility label for the section that lists subscription plans."
+},
+"Localizable␟subscription.continueFree": {
+"cat": "Localizable",
+"key": "subscription.continueFree",
+"en": "Continue with Free",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.eyebrow": {
+"cat": "Localizable",
+"key": "subscription.eyebrow",
+"en": "EARNIT PRO",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.feature.apps": {
+"cat": "Localizable",
+"key": "subscription.feature.apps",
+"en": "Choose unlimited restricted apps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.feature.ratios": {
+"cat": "Localizable",
+"key": "subscription.feature.ratios",
+"en": "Set your own earning ratio",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.feature.stats": {
+"cat": "Localizable",
+"key": "subscription.feature.stats",
+"en": "See advanced progress statistics",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.status.checking": {
+"cat": "Localizable",
+"key": "subscription.status.checking",
+"en": "Checking…",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.status.free": {
+"cat": "Localizable",
+"key": "subscription.status.free",
+"en": "Free",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.status.pro": {
+"cat": "Localizable",
+"key": "subscription.status.pro",
+"en": "Pro",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.title": {
+"cat": "Localizable",
+"key": "subscription.title",
+"en": "More ways to earn.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.title.emphasis": {
+"cat": "Localizable",
+"key": "subscription.title.emphasis",
+"en": "Never minutes for sale.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟subscription.unavailable.message": {
+"cat": "Localizable",
+"key": "subscription.unavailable.message",
+"en": "Pro purchases are not configured in this build yet. You can keep using every Free feature.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Suggested": {
+"cat": "Localizable",
+"key": "Suggested",
+"en": "Suggested",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Take a short walk": {
+"cat": "Localizable",
+"key": "Take a short walk",
+"en": "Take a short walk",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Take a short walk. Open Earnit when you return and your first reward will be waiting.": {
+"cat": "Localizable",
+"key": "Take a short walk. Open Earnit when you return and your first reward will be waiting.",
+"en": "Take a short walk. Open Earnit when you return and your first reward will be waiting.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Terms of Use": {
+"cat": "Localizable",
+"key": "Terms of Use",
+"en": "Terms of Use",
+"plural": false,
+"specs": [],
+"comment": "A link to the app's terms of use."
+},
+"Localizable␟That can add up to about %lld hours each week. Earnit helps you make that time more intentional.": {
+"cat": "Localizable",
+"key": "That can add up to about %lld hours each week. Earnit helps you make that time more intentional.",
+"en": "That can add up to about %lld hours each week. Earnit helps you make that time more intentional.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟That is why Earnit starts from your recent activity and recommends a small increase, rather than assigning the same target to everyone.": {
+"cat": "Localizable",
+"key": "That is why Earnit starts from your recent activity and recommends a small increase, rather than assigning the same target to everyone.",
+"en": "That is why Earnit starts from your recent activity and recommends a small increase, rather than assigning the same target to everyone.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟That makes sense": {
+"cat": "Localizable",
+"key": "That makes sense",
+"en": "That makes sense",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟That's more than %lld hours every week. Earnit helps you reclaim some of it without forcing you to quit your favorite apps.": {
+"cat": "Localizable",
+"key": "That's more than %lld hours every week. Earnit helps you reclaim some of it without forcing you to quit your favorite apps.",
+"en": "That's more than %lld hours every week. Earnit helps you reclaim some of it without forcing you to quit your favorite apps.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟That’s what happens when your phone gives you a reason to move.": {
+"cat": "Localizable",
+"key": "That’s what happens when your phone gives you a reason to move.",
+"en": "That’s what happens when your phone gives you a reason to move.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟The evidence supports moving more and sitting less. It does not guarantee a specific health outcome for any individual.": {
+"cat": "Localizable",
+"key": "The evidence supports moving more and sitting less. It does not guarantee a specific health outcome for any individual.",
+"en": "The evidence supports moving more and sitting less. It does not guarantee a specific health outcome for any individual.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟The purchase completed, but Pro access could not be verified. Try restoring purchases. If this continues, contact support.": {
+"cat": "Localizable",
+"key": "The purchase completed, but Pro access could not be verified. Try restoring purchases. If this continues, contact support.",
+"en": "The purchase completed, but Pro access could not be verified. Try restoring purchases. If this continues, contact support.",
+"plural": false,
+"specs": [],
+"comment": "An alert message that appears when a user tries to activate Pro access but the activation is not successful. It instructs the user to try restoring purchases and, if that fails, to contact support."
+},
+"Localizable␟The purchase completed, but subscription access could not be verified. Try restoring purchases. If this continues, contact support.": {
+"cat": "Localizable",
+"key": "The purchase completed, but subscription access could not be verified. Try restoring purchases. If this continues, contact support.",
+"en": "The purchase completed, but subscription access could not be verified. Try restoring purchases. If this continues, contact support.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟THE RULE IS SIMPLE": {
+"cat": "Localizable",
+"key": "THE RULE IS SIMPLE",
+"en": "THE RULE IS SIMPLE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟There is no wrong answer. This helps us explain what Earnit changes.": {
+"cat": "Localizable",
+"key": "There is no wrong answer. This helps us explain what Earnit changes.",
+"en": "There is no wrong answer. This helps us explain what Earnit changes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Thirty days of choosing movement before scrolling.": {
+"cat": "Localizable",
+"key": "Thirty days of choosing movement before scrolling.",
+"en": "Thirty days of choosing movement before scrolling.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟This is a conditional estimate, not a health outcome or a prediction of what you will do.": {
+"cat": "Localizable",
+"key": "This is a conditional estimate, not a health outcome or a prediction of what you will do.",
+"en": "This is a conditional estimate, not a health outcome or a prediction of what you will do.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟THIS IS EARNIT": {
+"cat": "Localizable",
+"key": "THIS IS EARNIT",
+"en": "THIS IS EARNIT",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟This is simple arithmetic based on your baseline and plan, not a health promise.": {
+"cat": "Localizable",
+"key": "This is simple arithmetic based on your baseline and plan, not a health promise.",
+"en": "This is simple arithmetic based on your baseline and plan, not a health promise.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟This is what you'll add to your routine.": {
+"cat": "Localizable",
+"key": "This is what you'll add to your routine.",
+"en": "This is what you'll add to your routine.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟This isn't a score. It's the number your first plan will grow from.": {
+"cat": "Localizable",
+"key": "This isn't a score. It's the number your first plan will grow from.",
+"en": "This isn't a score. It's the number your first plan will grow from.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟THIS MONTH": {
+"cat": "Localizable",
+"key": "THIS MONTH",
+"en": "THIS MONTH",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟TIME ADDS UP": {
+"cat": "Localizable",
+"key": "TIME ADDS UP",
+"en": "TIME ADDS UP",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟To build your plan, Earnit needs Screen Time access to show Apple’s app picker.": {
+"cat": "Localizable",
+"key": "To build your plan, Earnit needs Screen Time access to show Apple’s app picker.",
+"en": "To build your plan, Earnit needs Screen Time access to show Apple’s app picker.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Today": {
+"cat": "Localizable",
+"key": "Today",
+"en": "Today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Traditional limits": {
+"cat": "Localizable",
+"key": "Traditional limits",
+"en": "Traditional limits",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Try again": {
+"cat": "Localizable",
+"key": "Try again",
+"en": "Try again",
+"plural": false,
+"specs": [],
+"comment": "A button that allows the user to try purchasing their subscription again."
+},
+"Localizable␟Trying to use willpower": {
+"cat": "Localizable",
+"key": "Trying to use willpower",
+"en": "Trying to use willpower",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Turn the apps you already love into motivation to move.": {
+"cat": "Localizable",
+"key": "Turn the apps you already love into motivation to move.",
+"en": "Turn the apps you already love into motivation to move.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Turn your steps into screen time.": {
+"cat": "Localizable",
+"key": "Turn your steps into screen time.",
+"en": "Turn your steps into screen time.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Unable to load subscription options.": {
+"cat": "Localizable",
+"key": "Unable to load subscription options.",
+"en": "Unable to load subscription options.",
+"plural": false,
+"specs": [],
+"comment": "A message displayed when the app is unable to load subscription options from the server."
+},
+"Localizable␟Under 2,000 steps/day": {
+"cat": "Localizable",
+"key": "Under 2,000 steps/day",
+"en": "Under 2,000 steps/day",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Unlimited blocked apps": {
+"cat": "Localizable",
+"key": "Unlimited blocked apps",
+"en": "Unlimited blocked apps",
+"plural": false,
+"specs": [],
+"comment": "A benefit of the Pro subscription, describing unlimited access to blocked apps."
+},
+"Localizable␟Up to %lld": {
+"cat": "Localizable",
+"key": "Up to %lld",
+"en": "Up to %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟Up to %lld min": {
+"cat": "Localizable",
+"key": "Up to %lld min",
+"en": "Up to %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟up to %lldh": {
+"cat": "Localizable",
+"key": "up to %lldh",
+"en": "up to %lldh",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟Use an estimate instead": {
+"cat": "Localizable",
+"key": "Use an estimate instead",
+"en": "Use an estimate instead",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Use recommendation": {
+"cat": "Localizable",
+"key": "Use recommendation",
+"en": "Use recommendation",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Use this goal": {
+"cat": "Localizable",
+"key": "Use this goal",
+"en": "Use this goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Walk 500 steps": {
+"cat": "Localizable",
+"key": "Walk 500 steps",
+"en": "Walk 500 steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟wallet.consumedToday": {
+"cat": "Localizable",
+"key": "wallet.consumedToday",
+"en": "Used today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟wallet.earnedToday": {
+"cat": "Localizable",
+"key": "wallet.earnedToday",
+"en": "Earned today",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟wallet.summary %lld %lld %lld": {
+"cat": "Localizable",
+"key": "wallet.summary %lld %lld %lld",
+"en": "Screen Time Wallet: %1$lld minutes available, %2$lld earned today, %3$lld used today",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld",
+"%3$lld"
+],
+"comment": null
+},
+"Localizable␟wallet.title": {
+"cat": "Localizable",
+"key": "wallet.title",
+"en": "Screen Time Wallet",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We can use your recent walking activity to suggest a more achievable daily goal. Your earn rate and existing balance will not change.": {
+"cat": "Localizable",
+"key": "We can use your recent walking activity to suggest a more achievable daily goal. Your earn rate and existing balance will not change.",
+"en": "We can use your recent walking activity to suggest a more achievable daily goal. Your earn rate and existing balance will not change.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We couldn't find an active Pro subscription for this Apple Account.": {
+"cat": "Localizable",
+"key": "We couldn't find an active Pro subscription for this Apple Account.",
+"en": "We couldn't find an active Pro subscription for this Apple Account.",
+"plural": false,
+"specs": [],
+"comment": "An alert message displayed when a user tries to restore purchases but doesn't have an active Pro subscription."
+},
+"Localizable␟We couldn't find an active subscription for this Apple Account.": {
+"cat": "Localizable",
+"key": "We couldn't find an active subscription for this Apple Account.",
+"en": "We couldn't find an active subscription for this Apple Account.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We couldn't find enough recent walking data. Your current setup stays exactly as it is.": {
+"cat": "Localizable",
+"key": "We couldn't find enough recent walking data. Your current setup stays exactly as it is.",
+"en": "We couldn't find enough recent walking data. Your current setup stays exactly as it is.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We couldn't find enough walking history. A quick estimate works too.": {
+"cat": "Localizable",
+"key": "We couldn't find enough walking history. A quick estimate works too.",
+"en": "We couldn't find enough walking history. A quick estimate works too.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We'll start from there.": {
+"cat": "Localizable",
+"key": "We'll start from there.",
+"en": "We'll start from there.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟We'll start with %@ and suggest small changes only when you're ready.": {
+"cat": "Localizable",
+"key": "We'll start with %@ and suggest small changes only when you're ready.",
+"en": "We'll start with %@ and suggest small changes only when you're ready.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟Week one complete": {
+"cat": "Localizable",
+"key": "Week one complete",
+"en": "Week one complete",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟week.distanceCaption": {
+"cat": "Localizable",
+"key": "week.distanceCaption",
+"en": "walked, 7 days",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟week.distanceValue %.1f": {
+"cat": "Localizable",
+"key": "week.distanceValue %.1f",
+"en": "%.1f km",
+"plural": false,
+"specs": [
+"%.1f"
+],
+"comment": null
+},
+"Localizable␟week.footerNote": {
+"cat": "Localizable",
+"key": "week.footerNote",
+"en": "Progress is made outside the screen, in small walks.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟week.streak %lld": {
+"cat": "Localizable",
+"key": "week.streak %lld",
+"en": "%lld days in a row.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟week.streakCaption": {
+"cat": "Localizable",
+"key": "week.streakCaption",
+"en": "streak",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟week.streakValue %lld": {
+"cat": "Localizable",
+"key": "week.streakValue %lld",
+"en": "%lld days",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Localizable␟week.title": {
+"cat": "Localizable",
+"key": "week.title",
+"en": "This week",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟What have you tried before?": {
+"cat": "Localizable",
+"key": "What have you tried before?",
+"en": "What have you tried before?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟What would you like to change?": {
+"cat": "Localizable",
+"key": "What would you like to change?",
+"en": "What would you like to change?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟WHAT YOU'VE TRIED": {
+"cat": "Localizable",
+"key": "WHAT YOU'VE TRIED",
+"en": "WHAT YOU'VE TRIED",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Which apps should pause until you've earned time?": {
+"cat": "Localizable",
+"key": "Which apps should pause until you've earned time?",
+"en": "Which apps should pause until you've earned time?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Which apps should you earn?": {
+"cat": "Localizable",
+"key": "Which apps should you earn?",
+"en": "Which apps should you earn?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟WHY THIS WORKS": {
+"cat": "Localizable",
+"key": "WHY THIS WORKS",
+"en": "WHY THIS WORKS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Willpower makes you decide again and again.": {
+"cat": "Localizable",
+"key": "Willpower makes you decide again and again.",
+"en": "Willpower makes you decide again and again.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Yearly": {
+"cat": "Localizable",
+"key": "Yearly",
+"en": "Yearly",
+"plural": false,
+"specs": [],
+"comment": "A label describing a billing plan that charges a user a fixed amount of money each month."
+},
+"Localizable␟You earned your month": {
+"cat": "Localizable",
+"key": "You earned your month",
+"en": "You earned your month",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOU EARNED YOUR MONTH": {
+"cat": "Localizable",
+"key": "YOU EARNED YOUR MONTH",
+"en": "YOU EARNED YOUR MONTH",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟You're averaging %@ steps a day.": {
+"cat": "Localizable",
+"key": "You're averaging %@ steps a day.",
+"en": "You're averaging %@ steps a day.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟You're averaging %@ steps/day.": {
+"cat": "Localizable",
+"key": "You're averaging %@ steps/day.",
+"en": "You're averaging %@ steps/day.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟You're averaging about %@ steps/day.": {
+"cat": "Localizable",
+"key": "You're averaging about %@ steps/day.",
+"en": "You're averaging about %@ steps/day.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Localizable␟You’re in.": {
+"cat": "Localizable",
+"key": "You’re in.",
+"en": "You’re in.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟You’re not trying to use a different phone. You’re building a different relationship with it.": {
+"cat": "Localizable",
+"key": "You’re not trying to use a different phone. You’re building a different relationship with it.",
+"en": "You’re not trying to use a different phone. You’re building a different relationship with it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟You've reached your goal on at least 6 of the last 7 active days.": {
+"cat": "Localizable",
+"key": "You've reached your goal on at least 6 of the last 7 active days.",
+"en": "You've reached your goal on at least 6 of the last 7 active days.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your 30-day goal": {
+"cat": "Localizable",
+"key": "Your 30-day goal",
+"en": "Your 30-day goal",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your app activity stays private. Earnit only stores Apple’s opaque selections on this device.": {
+"cat": "Localizable",
+"key": "Your app activity stays private. Earnit only stores Apple’s opaque selections on this device.",
+"en": "Your app activity stays private. Earnit only stores Apple’s opaque selections on this device.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your apps stop opening on autopilot.": {
+"cat": "Localizable",
+"key": "Your apps stop opening on autopilot.",
+"en": "Your apps stop opening on autopilot.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR BASELINE": {
+"cat": "Localizable",
+"key": "YOUR BASELINE",
+"en": "YOUR BASELINE",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR COMMITMENT": {
+"cat": "Localizable",
+"key": "YOUR COMMITMENT",
+"en": "YOUR COMMITMENT",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your current goal looks ambitious right now.": {
+"cat": "Localizable",
+"key": "Your current goal looks ambitious right now.",
+"en": "Your current goal looks ambitious right now.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your estimate gives us everything needed to begin. Your plan will update from your real steps.": {
+"cat": "Localizable",
+"key": "Your estimate gives us everything needed to begin. Your plan will update from your real steps.",
+"en": "Your estimate gives us everything needed to begin. Your plan will update from your real steps.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your first %@ steps unlock %lld minutes.": {
+"cat": "Localizable",
+"key": "Your first %@ steps unlock %lld minutes.",
+"en": "Your first %1$@ steps unlock %2$lld minutes.",
+"plural": false,
+"specs": [
+"%1$@",
+"%2$lld"
+],
+"comment": "A description of a step goal and its corresponding reward. The first argument is the formatted number of steps required to unlock the reward. The second argument is the number of minutes of reward time."
+},
+"Localizable␟Your first 5 minutes are 500 steps away.": {
+"cat": "Localizable",
+"key": "Your first 5 minutes are 500 steps away.",
+"en": "Your first 5 minutes are 500 steps away.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR FIRST GOAL": {
+"cat": "Localizable",
+"key": "YOUR FIRST GOAL",
+"en": "YOUR FIRST GOAL",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR FIRST MISSION": {
+"cat": "Localizable",
+"key": "YOUR FIRST MISSION",
+"en": "YOUR FIRST MISSION",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your first walk starts now.": {
+"cat": "Localizable",
+"key": "Your first walk starts now.",
+"en": "Your first walk starts now.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your goal and earn rate are separate. Start with our recommended earn rate and change it later from Settings.": {
+"cat": "Localizable",
+"key": "Your goal and earn rate are separate. Start with our recommended earn rate and change it later from Settings.",
+"en": "Your goal and earn rate are separate. Start with our recommended earn rate and change it later from Settings.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your goal tracks daily progress. It does not change how quickly you earn minutes.": {
+"cat": "Localizable",
+"key": "Your goal tracks daily progress. It does not change how quickly you earn minutes.",
+"en": "Your goal tracks daily progress. It does not change how quickly you earn minutes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your health history stays on your device. Earnit only keeps the baseline used for your plan.": {
+"cat": "Localizable",
+"key": "Your health history stays on your device. Earnit only keeps the baseline used for your plan.",
+"en": "Your health history stays on your device. Earnit only keeps the baseline used for your plan.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR INTENTION": {
+"cat": "Localizable",
+"key": "YOUR INTENTION",
+"en": "YOUR INTENTION",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your membership wasn't activated": {
+"cat": "Localizable",
+"key": "Your membership wasn't activated",
+"en": "Your membership wasn't activated",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your movement becomes a balance": {
+"cat": "Localizable",
+"key": "Your movement becomes a balance",
+"en": "Your movement becomes a balance",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR NEXT 30 DAYS": {
+"cat": "Localizable",
+"key": "YOUR NEXT 30 DAYS",
+"en": "YOUR NEXT 30 DAYS",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your personal baseline": {
+"cat": "Localizable",
+"key": "Your personal baseline",
+"en": "Your personal baseline",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your personalized Earnit plan is ready.": {
+"cat": "Localizable",
+"key": "Your personalized Earnit plan is ready.",
+"en": "Your personalized Earnit plan is ready.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your phone is spending this month pushing you forward.": {
+"cat": "Localizable",
+"key": "Your phone is spending this month pushing you forward.",
+"en": "Your phone is spending this month pushing you forward.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your phone keeps you sitting.": {
+"cat": "Localizable",
+"key": "Your phone keeps you sitting.",
+"en": "Your phone keeps you sitting.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR PLAN": {
+"cat": "Localizable",
+"key": "YOUR PLAN",
+"en": "YOUR PLAN",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR PLAN IS READY": {
+"cat": "Localizable",
+"key": "YOUR PLAN IS READY",
+"en": "YOUR PLAN IS READY",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your starter plan": {
+"cat": "Localizable",
+"key": "Your starter plan",
+"en": "Your starter plan",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟YOUR STARTING POINT": {
+"cat": "Localizable",
+"key": "YOUR STARTING POINT",
+"en": "YOUR STARTING POINT",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your steps": {
+"cat": "Localizable",
+"key": "Your steps",
+"en": "Your steps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Localizable␟Your subscription automatically renews for %@ %@ unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in App Store settings.": {
+"cat": "Localizable",
+"key": "Your subscription automatically renews for %@ %@ unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in App Store settings.",
+"en": "Your subscription automatically renews for %@ %@ unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in App Store settings.",
+"plural": false,
+"specs": [
+"%@",
+"%@"
+],
+"comment": null
+},
+"Localizable␟Your walking rhythm is getting stronger.": {
+"cat": "Localizable",
+"key": "Your walking rhythm is getting stronger.",
+"en": "Your walking rhythm is getting stronger.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.answer.cta": {
+"cat": "Study",
+"key": "study.answer.cta",
+"en": "Check my answer",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.answer.placeholder": {
+"cat": "Study",
+"key": "study.answer.placeholder",
+"en": "Type your answer",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.camera.cta": {
+"cat": "Study",
+"key": "study.camera.cta",
+"en": "Take photo",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.camera.detail": {
+"cat": "Study",
+"key": "study.camera.detail",
+"en": "Use a textbook page, article, printed notes, or clear handwritten notes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.camera.guide": {
+"cat": "Study",
+"key": "study.camera.guide",
+"en": "Keep the text inside this frame",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.camera.title": {
+"cat": "Study",
+"key": "study.camera.title",
+"en": "Scan what you’re studying",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.checking.detail": {
+"cat": "Study",
+"key": "study.checking.detail",
+"en": "We’re checking the key idea, not spelling or writing style.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.checking.title": {
+"cat": "Study",
+"key": "study.checking.title",
+"en": "Checking your answer",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.entry.detail": {
+"cat": "Study",
+"key": "study.entry.detail",
+"en": "Read something. Prove you understood it. Earn 15 minutes.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.entry.hint": {
+"cat": "Study",
+"key": "study.entry.hint",
+"en": "Opens the page scanner",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.error.eyebrow": {
+"cat": "Study",
+"key": "study.error.eyebrow",
+"en": "Try again",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.error.retry": {
+"cat": "Study",
+"key": "study.error.retry",
+"en": "Retry",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.error.title": {
+"cat": "Study",
+"key": "study.error.title",
+"en": "We couldn’t finish that step",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.intro.detail %lld": {
+"cat": "Study",
+"key": "study.intro.detail %lld",
+"en": "Scan a page or your notes. Answer one question to earn %lld minutes.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Study␟study.intro.examples": {
+"cat": "Study",
+"key": "study.intro.examples",
+"en": "Textbooks, articles, printed notes, and clear handwriting work best.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.intro.title": {
+"cat": "Study",
+"key": "study.intro.title",
+"en": "Read it. Understand it. Earn it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.limit.detail %@": {
+"cat": "Study",
+"key": "study.limit.detail %@",
+"en": "Your next study reward becomes available at %@.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Study␟study.limit.detail.fallback": {
+"cat": "Study",
+"key": "study.limit.detail.fallback",
+"en": "Come back tomorrow for another study reward.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.limit.eyebrow": {
+"cat": "Study",
+"key": "study.limit.eyebrow",
+"en": "Today’s study rewards",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.limit.title": {
+"cat": "Study",
+"key": "study.limit.title",
+"en": "You reached today’s limit",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.mission": {
+"cat": "Study",
+"key": "study.mission",
+"en": "Study to Earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.preparing.detail": {
+"cat": "Study",
+"key": "study.preparing.detail",
+"en": "Checking today’s reward and secure access.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.preparing.title": {
+"cat": "Study",
+"key": "study.preparing.title",
+"en": "Preparing your mission",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.privacy.detail": {
+"cat": "Study",
+"key": "study.privacy.detail",
+"en": "Your scan is used only to create one study question. Earnit does not save your page or use it for training.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.privacy.title": {
+"cat": "Study",
+"key": "study.privacy.title",
+"en": "Your page stays private",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.processing.detail": {
+"cat": "Study",
+"key": "study.processing.detail",
+"en": "Reading your page and creating one question from it.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.processing.title": {
+"cat": "Study",
+"key": "study.processing.title",
+"en": "Finding the key idea",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.question.different": {
+"cat": "Study",
+"key": "study.question.different",
+"en": "Ask a different question",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.question.eyebrow": {
+"cat": "Study",
+"key": "study.question.eyebrow",
+"en": "One quick check",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.question.title": {
+"cat": "Study",
+"key": "study.question.title",
+"en": "Answer in your own words",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.retry.cta": {
+"cat": "Study",
+"key": "study.retry.cta",
+"en": "Try again",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.retry.eyebrow": {
+"cat": "Study",
+"key": "study.retry.eyebrow",
+"en": "Review and retry",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.retry.title": {
+"cat": "Study",
+"key": "study.retry.title",
+"en": "Almost there",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.scan.another": {
+"cat": "Study",
+"key": "study.scan.another",
+"en": "Scan another page",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.scan.cta": {
+"cat": "Study",
+"key": "study.scan.cta",
+"en": "Scan a page",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.success.again": {
+"cat": "Study",
+"key": "study.success.again",
+"en": "Study again",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.success.detail": {
+"cat": "Study",
+"key": "study.success.detail",
+"en": "You understood the material. Your screen-time balance has been updated.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.success.eyebrow": {
+"cat": "Study",
+"key": "study.success.eyebrow",
+"en": "Comprehension confirmed",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.success.title %lld": {
+"cat": "Study",
+"key": "study.success.title %lld",
+"en": "You earned %lld minutes",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Study␟study.success.use": {
+"cat": "Study",
+"key": "study.success.use",
+"en": "Use my minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Study␟study.title": {
+"cat": "Study",
+"key": "study.title",
+"en": "Study to Earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.active.camera_note": {
+"cat": "Pushups",
+"key": "pushups.active.camera_note",
+"en": "Counting pauses if your body leaves the frame",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.active.of %lld": {
+"cat": "Pushups",
+"key": "pushups.active.of %lld",
+"en": "/ %lld push-ups",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.active.progress %lld %lld": {
+"cat": "Pushups",
+"key": "pushups.active.progress %lld %lld",
+"en": "%1$lld of %2$lld push-ups",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Pushups␟pushups.active.rep_announcement %lld %lld": {
+"cat": "Pushups",
+"key": "pushups.active.rep_announcement %lld %lld",
+"en": "Push-up %1$lld of %2$lld",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Pushups␟pushups.active.reward %lld": {
+"cat": "Pushups",
+"key": "pushups.active.reward %lld",
+"en": "Earn %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.active.started": {
+"cat": "Pushups",
+"key": "pushups.active.started",
+"en": "Start push-ups",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.challenge.accessibility %lld %lld": {
+"cat": "Pushups",
+"key": "pushups.challenge.accessibility %lld %lld",
+"en": "%1$lld push-ups, earn %2$lld minutes",
+"plural": false,
+"specs": [
+"%1$lld",
+"%2$lld"
+],
+"comment": null
+},
+"Pushups␟pushups.challenge.reps %lld": {
+"cat": "Pushups",
+"key": "pushups.challenge.reps %lld",
+"en": "%lld push-ups",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.challenge.reward %lld": {
+"cat": "Pushups",
+"key": "pushups.challenge.reward %lld",
+"en": "Earn %lld min",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.claiming.detail": {
+"cat": "Pushups",
+"key": "pushups.claiming.detail",
+"en": "Securing your reward without sending camera data.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.claiming.title": {
+"cat": "Pushups",
+"key": "pushups.claiming.title",
+"en": "Adding your minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.countdown.accessibility %lld": {
+"cat": "Pushups",
+"key": "pushups.countdown.accessibility %lld",
+"en": "Starting in %lld",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.countdown.started": {
+"cat": "Pushups",
+"key": "pushups.countdown.started",
+"en": "Challenge countdown started",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.entry.detail": {
+"cat": "Pushups",
+"key": "pushups.entry.detail",
+"en": "Do pushups. Earn your scroll.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.entry.hint": {
+"cat": "Pushups",
+"key": "pushups.entry.hint",
+"en": "Choose a live push-up challenge",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.error.eyebrow": {
+"cat": "Pushups",
+"key": "pushups.error.eyebrow",
+"en": "Try again",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.error.retry": {
+"cat": "Pushups",
+"key": "pushups.error.retry",
+"en": "Retry",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.error.title": {
+"cat": "Pushups",
+"key": "pushups.error.title",
+"en": "We couldn’t continue",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.find_body": {
+"cat": "Pushups",
+"key": "pushups.guidance.find_body",
+"en": "Move back so your full body is visible",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.improve_lighting": {
+"cat": "Pushups",
+"key": "pushups.guidance.improve_lighting",
+"en": "Improve the lighting",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.keep_going": {
+"cat": "Pushups",
+"key": "pushups.guidance.keep_going",
+"en": "Great form — keep going",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.lower_body": {
+"cat": "Pushups",
+"key": "pushups.guidance.lower_body",
+"en": "Lower a little more",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.move_into_frame": {
+"cat": "Pushups",
+"key": "pushups.guidance.move_into_frame",
+"en": "Move back into frame",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.push_up": {
+"cat": "Pushups",
+"key": "pushups.guidance.push_up",
+"en": "Push back up",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.slow_down": {
+"cat": "Pushups",
+"key": "pushups.guidance.slow_down",
+"en": "Slow down for a full repetition",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.start_at_top": {
+"cat": "Pushups",
+"key": "pushups.guidance.start_at_top",
+"en": "Start with your arms extended",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.guidance.straighten_body": {
+"cat": "Pushups",
+"key": "pushups.guidance.straighten_body",
+"en": "Hold a straight plank, not a kneel",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.cta": {
+"cat": "Pushups",
+"key": "pushups.intro.cta",
+"en": "Try it now",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.detail": {
+"cat": "Pushups",
+"key": "pushups.intro.detail",
+"en": "Steps are not the only way anymore. Prop your phone in front of you, do a set, and the camera counts it live.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.eyebrow": {
+"cat": "Pushups",
+"key": "pushups.intro.eyebrow",
+"en": "NEW WAY TO EARN",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.later": {
+"cat": "Pushups",
+"key": "pushups.intro.later",
+"en": "Maybe later",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.privacy": {
+"cat": "Pushups",
+"key": "pushups.intro.privacy",
+"en": "Counting happens on this iPhone. No video, image, or body landmark is recorded, saved, or uploaded.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.camera": {
+"cat": "Pushups",
+"key": "pushups.intro.step.camera",
+"en": "Prop the phone facing you",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.camera.detail": {
+"cat": "Pushups",
+"key": "pushups.intro.step.camera.detail",
+"en": "Selfie framing: it only needs to see your head, shoulders, and hands.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.reps": {
+"cat": "Pushups",
+"key": "pushups.intro.step.reps",
+"en": "Pick 5, 10, or 20 reps",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.reps.detail": {
+"cat": "Pushups",
+"key": "pushups.intro.step.reps.detail",
+"en": "Each rep is counted only when you go all the way down and back up.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.reward": {
+"cat": "Pushups",
+"key": "pushups.intro.step.reward",
+"en": "Get the minutes right away",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.step.reward.detail": {
+"cat": "Pushups",
+"key": "pushups.intro.step.reward.detail",
+"en": "The reward lands in the same balance your steps feed, up to 30 minutes a day.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.intro.title": {
+"cat": "Pushups",
+"key": "pushups.intro.title",
+"en": "Push-ups now earn screen time too.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.limit.detail %@": {
+"cat": "Pushups",
+"key": "pushups.limit.detail %@",
+"en": "You can earn from push-ups again at %@.",
+"plural": false,
+"specs": [
+"%@"
+],
+"comment": null
+},
+"Pushups␟pushups.limit.detail.fallback": {
+"cat": "Pushups",
+"key": "pushups.limit.detail.fallback",
+"en": "Come back after the daily UTC reset.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.limit.eyebrow": {
+"cat": "Pushups",
+"key": "pushups.limit.eyebrow",
+"en": "Today’s push-up rewards",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.limit.title": {
+"cat": "Pushups",
+"key": "pushups.limit.title",
+"en": "You reached today’s limit",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.loading.accessibility": {
+"cat": "Pushups",
+"key": "pushups.loading.accessibility",
+"en": "Loading push-up challenges",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.loading.title": {
+"cat": "Pushups",
+"key": "pushups.loading.title",
+"en": "Checking today’s challenges",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.mission": {
+"cat": "Pushups",
+"key": "pushups.mission",
+"en": "Pushups to Earn",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.pending.detail": {
+"cat": "Pushups",
+"key": "pushups.pending.detail",
+"en": "Your completed challenge is saved on this phone. Reconnect and retry to add the reward once.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.pending.eyebrow": {
+"cat": "Pushups",
+"key": "pushups.pending.eyebrow",
+"en": "Challenge saved",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.pending.retry": {
+"cat": "Pushups",
+"key": "pushups.pending.retry",
+"en": "Retry reward",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.pending.title": {
+"cat": "Pushups",
+"key": "pushups.pending.title",
+"en": "Your minutes are waiting",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.permission.settings": {
+"cat": "Pushups",
+"key": "pushups.permission.settings",
+"en": "Open Settings",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.permission.title": {
+"cat": "Pushups",
+"key": "pushups.permission.title",
+"en": "Camera access is needed",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.picker.cta": {
+"cat": "Pushups",
+"key": "pushups.picker.cta",
+"en": "Choose challenge",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.picker.detail": {
+"cat": "Pushups",
+"key": "pushups.picker.detail",
+"en": "Choose a finite challenge. Push-up rewards are capped at 30 minutes per UTC day.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.picker.title": {
+"cat": "Pushups",
+"key": "pushups.picker.title",
+"en": "How much time do you want to earn?",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.privacy.detail": {
+"cat": "Pushups",
+"key": "pushups.privacy.detail",
+"en": "We count your push-ups live on this iPhone. No video, image, or body landmark is recorded, saved, or uploaded.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.privacy.title": {
+"cat": "Pushups",
+"key": "pushups.privacy.title",
+"en": "Your camera stays private",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.cta": {
+"cat": "Pushups",
+"key": "pushups.setup.cta",
+"en": "I’m ready",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.framing": {
+"cat": "Pushups",
+"key": "pushups.setup.framing",
+"en": "Looking for your shoulders and arms",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.hold": {
+"cat": "Pushups",
+"key": "pushups.setup.hold",
+"en": "Great framing — hold there",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.move_back": {
+"cat": "Pushups",
+"key": "pushups.setup.move_back",
+"en": "Adjust the distance until your shoulders and hands stay inside the frame",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.place_phone": {
+"cat": "Pushups",
+"key": "pushups.setup.place_phone",
+"en": "Prop the phone in front of you, facing you, and get into a plank so it sees your head, shoulders, and hands",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.ready.front": {
+"cat": "Pushups",
+"key": "pushups.setup.ready.front",
+"en": "Selfie framing detected",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.ready.side": {
+"cat": "Pushups",
+"key": "pushups.setup.ready.side",
+"en": "Side framing detected",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.setup.title": {
+"cat": "Pushups",
+"key": "pushups.setup.title",
+"en": "Set up your camera",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.starting.detail": {
+"cat": "Pushups",
+"key": "pushups.starting.detail",
+"en": "Locking in the challenge and reward.",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.starting.title": {
+"cat": "Pushups",
+"key": "pushups.starting.title",
+"en": "Starting challenge",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.success.again": {
+"cat": "Pushups",
+"key": "pushups.success.again",
+"en": "Do another challenge",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.success.announcement %lld": {
+"cat": "Pushups",
+"key": "pushups.success.announcement %lld",
+"en": "You earned %lld minutes",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.success.detail %lld": {
+"cat": "Pushups",
+"key": "pushups.success.detail %lld",
+"en": "You completed %lld push-ups. Your screen-time balance is ready to use.",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.success.eyebrow": {
+"cat": "Pushups",
+"key": "pushups.success.eyebrow",
+"en": "Challenge complete",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.success.title %lld": {
+"cat": "Pushups",
+"key": "pushups.success.title %lld",
+"en": "You earned %lld minutes",
+"plural": false,
+"specs": [
+"%lld"
+],
+"comment": null
+},
+"Pushups␟pushups.success.use": {
+"cat": "Pushups",
+"key": "pushups.success.use",
+"en": "Use my minutes",
+"plural": false,
+"specs": [],
+"comment": null
+},
+"Pushups␟pushups.title": {
+"cat": "Pushups",
+"key": "pushups.title",
+"en": "Pushups to Earn",
+"plural": false,
+"specs": [],
+"comment": null
+}
+}
