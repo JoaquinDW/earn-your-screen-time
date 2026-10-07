@@ -163,6 +163,7 @@ final class AppEnvironment {
             stepEarnedSeconds: summary.stepEarnedSeconds,
             studyEarnedSeconds: summary.studyEarnedSeconds,
             pushupEarnedSeconds: summary.pushupEarnedSeconds,
+            squatEarnedSeconds: summary.squatEarnedSeconds,
             consumedSeconds: currentConsumedSeconds(),
             sessionCount: summary.sessionCount,
             returnedSeconds: summary.returnedSeconds,
@@ -275,7 +276,7 @@ final class AppEnvironment {
         guard configuration.entitled else {
             // The server counts free rewards per account, which can outlive this install's state
             // (the backend identity survives a reinstall). Adopt its answer so the next tap on
-            // push-ups offers the paywall instead of failing here again.
+            // the exercise entry offers the paywall instead of failing here again.
             if subscriptionManager.status == .free, !state.freePushupsRewardClaimed {
                 state = SharedStore.shared.mutate { $0.freePushupsRewardClaimed = true }
             }
@@ -290,10 +291,11 @@ final class AppEnvironment {
     }
 
     @discardableResult
-    func applyExerciseReward(_ reward: ExerciseReward) throws -> Bool {
+    func applyExerciseReward(_ reward: ExerciseReward, exercise: ExerciseKind) throws -> Bool {
+        let method = exercise.earningMethod
         let receipt = ServerRewardReceipt(
             id: reward.id,
-            method: .pushups,
+            method: method,
             rewardSeconds: reward.amountSeconds,
             issuedAt: reward.createdAt,
             externalReference: reward.sessionID.uuidString.lowercased()
@@ -312,18 +314,19 @@ final class AppEnvironment {
             }
             analytics.track(.pushupsRewardClaimed.withProperties([
                 "reward_seconds": .int(reward.amountSeconds),
-                "free_reward": .bool(isFreeReward)
+                "free_reward": .bool(isFreeReward),
+                "exercise": .string(exercise.rawValue)
             ]))
             analytics.track(.rewardCompleted.withProperties([
                 "reward_minutes": .int(reward.amountSeconds / 60),
-                "earning_method": .string(EarningMethod.pushups.rawValue)
+                "earning_method": .string(method.rawValue)
             ]))
             analytics.track(.minutesEarned.withProperties([
                 "seconds": .int(reward.amountSeconds),
                 "balance_seconds": .int(state.ledger.wallet.remainingValueSeconds),
-                "earning_method": .string(EarningMethod.pushups.rawValue)
+                "earning_method": .string(method.rawValue)
             ]))
-            trackFirstActiveRewardIfNeeded(method: .pushups, seconds: reward.amountSeconds)
+            trackFirstActiveRewardIfNeeded(method: method, seconds: reward.amountSeconds)
             HapticManager.trigger(.earned)
             synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
             return true
@@ -1165,11 +1168,11 @@ enum ExerciseAccessError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .subscriptionRequired: "Pushups to Earn requires an active Pro subscription."
-        case .disabled: "Pushups to Earn is temporarily unavailable."
-        case .updateRequired: "Update Earnit to use Pushups to Earn."
-        case .walletCapacity: "Use some minutes first. The full push-up reward must fit in your balance."
-        case .invalidReward: "Earnit could not verify the push-up reward."
+        case .subscriptionRequired: "Exercise to Earn requires an active Pro subscription."
+        case .disabled: "Exercise to Earn is temporarily unavailable."
+        case .updateRequired: "Update Earnit to use Exercise to Earn."
+        case .walletCapacity: "Use some minutes first. The full exercise reward must fit in your balance."
+        case .invalidReward: "Earnit could not verify the exercise reward."
         }
     }
 }

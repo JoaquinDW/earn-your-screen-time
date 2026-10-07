@@ -214,4 +214,27 @@ struct StudyRewardTests {
         #expect(summary.pushupEarnedSeconds == 600)
         #expect(journey.earnedSeconds == 0)
     }
+
+    @Test("Squat earnings get their own bucket instead of inflating steps")
+    func squatHistoryClassification() {
+        var state = ServerRewardEngine.apply(
+            ServerRewardReceipt(id: UUID(), method: .pushups, rewardSeconds: 600, issuedAt: issuedAt),
+            to: .initial(day: day)
+        ).state
+        let squats = ServerRewardReceipt(
+            id: UUID(),
+            method: ExerciseKind.squat.earningMethod,
+            rewardSeconds: 300,
+            issuedAt: issuedAt
+        )
+        state = ServerRewardEngine.apply(squats, to: state).state
+        let summary = DaySummary(ledger: state.ledger)
+
+        #expect(state.ledger.walletTransactions.last?.source == .squats)
+        #expect(state.ledger.rewardTransactions.last?.method == .squats)
+        #expect(summary.earnedSeconds == 900)
+        #expect(summary.stepEarnedSeconds == 0)
+        #expect(summary.pushupEarnedSeconds == 600)
+        #expect(summary.squatEarnedSeconds == 300)
+    }
 }

@@ -120,6 +120,9 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let pushupsRewardRejected = AnalyticsEvent("pushups_reward_rejected")
     static let pushupsDailyCapReached = AnalyticsEvent("pushups_daily_cap_reached")
     static let pushupsSessionAbandoned = AnalyticsEvent("pushups_session_abandoned")
+    /// Switching between push-ups and squats. The `pushups_*` events above predate squats and
+    /// cover both; each carries an `exercise` property.
+    static let exerciseSelected = AnalyticsEvent("exercise_selected")
 
     // The optional push-up demo inside onboarding. Kept separate from the `pushups_*` events
     // above because the demo grants nothing: mixing them would pollute the earning funnel.

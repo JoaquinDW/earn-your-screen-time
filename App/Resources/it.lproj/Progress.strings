@@ -19,6 +19,7 @@
 "progress.source.movement" = "Camminata";
 "progress.source.study" = "Studio";
 "progress.source.pushups" = "Piegamenti";
+"progress.source.squats" = "Squat";
 "progress.sessions.title" = "Le tue sessioni";
 "progress.sessions.subtitle" = "Il tempo che hai scelto di aprire, usare e restituire.";
 "progress.sessions.count" = "sessioni";

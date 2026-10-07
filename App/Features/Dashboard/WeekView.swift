@@ -274,6 +274,7 @@ struct WeekView: View {
                 steps: totals.stepEarnedSeconds,
                 study: totals.studyEarnedSeconds,
                 pushups: totals.pushupEarnedSeconds,
+                squats: totals.squatEarnedSeconds,
                 isVisible: plotIsVisible
             )
             .padding(.top, Theme.Space.s)
@@ -283,6 +284,8 @@ struct WeekView: View {
             sourceRow("book.closed.fill", "progress.source.study", totals.studyEarnedSeconds, Night.textSoft)
             NightHairline(inset: 34)
             sourceRow("figure.strengthtraining.traditional", "progress.source.pushups", totals.pushupEarnedSeconds, Night.moss)
+            NightHairline(inset: 34)
+            sourceRow("figure.strengthtraining.functional", "progress.source.squats", totals.squatEarnedSeconds, Night.squatMoss)
         }
     }
 
@@ -786,9 +789,10 @@ private struct SourceRibbon: View {
     let steps: Int
     let study: Int
     let pushups: Int
+    let squats: Int
     let isVisible: Bool
 
-    private var total: CGFloat { CGFloat(max(steps + study + pushups, 1)) }
+    private var total: CGFloat { CGFloat(max(steps + study + pushups + squats, 1)) }
 
     var body: some View {
         GeometryReader { geometry in
@@ -796,6 +800,7 @@ private struct SourceRibbon: View {
                 segment(steps, color: Night.cobalt, width: geometry.size.width)
                 segment(study, color: Night.textSoft, width: geometry.size.width)
                 segment(pushups, color: Night.moss, width: geometry.size.width)
+                segment(squats, color: Night.squatMoss, width: geometry.size.width)
             }
             .scaleEffect(x: isVisible ? 1 : 0.02, anchor: .leading)
         }
@@ -819,6 +824,12 @@ private struct ProgressPlotButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.72 : 1)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
     }
+}
+
+private extension Night {
+    /// Squats are the second camera exercise: the same credited moss as push-ups, a step
+    /// quieter so the two read as siblings rather than a new accent.
+    static let squatMoss = Night.moss.opacity(0.55)
 }
 
 private func progressText(_ key: LocalizedStringKey) -> Text {

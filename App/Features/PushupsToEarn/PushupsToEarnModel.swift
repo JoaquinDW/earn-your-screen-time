@@ -29,8 +29,10 @@ final class PushupsToEarnModel {
         case tooFar
         case lighting
         case moveBack
-        case plank
-        case armsExtended
+        /// Not in the exercise's position: kneeling instead of a plank, not standing for squats.
+        case posture
+        /// In position but not yet at the top: arms bent, or crouched before a squat set.
+        case startPosition
         case holding
     }
 
@@ -43,11 +45,14 @@ final class PushupsToEarnModel {
     }
 
     private(set) var phase = Phase.loading
+    /// The camera exercise being earned with. Remembered between visits.
+    private(set) var exercise = PushupsToEarnModel.lastExercise
+    private(set) var availableExercises: [ExerciseKind] = [.pushup]
     private(set) var configuration: ExerciseConfiguration?
     private(set) var challenges: [ExerciseChallenge] = []
     private(set) var selectedChallenge: ExerciseChallenge?
-    private(set) var detector: VisionPushupDetector?
-    private(set) var snapshot: PushupDetectionSnapshot?
+    private(set) var detector: VisionExerciseDetector?
+    private(set) var snapshot: ExerciseDetectionSnapshot?
     private(set) var setupCue = SetupCue.searching
     /// How far through the hold that confirms the position, 0...1.
     private(set) var setupHoldProgress: Double = 0
@@ -81,6 +86,15 @@ final class PushupsToEarnModel {
     /// The manual escape hatch has to leave enough time to walk back and get set.
     static let manualCountdownSeconds = 12
 
+    private static let lastExerciseKey = "exercise.last.v1"
+
+    private static var lastExercise: ExerciseKind {
+        get {
+            AppGroup.defaults.string(forKey: lastExerciseKey).flatMap(ExerciseKind.init(rawValue:)) ?? .pushup
+        }
+        set { AppGroup.defaults.set(newValue.rawValue, forKey: lastExerciseKey) }
+    }
+
     var targetReps: Int { selectedChallenge?.targetReps ?? pendingClaim?.targetReps ?? 0 }
     var selectedRewardMinutes: Int { (selectedChallenge?.rewardSeconds ?? 0) / 60 }
     var earnedRewardMinutes: Int { rewardSeconds / 60 }
@@ -94,7 +108,7 @@ final class PushupsToEarnModel {
         isClosed = false
         if !opened {
             opened = true
-            environment.analytics.track(.pushupsToEarnOpened)
+            track(.pushupsToEarnOpened, in: environment)
         }
         guard phase == .loading else { return }
         await load(in: environment)
@@ -102,10 +116,22 @@ final class PushupsToEarnModel {
 
     func select(_ challenge: ExerciseChallenge, in environment: AppEnvironment) {
         selectedChallenge = challenge
-        environment.analytics.track(.pushupsChallengeSelected.withProperties([
+        track(.pushupsChallengeSelected, [
             "target_reps": .int(challenge.targetReps),
             "reward_seconds": .int(challenge.rewardSeconds)
-        ]))
+        ], in: environment)
+    }
+
+    /// Switching exercise keeps the reward the athlete was aiming for: the same minutes, in the
+    /// new exercise's repetitions.
+    func select(_ exercise: ExerciseKind, in environment: AppEnvironment) {
+        guard exercise != self.exercise, availableExercises.contains(exercise), phase == .picker else { return }
+        let previousReward = selectedChallenge?.rewardSeconds
+        self.exercise = exercise
+        Self.lastExercise = exercise
+        track(.exerciseSelected, in: environment)
+        guard let configuration else { return }
+        applyChallenges(from: configuration, preferringReward: previousReward)
     }
 
     func prepareCamera(in environment: AppEnvironment) async {
@@ -121,7 +147,7 @@ final class PushupsToEarnModel {
 
         do {
             try await requestCameraAccess(in: environment)
-            let detector = VisionPushupDetector(thresholds: Self.thresholds(from: configuration.poseThresholds))
+            let detector = VisionExerciseDetector(counter: Self.counter(for: exercise, configuration: configuration))
             detector.setCountingEnabled(false)
             self.detector = detector
             snapshot = nil
@@ -131,14 +157,14 @@ final class PushupsToEarnModel {
             autoStartRequested = false
             cameraPermissionDenied = false
             phase = .setup
-            voice.say(PushupsLocalization.string("pushups.voice.intro"))
+            voice.say(exercise.voiceIntro)
         } catch {
             cameraPermissionDenied = Self.isPermissionDenied(error)
             show(error, operation: .permission)
         }
     }
 
-    func received(_ snapshot: PushupDetectionSnapshot, in environment: AppEnvironment) {
+    func received(_ snapshot: ExerciseDetectionSnapshot, in environment: AppEnvironment) {
         self.snapshot = snapshot
         switch phase {
         case .setup:
@@ -147,17 +173,17 @@ final class PushupsToEarnModel {
             trackPoseTransition(for: snapshot, in: environment)
             guard snapshot.didCountRep, snapshot.count > repetitionCount else { return }
             repetitionCount = min(snapshot.count, targetReps)
-            environment.analytics.track(.pushupsRepCounted.withProperties([
+            track(.pushupsRepCounted, [
                 "rep_number": .int(repetitionCount),
                 "target_reps": .int(targetReps)
-            ]))
+            ], in: environment)
             HapticManager.trigger(.light)
             AudioServicesPlaySystemSound(1104)
             // A bare number needs no translation and is short enough to keep up with a fast set.
             voice.say("\(repetitionCount)", repeatAfter: 0, interrupting: true)
             UIAccessibility.post(
                 notification: .announcement,
-                argument: PushupsLocalization.string("pushups.active.rep_announcement \(repetitionCount) \(targetReps)")
+                argument: exercise.repAnnouncement(repetitionCount, of: targetReps)
             )
             if repetitionCount >= targetReps {
                 completeTarget(in: environment)
@@ -172,11 +198,11 @@ final class PushupsToEarnModel {
         detector?.stop()
         cameraPermissionDenied = error == .permissionDenied
         if sessionStarted, !targetCompleted {
-            environment.analytics.track(.pushupsSessionAbandoned.withProperties([
+            track(.pushupsSessionAbandoned, [
                 "completed_reps": .int(repetitionCount),
                 "target_reps": .int(targetReps),
                 "reason": .string("camera")
-            ]))
+            ], in: environment)
             environment.pendingExerciseClaims.clear()
             pendingClaim = nil
             sessionStarted = false
@@ -184,8 +210,8 @@ final class PushupsToEarnModel {
         show(error, operation: .camera)
     }
 
-    /// - Parameter automatic: `true` when the detector saw the athlete hold the top of a
-    ///   push-up. The manual path is the escape hatch for a camera that never converges, and
+    /// - Parameter automatic: `true` when the detector saw the athlete hold the starting
+    ///   position. The manual path is the escape hatch for a camera that never converges, and
     ///   it buys a long countdown so the athlete can walk back and get set.
     func start(in environment: AppEnvironment, automatic: Bool) async {
         guard phase == .setup, let selectedChallenge, let configuration else { return }
@@ -200,19 +226,21 @@ final class PushupsToEarnModel {
         detector?.setCountingEnabled(false)
         if !setupCompleted {
             setupCompleted = true
-            environment.analytics.track(.pushupsSetupCompleted.withProperties([
+            track(.pushupsSetupCompleted, [
                 "target_reps": .int(selectedChallenge.targetReps),
                 "automatic": .bool(automatic)
-            ]))
+            ], in: environment)
         }
         let reusableRecord = pendingClaim.flatMap { record in
             record.stage == .started && record.session == nil
+                && record.exercise == exercise
                 && record.targetReps == selectedChallenge.targetReps
                 && record.detectionVersion == configuration.detectionVersion ? record : nil
         }
         let requestID = reusableRecord?.clientRequestID ?? UUID()
         var record = reusableRecord ?? PendingExerciseClaim(
             clientRequestID: requestID,
+            exercise: exercise,
             targetReps: selectedChallenge.targetReps,
             detectionVersion: configuration.detectionVersion
         )
@@ -220,6 +248,7 @@ final class PushupsToEarnModel {
             try environment.pendingExerciseClaims.save(record)
             pendingClaim = record
             let session = try await environment.exercise.start(
+                exercise: exercise,
                 challenge: selectedChallenge,
                 detectionVersion: configuration.detectionVersion,
                 requestID: requestID
@@ -232,10 +261,10 @@ final class PushupsToEarnModel {
             try environment.pendingExerciseClaims.save(record)
             pendingClaim = record
             sessionStarted = true
-            environment.analytics.track(.pushupsSessionStarted.withProperties([
+            track(.pushupsSessionStarted, [
                 "target_reps": .int(session.targetReps),
                 "reward_seconds": .int(session.rewardSeconds)
-            ]))
+            ], in: environment)
             beginCountdown(in: environment)
         } catch {
             if Self.errorCode(error) == "daily_cap_reached" {
@@ -286,11 +315,11 @@ final class PushupsToEarnModel {
         detector = nil
 
         guard sessionStarted, !targetCompleted else { return }
-        environment.analytics.track(.pushupsSessionAbandoned.withProperties([
+        track(.pushupsSessionAbandoned, [
             "completed_reps": .int(repetitionCount),
             "target_reps": .int(targetReps),
             "reason": .string("dismissed")
-        ]))
+        ], in: environment)
         environment.pendingExerciseClaims.clear()
         pendingClaim = nil
         sessionStarted = false
@@ -299,11 +328,12 @@ final class PushupsToEarnModel {
     private func load(in environment: AppEnvironment) async {
         do {
             let existing = try environment.pendingExerciseClaims.load()
-            if existing?.stage == .started {
+            if let existing, existing.stage == .started {
                 environment.analytics.track(.pushupsSessionAbandoned.withProperties([
-                    "completed_reps": .int(existing?.completedReps ?? 0),
-                    "target_reps": .int(existing?.targetReps ?? 0),
-                    "reason": .string("interrupted")
+                    "completed_reps": .int(existing.completedReps ?? 0),
+                    "target_reps": .int(existing.targetReps),
+                    "reason": .string("interrupted"),
+                    "exercise": .string(existing.exercise.rawValue)
                 ]))
                 environment.pendingExerciseClaims.clear()
             } else {
@@ -314,26 +344,38 @@ final class PushupsToEarnModel {
             guard !isClosed else { return }
             self.configuration = configuration
 
-            if pendingClaim?.stage == .completed {
+            availableExercises = configuration.availableExercises
+            if let pending = pendingClaim, pending.stage == .completed {
+                exercise = pending.exercise
                 await claimPending(in: environment)
                 return
             }
+            if !availableExercises.contains(exercise) {
+                exercise = .pushup
+            }
 
-            challenges = configuration.challenges
-                .filter { [5, 10, 20].contains($0.targetReps) }
-                .sorted { $0.targetReps < $1.targetReps }
+            applyChallenges(from: configuration, preferringReward: nil)
             guard !challenges.isEmpty else {
                 throw ExerciseAccessError.disabled
             }
-            if !challenges.contains(where: { $0.rewardSeconds <= configuration.rewardSecondsRemaining }) {
+            if selectedChallenge == nil {
                 showDailyCap(in: environment)
                 return
             }
-            selectedChallenge = challenges.first { $0.rewardSeconds <= configuration.rewardSecondsRemaining }
             phase = .picker
         } catch {
             show(error, operation: .load)
         }
+    }
+
+    /// Each exercise offers three finite challenges; the daily cap is shared, so whichever
+    /// exercise is shown, the same rewards are still in reach.
+    private func applyChallenges(from configuration: ExerciseConfiguration, preferringReward reward: Int?) {
+        challenges = Array(configuration.challenges(for: exercise)
+            .sorted { $0.targetReps < $1.targetReps }
+            .prefix(3))
+        let affordable = challenges.filter { $0.rewardSeconds <= configuration.rewardSecondsRemaining }
+        selectedChallenge = affordable.first { $0.rewardSeconds == reward } ?? affordable.first
     }
 
     private func requestCameraAccess(in environment: AppEnvironment) async throws {
@@ -341,11 +383,11 @@ final class PushupsToEarnModel {
         case .authorized:
             return
         case .notDetermined:
-            environment.analytics.track(.pushupsCameraPermissionRequested)
+            track(.pushupsCameraPermissionRequested, in: environment)
             guard await AVCaptureDevice.requestAccess(for: .video) else {
                 throw ExerciseDetectorError.permissionDenied
             }
-            environment.analytics.track(.pushupsCameraPermissionGranted)
+            track(.pushupsCameraPermissionGranted, in: environment)
         case .denied, .restricted:
             throw ExerciseDetectorError.permissionDenied
         @unknown default:
@@ -390,7 +432,7 @@ final class PushupsToEarnModel {
             HapticManager.trigger(.unlocked)
             UIAccessibility.post(
                 notification: .announcement,
-                argument: PushupsLocalization.string("pushups.active.started")
+                argument: exercise.startedAnnouncement
             )
         }
     }
@@ -411,10 +453,10 @@ final class PushupsToEarnModel {
         detector?.setCountingEnabled(false)
         voice.say(PushupsLocalization.string("pushups.voice.done"), repeatAfter: 0, interrupting: true)
         let duration = max(0, Date().timeIntervalSince(activeStartedAt ?? Date()))
-        environment.analytics.track(.pushupsSessionCompleted.withProperties([
+        track(.pushupsSessionCompleted, [
             "target_reps": .int(targetReps),
             "duration_seconds": .int(Int(duration.rounded()))
-        ]))
+        ], in: environment)
         guard var record = pendingClaim else {
             show(ExerciseAccessError.invalidReward, operation: .persistCompletion)
             return
@@ -457,7 +499,7 @@ final class PushupsToEarnModel {
                 detectionVersion: record.detectionVersion
             )
             guard !isClosed else { return }
-            _ = try environment.applyExerciseReward(reward)
+            _ = try environment.applyExerciseReward(reward, exercise: record.exercise)
             rewardSeconds = reward.amountSeconds
             environment.pendingExerciseClaims.clear()
             pendingClaim = nil
@@ -484,16 +526,16 @@ final class PushupsToEarnModel {
     }
 
     private func rejectPending(_ error: Error, in environment: AppEnvironment) {
-        environment.analytics.track(.pushupsRewardRejected.withProperties([
+        track(.pushupsRewardRejected, [
             "reason": .string(Self.errorCode(error) ?? "unknown")
-        ]))
+        ], in: environment)
         environment.pendingExerciseClaims.clear()
         pendingClaim = nil
     }
 
     private func showDailyCap(in environment: AppEnvironment) {
         if phase != .dailyCap {
-            environment.analytics.track(.pushupsDailyCapReached)
+            track(.pushupsDailyCapReached, in: environment)
         }
         phase = .dailyCap
     }
@@ -502,22 +544,22 @@ final class PushupsToEarnModel {
         voiceEnabled.toggle()
         ExerciseVoiceCoach.isEnabled = voiceEnabled
         if voiceEnabled {
-            voice.say(PushupsLocalization.string(Self.voiceKey(for: setupCue)), repeatAfter: 0)
+            voice.say(exercise.voiceCue(setupCue), repeatAfter: 0)
         } else {
             voice.stop()
         }
     }
 
-    /// The setup screen is the one the athlete cannot reach: they are in a plank two metres
-    /// from the phone. So the position itself is the trigger — hold the top of a push-up for
-    /// about a second and the countdown starts on its own.
-    private func updateSetup(with snapshot: PushupDetectionSnapshot, in environment: AppEnvironment) {
+    /// The setup screen is the one the athlete cannot reach: they are in a plank, or standing,
+    /// two metres from the phone. So the position itself is the trigger — hold the starting
+    /// position for about a second and the countdown starts on its own.
+    private func updateSetup(with snapshot: ExerciseDetectionSnapshot, in environment: AppEnvironment) {
         let cue = Self.cue(for: snapshot)
         if cue != setupCue {
             setupCue = cue
             if cue == .holding { HapticManager.trigger(.light) }
         }
-        voice.say(PushupsLocalization.string(Self.voiceKey(for: cue)))
+        voice.say(exercise.voiceCue(cue))
 
         // A frame the detector drops, or an elbow angle sitting on the threshold, should not
         // undo a second of good position — so the hold decays instead of resetting.
@@ -533,10 +575,10 @@ final class PushupsToEarnModel {
         }
     }
 
-    /// `ready` means the counter sees a full body, a valid plank and extended arms — the top
-    /// of a push-up. That is a far better "I am set" signal than a body merely being in frame,
-    /// which a standing athlete also satisfies.
-    private static func cue(for snapshot: PushupDetectionSnapshot) -> SetupCue {
+    /// `ready` means the counter sees the exercise's starting position — a plank with extended
+    /// arms, or standing tall with the feet in view. That is a far better "I am set" signal than
+    /// a body merely being in frame.
+    private static func cue(for snapshot: ExerciseDetectionSnapshot) -> SetupCue {
         switch snapshot.status {
         case .poseLost:
             .searching
@@ -544,10 +586,10 @@ final class PushupsToEarnModel {
             isDistant(snapshot.framing.bounds) ? .tooFar : .lighting
         case .notInFrame:
             .moveBack
-        case .plankInvalid:
-            .plank
+        case .postureInvalid:
+            .posture
         case .waitingForTop:
-            .armsExtended
+            .startPosition
         case .ready, .lowering, .bottom, .rising:
             .holding
         }
@@ -560,19 +602,7 @@ final class PushupsToEarnModel {
         return hypot(bounds.width, bounds.height) < 0.3
     }
 
-    private static func voiceKey(for cue: SetupCue) -> String.LocalizationValue {
-        switch cue {
-        case .searching: "pushups.voice.searching"
-        case .tooFar: "pushups.voice.too_far"
-        case .lighting: "pushups.voice.lighting"
-        case .moveBack: "pushups.voice.move_back"
-        case .plank: "pushups.voice.plank"
-        case .armsExtended: "pushups.voice.arms_extended"
-        case .holding: "pushups.voice.holding"
-        }
-    }
-
-    private func trackPoseTransition(for snapshot: PushupDetectionSnapshot, in environment: AppEnvironment) {
+    private func trackPoseTransition(for snapshot: ExerciseDetectionSnapshot, in environment: AppEnvironment) {
         let detected: Bool
         switch snapshot.status {
         case .poseLost, .lowConfidence, .notInFrame:
@@ -582,7 +612,18 @@ final class PushupsToEarnModel {
         }
         guard detected != lastPoseWasDetected else { return }
         lastPoseWasDetected = detected
-        environment.analytics.track(detected ? .pushupsPoseDetected : .pushupsPoseLost)
+        track(detected ? .pushupsPoseDetected : .pushupsPoseLost, in: environment)
+    }
+
+    /// The `pushups_*` funnel predates squats; every event in it says which exercise it was.
+    private func track(
+        _ event: AnalyticsEvent,
+        _ properties: AnalyticsProperties = [:],
+        in environment: AppEnvironment
+    ) {
+        environment.analytics.track(event.withProperties(properties.merging([
+            "exercise": .string(exercise.rawValue)
+        ]) { property, _ in property }))
     }
 
     private func show(_ error: Error, operation: FailedOperation) {
@@ -599,6 +640,7 @@ final class PushupsToEarnModel {
         voice.stop()
         snapshot = nil
         configuration = nil
+        availableExercises = [.pushup]
         challenges = []
         selectedChallenge = nil
         pendingClaim = nil
@@ -618,6 +660,30 @@ final class PushupsToEarnModel {
         targetCompleted = false
         lastPoseWasDetected = nil
         isClosed = false
+    }
+
+    private static func counter(
+        for exercise: ExerciseKind,
+        configuration: ExerciseConfiguration
+    ) -> ExerciseRepCounter {
+        switch exercise {
+        case .pushup:
+            return .pushup(PushupRepCounter(thresholds: thresholds(from: configuration.poseThresholds)))
+        case .squat:
+            var thresholds = SquatPoseThresholds()
+            if let remote = configuration.squats?.poseThresholds {
+                thresholds.minimumJointConfidence = remote.minimumConfidence
+                thresholds.bottomEnterScore = remote.bottomDepthScore
+                // Keep the hysteresis band the defaults have, so a deeper or shallower tuning
+                // never lets the exit cross back over the top threshold.
+                thresholds.bottomExitScore = max(
+                    thresholds.topEnterScore + 0.05,
+                    remote.bottomDepthScore - 0.15
+                )
+                thresholds.minimumRepDuration = remote.minimumRepDurationSeconds
+            }
+            return .squat(SquatRepCounter(thresholds: thresholds))
+        }
     }
 
     private static func thresholds(from remote: ExercisePoseThresholds) -> PushupPoseThresholds {
@@ -653,7 +719,7 @@ final class PushupsToEarnModel {
             "challenge_incomplete", "invalid_duration", "detection_version_mismatch",
             "invalid_completion_time",
             "session_not_found", "session_inactive", "session_expired", "entitlement_required",
-            "update_required", "pushups_disabled"
+            "update_required", "pushups_disabled", "squats_disabled"
         ].contains(code)
     }
 }

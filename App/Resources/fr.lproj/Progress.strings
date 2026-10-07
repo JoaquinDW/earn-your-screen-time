@@ -19,6 +19,7 @@
 "progress.source.movement" = "Marche";
 "progress.source.study" = "Étude";
 "progress.source.pushups" = "Pompes";
+"progress.source.squats" = "Squats";
 "progress.sessions.title" = "Tes sessions";
 "progress.sessions.subtitle" = "Le temps que tu as choisi d’ouvrir, d’utiliser et de rendre.";
 "progress.sessions.count" = "sessions";

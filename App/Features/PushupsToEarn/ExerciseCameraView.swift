@@ -3,14 +3,14 @@ import SwiftUI
 import UIKit
 
 @MainActor
-struct PushupCameraView: UIViewRepresentable {
-    let detector: VisionPushupDetector
-    let onSnapshot: @MainActor @Sendable (PushupDetectionSnapshot) -> Void
+struct ExerciseCameraView: UIViewRepresentable {
+    let detector: VisionExerciseDetector
+    let onSnapshot: @MainActor @Sendable (ExerciseDetectionSnapshot) -> Void
     let onError: @MainActor @Sendable (ExerciseDetectorError) -> Void
 
     init(
-        detector: VisionPushupDetector = VisionPushupDetector(),
-        onSnapshot: @escaping @MainActor @Sendable (PushupDetectionSnapshot) -> Void,
+        detector: VisionExerciseDetector = VisionExerciseDetector(),
+        onSnapshot: @escaping @MainActor @Sendable (ExerciseDetectionSnapshot) -> Void,
         onError: @escaping @MainActor @Sendable (ExerciseDetectorError) -> Void
     ) {
         self.detector = detector
@@ -18,19 +18,19 @@ struct PushupCameraView: UIViewRepresentable {
         self.onError = onError
     }
 
-    func makeUIView(context: Context) -> PushupCameraPreviewView {
-        let view = PushupCameraPreviewView()
+    func makeUIView(context: Context) -> ExerciseCameraPreviewView {
+        let view = ExerciseCameraPreviewView()
         view.detector = detector
         view.previewLayer.session = detector.captureSession
         detector.start(onSnapshot: onSnapshot, onError: onError)
         return view
     }
 
-    func updateUIView(_ view: PushupCameraPreviewView, context: Context) {
+    func updateUIView(_ view: ExerciseCameraPreviewView, context: Context) {
         detector.updateHandlers(onSnapshot: onSnapshot, onError: onError)
     }
 
-    static func dismantleUIView(_ view: PushupCameraPreviewView, coordinator: Void) {
+    static func dismantleUIView(_ view: ExerciseCameraPreviewView, coordinator: Void) {
         view.previewLayer.session = nil
         view.detector?.stop()
         view.detector = nil
@@ -38,8 +38,8 @@ struct PushupCameraView: UIViewRepresentable {
 
 }
 
-final class PushupCameraPreviewView: UIView {
-    var detector: VisionPushupDetector?
+final class ExerciseCameraPreviewView: UIView {
+    var detector: VisionExerciseDetector?
 
     override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
 
@@ -80,7 +80,7 @@ final class PushupCameraPreviewView: UIView {
         case .landscapeRight: 0
         case .portraitUpsideDown: 270
         case .landscapeLeft: 180
-        default: VisionPushupDetector.portraitRotationAngle
+        default: VisionExerciseDetector.portraitRotationAngle
         }
     }
 }

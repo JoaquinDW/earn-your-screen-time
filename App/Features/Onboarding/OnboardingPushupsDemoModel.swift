@@ -33,7 +33,7 @@ final class OnboardingPushupsDemoModel {
     }
 
     private(set) var demo: OnboardingPushupDemo
-    private(set) var detector: VisionPushupDetector?
+    private(set) var detector: VisionExerciseDetector?
     private(set) var cue = FramingCue.searching
     /// The last thing framing asked for before it gave up — what the trouble screen leads with.
     private(set) var troubleCue = FramingCue.searching
@@ -136,7 +136,7 @@ final class OnboardingPushupsDemoModel {
         }
     }
 
-    func received(_ snapshot: PushupDetectionSnapshot, in environment: AppEnvironment) {
+    func received(_ snapshot: ExerciseDetectionSnapshot, in environment: AppEnvironment) {
         cue = Self.cue(for: snapshot)
         if cue != .ready, cue != .searching || troubleCue == .searching { troubleCue = cue }
         switch demo.phase {
@@ -229,7 +229,7 @@ final class OnboardingPushupsDemoModel {
         #if targetEnvironment(simulator)
         detector = nil
         #else
-        let detector = VisionPushupDetector()
+        let detector = VisionExerciseDetector()
         detector.setCountingEnabled(false)
         self.detector = detector
         #endif
@@ -328,7 +328,7 @@ final class OnboardingPushupsDemoModel {
 
     /// `ready` means the counter sees a full body in a plank — the same signal the real
     /// feature uses to start a set, so the demo behaves like the thing it demonstrates.
-    private static func cue(for snapshot: PushupDetectionSnapshot) -> FramingCue {
+    private static func cue(for snapshot: ExerciseDetectionSnapshot) -> FramingCue {
         switch snapshot.status {
         case .poseLost:
             .searching
@@ -336,7 +336,7 @@ final class OnboardingPushupsDemoModel {
             isDistant(snapshot.framing.bounds) ? .tooFar : .lighting
         case .notInFrame:
             .moveBack
-        case .plankInvalid, .waitingForTop, .ready, .lowering, .bottom, .rising:
+        case .postureInvalid, .waitingForTop, .ready, .lowering, .bottom, .rising:
             .ready
         }
     }

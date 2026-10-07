@@ -146,6 +146,7 @@ Deno.test("pushups start accepts only supported challenges and metadata", () => 
     }),
     {
       clientRequestId: "10000000-0000-4000-8000-000000000001",
+      exerciseType: "pushup",
       targetReps: 10,
       appVersion: "2.1.0",
       detectionVersion: "pose-v1",
@@ -161,6 +162,43 @@ Deno.test("pushups start accepts only supported challenges and metadata", () => 
       }),
     Error,
     "5, 10, or 20",
+  );
+});
+
+Deno.test("squat start accepts the squat challenges only", () => {
+  assertEquals(
+    validateStartBody({
+      client_request_id: "10000000-0000-4000-8000-000000000001",
+      exercise_type: "squat",
+      target_reps: 40,
+      app_version: "2.1.0",
+      detection_version: "pose-v1",
+    }).exerciseType,
+    "squat",
+  );
+  assertThrows(
+    () =>
+      validateStartBody({
+        client_request_id: "10000000-0000-4000-8000-000000000001",
+        exercise_type: "squat",
+        target_reps: 5,
+        app_version: "2.1.0",
+        detection_version: "pose-v1",
+      }),
+    Error,
+    "10, 20, or 40",
+  );
+  assertThrows(
+    () =>
+      validateStartBody({
+        client_request_id: "10000000-0000-4000-8000-000000000001",
+        exercise_type: "burpee",
+        target_reps: 10,
+        app_version: "2.1.0",
+        detection_version: "pose-v1",
+      }),
+    Error,
+    "pushup or squat",
   );
 });
 

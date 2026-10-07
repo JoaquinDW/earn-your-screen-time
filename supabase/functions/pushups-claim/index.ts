@@ -32,6 +32,13 @@ function rpcError(error: { code?: string; message?: string }): never {
       "A newer app version is required",
     );
   }
+  if (message.includes("squats rewards are disabled")) {
+    throw new HttpError(
+      403,
+      "squats_disabled",
+      "Squats rewards are disabled",
+    );
+  }
   if (message.includes("disabled")) {
     throw new HttpError(
       403,

@@ -9,9 +9,18 @@ const ISO_TIMESTAMP =
 
 type UnknownBody = Record<string, unknown>;
 
+export type ExerciseType = "pushup" | "squat";
+
+/** Repetition targets each exercise offers; the database holds the matching rewards. */
+export const CHALLENGE_REPS: Record<ExerciseType, readonly number[]> = {
+  pushup: [5, 10, 20],
+  squat: [10, 20, 40],
+};
+
 export type StartBody = {
   clientRequestId: string;
-  targetReps: 5 | 10 | 20;
+  exerciseType: ExerciseType;
+  targetReps: number;
   appVersion: string;
   detectionVersion: string;
 };
@@ -73,6 +82,7 @@ export function validateStartBody(value: unknown): StartBody {
   const body = bodyRecord(value);
   exactKeys(body, [
     "client_request_id",
+    "exercise_type",
     "target_reps",
     "app_version",
     "detection_version",
@@ -87,14 +97,26 @@ export function validateStartBody(value: unknown): StartBody {
       "client_request_id must be a UUID",
     );
   }
+  // Clients from before squats send no exercise type and always mean push-ups.
+  const exerciseType = body.exercise_type ?? "pushup";
+  if (exerciseType !== "pushup" && exerciseType !== "squat") {
+    throw new HttpError(
+      400,
+      "invalid_exercise",
+      "exercise_type must be pushup or squat",
+    );
+  }
+  const allowedReps = CHALLENGE_REPS[exerciseType];
   if (
-    body.target_reps !== 5 && body.target_reps !== 10 &&
-    body.target_reps !== 20
+    typeof body.target_reps !== "number" ||
+    !allowedReps.includes(body.target_reps)
   ) {
     throw new HttpError(
       400,
       "invalid_challenge",
-      "target_reps must be 5, 10, or 20",
+      `target_reps must be ${allowedReps.slice(0, -1).join(", ")}, or ${
+        allowedReps.at(-1)
+      }`,
     );
   }
   if (!validAppVersion(body.app_version)) {
@@ -106,6 +128,7 @@ export function validateStartBody(value: unknown): StartBody {
   }
   return {
     clientRequestId: body.client_request_id,
+    exerciseType,
     targetReps: body.target_reps,
     appVersion: body.app_version,
     detectionVersion: detectionVersion(body.detection_version),

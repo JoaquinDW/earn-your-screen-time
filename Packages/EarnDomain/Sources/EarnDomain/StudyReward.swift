@@ -4,6 +4,7 @@ public enum EarningMethod: String, Codable, CaseIterable, Sendable {
     case steps
     case study
     case pushups
+    case squats
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -155,6 +156,7 @@ private extension EarningMethod {
         case .steps: .steps
         case .study: .study
         case .pushups: .pushups
+        case .squats: .squats
         }
     }
 }

@@ -30,7 +30,7 @@ struct PushupsToEarnView: View {
         }
         .background(Night.ground.ignoresSafeArea())
         .foregroundStyle(Night.text)
-        .navigationTitle(Text("pushups.title", tableName: PushupsLocalization.tableName))
+        .navigationTitle(Text(model.exercise.titleKey, tableName: PushupsLocalization.tableName))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Night.ground, for: .navigationBar)
         .trackScreen("pushups_to_earn", analytics: env.analytics)
@@ -77,14 +77,18 @@ struct PushupsToEarnView: View {
 
     private var picker: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
-            NightEyebrow(text: "pushups.mission", tableName: PushupsLocalization.tableName)
+            NightEyebrow(text: model.exercise.titleKey, tableName: PushupsLocalization.tableName)
             PushupsText("pushups.picker.title")
                 .font(.serif(42))
                 .fixedSize(horizontal: false, vertical: true)
-            PushupsText("pushups.picker.detail")
+            PushupsText(model.exercise.pickerDetailKey)
                 .font(.sans(17))
                 .foregroundStyle(Night.textSoft)
                 .fixedSize(horizontal: false, vertical: true)
+
+            if model.availableExercises.count > 1 {
+                exerciseSelector
+            }
 
             VStack(spacing: 0) {
                 ForEach(model.challenges, id: \.targetReps) { challenge in
@@ -104,7 +108,7 @@ struct PushupsToEarnView: View {
                 }
                     .font(.sans(14, weight: .semibold))
                     .foregroundStyle(Night.textSoft)
-                PushupsText("pushups.privacy.detail")
+                PushupsText(model.exercise.privacyDetailKey)
                     .font(.sans(13))
                     .foregroundStyle(Night.textDim)
                     .fixedSize(horizontal: false, vertical: true)
@@ -120,6 +124,37 @@ struct PushupsToEarnView: View {
         }
     }
 
+    /// Two exercises, one choice: a segmented capsule rather than a menu, so both options are
+    /// visible before anyone decides they cannot do push-ups.
+    private var exerciseSelector: some View {
+        HStack(spacing: Theme.Space.xs) {
+            ForEach(model.availableExercises, id: \.self) { exercise in
+                let selected = model.exercise == exercise
+                Button {
+                    withAnimation(.easeOut(duration: EarnMotion.quick)) {
+                        model.select(exercise, in: env)
+                    }
+                } label: {
+                    PushupsText(exercise.nameKey)
+                        .font(.sans(16, weight: .semibold))
+                        .foregroundStyle(selected ? Night.text : Night.textMuted)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(selected ? Night.cobaltWash : .clear, in: .capsule)
+                        .overlay {
+                            Capsule().strokeBorder(selected ? Night.cobaltText.opacity(0.5) : .clear, lineWidth: 1)
+                        }
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(selected ? .isSelected : [])
+            }
+        }
+        .padding(Theme.Space.xs)
+        .background(Night.panel, in: .capsule)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(Text("exercise.picker.label", tableName: PushupsLocalization.tableName))
+    }
+
     private func challengeRow(_ challenge: ExerciseChallenge) -> some View {
         let selected = model.selectedChallenge == challenge
         let available = challenge.rewardSeconds <= (model.configuration?.rewardSecondsRemaining ?? 0)
@@ -128,7 +163,7 @@ struct PushupsToEarnView: View {
         } label: {
             HStack(spacing: Theme.Space.m) {
                 VStack(alignment: .leading, spacing: Theme.Space.xs) {
-                    PushupsText("pushups.challenge.reps \(challenge.targetReps)")
+                    PushupsText(model.exercise.repsKey(challenge.targetReps))
                         .font(.sans(17, weight: .semibold))
                     PushupsText("pushups.challenge.reward \(challenge.rewardSeconds / 60)")
                         .font(.sans(13))
@@ -147,7 +182,10 @@ struct PushupsToEarnView: View {
         .disabled(!available)
         .opacity(available ? 1 : 0.45)
         .accessibilityLabel(Text(
-            "pushups.challenge.accessibility \(challenge.targetReps) \(challenge.rewardSeconds / 60)",
+            model.exercise.challengeAccessibilityKey(
+                reps: challenge.targetReps,
+                minutes: challenge.rewardSeconds / 60
+            ),
             tableName: PushupsLocalization.tableName
         ))
         .accessibilityAddTraits(selected ? .isSelected : [])
@@ -156,7 +194,7 @@ struct PushupsToEarnView: View {
     private var cameraExperience: some View {
         ZStack {
             if let detector = model.detector {
-                PushupCameraView(
+                ExerciseCameraView(
                     detector: detector,
                     onSnapshot: { model.received($0, in: env) },
                     onError: { model.cameraFailed($0, in: env) }
@@ -231,13 +269,13 @@ struct PushupsToEarnView: View {
                     .font(.system(size: 52, weight: .semibold))
                     .foregroundStyle(setupCueColor)
                     .accessibilityHidden(true)
-                // Sized to be read from a plank two metres away, not to sit politely in a card.
-                PushupsText(setupCueHeadlineKey)
+                // Sized to be read from two metres away, not to sit politely in a card.
+                PushupsText(model.exercise.cueHeadlineKey(model.setupCue))
                     .font(.sans(44, weight: .bold, relativeTo: .largeTitle))
                     .foregroundStyle(setupCueColor)
                     .minimumScaleFactor(0.5)
                     .lineLimit(2)
-                PushupsText(setupCueDetailKey)
+                PushupsText(model.exercise.cueDetailKey(model.setupCue))
                     .font(.sans(19, weight: .semibold))
                     .foregroundStyle(Night.textSoft)
                     .minimumScaleFactor(0.7)
@@ -303,7 +341,7 @@ struct PushupsToEarnView: View {
                     .monospacedDigit()
                     .contentTransition(.numericText())
                     .animation(.easeOut(duration: EarnMotion.quick), value: model.repetitionCount)
-                PushupsText("pushups.active.of \(model.targetReps)")
+                PushupsText(model.exercise.activeOfKey(model.targetReps))
                     .font(.sans(22, weight: .semibold))
                     .foregroundStyle(Night.textSoft)
                 Spacer()
@@ -320,7 +358,7 @@ struct PushupsToEarnView: View {
         .background(Night.ground.opacity(0.9), in: .rect(cornerRadius: Night.panelRadius))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(
-            "pushups.active.progress \(model.repetitionCount) \(model.targetReps)",
+            model.exercise.activeProgressKey(model.repetitionCount, of: model.targetReps),
             tableName: PushupsLocalization.tableName
         ))
     }
@@ -331,7 +369,7 @@ struct PushupsToEarnView: View {
         case .setup:
             VStack(spacing: Theme.Space.m) {
                 Label {
-                    PushupsText(model.setupReady ? "pushups.setup.starting" : "pushups.setup.auto_hint")
+                    PushupsText(model.setupReady ? "pushups.setup.starting" : model.exercise.autoStartHintKey)
                 } icon: {
                     Image(systemName: model.setupReady ? "checkmark.circle.fill" : "viewfinder")
                 }
@@ -343,7 +381,7 @@ struct PushupsToEarnView: View {
                 .background(Night.ground.opacity(0.88), in: .rect(cornerRadius: Night.panelRadius))
 
                 // The escape hatch for a camera that never converges. It buys a long countdown
-                // instead of demanding a tap from someone already lying on the floor.
+                // instead of demanding a tap from someone already in position across the room.
                 Button {
                     Task { await model.start(in: env, automatic: false) }
                 } label: {
@@ -371,7 +409,7 @@ struct PushupsToEarnView: View {
     private var setupCueColor: Color {
         switch model.setupCue {
         case .holding: Night.moss
-        case .armsExtended: Night.cobaltText
+        case .startPosition: Night.cobaltText
         default: Night.text
         }
     }
@@ -382,49 +420,14 @@ struct PushupsToEarnView: View {
         case .tooFar: "arrow.down.forward.and.arrow.up.backward"
         case .lighting: "lightbulb.max"
         case .moveBack: "arrow.up.backward.and.arrow.down.forward"
-        case .plank: "figure.strengthtraining.traditional"
-        case .armsExtended: "arrow.up.circle"
+        case .posture: model.exercise == .squat ? "figure.stand" : "figure.strengthtraining.traditional"
+        case .startPosition: "arrow.up.circle"
         case .holding: "checkmark.circle.fill"
         }
     }
 
-    private var setupCueHeadlineKey: LocalizedStringKey {
-        switch model.setupCue {
-        case .searching: "pushups.cue.searching"
-        case .tooFar: "pushups.cue.too_far"
-        case .lighting: "pushups.cue.lighting"
-        case .moveBack: "pushups.cue.move_back"
-        case .plank: "pushups.cue.plank"
-        case .armsExtended: "pushups.cue.arms_extended"
-        case .holding: "pushups.cue.holding"
-        }
-    }
-
-    private var setupCueDetailKey: LocalizedStringKey {
-        switch model.setupCue {
-        case .searching: "pushups.cue.searching.detail"
-        case .tooFar: "pushups.cue.too_far.detail"
-        case .lighting: "pushups.cue.lighting.detail"
-        case .moveBack: "pushups.cue.move_back.detail"
-        case .plank: "pushups.cue.plank.detail"
-        case .armsExtended: "pushups.cue.arms_extended.detail"
-        case .holding: "pushups.cue.holding.detail"
-        }
-    }
-
     private var activeGuidanceKey: LocalizedStringKey {
-        guard let guidance = model.snapshot?.guidance else { return "pushups.guidance.find_body" }
-        return switch guidance {
-        case .findBody: "pushups.guidance.find_body"
-        case .improveLighting: "pushups.guidance.improve_lighting"
-        case .moveIntoFrame: "pushups.guidance.move_into_frame"
-        case .straightenBody: "pushups.guidance.straighten_body"
-        case .startAtTop: "pushups.guidance.start_at_top"
-        case .lowerBody: "pushups.guidance.lower_body"
-        case .pushUp: "pushups.guidance.push_up"
-        case .slowDown: "pushups.guidance.slow_down"
-        case .none: "pushups.guidance.keep_going"
-        }
+        model.exercise.guidanceKey(model.snapshot?.guidance ?? .findBody)
     }
 
     private var pending: some View {
@@ -457,7 +460,7 @@ struct PushupsToEarnView: View {
             PushupsText("pushups.success.title \(model.earnedRewardMinutes)")
                 .font(.serif(44))
                 .fixedSize(horizontal: false, vertical: true)
-            PushupsText("pushups.success.detail \(model.targetReps)")
+            PushupsText(model.exercise.successDetailKey(model.targetReps))
                 .font(.sans(17))
                 .foregroundStyle(Night.textSoft)
             Button {
@@ -493,10 +496,10 @@ struct PushupsToEarnView: View {
     private var dailyCap: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
             stateSymbol("moon.stars", color: Night.textMuted)
-            NightEyebrow(text: "pushups.limit.eyebrow", tableName: PushupsLocalization.tableName)
+            NightEyebrow(text: model.exercise.limitEyebrowKey, tableName: PushupsLocalization.tableName)
             PushupsText("pushups.limit.title").font(.serif(42))
             if let resetsAt = model.configuration?.resetsAt {
-                PushupsText("pushups.limit.detail \(resetsAt.formatted(date: .omitted, time: .shortened))")
+                PushupsText(model.exercise.limitDetailKey(resetsAt.formatted(date: .omitted, time: .shortened)))
                     .font(.sans(17))
                     .foregroundStyle(Night.textSoft)
             } else {
@@ -539,7 +542,7 @@ struct PushupsToEarnView: View {
 
     private var loading: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {
-            NightEyebrow(text: "pushups.mission", tableName: PushupsLocalization.tableName)
+            NightEyebrow(text: model.exercise.titleKey, tableName: PushupsLocalization.tableName)
             PushupsText("pushups.loading.title").font(.serif(38))
             VStack(alignment: .leading, spacing: Theme.Space.m) {
                 ForEach([0.84, 0.68, 0.76], id: \.self) { width in
@@ -555,7 +558,7 @@ struct PushupsToEarnView: View {
         }
         .redacted(reason: .placeholder)
         .accessibilityLabel(Text(
-            "pushups.loading.accessibility",
+            model.exercise.loadingAccessibilityKey,
             tableName: PushupsLocalization.tableName
         ))
     }

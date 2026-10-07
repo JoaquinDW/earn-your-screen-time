@@ -375,6 +375,53 @@ struct SharedStateMigrationTests {
         #expect(state.ledger.returnedSessionSeconds == 0)
     }
 
+    @Test("A v14 day without squats keeps its step minutes and decodes zero squat minutes")
+    func migratesV14HistoryWithoutSquats() throws {
+        let v14 = """
+        {
+          "schemaVersion": 14,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 12 },
+            "wallet": { "earnedSeconds": 600 }
+          },
+          "history": {
+            "days": [{
+              "day": { "year": 2027, "month": 2, "day": 11 },
+              "activityAmount": 3000,
+              "earnedSeconds": 1500,
+              "pushupEarnedSeconds": 300,
+              "consumedSeconds": 0
+            }]
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v14.utf8))
+        let day = try #require(state.history.days.first)
+
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
+        #expect(day.squatEarnedSeconds == 0)
+        #expect(day.pushupEarnedSeconds == 300)
+        #expect(day.stepEarnedSeconds == 1_200)
+        #expect(day.earnedSeconds == 1_500)
+    }
+
+    @Test("Squat minutes survive a round trip through history")
+    func squatHistoryRoundTrip() throws {
+        let summary = DaySummary(
+            day: DayKey(year: 2027, month: 2, day: 11),
+            activityAmount: 0,
+            stepEarnedSeconds: 0,
+            studyEarnedSeconds: 0,
+            squatEarnedSeconds: 600
+        )
+        let decoded = try JSONDecoder().decode(DaySummary.self, from: JSONEncoder().encode(summary))
+
+        #expect(decoded.squatEarnedSeconds == 600)
+        #expect(decoded.stepEarnedSeconds == 0)
+        #expect(decoded.earnedSeconds == 600)
+    }
+
     @Test("A pre-v11 install that never blocked an app can still report its first")
     func migratesV10WithoutFalseLatches() throws {
         let v10 = """

@@ -1,3 +1,4 @@
+import EarnDomain
 import Foundation
 import Supabase
 
@@ -11,14 +12,40 @@ struct ExerciseConfiguration: Equatable, Sendable {
     let dailyCapSeconds: Int
     let poseThresholds: ExercisePoseThresholds
     let challenges: [ExerciseChallenge]
+    /// `nil` when the server predates squats or has them switched off.
+    let squats: SquatConfiguration?
     let earnedSeconds: Int
     let rewardSecondsRemaining: Int
     let resetsAt: Date
 }
 
+extension ExerciseConfiguration {
+    var availableExercises: [ExerciseKind] {
+        squats.map { $0.challenges.isEmpty ? [.pushup] : [.pushup, .squat] } ?? [.pushup]
+    }
+
+    func challenges(for exercise: ExerciseKind) -> [ExerciseChallenge] {
+        switch exercise {
+        case .pushup: challenges
+        case .squat: squats?.challenges ?? []
+        }
+    }
+}
+
 struct ExerciseChallenge: Codable, Equatable, Sendable {
     let targetReps: Int
     let rewardSeconds: Int
+}
+
+struct SquatConfiguration: Codable, Equatable, Sendable {
+    let poseThresholds: SquatRemotePoseThresholds
+    let challenges: [ExerciseChallenge]
+}
+
+struct SquatRemotePoseThresholds: Codable, Equatable, Sendable {
+    let minimumConfidence: Double
+    let bottomDepthScore: Double
+    let minimumRepDurationSeconds: Double
 }
 
 struct ExercisePoseThresholds: Codable, Equatable, Sendable {
@@ -31,11 +58,48 @@ struct ExercisePoseThresholds: Codable, Equatable, Sendable {
 
 struct ExerciseSession: Codable, Equatable, Sendable {
     let id: UUID
+    let exercise: ExerciseKind
     let status: String
     let targetReps: Int
     let rewardSeconds: Int
     let expiresAt: Date
     let detectionVersion: String
+
+    init(
+        id: UUID,
+        exercise: ExerciseKind,
+        status: String,
+        targetReps: Int,
+        rewardSeconds: Int,
+        expiresAt: Date,
+        detectionVersion: String
+    ) {
+        self.id = id
+        self.exercise = exercise
+        self.status = status
+        self.targetReps = targetReps
+        self.rewardSeconds = rewardSeconds
+        self.expiresAt = expiresAt
+        self.detectionVersion = detectionVersion
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, exercise, status, targetReps, rewardSeconds, expiresAt, detectionVersion
+    }
+
+    /// A session persisted in a pending claim before squats existed was a push-up session.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            id: try container.decode(UUID.self, forKey: .id),
+            exercise: try container.decodeIfPresent(ExerciseKind.self, forKey: .exercise) ?? .pushup,
+            status: try container.decode(String.self, forKey: .status),
+            targetReps: try container.decode(Int.self, forKey: .targetReps),
+            rewardSeconds: try container.decode(Int.self, forKey: .rewardSeconds),
+            expiresAt: try container.decode(Date.self, forKey: .expiresAt),
+            detectionVersion: try container.decode(String.self, forKey: .detectionVersion)
+        )
+    }
 }
 
 struct ExerciseReward: Codable, Equatable, Sendable {
@@ -50,6 +114,7 @@ protocol ExerciseServing: Sendable {
     func ensureIdentity() async throws -> UUID
     func configuration() async throws -> ExerciseConfiguration
     func start(
+        exercise: ExerciseKind,
         challenge: ExerciseChallenge,
         detectionVersion: String,
         requestID: UUID
@@ -136,6 +201,11 @@ actor SupabaseExerciseService: ExerciseServing {
             dailyCapSeconds: response.configuration.dailyCapSeconds,
             poseThresholds: response.configuration.poseThresholds,
             challenges: response.configuration.challenges,
+            squats: response.configuration.squats.flatMap { squats in
+                squats.enabled
+                    ? SquatConfiguration(poseThresholds: squats.poseThresholds, challenges: squats.challenges)
+                    : nil
+            },
             earnedSeconds: response.availability.earnedSeconds,
             rewardSecondsRemaining: response.availability.rewardSecondsRemaining,
             resetsAt: resetsAt
@@ -143,6 +213,7 @@ actor SupabaseExerciseService: ExerciseServing {
     }
 
     func start(
+        exercise: ExerciseKind,
         challenge: ExerciseChallenge,
         detectionVersion: String,
         requestID: UUID
@@ -152,6 +223,8 @@ actor SupabaseExerciseService: ExerciseServing {
             method: "POST",
             body: StartRequest(
                 clientRequestID: requestID,
+                // Omitted for push-ups so the request stays valid against a server without squats.
+                exerciseType: exercise == .pushup ? nil : exercise.rawValue,
                 targetReps: challenge.targetReps,
                 appVersion: appVersion,
                 detectionVersion: detectionVersion
@@ -162,6 +235,7 @@ actor SupabaseExerciseService: ExerciseServing {
         }
         return ExerciseSession(
             id: response.session.id,
+            exercise: response.session.exerciseType.flatMap(ExerciseKind.init(rawValue:)) ?? exercise,
             status: response.session.status,
             targetReps: response.session.targetReps,
             rewardSeconds: response.session.rewardSeconds,
@@ -286,6 +360,13 @@ private struct ConfigResponse: Decodable {
         let dailyCapSeconds: Int
         let poseThresholds: ExercisePoseThresholds
         let challenges: [ExerciseChallenge]
+        let squats: Squats?
+    }
+
+    struct Squats: Decodable {
+        let enabled: Bool
+        let poseThresholds: SquatRemotePoseThresholds
+        let challenges: [ExerciseChallenge]
     }
 
     struct Availability: Decodable {
@@ -302,6 +383,7 @@ private struct ConfigResponse: Decodable {
 
 private struct StartRequest: Encodable {
     let clientRequestID: UUID
+    let exerciseType: String?
     let targetReps: Int
     let appVersion: String
     let detectionVersion: String
@@ -310,6 +392,7 @@ private struct StartRequest: Encodable {
 private struct SessionResponse: Decodable {
     struct RemoteSession: Decodable {
         let id: UUID
+        let exerciseType: String?
         let status: String
         let targetReps: Int
         let rewardSeconds: Int
@@ -344,6 +427,7 @@ actor UnconfiguredExerciseService: ExerciseServing {
     func ensureIdentity() async throws -> UUID { throw ExerciseServiceError.notConfigured }
     func configuration() async throws -> ExerciseConfiguration { throw ExerciseServiceError.notConfigured }
     func start(
+        exercise: ExerciseKind,
         challenge: ExerciseChallenge,
         detectionVersion: String,
         requestID: UUID

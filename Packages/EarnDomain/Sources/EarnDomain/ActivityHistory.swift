@@ -12,6 +12,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
     public let stepEarnedSeconds: Int
     public let studyEarnedSeconds: Int
     public let pushupEarnedSeconds: Int
+    public let squatEarnedSeconds: Int
     public let consumedSeconds: Int
     public let sessionCount: Int
     public let returnedSeconds: Int
@@ -25,6 +26,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
             stepEarnedSeconds: earnedSeconds,
             studyEarnedSeconds: 0,
             pushupEarnedSeconds: 0,
+            squatEarnedSeconds: 0,
             consumedSeconds: 0,
             sessionCount: 0,
             returnedSeconds: 0,
@@ -38,6 +40,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
         stepEarnedSeconds: Int,
         studyEarnedSeconds: Int,
         pushupEarnedSeconds: Int = 0,
+        squatEarnedSeconds: Int = 0,
         consumedSeconds: Int = 0,
         sessionCount: Int = 0,
         returnedSeconds: Int = 0,
@@ -48,11 +51,13 @@ public struct DaySummary: Codable, Equatable, Sendable {
         self.stepEarnedSeconds = max(0, stepEarnedSeconds)
         self.studyEarnedSeconds = max(0, studyEarnedSeconds)
         self.pushupEarnedSeconds = max(0, pushupEarnedSeconds)
+        self.squatEarnedSeconds = max(0, squatEarnedSeconds)
         self.consumedSeconds = max(0, consumedSeconds)
         self.sessionCount = max(0, sessionCount)
         self.returnedSeconds = max(0, returnedSeconds)
         self.hasUsageData = hasUsageData
         earnedSeconds = self.stepEarnedSeconds + self.studyEarnedSeconds + self.pushupEarnedSeconds
+            + self.squatEarnedSeconds
     }
 
     public init(ledger: DailyLedger) {
@@ -66,12 +71,18 @@ public struct DaySummary: Codable, Equatable, Sendable {
                 total += transaction.amountSeconds
             }
         }
+        let squatSeconds = ledger.walletTransactions.reduce(into: 0) { total, transaction in
+            if transaction.kind == .earned, transaction.source == .squats {
+                total += transaction.amountSeconds
+            }
+        }
         self.init(
             day: ledger.day,
             activityAmount: ledger.activityAmount,
-            stepEarnedSeconds: max(0, ledger.wallet.earnedSeconds - studySeconds - pushupSeconds),
+            stepEarnedSeconds: max(0, ledger.wallet.earnedSeconds - studySeconds - pushupSeconds - squatSeconds),
             studyEarnedSeconds: studySeconds,
             pushupEarnedSeconds: pushupSeconds,
+            squatEarnedSeconds: squatSeconds,
             consumedSeconds: ledger.wallet.consumedSeconds,
             sessionCount: ledger.sessionCount,
             returnedSeconds: ledger.returnedSessionSeconds
@@ -87,6 +98,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
 
     private enum CodingKeys: String, CodingKey {
         case day, activityAmount, earnedSeconds, stepEarnedSeconds, studyEarnedSeconds, pushupEarnedSeconds
+        case squatEarnedSeconds
         case consumedSeconds, sessionCount, returnedSeconds
         case hasUsageData
     }
@@ -96,6 +108,8 @@ public struct DaySummary: Codable, Equatable, Sendable {
         let historicalEarnedSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .earnedSeconds) ?? 0)
         let studySeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .studyEarnedSeconds) ?? 0)
         let pushupSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .pushupEarnedSeconds) ?? 0)
+        // Days filed before v15 predate squats.
+        let squatSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .squatEarnedSeconds) ?? 0)
         let hasPersistedUsage = container.contains(.consumedSeconds)
             || container.contains(.sessionCount)
             || container.contains(.returnedSeconds)
@@ -103,9 +117,10 @@ public struct DaySummary: Codable, Equatable, Sendable {
             day: try container.decode(DayKey.self, forKey: .day),
             activityAmount: try container.decodeIfPresent(Int.self, forKey: .activityAmount) ?? 0,
             stepEarnedSeconds: try container.decodeIfPresent(Int.self, forKey: .stepEarnedSeconds)
-                ?? max(0, historicalEarnedSeconds - studySeconds - pushupSeconds),
+                ?? max(0, historicalEarnedSeconds - studySeconds - pushupSeconds - squatSeconds),
             studyEarnedSeconds: studySeconds,
             pushupEarnedSeconds: pushupSeconds,
+            squatEarnedSeconds: squatSeconds,
             consumedSeconds: try container.decodeIfPresent(Int.self, forKey: .consumedSeconds) ?? 0,
             sessionCount: try container.decodeIfPresent(Int.self, forKey: .sessionCount) ?? 0,
             returnedSeconds: try container.decodeIfPresent(Int.self, forKey: .returnedSeconds) ?? 0,
@@ -148,6 +163,7 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
         public let stepEarnedSeconds: Int
         public let studyEarnedSeconds: Int
         public let pushupEarnedSeconds: Int
+        public let squatEarnedSeconds: Int
         public let consumedSeconds: Int
         public let sessionCount: Int
         public let returnedSeconds: Int
@@ -173,6 +189,7 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
                 stepEarnedSeconds: 0,
                 studyEarnedSeconds: 0,
                 pushupEarnedSeconds: 0,
+                squatEarnedSeconds: 0,
                 consumedSeconds: 0,
                 sessionCount: 0,
                 returnedSeconds: 0,
@@ -188,6 +205,7 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
             stepEarnedSeconds: summaries.reduce(0) { $0 + $1.stepEarnedSeconds },
             studyEarnedSeconds: summaries.reduce(0) { $0 + $1.studyEarnedSeconds },
             pushupEarnedSeconds: summaries.reduce(0) { $0 + $1.pushupEarnedSeconds },
+            squatEarnedSeconds: summaries.reduce(0) { $0 + $1.squatEarnedSeconds },
             consumedSeconds: summaries.reduce(0) { $0 + $1.consumedSeconds },
             sessionCount: summaries.reduce(0) { $0 + $1.sessionCount },
             returnedSeconds: summaries.reduce(0) { $0 + $1.returnedSeconds },
@@ -214,6 +232,7 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
                 stepEarnedSeconds: 0,
                 studyEarnedSeconds: 0,
                 pushupEarnedSeconds: 0,
+                squatEarnedSeconds: 0,
                 consumedSeconds: 0,
                 sessionCount: 0,
                 returnedSeconds: 0,

@@ -100,6 +100,7 @@ public struct WalletTransaction: Codable, Equatable, Sendable {
         case steps
         case study
         case pushups
+        case squats
         case dailyGoalBonus
         case session
         case dayRollover

@@ -127,7 +127,7 @@ struct OnboardingPushupsDemoStep: View {
     private var cameraExperience: some View {
         ZStack {
             if let detector = model.detector {
-                PushupCameraView(
+                ExerciseCameraView(
                     detector: detector,
                     onSnapshot: { model.received($0, in: env) },
                     onError: { model.cameraFailed($0, in: env) }

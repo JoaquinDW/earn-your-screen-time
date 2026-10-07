@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(17);
+select plan(18);
 
 select ok((select relrowsecurity from pg_class where oid = 'public.exercise_configuration'::regclass), 'exercise configuration has RLS');
 select ok((select relrowsecurity from pg_class where oid = 'public.exercise_challenges'::regclass), 'exercise challenges have RLS');
@@ -13,17 +13,22 @@ select ok(not has_table_privilege('authenticated', 'public.exercise_sessions', '
 select ok(not has_table_privilege('authenticated', 'public.reward_transactions', 'select,insert,update,delete'), 'authenticated cannot read or write rewards directly');
 
 select ok(not has_function_privilege('authenticated', 'public.cleanup_expired_exercise_sessions()', 'execute'), 'authenticated cannot run cleanup');
-select ok(not has_function_privilege('authenticated', 'public.start_exercise_session(uuid,uuid,integer,text,text)', 'execute'), 'authenticated cannot call privileged start RPC');
+select ok(not has_function_privilege('authenticated', 'public.start_exercise_session(uuid,uuid,integer,text,text,text)', 'execute'), 'authenticated cannot call privileged start RPC');
 select ok(not has_function_privilege('authenticated', 'public.claim_exercise_reward(uuid,uuid,integer,numeric,timestamptz,text)', 'execute'), 'authenticated cannot call privileged claim RPC');
-select ok(has_function_privilege('service_role', 'public.start_exercise_session(uuid,uuid,integer,text,text)', 'execute'), 'service role can call start RPC');
+select ok(has_function_privilege('service_role', 'public.start_exercise_session(uuid,uuid,integer,text,text,text)', 'execute'), 'service role can call start RPC');
 select ok(has_function_privilege('service_role', 'public.claim_exercise_reward(uuid,uuid,integer,numeric,timestamptz,text)', 'execute'), 'service role can call claim RPC');
 
 select is((select enabled from public.exercise_configuration where id = true), true, 'remote feature flag starts enabled');
 select is((select daily_cap_seconds from public.exercise_configuration where id = true), 1800, 'daily cap is thirty minutes');
 select results_eq(
-  $$select target_reps::integer, reward_seconds from public.exercise_challenges order by display_order$$,
+  $$select target_reps::integer, reward_seconds from public.exercise_challenges where exercise_type = 'pushup' order by display_order$$,
   $$values (5, 300), (10, 600), (20, 1200)$$,
-  'challenges grant matching five, ten, and twenty minute rewards'
+  'push-up challenges grant matching five, ten, and twenty minute rewards'
+);
+select results_eq(
+  $$select target_reps::integer, reward_seconds from public.exercise_challenges where exercise_type = 'squat' order by display_order$$,
+  $$values (10, 300), (20, 600), (40, 1200)$$,
+  'squat challenges ask for twice the repetitions for the same minutes'
 );
 select is(
   (select count(*)::integer from information_schema.columns where table_schema = 'public' and table_name in ('exercise_sessions', 'reward_transactions') and column_name in ('frame', 'frames', 'landmark', 'landmarks')),

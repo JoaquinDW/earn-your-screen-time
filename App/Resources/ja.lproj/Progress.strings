@@ -19,6 +19,7 @@
 "progress.source.movement" = "ウォーキング";
 "progress.source.study" = "勉強";
 "progress.source.pushups" = "腕立て伏せ";
+"progress.source.squats" = "スクワット";
 "progress.sessions.title" = "セッション";
 "progress.sessions.subtitle" = "自分で開き、使い、残した時間です。";
 "progress.sessions.count" = "セッション";

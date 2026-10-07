@@ -52,13 +52,159 @@ struct PoseFraming: Equatable, Sendable {
     let mode: PushupViewMode?
 }
 
-struct PushupDetectionSnapshot: Equatable, Sendable {
+/// One analyzed camera frame, in terms every exercise shares.
+struct ExerciseDetectionSnapshot: Equatable, Sendable {
+    enum Status: Equatable, Sendable {
+        case poseLost
+        case lowConfidence
+        case notInFrame
+        /// Visible but not in the exercise's position at all: kneeling instead of a plank,
+        /// lying down instead of standing.
+        case postureInvalid
+        case waitingForTop
+        case ready
+        case lowering
+        case bottom
+        case rising
+    }
+
+    enum Guidance: Equatable, Sendable {
+        case findBody
+        case improveLighting
+        case moveIntoFrame
+        case fixPosture
+        case startAtTop
+        case goDown
+        case comeUp
+        case slowDown
+        case none
+    }
+
     let count: Int
-    let status: PushupRepCounter.Status
-    let guidance: PushupRepCounter.Guidance
+    let status: Status
+    let guidance: Guidance
     let framing: PoseFraming
     let didCountRep: Bool
     let viewMode: PushupViewMode?
+}
+
+/// The domain rep counters behind one interface, so the camera pipeline is the same for every
+/// exercise.
+enum ExerciseRepCounter: Sendable {
+    case pushup(PushupRepCounter)
+    case squat(SquatRepCounter)
+
+    struct Reading: Sendable {
+        let count: Int
+        let didCountRep: Bool
+        let status: ExerciseDetectionSnapshot.Status
+        let guidance: ExerciseDetectionSnapshot.Guidance
+        let viewMode: PushupViewMode?
+        /// The joints the counter judged, which is what the framing should be measured on.
+        let trackedJoints: [BodyJoint]?
+    }
+
+    mutating func reset() {
+        switch self {
+        case var .pushup(counter):
+            counter.reset()
+            self = .pushup(counter)
+        case var .squat(counter):
+            counter.reset()
+            self = .squat(counter)
+        }
+    }
+
+    mutating func process(_ pose: BodyPose) -> Reading {
+        switch self {
+        case var .pushup(counter):
+            let output = counter.process(pose)
+            self = .pushup(counter)
+            return Reading(
+                count: output.repetitionCount,
+                didCountRep: output.didCountRep,
+                status: Self.status(output.status),
+                guidance: Self.guidance(output.guidance),
+                viewMode: output.viewMode,
+                trackedJoints: Self.pushupJoints(output)
+            )
+        case var .squat(counter):
+            let output = counter.process(pose)
+            self = .squat(counter)
+            return Reading(
+                count: output.repetitionCount,
+                didCountRep: output.didCountRep,
+                status: Self.status(output.status),
+                guidance: Self.guidance(output.guidance),
+                viewMode: nil,
+                trackedJoints: nil
+            )
+        }
+    }
+
+    /// In profile only the near side is tracked; selfie framing tracks the whole upper body.
+    private static func pushupJoints(_ output: PushupRepCounter.Output) -> [BodyJoint]? {
+        guard output.viewMode != .front, let side = output.trackedSide else { return nil }
+        return side == .left
+            ? [.leftShoulder, .leftElbow, .leftWrist, .leftHip, .leftAnkle]
+            : [.rightShoulder, .rightElbow, .rightWrist, .rightHip, .rightAnkle]
+    }
+
+    private static func status(_ status: PushupRepCounter.Status) -> ExerciseDetectionSnapshot.Status {
+        switch status {
+        case .poseLost: .poseLost
+        case .lowConfidence: .lowConfidence
+        case .notInFrame: .notInFrame
+        case .plankInvalid: .postureInvalid
+        case .waitingForTop: .waitingForTop
+        case .ready: .ready
+        case .lowering: .lowering
+        case .bottom: .bottom
+        case .rising: .rising
+        }
+    }
+
+    private static func status(_ status: SquatRepCounter.Status) -> ExerciseDetectionSnapshot.Status {
+        switch status {
+        case .poseLost: .poseLost
+        case .lowConfidence: .lowConfidence
+        case .notInFrame: .notInFrame
+        case .notUpright: .postureInvalid
+        case .waitingForTop: .waitingForTop
+        case .ready: .ready
+        case .lowering: .lowering
+        case .bottom: .bottom
+        case .rising: .rising
+        }
+    }
+
+    private static func guidance(_ guidance: PushupRepCounter.Guidance) -> ExerciseDetectionSnapshot.Guidance {
+        switch guidance {
+        case .findBody: .findBody
+        case .improveLighting: .improveLighting
+        case .moveIntoFrame: .moveIntoFrame
+        case .straightenBody: .fixPosture
+        case .startAtTop: .startAtTop
+        case .lowerBody: .goDown
+        case .pushUp: .comeUp
+        case .slowDown: .slowDown
+        case .none: .none
+        }
+    }
+
+    private static func guidance(_ guidance: SquatRepCounter.Guidance) -> ExerciseDetectionSnapshot.Guidance {
+        switch guidance {
+        case .findBody: .findBody
+        case .improveLighting: .improveLighting
+        case .moveIntoFrame: .moveIntoFrame
+        case .standUpright: .fixPosture
+        case .startStanding: .startAtTop
+        case .lowerHips: .goDown
+        case .standUp: .comeUp
+        case .slowDown: .slowDown
+        case .none: .none
+        }
+    }
 }
 
 @MainActor
@@ -97,7 +243,7 @@ final class MockExerciseDetector<Snapshot: Sendable>: ExerciseDetector {
     }
 }
 
-final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendable {
+final class VisionExerciseDetector: NSObject, ExerciseDetector, @unchecked Sendable {
     static let portraitRotationAngle: CGFloat = 90
 
     /// Fallbacks for a phone propped at an angle the interface orientation cannot describe,
@@ -113,9 +259,9 @@ final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendabl
     private let poseRequest = VNDetectHumanBodyPoseRequest()
     private let frameInterval = 1.0 / 12.0
 
-    private var counter = PushupRepCounter()
+    private var counter: ExerciseRepCounter
     private var configured = false
-    private var rotationAngle: CGFloat = VisionPushupDetector.portraitRotationAngle
+    private var rotationAngle: CGFloat = VisionExerciseDetector.portraitRotationAngle
     private var orientationIndex = 0
     private var undetectedFrameStreak = 0
     private var wantsToRun = false
@@ -125,17 +271,17 @@ final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendabl
     private var countingEnabled = false
     private var notificationTokens: [NSObjectProtocol] = []
 
-    @MainActor private var snapshotHandler: (@MainActor @Sendable (PushupDetectionSnapshot) -> Void)?
+    @MainActor private var snapshotHandler: (@MainActor @Sendable (ExerciseDetectionSnapshot) -> Void)?
     @MainActor private var errorHandler: (@MainActor @Sendable (ExerciseDetectorError) -> Void)?
 
-    init(thresholds: PushupPoseThresholds = PushupPoseThresholds()) {
-        counter = PushupRepCounter(thresholds: thresholds)
+    init(counter: ExerciseRepCounter = .pushup(PushupRepCounter())) {
+        self.counter = counter
         super.init()
     }
 
     @MainActor
     func start(
-        onSnapshot: @escaping @MainActor @Sendable (PushupDetectionSnapshot) -> Void,
+        onSnapshot: @escaping @MainActor @Sendable (ExerciseDetectionSnapshot) -> Void,
         onError: @escaping @MainActor @Sendable (ExerciseDetectorError) -> Void
     ) {
         snapshotHandler = onSnapshot
@@ -162,7 +308,7 @@ final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendabl
 
     @MainActor
     func updateHandlers(
-        onSnapshot: @escaping @MainActor @Sendable (PushupDetectionSnapshot) -> Void,
+        onSnapshot: @escaping @MainActor @Sendable (ExerciseDetectionSnapshot) -> Void,
         onError: @escaping @MainActor @Sendable (ExerciseDetectorError) -> Void
     ) {
         snapshotHandler = onSnapshot
@@ -305,7 +451,7 @@ final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendabl
         ]
     }
 
-    private func emit(snapshot: PushupDetectionSnapshot) {
+    private func emit(snapshot: ExerciseDetectionSnapshot) {
         Task { @MainActor [weak self] in
             self?.snapshotHandler?(snapshot)
         }
@@ -318,7 +464,7 @@ final class VisionPushupDetector: NSObject, ExerciseDetector, @unchecked Sendabl
     }
 }
 
-extension VisionPushupDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension VisionExerciseDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
@@ -346,14 +492,14 @@ extension VisionPushupDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
             searchOrientationIfNeeded(detected: observation != nil)
             let pose = makeBodyPose(from: observation, timestamp: timestamp)
             if !countingEnabled { counter.reset() }
-            let output = counter.process(pose)
-            emit(snapshot: PushupDetectionSnapshot(
-                count: output.repetitionCount,
-                status: output.status,
-                guidance: output.guidance,
-                framing: makeFraming(points: pose.points, output: output),
-                didCountRep: output.didCountRep,
-                viewMode: output.viewMode
+            let reading = counter.process(pose)
+            emit(snapshot: ExerciseDetectionSnapshot(
+                count: reading.count,
+                status: reading.status,
+                guidance: reading.guidance,
+                framing: makeFraming(points: pose.points, reading: reading),
+                didCountRep: reading.didCountRep,
+                viewMode: reading.viewMode
             ))
         } catch {
             if !reportedProcessingFailure {
@@ -390,11 +536,13 @@ extension VisionPushupDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
             (.leftElbow, .leftElbow),
             (.leftWrist, .leftWrist),
             (.leftHip, .leftHip),
+            (.leftKnee, .leftKnee),
             (.leftAnkle, .leftAnkle),
             (.rightShoulder, .rightShoulder),
             (.rightElbow, .rightElbow),
             (.rightWrist, .rightWrist),
             (.rightHip, .rightHip),
+            (.rightKnee, .rightKnee),
             (.rightAnkle, .rightAnkle)
         ]
 
@@ -412,23 +560,13 @@ extension VisionPushupDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
 
     private func makeFraming(
         points: [BodyJoint: BodyPosePoint],
-        output: PushupRepCounter.Output
+        reading: ExerciseRepCounter.Reading
     ) -> PoseFraming {
-        let visiblePoints: [BodyPosePoint]
-        if output.viewMode == .front {
-            // Selfie framing tracks the upper body; legs trail away from the lens.
-            visiblePoints = Array(points.values)
-        } else if let side = output.trackedSide {
-            let sideJoints: [BodyJoint] = side == .left
-                ? [.leftShoulder, .leftElbow, .leftWrist, .leftHip, .leftAnkle]
-                : [.rightShoulder, .rightElbow, .rightWrist, .rightHip, .rightAnkle]
-            visiblePoints = sideJoints.compactMap { points[$0] }
-        } else {
-            visiblePoints = Array(points.values)
-        }
+        let visiblePoints = reading.trackedJoints.map { joints in joints.compactMap { points[$0] } }
+            ?? Array(points.values)
 
         guard !visiblePoints.isEmpty else {
-            return PoseFraming(bounds: nil, state: .noBody, mode: output.viewMode)
+            return PoseFraming(bounds: nil, state: .noBody, mode: reading.viewMode)
         }
         let minX = visiblePoints.map(\.x).min() ?? 0
         let maxX = visiblePoints.map(\.x).max() ?? 0
@@ -436,12 +574,12 @@ extension VisionPushupDetector: AVCaptureVideoDataOutputSampleBufferDelegate {
         let maxY = visiblePoints.map(\.y).max() ?? 0
         let bounds = CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
         let state: PoseFraming.State
-        switch output.status {
+        switch reading.status {
         case .poseLost, .notInFrame:
             state = .partiallyVisible
         default:
             state = .fullyVisible
         }
-        return PoseFraming(bounds: bounds, state: state, mode: output.viewMode)
+        return PoseFraming(bounds: bounds, state: state, mode: reading.viewMode)
     }
 }

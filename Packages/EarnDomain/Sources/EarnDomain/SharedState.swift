@@ -9,7 +9,8 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// v13 adds persisted daily session and returned-time progress metrics.
     /// v14 adds the latch for the first reward the user earned by doing something (push-ups or
     /// study), as opposed to steps that HealthKit credited in the background.
-    public static let currentSchemaVersion = 14
+    /// v15 adds squats as an earning source and files their minutes separately in day history.
+    public static let currentSchemaVersion = 15
 
     public var schemaVersion: Int
     public var ledger: DailyLedger
@@ -47,7 +48,8 @@ public struct SharedState: Codable, Equatable, Sendable {
     public var successfulUnlockCount: Int
     /// One-shot latch: the native review prompt is requested at most once per install.
     public var reviewPromptRequested: Bool
-    /// Someone who has not paid gets one push-up reward. The server enforces it per account;
+    /// Someone who has not paid gets one camera exercise reward (push-ups or squats; the persisted
+    /// name predates squats). The server enforces it per account;
     /// this local copy only decides whether the app offers the challenge or the paywall.
     public var freePushupsRewardClaimed: Bool
     /// One-shot latch for `first_active_reward_earned`. Step rewards arrive on their own whenever

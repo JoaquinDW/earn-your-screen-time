@@ -25614,43 +25614,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit Liegestützen Zeit verdienen"
+            "value" : "Mit Liegestützen oder Kniebeugen Zeit verdienen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Earn time with pushups"
+            "value" : "Earn time with push-ups or squats"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ganar tiempo con flexiones"
+            "value" : "Ganar tiempo con flexiones o sentadillas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gagner du temps avec des pompes"
+            "value" : "Gagner du temps avec des pompes ou des squats"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guadagna tempo con le flessioni"
+            "value" : "Guadagna tempo con flessioni o squat"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "腕立て伏せで時間を獲得"
+            "value" : "腕立て伏せかスクワットで時間を獲得"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ganhar tempo com flexões"
+            "value" : "Ganhar tempo com flexões ou agachamentos"
           }
         }
       }

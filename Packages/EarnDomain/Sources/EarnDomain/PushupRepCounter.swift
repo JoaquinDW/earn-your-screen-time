@@ -18,11 +18,13 @@ public enum BodyJoint: String, Codable, CaseIterable, Sendable {
     case leftElbow
     case leftWrist
     case leftHip
+    case leftKnee
     case leftAnkle
     case rightShoulder
     case rightElbow
     case rightWrist
     case rightHip
+    case rightKnee
     case rightAnkle
 }
 

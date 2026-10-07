@@ -189,7 +189,7 @@ struct EarnTimeView: View {
 
             Button(action: onPushups) {
                 EarningRuleCard(
-                    title: "pushups.title",
+                    title: "exercise.entry.title",
                     titleTableName: PushupsLocalization.tableName,
                     detail: Text("pushups.entry.detail", tableName: PushupsLocalization.tableName),
                     glyph: "figure.strengthtraining.traditional",

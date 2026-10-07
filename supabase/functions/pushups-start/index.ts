@@ -11,6 +11,13 @@ import {
 
 function rpcError(error: { code?: string; message?: string }): never {
   const message = error.message ?? "";
+  if (message.includes("squats rewards are disabled")) {
+    throw new HttpError(
+      403,
+      "squats_disabled",
+      "Squats rewards are disabled",
+    );
+  }
   if (message.includes("disabled")) {
     throw new HttpError(
       403,
@@ -84,12 +91,14 @@ Deno.serve(async (request) => {
         p_target_reps: body.targetReps,
         p_app_version: body.appVersion,
         p_detection_version: body.detectionVersion,
+        p_exercise_type: body.exerciseType,
       },
     );
     if (error) rpcError(error);
     return json({
       session: {
         id: session.id,
+        exerciseType: session.exercise_type,
         status: session.status,
         targetReps: session.target_reps,
         rewardSeconds: session.reward_seconds,
