@@ -16,6 +16,9 @@ public struct OnboardingProfile: Codable, Equatable, Sendable {
     }
     public var baselineSource: BaselineSource?
     public var primaryGoal: UserPrimaryGoal?
+    /// Stamped the first time the opening step is shown, so `onboarding_completed` can report
+    /// how long the whole flow took.
+    public var onboardingStartedAt: Date?
     public var onboardingCompletedAt: Date?
     public var lastGoalRecommendationDate: Date?
     public var pendingGoalRecommendation: Int?

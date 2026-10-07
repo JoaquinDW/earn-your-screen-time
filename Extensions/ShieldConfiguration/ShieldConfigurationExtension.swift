@@ -112,8 +112,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 formatted(
                     "shield.noTime.progress",
                     viewModel.stepsRemaining,
-                    viewModel.rewardMinutes,
-                    viewModel.estimatedWalkMinutes
+                    viewModel.rewardMinutes
                 )
             )
         }

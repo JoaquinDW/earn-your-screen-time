@@ -2,27 +2,57 @@ import EarnDomain
 import SwiftUI
 
 enum OnboardingRouteStorage {
-    static let key = "onboarding.route.v3"
+    /// v4 dropped five read-only screens, so a stored v3 route can point at a step that no longer
+    /// exists or no longer means the same thing. A new key restarts anyone caught mid-flow on a
+    /// flow that is now a third shorter.
+    static let key = "onboarding.route.v4"
 
     static func reset() {
         AppGroup.defaults.set(OnboardingView.Route.hook.rawValue, forKey: key)
     }
 }
 
+/// Onboarding, v7 — *fewer screens, and none of them a page of text.*
+///
+/// v6 asked for sixteen steps before the paywall, and eight of those existed only to be read:
+/// the time cost, the difference, the mechanism, the science, the baseline, the goal, the plan,
+/// the projection. Each one was an eyebrow, a serif headline, two paragraphs and a button, and
+/// by the fourth they were indistinguishable — which is how someone who wanted the product ends
+/// up leaving before ever seeing what it costs.
+///
+/// Three changes carry this version:
+///
+/// 1. **The reading screens merged.** Difference folded into mechanism as its headline, science
+///    into a single tappable line on the goal screen, baseline and goal into one, projection into
+///    the plan. Sixteen steps became eleven, and every remaining one has a job you can name.
+/// 2. **Pictures replaced the paragraphs.** A year drawn as 365 marks, the earn loop played once
+///    beat by beat, the goal as a sliver of cobalt on the app's own tick rule. See
+///    `OnboardingGraphics.swift`. Where a graphic carries the argument, the copy is one line.
+/// 3. **Questions answer themselves.** Choosing advances. Four screens no longer charge a second
+///    tap to confirm a choice nothing could invalidate.
+///
+/// The eyebrows are gone everywhere. Sixteen lines of uppercase label that named the screen you
+/// were already looking at were the cheapest text in the flow to cut.
 struct OnboardingView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.locale) private var locale
     @AppStorage(OnboardingRouteStorage.key, store: AppGroup.defaults) private var storedRoute = Route.hook.rawValue
 
     @State private var profile = OnboardingProfile()
+    @State private var pushupsDemo = OnboardingPushupsDemoModel()
     @State private var isMovingBack = false
     @State private var isLoadingHealth = false
     @State private var isActivating = false
+    @State private var isRequestingNotifications = false
     @State private var healthMessage: String?
     @State private var isShowingScienceSource = false
 
-    private var route: Route { Route(rawValue: storedRoute) ?? .hook }
+    /// Someone who left on the paywall under v7 resumes at the mission: that screen and the
+    /// paywall's position after the first unlock both assume they have already set up.
+    private var route: Route {
+        if storedRoute == Route.legacyPaywallRawValue { return .mission }
+        return Route(rawValue: storedRoute) ?? .hook
+    }
 
     var body: some View {
         ZStack {
@@ -35,7 +65,15 @@ struct OnboardingView: View {
         .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: route)
         .onAppear {
             profile = env.profile
-            env.analytics.track(.onboardingStarted)
+            // Stamped once per install so `onboarding_completed` can report the total time.
+            let isResuming = profile.onboardingStartedAt != nil
+            if !isResuming { profile.onboardingStartedAt = Date() }
+            // Every relaunch mid-flow used to report a fresh start; `resumed` keeps the funnel's
+            // first step counting people, not app launches.
+            env.analytics.track(.onboardingStarted.withProperties([
+                "resumed": .bool(isResuming),
+                "route": .string(route.rawValue)
+            ]))
             env.analytics.track(.screenViewed("onboarding_" + route.rawValue))
         }
         .onChange(of: profile) { _, updated in env.saveProfile(updated) }
@@ -55,168 +93,194 @@ struct OnboardingView: View {
         case .hook:
             OnboardingHookStep(onContinue: advance)
         case .scrolling:
-            adaptiveLayout("A LITTLE ABOUT YOU", "How much time do you think you spend scrolling each day?", back: goBack) {
-                choices(OnboardingProfile.ScrollingBand.allCases, selected: profile.scrolling) { value in
+            step("How long do you scroll each day?", back: goBack) {
+                OnboardingChoices(
+                    values: OnboardingProfile.ScrollingBand.allCases,
+                    selected: profile.scrolling,
+                    label: \.label
+                ) { value in
                     profile.scrolling = value
-                } label: { $0.label }
-                if let scrolling = profile.scrolling {
-                    contextualScrollingCopy(scrolling)
-                        .padding(.top, Theme.Space.m)
-                }
-            } action: {
-                continueButton(disabled: profile.scrolling == nil) {
-                    if let scrolling = profile.scrolling {
-                        env.analytics.track(.screenTimeEstimateSelected.withProperties([
-                            "screen_time_bucket": .string(scrolling.rawValue)
-                        ]))
-                    }
+                    env.analytics.track(.screenTimeEstimateSelected.withProperties([
+                        "screen_time_bucket": .string(value.rawValue)
+                    ]))
                     advance()
                 }
-            }
+            } action: { EmptyView() }
         case .timeCost:
             timeCostStep
         case .intent:
-            adaptiveLayout("YOUR INTENTION", "What would you like to change?", back: goBack) {
-                choices(UserPrimaryGoal.allCases, selected: profile.primaryGoal) { value in
+            step("What would you like to change?", back: goBack) {
+                OnboardingChoices(
+                    values: UserPrimaryGoal.allCases,
+                    selected: profile.primaryGoal,
+                    label: \.label
+                ) { value in
                     profile.primaryGoal = value
                     profile.desiredOutcomes = [value.desiredOutcome]
-                } label: { $0.label }
-            } action: {
-                continueButton(disabled: profile.primaryGoal == nil) {
-                    if let goal = profile.primaryGoal {
-                        env.analytics.track(.primaryGoalSelected.withProperties(["primary_goal": .string(goal.rawValue)]))
-                    }
+                    env.analytics.track(.primaryGoalSelected.withProperties([
+                        "primary_goal": .string(value.rawValue)
+                    ]))
                     advance()
                 }
-            }
+            } action: { EmptyView() }
         case .previousAttempt:
-            adaptiveLayout("WHAT YOU'VE TRIED", "What have you tried before?", back: goBack) {
-                Text("There is no wrong answer. This helps us explain what Earnit changes.")
+            step("What have you tried before?", back: goBack) {
+                // Choosing advances, and people who had tried several things kept coming back
+                // from the next screen to pick another. One answer is all the headline uses.
+                Text("Pick the one you relied on most.")
                     .font(.sans(15))
                     .foregroundStyle(Theme.muted)
-                    .padding(.top, Theme.Space.s)
-                choices(OnboardingProfile.PreviousAttempt.allCases, selected: profile.previousAttempt) { value in
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom, Theme.Space.m)
+                OnboardingChoices(
+                    values: OnboardingProfile.PreviousAttempt.allCases,
+                    selected: profile.previousAttempt,
+                    label: \.label
+                ) { value in
                     profile.previousAttempt = value
-                } label: { $0.label }
-            } action: {
-                continueButton(disabled: profile.previousAttempt == nil, action: advance)
-            }
-        case .difference:
-            differenceStep
+                    advance()
+                }
+            } action: { EmptyView() }
         case .mechanism:
             mechanismStep
-        case .science:
-            scienceStep
         case .health:
             healthStep
         case .manualBaseline:
-            adaptiveLayout("YOUR STARTING POINT", "About how much do you usually walk?", back: goBack) {
-                Text("An estimate is enough. You can adjust your plan later.")
-                    .font(.sans(15))
-                    .foregroundStyle(Theme.muted)
-                    .padding(.bottom, Theme.Space.m)
-                choices(ManualBaseline.allCases, selected: manualSelection) { value in
+            step("About how much do you usually walk?", back: goBack) {
+                Text("Your estimate sets your goal. Connect Apple Health on the Earn screen to count your steps.")
+                    .font(.sans(14))
+                    .foregroundStyle(Night.textSoft)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom, Theme.Space.l)
+                OnboardingChoices(
+                    values: ManualBaseline.allCases,
+                    selected: manualSelection,
+                    label: \.label
+                ) { value in
                     applyBaseline(value.steps, source: .selfReported)
-                } label: { $0.label }
-            } action: {
-                continueButton(disabled: profile.baselineSource != .selfReported) {
                     env.analytics.track(.baselineSelfReported.withProperties([
-                        "baseline_steps": .int(profile.baselineDailySteps ?? 0)
+                        "baseline_steps": .int(value.steps)
                     ]))
-                    go(to: .baselineResult)
+                    go(to: .goal)
                 }
-            }
-        case .baselineResult:
-            adaptiveLayout("YOUR STARTING POINT", "You're averaging \((profile.baselineDailySteps ?? 0).formatted()) steps a day.", back: goBack) {
-                Spacer(minLength: Theme.Space.xl)
-                Text("This isn't a score. It's the number your first plan will grow from.")
-                    .font(.serif(27))
-                    .frame(maxWidth: .infinity, alignment: .center)
-                Text("Measured from recent Health activity or the estimate you selected.")
-                    .font(.sans(15))
-                    .foregroundStyle(Theme.muted)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.top, Theme.Space.s)
-            } action: { Button("Show my first goal", action: advance).buttonStyle(.pill) }
-            .onAppear { env.analytics.track(.personalizedResultViewed) }
-        case .progressiveGoal:
-            progressiveGoalStep
+            } action: { EmptyView() }
+        case .goal:
+            goalStep
+        case .pushupsIntro:
+            OnboardingPushupsIntroStep(
+                model: pushupsDemo,
+                onTryNow: {
+                    pushupsDemo.tapTryNow(in: env)
+                    go(to: .pushupsDemo)
+                },
+                onLater: continueWithoutDemo,
+                onBack: goBack
+            )
+        case .pushupsDemo:
+            pushupsDemoStep
+        case .pushupsLater:
+            OnboardingPushupsLaterStep(model: pushupsDemo, onContinue: advance)
         case .apps:
             AppsStep(onContinue: advance, onBack: goBack)
         case .plan:
-            starterPlanStep
+            planStep
         case .customize:
             customizeStep
-        case .projection:
-            projectionStep
-        case .paywall:
-            OnboardingPaywallStep(profile: profile, onActivated: advance)
+        case .notifications:
+            notificationsStep
         case .mission:
             missionStep
         }
     }
 
+    /// The demo route hosts both the contextual camera explanation and the camera itself, so
+    /// the capture session is created once and torn down the moment the route changes.
+    @ViewBuilder
+    private var pushupsDemoStep: some View {
+        switch pushupsDemo.phase {
+        case .cameraExplanation:
+            OnboardingCameraExplanationStep(model: pushupsDemo, onSkip: continueWithoutDemo)
+        case .intro:
+            // Only reachable by relaunching onto a stored route whose in-memory demo is gone.
+            // Send the user back to the offer rather than to an empty camera screen.
+            Color.clear.onAppear { go(to: .pushupsIntro, movingBack: true) }
+        case .skipped:
+            Color.clear.onAppear { go(to: .pushupsLater) }
+        default:
+            OnboardingPushupsDemoStep(
+                model: pushupsDemo,
+                onFinished: { go(to: .apps) },
+                onSkip: { go(to: .pushupsLater) }
+            )
+            .onDisappear { pushupsDemo.close(in: env) }
+        }
+    }
+
+    /// Every "later" path: the intro's secondary action, and the explanation's. Neither has
+    /// asked for a permission, so the only thing to record is the choice itself.
+    private func continueWithoutDemo() {
+        pushupsDemo.tapLater(in: env)
+        env.analytics.track(.onboardingContinueWithoutDemo.withProperties([
+            "detection_supported": .bool(pushupsDemo.offersDemo)
+        ]))
+        go(to: .pushupsLater)
+    }
+
+    // MARK: - Steps
+
+    /// The cost of scrolling: the big number, then the year that makes it real.
+    ///
+    /// Hours lead because "46 days" is the honest unit and the unimpressive one — a thousand-odd
+    /// hours is the figure that lands. The calendar underneath then converts it back into
+    /// something you can hold, so the screen gets the size of the number *and* the weight of
+    /// seeing a month and a half of your own year go dark.
     private var timeCostStep: some View {
-        let range = profile.scrolling.map(ScreenTimeCostRange.init(scrollingBand:))
-        return adaptiveLayout("TIME ADDS UP", "Scrolling rarely feels this long in the moment.", back: goBack) {
-            if let range {
-                VStack(alignment: .leading, spacing: Theme.Space.l) {
-                    insightMetric(range.weeklyHours.display(locale: locale), "hours every week")
-                    Hairline()
-                    insightMetric(range.annualDays.display(locale: locale), "full days every year")
-                }
-                .padding(Theme.Space.m)
-                .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-                .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
-                .padding(.top, Theme.Space.xl)
+        step(nil, back: goBack) {
+            VStack(alignment: .leading, spacing: 0) {
+                CountUp(value: annualScrollingHours)
+                Text("hours a year, spent scrolling")
+                    .font(.sans(19, weight: .semibold))
+                    .foregroundStyle(Night.textSoft)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 2)
             }
-            Text("An estimate based on the range you selected. The point isn't guilt. It's seeing what autopilot can cost.")
-                .font(.sans(14.5))
-                .foregroundStyle(Theme.muted)
+            YearGrid(daysLost: annualScrollingDays)
+                .padding(.top, Theme.Space.xxl)
+            Text("That's \(annualScrollingDays.formatted()) full days of your year.")
+                .font(.sans(15, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Space.m)
+            Text("Each mark is a day, estimated from the range you picked.")
+                .font(.sans(13))
+                .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 4)
         } action: {
             Button("I want some of that time back", action: advance).buttonStyle(.pill)
         }
     }
 
-    private var differenceStep: some View {
-        adaptiveLayout(
-            "A DIFFERENT APPROACH",
-            profile.previousAttempt?.differenceHeadline ?? "Restriction alone is hard to sustain.",
+    /// The objection, then the answer — on one screen instead of two.
+    ///
+    /// The headline is whatever the previous question said has already failed for this person,
+    /// and the loop underneath is the reply. The closing line names *their* objection and answers
+    /// it in one sentence — without it the screen states a problem, shows a diagram, and leaves
+    /// the person to join the two themselves, which is exactly where "this isn't for me" happens.
+    ///
+    /// It is set in the serif rather than the running sans on purpose: the switch back to the
+    /// display face is what marks it as the conclusion instead of another caption.
+    private var mechanismStep: some View {
+        step(
+            profile.previousAttempt?.differenceHeadline ?? "Your apps stop opening on autopilot.",
             back: goBack
         ) {
-            Text(profile.previousAttempt?.differenceBody ?? "Most tools ask you to resist the same impulse again and again. Earnit changes what happens before an app opens.")
-                .font(.sans(17))
-                .foregroundStyle(Night.textSoft)
-                .padding(.top, Theme.Space.l)
-            VStack(spacing: 0) {
-                comparisonRow("Traditional limits", "Keep saying no", emphasized: false)
-                Hairline()
-                comparisonRow("Earnit", "Move once, choose later", emphasized: true)
-            }
-            .padding(.horizontal, Theme.Space.m)
-            .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-            .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
-            .padding(.top, Theme.Space.xl)
-        } action: {
-            Button("Show me how", action: advance).buttonStyle(.pill)
-        }
-    }
-
-    private var mechanismStep: some View {
-        adaptiveLayout("THIS IS EARNIT", "Your apps stop opening on autopilot.", back: goBack) {
-            VStack(spacing: Theme.Space.s) {
-                mechanismRow("figure.walk", "Walk 500 steps", "Or do push-ups: the camera counts them")
-                mechanismConnector
-                mechanismRow("timer", "Earn 5 minutes", "Your movement becomes a balance")
-                mechanismConnector
-                mechanismRow("hand.tap", "Choose when to use them", "Open a 5, 10, or 15-minute session")
-            }
-            .padding(.top, Theme.Space.xl)
-            Text("Not a permanent ban. Not another limit to ignore. A pause between impulse and choice.")
-                .font(.sans(15, weight: .semibold))
-                .foregroundStyle(Night.textSoft)
-                .padding(.top, Theme.Space.l)
+            EarnLoopDiagram()
+                .padding(.top, Theme.Space.m)
+            Text(profile.previousAttempt?.differenceClose ?? "Not a ban. A pause you can open, once you've moved.")
+                .font(.serif(28))
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Theme.Space.xl)
         } action: {
             Button("That makes sense") {
                 env.analytics.track(.mechanismUnderstood)
@@ -226,50 +290,19 @@ struct OnboardingView: View {
         }
     }
 
-    private var scienceStep: some View {
-        adaptiveLayout("BUILT FROM YOUR BASELINE", "10,000 isn't a magic number.", back: goBack) {
-            Text("A 2022 meta-analysis of 15 international studies found that health benefits were associated with step counts below 10,000, and the pattern differed by age.")
-                .font(.sans(17))
-                .foregroundStyle(Night.textSoft)
-                .padding(.top, Theme.Space.l)
-            Text("Earnit's reward loop also draws on “temptation bundling”: pairing something you want with an activity that benefits you. It is a behavioral principle, not a guarantee.")
-                .font(.sans(15))
-                .foregroundStyle(Theme.muted)
-                .padding(.top, Theme.Space.m)
-            Button {
-                isShowingScienceSource = true
-            } label: {
-                Label("See the study", systemImage: "doc.text.magnifyingglass")
-                    .font(.sans(14, weight: .semibold))
-                    .foregroundStyle(Night.cobaltText)
-                    .frame(minHeight: Theme.minTouchTarget)
-            }
-            .buttonStyle(.plain)
-            .padding(.top, Theme.Space.s)
-            Text("That is why Earnit starts from your recent activity and recommends a small increase, rather than assigning the same target to everyone.")
-                .font(.serif(25))
-                .padding(.top, Theme.Space.xl)
-        } action: {
-            Button("Build my starting point", action: advance).buttonStyle(.pill)
-        }
-        .onAppear { env.analytics.track(.scienceScreenViewed) }
-    }
-
     private var healthStep: some View {
-        adaptiveLayout("A GOAL THAT FITS", "Let's see where you're starting from.", back: goBack) {
-            Text("Earnit uses your walking activity to create a goal that actually fits you.")
-                .font(.sans(16))
-                .foregroundStyle(Theme.muted)
-                .padding(.top, Theme.Space.s)
+        step("Let's see where you're starting from.", back: goBack) {
             VStack(spacing: Theme.Space.m) {
                 permissionRow("heart.fill", "Apple Health", Night.textSoft)
                 Image(systemName: "arrow.down").foregroundStyle(Theme.muted).accessibilityHidden(true)
                 permissionRow("target", "Your personal baseline", Night.cobaltText)
             }
-            .padding(.vertical, Theme.Space.xl)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, Theme.Space.l)
             Text("Your health history stays on your device. Earnit only keeps the baseline used for your plan.")
                 .font(.sans(13.5))
                 .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
             if let healthMessage {
                 Text(healthMessage)
                     .font(.sans(13.5, weight: .semibold))
@@ -290,35 +323,75 @@ struct OnboardingView: View {
         }
     }
 
-    private var progressiveGoalStep: some View {
+    /// Baseline and first goal, which v6 spent two full screens saying in sequence.
+    ///
+    /// The rule does both at once: the ground already covered is soft, the increment is the only
+    /// cobalt on the screen, and how little of the rule it takes *is* the argument that the goal
+    /// is achievable. The science that used to be its own four-paragraph screen is the quiet line
+    /// underneath — available to the one person in twenty who wants the citation, free for the
+    /// nineteen who don't.
+    private var goalStep: some View {
         let baseline = profile.baselineDailySteps ?? 0
         let goal = profile.dailyStepGoal
         let increase = max(0, goal - baseline)
-        return adaptiveLayout("YOUR FIRST GOAL", "\(goal.formatted()) steps. Just \(increase.formatted()) more than now.", back: goBack) {
-            HStack(spacing: Theme.Space.m) {
-                goalMetric("Today", baseline)
-                Image(systemName: "arrow.right")
-                    .foregroundStyle(Night.cobaltText)
-                    .accessibilityHidden(true)
-                goalMetric("First goal", goal)
-            }
-            .padding(.top, Theme.Space.xl)
-            Text("Earnit starts from your average and changes the goal only after a full week of activity. You decide whether to accept each change.")
-                .font(.sans(15))
-                .foregroundStyle(Theme.muted)
-                .padding(.top, Theme.Space.l)
-        } action: { Button("Use this goal", action: advance).buttonStyle(.pill) }
-    }
-
-    private var starterPlanStep: some View {
-        adaptiveLayout("YOUR PLAN IS READY", "Move once. Choose later.", back: goBack) {
-            planRow("target", "Daily movement goal", "\(profile.dailyStepGoal.formatted()) steps")
-            planRow("figure.walk", "Earn rate", "500 steps → 5 min")
-            planRow("apps.iphone", "Protected apps", "\(env.state.restrictedItemCount) selected")
-            planRow("sparkles", "Goal reward", "+10 bonus min")
-            Text("Protected apps stay paused until you deliberately start a 5, 10, or 15-minute session with the balance you've earned.")
+        return step(
+            increase > 0
+                ? "Just \(increase.formatted()) more steps than your usual day."
+                : "\(goal.formatted()) steps a day.",
+            back: goBack
+        ) {
+            GoalRule(baseline: baseline, goal: goal)
+                .padding(.top, Theme.Space.m)
+            Text("The goal only changes after a full week, and only if you accept.")
                 .font(.sans(14.5))
                 .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Theme.Space.xl)
+            Button {
+                env.analytics.track(.scienceScreenViewed)
+                isShowingScienceSource = true
+            } label: {
+                Label("Why not 10,000 steps?", systemImage: "doc.text.magnifyingglass")
+                    .font(.sans(14, weight: .semibold))
+                    .foregroundStyle(Night.cobaltText)
+                    .frame(minHeight: Theme.minTouchTarget)
+            }
+            .buttonStyle(.plain)
+        } action: {
+            Button("Use this goal", action: advance).buttonStyle(.pill)
+        }
+        .onAppear { env.analytics.track(.personalizedResultViewed) }
+    }
+
+    /// The plan and what thirty days of it adds up to, on one screen.
+    ///
+    /// v6 showed the settings, then made you tap once more for the payoff. The payoff belongs
+    /// next to what produces it, so it is a number that counts up rather than a row in a panel.
+    private var planStep: some View {
+        let projection = Projection(
+            currentDailySteps: profile.baselineDailySteps ?? 0,
+            goalDailySteps: profile.dailyStepGoal,
+            rule: EarningRule(source: .steps, amountRequired: 500, rewardSeconds: 300)
+        )
+        return step("Move once. Choose later.", back: goBack) {
+            VStack(spacing: 0) {
+                planRow("target", "Daily movement goal", "\(profile.dailyStepGoal.formatted()) steps")
+                planRow("figure.walk", "Earn rate", "500 steps → 5 min")
+                planRow("figure.strengthtraining.traditional", "Or push-ups", "5 reps → 5 min")
+                planRow("apps.iphone", "Protected apps", "\(env.state.restrictedItemCount) selected")
+                planRow("sparkles", "Goal reward", "+10 bonus min")
+            }
+            Hairline()
+                .padding(.vertical, Theme.Space.l)
+            CountUp(value: projection.upliftSteps, font: .serif(52))
+            Text("extra steps in your first 30 days")
+                .font(.sans(16, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
+                .fixedSize(horizontal: false, vertical: true)
+            Text("This is a conditional estimate, not a health outcome or a prediction of what you will do.")
+                .font(.sans(13))
+                .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Space.m)
         } action: {
             Button("Start my plan") {
@@ -326,6 +399,7 @@ struct OnboardingView: View {
                     "selected_goal": .int(profile.dailyStepGoal),
                     "earn_rate": .string("500:5")
                 ]))
+                env.analytics.track(.thirtyDayProjectionCTA)
                 advance()
             }
             .buttonStyle(.pill)
@@ -338,14 +412,12 @@ struct OnboardingView: View {
         .onAppear {
             env.analytics.track(.starterPlanViewed)
             env.analytics.track(.planGenerated)
+            env.analytics.track(.thirtyDayProjectionViewed)
         }
     }
 
     private var customizeStep: some View {
-        adaptiveLayout("MAKE IT YOURS", "Adjust your daily goal", back: { go(to: .plan, movingBack: true) }) {
-            Text("Your goal and earn rate are separate. Start with our recommended earn rate and change it later from Settings.")
-                .font(.sans(15))
-                .foregroundStyle(Theme.muted)
+        step("Adjust your daily goal", back: { go(to: .plan, movingBack: true) }) {
             Stepper(value: goalBinding, in: 2_000...20_000, step: 500) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Daily movement goal").font(.sans(14, weight: .semibold)).foregroundStyle(Theme.muted)
@@ -355,55 +427,82 @@ struct OnboardingView: View {
             .padding(Theme.Space.m)
             .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
             .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
-            .padding(.top, Theme.Space.l)
             planRow("figure.walk", "Recommended earn rate", "500 steps → 5 min")
-                .padding(.top, Theme.Space.s)
+                .padding(.top, Theme.Space.m)
+            planRow("figure.strengthtraining.traditional", "Or push-ups", "5 reps → 5 min")
         } action: {
-            Button("Save plan") { go(to: .projection) }.buttonStyle(.pill)
+            Button("Save plan") { go(to: .plan, movingBack: true) }.buttonStyle(.pill)
         }
     }
 
-    private var projectionStep: some View {
-        let projection = Projection(
-            currentDailySteps: profile.baselineDailySteps ?? 0,
-            goalDailySteps: profile.dailyStepGoal,
-            rule: EarningRule(source: .steps, amountRequired: 500, rewardSeconds: 300)
-        )
-        let walkingHours = projection.upliftWalkingMinutes / 60
-        let walkingMinutes = projection.upliftWalkingMinutes % 60
-        return adaptiveLayout("IF YOU REACH YOUR GOAL FOR 30 DAYS", "This is what you'll add to your routine.", back: goBack) {
-            VStack(spacing: 0) {
-                projectionRow("arrow.up.right", "Steps above your current average", projection.upliftSteps.formatted())
-                Hairline()
-                projectionRow("figure.walk.motion", "Estimated extra walking", "≈ \(walkingHours) h \(walkingMinutes) min")
+    /// Asked before the first earn because reminders are what bring someone back on day two, and
+    /// in 1.2.2 nobody who finished onboarding came back. This screen goes first so the system
+    /// prompt only appears for people who already said yes to the idea.
+    private var notificationsStep: some View {
+        step("Want a nudge when it's worth coming back?", back: goBack) {
+            VStack(spacing: Theme.Space.m) {
+                permissionRow("bell.badge.fill", "If your apps have waited a while", Night.cobaltText)
+                permissionRow("timer", "Before an unlock runs out", Night.textSoft)
             }
-            .padding(.horizontal, Theme.Space.m)
-            .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-            .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
-            .padding(.top, Theme.Space.xl)
-            Text("Calculated as \(projection.dailyStepUplift.formatted()) additional steps × 30 days. Walking time assumes about 100 steps per minute.")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, Theme.Space.l)
+            Text("A few reminders at most. You can turn them off any time in iOS Settings.")
                 .font(.sans(13.5))
                 .foregroundStyle(Theme.muted)
-                .padding(.top, Theme.Space.m)
-            Text("This is a conditional estimate, not a health outcome or a prediction of what you will do.")
-                .font(.sans(13.5))
-                .foregroundStyle(Theme.muted)
-                .padding(.top, Theme.Space.s)
+                .fixedSize(horizontal: false, vertical: true)
         } action: {
-            Button("Continue with my plan") {
-                env.analytics.track(.thirtyDayProjectionCTA)
-                advance()
+            Button {
+                guard !isRequestingNotifications else { return }
+                isRequestingNotifications = true
+                Task {
+                    await env.requestNotificationPermission(source: "onboarding")
+                    isRequestingNotifications = false
+                    advance()
+                }
+            } label: {
+                HStack {
+                    if isRequestingNotifications { ProgressView().tint(Color.white) }
+                    Text("Turn on reminders")
+                }
             }
             .buttonStyle(.pill)
+            .disabled(isRequestingNotifications)
+            Button("Not now") {
+                env.analytics.track(.notificationsPromptSkipped)
+                advance()
+            }
+            .buttonStyle(.quiet)
         }
-        .onAppear { env.analytics.track(.thirtyDayProjectionViewed) }
+        .onAppear { env.analytics.track(.notificationsPromptViewed) }
+    }
+
+    /// Push-ups are the one way to earn the first minutes without leaving the screen, so the
+    /// mission offers them first whenever this phone can count reps and the free reward is
+    /// unspent. In 1.2.2, four of the five people who finished onboarding wandered into Home and
+    /// Settings instead of earning anything, and none of them came back.
+    private var offersPushupsNow: Bool {
+        OnboardingPushupsDemoModel.isDetectionSupported && env.featureAccess.canUseWorkoutEarning
+    }
+
+    private func startFirstEarn(withPushups: Bool) {
+        guard !isActivating else { return }
+        isActivating = true
+        env.analytics.track(.firstEarnStarted.withProperties([
+            "method": .string(withPushups ? EarningMethod.pushups.rawValue : EarningMethod.steps.rawValue),
+            "pushups_offered": .bool(offersPushupsNow)
+        ]))
+        Task {
+            await env.activateAdaptivePlan(profile)
+            // Home's navigation stack picks this up as soon as it appears.
+            if withPushups { env.requestRoute(.pushups) }
+        }
     }
 
     /// The commitment moment, and the only other place onboarding spends an illustration: the
     /// path he is about to walk. Everything between the opening and here has been plain ground,
     /// so the artwork returning is what marks this as the end of setup.
     private var missionStep: some View {
-        illustratedLayout(scene: .earnPath, eyebrow: "YOUR FIRST MISSION") {
+        illustratedLayout(scene: .earnPath) {
             Text("Your first 5 minutes are 500 steps away.")
                 .font(.serif(38, relativeTo: .largeTitle))
                 .fixedSize(horizontal: false, vertical: true)
@@ -423,26 +522,54 @@ struct OnboardingView: View {
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Space.l)
-            Text("In a hurry? A set of push-ups in front of the camera earns minutes right now.")
-                .font(.sans(15))
-                .foregroundStyle(Theme.muted)
+            Text("In a hurry? Five push-ups in front of the camera earn the same five minutes.")
+                .font(.serif(25))
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, Theme.Space.s)
+                .padding(.top, Theme.Space.l)
         } action: {
-            Button {
-                guard !isActivating else { return }
-                isActivating = true
-                env.analytics.track(.firstEarnStarted)
-                Task { await env.activateAdaptivePlan(profile) }
-            } label: {
-                HStack {
-                    if isActivating { ProgressView().tint(Color.white) }
-                    Text(isActivating ? "Activating your plan" : "Take a short walk")
+            if offersPushupsNow {
+                Button {
+                    startFirstEarn(withPushups: true)
+                } label: {
+                    HStack {
+                        if isActivating { ProgressView().tint(Color.white) }
+                        Text(isActivating ? "Activating your plan" : "Earn them now with push-ups")
+                    }
                 }
+                .buttonStyle(.pill)
+                .disabled(isActivating)
+                Button("I'll take a walk") { startFirstEarn(withPushups: false) }
+                    .buttonStyle(.quiet)
+                    .disabled(isActivating)
+            } else {
+                Button {
+                    startFirstEarn(withPushups: false)
+                } label: {
+                    HStack {
+                        if isActivating { ProgressView().tint(Color.white) }
+                        Text(isActivating ? "Activating your plan" : "Take a short walk")
+                    }
+                }
+                .buttonStyle(.pill)
+                .disabled(isActivating)
             }
-            .buttonStyle(.pill)
-            .disabled(isActivating)
         }
+    }
+
+    // MARK: - Data
+
+    /// The midpoint of the band the user picked, so the calendar is neither the flattering end of
+    /// the range nor the alarming one. An open-ended band has only its floor to be honest with.
+    private var annualScrollingDays: Int { Int(annualScrollingDaysExact.rounded()) }
+    private var annualScrollingHours: Int { Int((annualScrollingDaysExact * 24).rounded()) }
+
+    /// Both figures come off this one midpoint, so the headline and the calendar can never
+    /// disagree about the same year.
+    private var annualScrollingDaysExact: Double {
+        guard let scrolling = profile.scrolling else { return 0 }
+        let days = ScreenTimeCostRange(scrollingBand: scrolling).annualDays
+        guard let upper = days.upperBound else { return days.lowerBound }
+        return (days.lowerBound + upper) / 2
     }
 
     private func connectHealth() {
@@ -462,7 +589,7 @@ struct OnboardingView: View {
                         "baseline_steps": .int(baseline),
                         "sample_days": .int(result.samples.count)
                     ]))
-                    go(to: .baselineResult)
+                    go(to: .goal)
                 } else {
                     env.analytics.track(.healthKitPermissionDenied)
                     healthMessage = String(localized: "We couldn't find enough walking history. A quick estimate works too.", locale: env.appLanguage.locale)
@@ -506,6 +633,8 @@ struct OnboardingView: View {
         Binding(get: { profile.dailyStepGoal }, set: { profile.recommendedDailyStepGoal = $0 })
     }
 
+    // MARK: - Navigation
+
     private func advance() {
         guard let next = route.next else { return }
         go(to: next)
@@ -513,6 +642,10 @@ struct OnboardingView: View {
 
     private func goBack() {
         guard let previous = route.previous else { return }
+        env.analytics.track(.onboardingBackTapped.withProperties([
+            "from": .string(route.rawValue),
+            "to": .string(previous.rawValue)
+        ]))
         go(to: previous, movingBack: true)
     }
 
@@ -521,36 +654,36 @@ struct OnboardingView: View {
         storedRoute = route.rawValue
     }
 
-    private func adaptiveLayout<Content: View, Action: View>(
-        _ eyebrow: LocalizedStringKey,
-        _ title: LocalizedStringKey,
+    // MARK: - Layout
+
+    /// Every functional step: the progress rule, an optional headline, the content, the actions.
+    ///
+    /// The headline is optional because one screen's headline is a number 96pt tall, and wrapping
+    /// a label around it would only repeat what the numeral already says.
+    private func step<Content: View, Action: View>(
+        _ title: LocalizedStringKey?,
         back: (() -> Void)?,
         @ViewBuilder content: () -> Content,
         @ViewBuilder action: () -> Action
     ) -> some View {
-        OnboardingScaffold(onBack: back) {
-            if route != .mission {
-                TickMeter(
-                    progress: Double(route.progress) / Double(Route.progressCount),
-                    height: 8
-                )
-                .padding(.bottom, Theme.Space.l)
-                .accessibilityLabel("Onboarding progress")
+        OnboardingScaffold(
+            onBack: back,
+            progress: Double(route.progress) / Double(Route.progressCount)
+        ) {
+            if let title {
+                Text(title)
+                    .font(.serif(40, relativeTo: .largeTitle))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.bottom, Theme.Space.l)
+                    .accessibilityAddTraits(.isHeader)
             }
-            Text(eyebrow).eyebrowStyle(Night.textMuted)
-            Text(title)
-                .font(.serif(40, relativeTo: .largeTitle))
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, 12)
-                .accessibilityAddTraits(.isHeader)
             content()
         } action: { action() }
     }
 
-    /// The illustrated variant of `adaptiveLayout`, for the one step that earns artwork.
+    /// The illustrated variant, for the one step that earns artwork.
     private func illustratedLayout<Content: View, Action: View>(
         scene: IllustratedScene,
-        eyebrow: LocalizedStringKey,
         @ViewBuilder content: () -> Content,
         @ViewBuilder action: () -> Action
     ) -> some View {
@@ -559,9 +692,7 @@ struct OnboardingView: View {
         return VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    SceneHero(scene: scene, share: 0.42) {
-                        Text(eyebrow).eyebrowStyle(Night.textMuted)
-                    }
+                    SceneHero(scene: scene, share: 0.42) { EmptyView() }
                     VStack(alignment: .leading, spacing: 0) { body }
                         .padding(.horizontal, Theme.Space.gutter)
                         .padding(.top, Theme.Space.l)
@@ -585,63 +716,6 @@ struct OnboardingView: View {
         }
     }
 
-    private func continueButton(disabled: Bool = false, action: @escaping () -> Void) -> some View {
-        Button("Continue", action: action).buttonStyle(.pill).disabled(disabled)
-    }
-
-    private func choices<Value: Hashable>(
-        _ values: [Value],
-        selected: Value?,
-        select: @escaping (Value) -> Void,
-        label: @escaping (Value) -> LocalizedStringKey
-    ) -> some View {
-        VStack(spacing: Theme.Space.s) {
-            ForEach(values, id: \.self) { value in
-                let isSelected = selected == value
-                let title = label(value)
-                Button { select(value) } label: {
-                    HStack {
-                        Text(title)
-                            .font(.sans(16, weight: .semibold))
-                        Spacer()
-                        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                            .foregroundStyle(isSelected ? Theme.cobaltDeep : Theme.muted)
-                    }
-                    .padding(.horizontal, Theme.Space.m)
-                    .frame(minHeight: 58)
-                    .background(
-                        isSelected ? Night.cobaltWash : Night.panel,
-                        in: .rect(cornerRadius: Theme.cornerRadius)
-                    )
-                    .overlay {
-                        RoundedRectangle(cornerRadius: Theme.cornerRadius)
-                            .stroke(isSelected ? Night.cobalt : Night.edge, lineWidth: isSelected ? 1.5 : 1)
-                    }
-                }
-                .buttonStyle(.plain)
-                .accessibilityAddTraits(isSelected ? .isSelected : [])
-            }
-        }
-        .padding(.top, Theme.Space.l)
-    }
-
-    @ViewBuilder
-    private func contextualScrollingCopy(_ band: OnboardingProfile.ScrollingBand) -> some View {
-        let weeklyHours = switch band {
-        case .underOneHour: 7
-        case .oneToTwoHours: 14
-        case .twoToThreeHours, .threeToFourHours: 28
-        case .fourHoursPlus: 28
-        }
-        Text(band == .fourHoursPlus
-             ? "That's more than \(weeklyHours) hours every week. Earnit helps you reclaim some of it without forcing you to quit your favorite apps."
-             : "That can add up to about \(weeklyHours) hours each week. Earnit helps you make that time more intentional.")
-            .font(.sans(14.5))
-            .foregroundStyle(Theme.muted)
-            .padding(Theme.Space.m)
-            .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-    }
-
     private func permissionRow(_ icon: String, _ label: LocalizedStringKey, _ color: Color) -> some View {
         HStack(spacing: Theme.Space.m) {
             Image(systemName: icon)
@@ -651,79 +725,7 @@ struct OnboardingView: View {
                 .background(Night.forestLift, in: .circle)
             Text(label).font(.serif(23))
         }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func insightMetric(_ value: String, _ label: LocalizedStringKey) -> some View {
-        VStack(alignment: .leading, spacing: Theme.Space.xs) {
-            Text(value)
-                .font(.serif(38))
-                .foregroundStyle(Night.cobaltText)
-                .monospacedDigit()
-            Text(label)
-                .font(.sans(15, weight: .semibold))
-                .foregroundStyle(Night.textSoft)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func comparisonRow(
-        _ label: LocalizedStringKey,
-        _ value: LocalizedStringKey,
-        emphasized: Bool
-    ) -> some View {
-        HStack(spacing: Theme.Space.m) {
-            Image(systemName: emphasized ? "arrow.right.circle.fill" : "minus.circle")
-                .foregroundStyle(emphasized ? Night.cobaltText : Night.textMuted)
-                .frame(width: 24)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(label).font(.sans(13)).foregroundStyle(Theme.muted)
-                Text(value).font(.sans(16, weight: .semibold))
-            }
-            Spacer(minLength: 0)
-        }
-        .frame(minHeight: 68)
-        .accessibilityElement(children: .combine)
-    }
-
-    private func mechanismRow(
-        _ icon: String,
-        _ title: LocalizedStringKey,
-        _ detail: LocalizedStringKey
-    ) -> some View {
-        HStack(spacing: Theme.Space.m) {
-            Image(systemName: icon)
-                .font(.system(size: 21, weight: .semibold))
-                .foregroundStyle(Night.cobaltText)
-                .frame(width: 48, height: 48)
-                .background(Night.cobaltWash, in: .circle)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(title).font(.sans(17, weight: .semibold))
-                Text(detail).font(.sans(13.5)).foregroundStyle(Theme.muted)
-            }
-            Spacer(minLength: 0)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private var mechanismConnector: some View {
-        Image(systemName: "arrow.down")
-            .font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(Night.textFaint)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 17)
-            .accessibilityHidden(true)
-    }
-
-    private func goalMetric(_ label: LocalizedStringKey, _ value: Int) -> some View {
-        VStack(alignment: .leading, spacing: Theme.Space.xs) {
-            Text(label).font(.sans(12.5, weight: .semibold)).foregroundStyle(Theme.muted)
-            Text(value.formatted()).font(.serif(28)).monospacedDigit()
-        }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(Theme.Space.m)
-        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
         .accessibilityElement(children: .combine)
     }
 
@@ -740,23 +742,17 @@ struct OnboardingView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func projectionRow(_ icon: String, _ label: LocalizedStringKey, _ value: String) -> some View {
-        HStack(spacing: Theme.Space.m) {
-            Image(systemName: icon).foregroundStyle(Theme.coralDeep).frame(width: 26)
-            Text(label).font(.sans(15, weight: .semibold))
-            Spacer()
-            Text(value).font(.serif(23)).monospacedDigit()
-        }
-        .frame(minHeight: 64)
-        .accessibilityElement(children: .combine)
-    }
-
     enum Route: String, CaseIterable {
-        case hook, scrolling, timeCost, intent, previousAttempt, difference, mechanism, science
-        case health, manualBaseline, baselineResult, progressiveGoal
-        case apps, plan, customize, projection, paywall, mission
+        case hook, scrolling, timeCost, intent, previousAttempt, mechanism
+        case health, manualBaseline, goal
+        /// The optional push-up demo. Every one of these three is skippable, and none of them
+        /// asks for Screen Time, which is why they sit before `apps` rather than inside it.
+        case pushupsIntro, pushupsDemo, pushupsLater
+        case apps, plan, customize, notifications, mission
 
-        static let progressCount = 15
+        /// v7 ended onboarding at a paywall; v8 moves it after the first unlock.
+        static let legacyPaywallRawValue = "paywall"
+        static let progressCount = 12
         var progress: Int {
             switch self {
             case .hook: 0
@@ -764,17 +760,14 @@ struct OnboardingView: View {
             case .timeCost: 2
             case .intent: 3
             case .previousAttempt: 4
-            case .difference: 5
-            case .mechanism: 6
-            case .science: 7
-            case .health, .manualBaseline: 8
-            case .baselineResult: 9
-            case .progressiveGoal: 10
-            case .apps: 11
-            case .plan, .customize: 12
-            case .projection: 13
-            case .paywall: 14
-            case .mission: 15
+            case .mechanism: 5
+            case .health, .manualBaseline: 6
+            case .goal: 7
+            case .pushupsIntro, .pushupsDemo, .pushupsLater: 8
+            case .apps: 9
+            case .plan, .customize: 10
+            case .notifications: 11
+            case .mission: 12
             }
         }
         var next: Route? {
@@ -783,19 +776,17 @@ struct OnboardingView: View {
             case .scrolling: .timeCost
             case .timeCost: .intent
             case .intent: .previousAttempt
-            case .previousAttempt: .difference
-            case .difference: .mechanism
-            case .mechanism: .science
-            case .science: .health
-            case .health: .baselineResult
-            case .manualBaseline: .baselineResult
-            case .baselineResult: .progressiveGoal
-            case .progressiveGoal: .apps
+            case .previousAttempt: .mechanism
+            case .mechanism: .health
+            case .health, .manualBaseline: .goal
+            case .goal: .pushupsIntro
+            case .pushupsIntro: .pushupsDemo
+            case .pushupsDemo, .pushupsLater: .apps
             case .apps: .plan
-            case .plan: .projection
-            case .customize: .projection
-            case .projection: .paywall
-            case .paywall: .mission
+            // Customizing returns to the plan rather than skipping past it, so the number the
+            // new goal produces is the thing that sends you on.
+            case .plan, .customize: .notifications
+            case .notifications: .mission
             case .mission: nil
             }
         }
@@ -806,34 +797,21 @@ struct OnboardingView: View {
             case .timeCost: .scrolling
             case .intent: .timeCost
             case .previousAttempt: .intent
-            case .difference: .previousAttempt
-            case .mechanism: .difference
-            case .science: .mechanism
-            case .health: .science
+            case .mechanism: .previousAttempt
+            case .health: .mechanism
             case .manualBaseline: .health
-            case .baselineResult: .health
-            case .progressiveGoal: .baselineResult
-            case .apps: .progressiveGoal
+            case .goal: .health
+            case .pushupsIntro: .goal
+            // The demo screens own their own way out ("Cancel", "Continue without the demo"),
+            // and re-entering a finished demo from behind would only show stale state.
+            case .pushupsDemo, .pushupsLater: nil
+            case .apps: .goal
             case .plan: .apps
             case .customize: .plan
-            case .projection: .plan
-            case .paywall: .projection
+            case .notifications: .plan
             case .mission: nil
             }
         }
-    }
-}
-
-private extension ScreenTimeCostRange.Bounds {
-    func display(locale: Locale) -> String {
-        let lower = Int(lowerBound.rounded(.down))
-        if lower == 0, let upperBound {
-            return String(localized: "Up to \(Int(upperBound.rounded(.up)))", locale: locale)
-        }
-        guard let upperBound else {
-            return String(localized: "\(lower)+", locale: locale)
-        }
-        return String(localized: "\(lower)–\(Int(upperBound.rounded(.up)))", locale: locale)
     }
 }
 
@@ -848,6 +826,8 @@ private extension OnboardingProfile.PreviousAttempt {
         }
     }
 
+    /// What this person already knows does not work — used as the mechanism screen's headline, so
+    /// the answer they are about to watch has something specific to answer.
     var differenceHeadline: LocalizedStringKey {
         switch self {
         case .appleLimits: "A limit is easy to override in the moment."
@@ -858,18 +838,20 @@ private extension OnboardingProfile.PreviousAttempt {
         }
     }
 
-    var differenceBody: LocalizedStringKey {
+    /// The reply, in one sentence. Long enough to answer the headline, short enough that someone
+    /// who has already understood the diagram can skip it without losing anything.
+    var differenceClose: LocalizedStringKey {
         switch self {
         case .appleLimits:
-            "Earnit changes the default: protected apps stay paused until your movement creates a balance you choose to use."
+            "There is no “ignore limit” here. Only minutes you already earned."
         case .blockingApps:
-            "Earnit keeps the pause, but gives you a clear way to earn intentional access instead of banning the apps forever."
+            "Earnit never says no. It says not yet — and hands you the way through."
         case .deletingApps:
-            "Earnit puts a pause before the app opens and turns that moment into a choice you have already earned."
+            "Nothing gets deleted. The impulse just has to move first."
         case .willpower:
-            "Earnit moves the decision earlier: walk, build a balance, then choose a short session without negotiating with yourself."
+            "You decide once, while you move. Not again every time you pick up the phone."
         case .nothingYet:
-            "Most tools ask you to resist the same impulse repeatedly. Earnit changes what happens before a protected app opens."
+            "Nothing to resist. Move first, and the time is already yours."
         }
     }
 }
@@ -965,20 +947,6 @@ private extension UserPrimaryGoal {
         case .feelInControl: .feelInControl
         case .healthierRoutine: .beMoreActive
         }
-    }
-}
-
-private struct OnboardingPaywallStep: View {
-    let profile: OnboardingProfile
-    let onActivated: () -> Void
-    @Environment(AppEnvironment.self) private var env
-
-    var body: some View {
-        ProPaywallView(profile: profile, allowsDismiss: false, onActivated: onActivated)
-            .task {
-                await env.subscriptionManager.refresh()
-                if env.subscriptionManager.isPro { onActivated() }
-            }
     }
 }
 

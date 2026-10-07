@@ -119,6 +119,22 @@ enum EarnPresentationEvent: Equatable, Identifiable {
         case .error: .error
         }
     }
+
+    var earnedMinutes: Int? {
+        switch self {
+        case let .screenTimeEarned(minutes),
+             let .firstRewardEarned(minutes),
+             let .dailyGoalCompleted(minutes):
+            minutes
+        default:
+            nil
+        }
+    }
+}
+
+struct EarnedTimeBalance: Equatable {
+    let beforeMinutes: Int
+    let afterMinutes: Int
 }
 
 /// A short-lived, in-process event. Its identity changes even when two legitimate rewards have
@@ -126,4 +142,16 @@ enum EarnPresentationEvent: Equatable, Identifiable {
 struct EarnPresentationFeedback: Identifiable, Equatable {
     let id = UUID()
     let event: EarnPresentationEvent
+    let haptic: EarnHaptic?
+    let earnedTimeBalance: EarnedTimeBalance?
+
+    init(
+        event: EarnPresentationEvent,
+        haptic: EarnHaptic? = nil,
+        earnedTimeBalance: EarnedTimeBalance? = nil
+    ) {
+        self.event = event
+        self.haptic = haptic
+        self.earnedTimeBalance = earnedTimeBalance
+    }
 }

@@ -5,7 +5,7 @@ M["it"] = dict(
  name="Tempo di utilizzo: Earnit",
  subtitle="Blocco app e detox digitale",
  keywords="guadagnare,dipendenza smartphone,autocontrollo,studiare,concentrazione,limite,distrazione",
- promo="Ora guadagni i tuoi minuti in tre modi: camminando, studiando o facendo flessioni. Fino ad allora le app restano bloccate.",
+ promo="Novità: prova una vera serie di flessioni già nell'onboarding e scopri come Earnit sblocca le tue app. La fotocamera conta, il video non viene mai salvato.",
  desc="""Il telefono non dovrebbe essere gratis. Guadagnatelo.
 
 Earnit blocca le app che ti mangiano la giornata e le tiene bloccate finché non fai qualcosa che vale la pena. Cammina. Studia. Fai flessioni. Ogni sforzo diventa minuti che puoi davvero spendere.
@@ -39,7 +39,7 @@ M["pt-BR"] = dict(
  name="Tempo de tela: Earnit",
  subtitle="Bloqueio de apps e detox",
  keywords="ganhar,vicio em celular,autocontrole,estudar,foco,limite,distracao,habito,parar de rolar",
- promo="Agora você ganha seus minutos de três jeitos: caminhando, estudando ou fazendo flexões. Até lá, os apps continuam bloqueados.",
+ promo="Novo: experimente uma série real de flexões já no onboarding e veja como o Earnit desbloqueia seus apps. A câmera conta, o vídeo nunca é salvo.",
  desc="""Seu celular não devia ser de graça. Conquiste ele.
 
 O Earnit bloqueia os apps que comem o seu dia e mantém tudo bloqueado até você fazer algo que vale a pena. Caminhe. Estude. Faça flexões. Cada esforço vira minutos que você pode gastar de verdade.
@@ -73,7 +73,7 @@ M["nl-NL"] = dict(
  name="Schermtijd verdienen: Earnit",
  subtitle="Apps blokkeren & detox",
  keywords="telefoonverslaving,zelfbeheersing,studeren,focus,limiet,afleiding,gewoonte,minder scrollen",
- promo="Verdien je minuten nu op drie manieren: wandelen, studeren of push-ups. Tot die tijd blijven je apps op slot.",
+ promo="Nieuw: probeer een echte set push-ups al tijdens de onboarding en zie hoe Earnit je apps ontgrendelt. Camera telt mee, video wordt nooit opgeslagen.",
  desc="""Je telefoon zou niet gratis moeten zijn. Verdien hem.
 
 Earnit vergrendelt de apps die je dag opeten en houdt ze vergrendeld tot je iets doet dat de moeite waard is. Wandelen. Studeren. Push-ups. Elke inspanning wordt minuten die je echt kunt uitgeven.
@@ -107,7 +107,7 @@ M["pl"] = dict(
  name="Czas przed ekranem: Earnit",
  subtitle="Blokada aplikacji i detoks",
  keywords="zarabiaj,uzaleznienie od telefonu,samokontrola,nauka,skupienie,limit,app blocker,screen time",
- promo="Minuty zdobywasz teraz na trzy sposoby: spacerem, nauką albo pompkami. Do tego czasu aplikacje zostają zablokowane.",
+ promo="Nowość: wykonaj prawdziwą serię pompek już podczas onboardingu i zobacz, jak Earnit odblokowuje twoje aplikacje. Kamera liczy, nagranie nigdy nie jest zapisywane.",
  desc="""Telefon nie powinien być za darmo. Zapracuj na niego.
 
 Earnit blokuje aplikacje, które zjadają ci dzień, i trzyma je zablokowane, dopóki nie zrobisz czegoś wartościowego. Spacer. Nauka. Pompki. Każdy wysiłek zamienia się w minuty, które naprawdę możesz wydać.
@@ -141,7 +141,7 @@ M["tr"] = dict(
  name="Ekran süresi kazan: Earnit",
  subtitle="Uygulama engelleme & detoks",
  keywords="telefon bagimliligi,oz kontrol,ders calisma,odaklanma,limit,dikkat dagitici,app blocker",
- promo="Dakikalarını artık üç yolla kazanıyorsun: yürü, ders çalış ya da şınav çek. O zamana kadar uygulamalar kilitli kalır.",
+ promo="Yeni: onboarding sırasında gerçek bir şınav seti dene ve Earnit'in uygulamalarını nasıl açtığını gör. Kamera sayar, video asla kaydedilmez.",
  desc="""Telefonun bedava olmamalı. Hak et.
 
 Earnit gününü yiyen uygulamaları kilitler ve değerli bir şey yapana kadar kilitli tutar. Yürü. Ders çalış. Şınav çek. Her çaba, gerçekten harcayabileceğin dakikalara dönüşür.
@@ -175,7 +175,7 @@ M["ru"] = dict(
  name="Экранное время: Earnit",
  subtitle="Блокировка приложений",
  keywords="заработать,зависимость от телефона,самоконтроль,учеба,фокус,лимит,цифровой детокс,привычки",
- promo="Теперь минуты зарабатываются тремя способами: шагами, учёбой или отжиманиями. До этого приложения остаются закрытыми.",
+ promo="Новое: попробуйте настоящий подход отжиманий прямо в онбординге и узнайте, как Earnit разблокирует приложения. Камера считает, видео не сохраняется.",
  desc="""Телефон не должен быть бесплатным. Заработай его.
 
 Earnit блокирует приложения, которые съедают твой день, и держит их закрытыми, пока ты не сделаешь что-то стоящее. Ходи. Учись. Отжимайся. Любое усилие превращается в минуты, которые можно потратить по-настоящему.

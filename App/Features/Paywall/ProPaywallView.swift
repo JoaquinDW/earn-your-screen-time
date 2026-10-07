@@ -5,31 +5,41 @@ struct ProPaywallView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
 
+    var source: PaywallSource
     var profile: OnboardingProfile?
     var allowsDismiss: Bool
     var onActivated: (() -> Void)?
+    /// For a paywall shown in place rather than presented, where `dismiss` has nothing to close.
+    var onClose: (() -> Void)?
 
     init(
+        source: PaywallSource,
         profile: OnboardingProfile? = nil,
         allowsDismiss: Bool = true,
-        onActivated: (() -> Void)? = nil
+        onActivated: (() -> Void)? = nil,
+        onClose: (() -> Void)? = nil
     ) {
+        self.source = source
         self.profile = profile
         self.allowsDismiss = allowsDismiss
         self.onActivated = onActivated
+        self.onClose = onClose
     }
 
     var body: some View {
+        let savedProfile = env.profile
+        let resolvedProfile = profile ?? (savedProfile.isComplete ? savedProfile : nil)
         ProPaywallContent(
             viewModel: PaywallViewModel(
                 subscriptionManager: env.subscriptionManager,
+                source: source,
                 analytics: env.analytics
             ),
-            profile: profile,
-            restrictedItemCount: env.state.restrictedItemCount,
+            profile: resolvedProfile,
+            earnedMinutes: env.earnedMinutesSoFar,
             allowsDismiss: allowsDismiss,
             activated: { onActivated?() ?? dismiss() },
-            dismiss: { dismiss() }
+            dismiss: { onClose?() ?? dismiss() }
         )
     }
 }
@@ -38,47 +48,71 @@ private struct ProPaywallContent: View {
     @Environment(\.locale) private var locale
     @State private var viewModel: PaywallViewModel
     let profile: OnboardingProfile?
-    let restrictedItemCount: Int
+    /// Minutes this person has already earned by moving. Once there are any, they are the
+    /// paywall's opening line: proof beats promise.
+    let earnedMinutes: Int
     let allowsDismiss: Bool
     let activated: () -> Void
     let dismiss: () -> Void
 
+    private var trialPackage: PaywallPackage? {
+        guard let package = viewModel.selectedPackage,
+              package.freeTrialDescription(locale: locale) != nil else { return nil }
+        return package
+    }
+
     init(
         viewModel: PaywallViewModel,
         profile: OnboardingProfile?,
-        restrictedItemCount: Int,
+        earnedMinutes: Int,
         allowsDismiss: Bool,
         activated: @escaping () -> Void,
         dismiss: @escaping () -> Void
     ) {
         _viewModel = State(initialValue: viewModel)
         self.profile = profile
-        self.restrictedItemCount = restrictedItemCount
+        self.earnedMinutes = earnedMinutes
         self.allowsDismiss = allowsDismiss
         self.activated = activated
         self.dismiss = dismiss
     }
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
+        VStack(spacing: 0) {
+            header
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     hero
-                    if let profile {
-                        personalizedPlan(profile)
-                    } else {
-                        benefits
-                    }
+                    benefits
                     pricing
-                    subscriptionTerms
-                    purchaseButton
+                    trialTimeline
+                    cancelNudge
+                    renewalDisclosure
                     legalLinks
                 }
                 .padding(.bottom, Theme.Space.l)
             }
             .scrollIndicators(.hidden)
-            .ignoresSafeArea(edges: .top)
+        }
+        .foregroundStyle(Theme.ink)
+        .background(Night.ground.ignoresSafeArea())
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 0) {
+                purchaseButton
+                purchaseSummary
+            }
+            .padding(.bottom, Theme.Space.s)
+            .background {
+                Night.groundDeep
+                    .ignoresSafeArea(edges: .bottom)
+            }
+        }
+        .task { await viewModel.viewAppeared() }
+        .alert(item: $viewModel.alert, content: alert(for:))
+    }
 
+    private var header: some View {
+        HStack {
             if allowsDismiss {
                 Button {
                     viewModel.paywallClosed()
@@ -88,113 +122,172 @@ private struct ProPaywallContent: View {
                         .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(Night.text)
                         .frame(width: Theme.minTouchTarget, height: Theme.minTouchTarget)
-                        .background(.ultraThinMaterial, in: .circle)
-                        .background(Night.groundDeep.opacity(0.5), in: .circle)
-                        .environment(\.colorScheme, .dark)
+                        .background(Night.panel, in: .circle)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Close paywall")
-                .padding(.top, Theme.Space.l)
-                .padding(.trailing, Theme.Space.l)
             }
+            Spacer()
+            restoreButton
         }
-        .foregroundStyle(Theme.ink)
-        .background(Night.ground.ignoresSafeArea())
-        .task { await viewModel.viewAppeared() }
-        .alert(item: $viewModel.alert, content: alert(for:))
+        .padding(.horizontal, Theme.Space.gutter)
+        .padding(.top, Theme.Space.s)
     }
 
-    /// The one emotional beat on a screen that otherwise has to be commercially plain.
-    ///
-    /// The artwork's sky is enormous and empty, so the headline sets straight into it and the
-    /// prices below stay on solid ground where nothing competes with them. The share is
-    /// deliberately under half the screen: the brief is that the illustration must never push
-    /// the price out of the first scroll.
     private var hero: some View {
-        SceneHero(scene: .freedomRidge, share: 0.42) {
-            VStack(alignment: .leading, spacing: Theme.Space.s) {
-                if profile == nil {
-                    Text("paywall.eyebrow").eyebrowStyle(Night.textSoft)
-                    Text("paywall.headline")
-                        .font(.serif(40, relativeTo: .largeTitle))
-                        .foregroundStyle(Night.text)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityAddTraits(.isHeader)
-                    Text("paywall.subtitle")
-                        .font(.sans(16))
-                        .foregroundStyle(Night.textSoft)
+        VStack(spacing: Theme.Space.m) {
+            Group {
+                if trialPackage != nil {
+                    Text("3-day free trial")
+                } else if profile == nil {
+                    Text("paywall.eyebrow")
                 } else {
-                    Text("paywall.plan.eyebrow").eyebrowStyle(Night.textSoft)
-                    Text("paywall.plan.headline")
-                        .font(.serif(40, relativeTo: .largeTitle))
-                        .foregroundStyle(Night.text)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityAddTraits(.isHeader)
-                    Text("paywall.plan.subtitle")
-                        .font(.sans(16))
-                        .foregroundStyle(Night.textSoft)
+                    Text("paywall.plan.eyebrow")
                 }
             }
+            .eyebrowStyle(Night.textSoft)
+
+            if earnedMinutes > 0 {
+                earnedProof
+            }
+
+            Group {
+                if trialPackage != nil {
+                    Text("Try Earnit Pro free for 3 days.")
+                } else {
+                    Text("Keep your momentum going.")
+                }
+            }
+            .font(.serif(38, relativeTo: .largeTitle))
+            .foregroundStyle(Night.text)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
+
+            Group {
+                if trialPackage != nil {
+                    Text("No charge today or during your 3-day trial.")
+                } else {
+                    Text("Go Pro to keep earning and unlocking your chosen apps.")
+                }
+            }
+            .font(.sans(15, weight: .medium))
+            .foregroundStyle(Night.textSoft)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, Theme.Space.gutter)
+        .padding(.top, Theme.Space.m)
     }
 
-    private func personalizedPlan(_ profile: OnboardingProfile) -> some View {
-        let projection = Projection(profile: profile)
-        return VStack(alignment: .leading, spacing: Theme.Space.s) {
-            Text("YOUR PLAN").eyebrowStyle()
-            paywallPlanRow(
-                icon: "figure.walk",
-                text: Text("\(profile.dailyStepGoal.formatted(.number.locale(locale))) steps/day")
-            )
-            paywallPlanRow(icon: "timer", text: Text("5 min / 500 steps"))
-            paywallPlanRow(icon: "apps.iphone", text: Text("\(restrictedItemCount) selected items"))
-            paywallPlanRow(
-                icon: "target",
-                text: Text("\(projection.totalSteps.formatted(.number.locale(locale)))-step 30-day goal")
-            )
+    private var benefits: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
+            benefit("lock.iphone", "Keep your chosen apps protected")
+            benefit("figure.walk", "Earn more access from your steps")
+            benefit("timer", "Use focus sessions and see your progress")
         }
         .padding(Theme.Space.m)
-        .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
-        .overlay { RoundedRectangle(cornerRadius: Theme.cornerRadius).stroke(Night.edge) }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Night.panel, in: .rect(cornerRadius: Night.panelRadius))
         .padding(.horizontal, Theme.Space.gutter)
         .padding(.top, Theme.Space.l)
     }
 
-    private func paywallPlanRow(icon: String, text: Text) -> some View {
-        HStack(spacing: Theme.Space.s) {
-            Image(systemName: icon).foregroundStyle(Night.cobaltText).frame(width: 24)
-            text.font(.sans(15, weight: .semibold))
+    private func benefit(_ symbol: String, _ title: LocalizedStringKey) -> some View {
+        Label {
+            Text(title)
+                .font(.sans(14, weight: .semibold))
+                .foregroundStyle(Night.text)
+        } icon: {
+            Image(systemName: symbol)
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundStyle(Night.cobaltText)
+                .frame(width: 25)
+        }
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
+    @ViewBuilder
+    private var trialTimeline: some View {
+        if let package = trialPackage {
+            VStack(alignment: .leading, spacing: Theme.Space.s) {
+                timelineRow("Today", detail: "No charge during your trial", price: package.zeroPrice)
+                Rectangle()
+                    .fill(Night.edge)
+                    .frame(height: 1)
+                    .padding(.leading, 26)
+                    .accessibilityHidden(true)
+                timelineRow("After 3 days", detail: "Subscription begins unless you cancel", price: "\(package.price) \(billingPeriod(for: package))")
+            }
+            .padding(Theme.Space.m)
+            .background(Night.cobaltWash, in: .rect(cornerRadius: Night.panelRadius))
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.l)
+        }
+    }
+
+    private func timelineRow(_ title: LocalizedStringKey, detail: LocalizedStringKey, price: String) -> some View {
+        HStack(alignment: .center, spacing: Theme.Space.s) {
+            Image(systemName: "circle.fill")
+                .font(.system(size: 8))
+                .foregroundStyle(Night.cobaltText)
+                .frame(width: 18)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.sans(14, weight: .bold))
+                    .foregroundStyle(Night.text)
+                Text(detail)
+                    .font(.sans(12))
+                    .foregroundStyle(Night.textSoft)
+            }
+            Spacer(minLength: Theme.Space.s)
+            Text(verbatim: price)
+                .font(.sans(13, weight: .semibold))
+                .foregroundStyle(Night.text)
+                .multilineTextAlignment(.trailing)
         }
         .accessibilityElement(children: .combine)
     }
 
-    private var benefits: some View {
-        VStack(spacing: 0) {
-            benefit("Protect the apps that take your time")
-            Hairline()
-            benefit("Earn screen time from your steps")
-            Hairline()
-            benefit("Custom earning rules")
-            Hairline()
-            benefit("Progress insights")
+    private var earnedProof: some View {
+        HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
+            Text("\(earnedMinutes) min")
+                .font(.serif(24))
+                .monospacedDigit()
+                .foregroundStyle(Night.cobaltText)
+            Text("earned so far")
+                .font(.sans(14, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
         }
-        .padding(.horizontal, Theme.Space.gutter)
-        .padding(.top, Theme.Space.l)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, Theme.Space.m)
+        .padding(.vertical, Theme.Space.s)
+        .background(Night.panel, in: .rect(cornerRadius: Night.panelRadius))
+        .accessibilityElement(children: .combine)
     }
 
-    private func benefit(_ title: LocalizedStringKey) -> some View {
-        HStack(spacing: Theme.Space.m) {
-            Image(systemName: "checkmark")
-                .font(.sans(14, weight: .semibold))
-                .foregroundStyle(Night.moss)
-                .frame(width: 20)
-                .accessibilityHidden(true)
-            Text(title)
-                .font(.sans(16, weight: .semibold))
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
+    @ViewBuilder
+    private var cancelNudge: some View {
+        if viewModel.showsCancelNudge, trialPackage != nil {
+            VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                Text("No charge today or during your 3-day trial.")
+                    .font(.sans(16, weight: .bold))
+                    .foregroundStyle(Night.text)
+                Text("Cancel in App Store settings at least 24 hours before the trial ends.")
+                    .font(.sans(14))
+                    .foregroundStyle(Night.textSoft)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Theme.Space.m)
+            .background(Night.cobaltWash, in: .rect(cornerRadius: Night.panelRadius))
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.m)
+            .accessibilityElement(children: .combine)
         }
-        .frame(minHeight: 52)
     }
 
     @ViewBuilder
@@ -230,7 +323,7 @@ private struct ProPaywallContent: View {
                 .padding(.vertical, Theme.Space.l)
                 .accessibilityElement(children: .combine)
             } else {
-                ForEach(viewModel.packages) { package in
+                ForEach(viewModel.packages.sorted { $0.plan == .yearly && $1.plan != .yearly }) { package in
                     PlanRow(
                         package: package,
                         isSelected: viewModel.selectedPackage?.plan == package.plan,
@@ -240,7 +333,7 @@ private struct ProPaywallContent: View {
             }
         }
         .padding(.horizontal, Theme.Space.gutter)
-        .padding(.top, Theme.Space.l)
+        .padding(.top, Theme.Space.m)
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Subscription plans")
     }
@@ -260,9 +353,13 @@ private struct ProPaywallContent: View {
         }
         .buttonStyle(.pill)
         .disabled(!viewModel.canPurchase)
-        .accessibilityHint("Purchases the selected subscription through the App Store")
+        .accessibilityHint(
+            trialPackage == nil
+                ? Text("Purchases the selected subscription through the App Store")
+                : Text("Starts a 3-day free trial through the App Store. No charge until the trial ends.")
+        )
         .padding(.horizontal, Theme.Space.gutter)
-        .padding(.top, Theme.Space.l)
+        .padding(.top, Theme.Space.s)
     }
 
     private var purchaseButtonTitle: Text {
@@ -277,37 +374,45 @@ private struct ProPaywallContent: View {
     }
 
     @ViewBuilder
-    private var subscriptionTerms: some View {
+    private var purchaseSummary: some View {
         if let package = viewModel.selectedPackage {
-            VStack(alignment: .leading, spacing: Theme.Space.s) {
-                if let trial = package.freeTrialDescription(locale: locale) {
-                    Text("\(trial). Then \(package.price) \(billingPeriod(for: package)).")
-                        .font(.sans(15, weight: .semibold))
-                        .foregroundStyle(Theme.ink)
+            VStack(spacing: 3) {
+                if trialPackage != nil {
+                    Text("No charge today or during your 3-day trial.")
+                        .font(.sans(14, weight: .bold))
+                        .foregroundStyle(Night.cobaltText)
+                    Text("After 3 days: \(package.price) \(billingPeriod(for: package)) unless you cancel at least 24 hours before the trial ends.")
+                        .font(.sans(12, weight: .medium))
+                        .foregroundStyle(Night.textSoft)
                 } else {
                     Text("\(package.price) \(billingPeriod(for: package)).")
-                        .font(.sans(15, weight: .semibold))
-                        .foregroundStyle(Theme.ink)
+                        + Text(verbatim: " ")
+                        + Text("Renews automatically.")
                 }
-
-                Text("Your subscription automatically renews for \(package.price) \(billingPeriod(for: package)) unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in App Store settings.")
-                    .font(.sans(13))
-                    .foregroundStyle(Theme.muted)
             }
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(Theme.Space.m)
-            .background(Night.panel.opacity(0.55), in: .rect(cornerRadius: Theme.cornerRadius))
+            .font(.sans(13, weight: .medium))
+            .foregroundStyle(Night.textSoft)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
             .padding(.horizontal, Theme.Space.gutter)
-            .padding(.top, Theme.Space.m)
-            .accessibilityElement(children: .combine)
+            .padding(.top, Theme.Space.s)
         }
+    }
+
+    private var renewalDisclosure: some View {
+        Text("Subscription renews automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in App Store settings.")
+            .font(.sans(11.5))
+            .foregroundStyle(Night.textMuted)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.s)
     }
 
     private func billingPeriod(for package: PaywallPackage) -> String {
         switch package.plan {
-        case .monthly: String(localized: "per month", locale: locale)
-        case .yearly: String(localized: "per year", locale: locale)
+        case .monthly: PaywallPackage.localized("per month", locale: locale)
+        case .yearly: PaywallPackage.localized("per year", locale: locale)
         }
     }
 
@@ -335,9 +440,9 @@ private struct ProPaywallContent: View {
             Link("Privacy Policy", destination: url)
                 .buttonStyle(.quietLink)
         }
-        if AppConfiguration.termsOfUseURL != nil || AppConfiguration.privacyPolicyURL != nil {
-            Text("·").foregroundStyle(Theme.muted).accessibilityHidden(true)
-        }
+    }
+
+    private var restoreButton: some View {
         Button {
             Task {
                 if await viewModel.restorePurchases() { activated() }
@@ -409,15 +514,15 @@ private struct PlanRow: View {
 
     private var title: String {
         switch package.plan {
-        case .monthly: String(localized: "Monthly", locale: locale)
-        case .yearly: String(localized: "Yearly", locale: locale)
+        case .monthly: PaywallPackage.localized("Monthly", locale: locale)
+        case .yearly: PaywallPackage.localized("Yearly", locale: locale)
         }
     }
 
     private var period: String {
         switch package.plan {
-        case .monthly: String(localized: "per month", locale: locale)
-        case .yearly: String(localized: "per year", locale: locale)
+        case .monthly: PaywallPackage.localized("per month", locale: locale)
+        case .yearly: PaywallPackage.localized("per year", locale: locale)
         }
     }
 
@@ -429,36 +534,41 @@ private struct PlanRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: Theme.Space.m) {
-                SelectionDot(isSelected: isSelected)
                 VStack(alignment: .leading, spacing: Theme.Space.xs) {
                     HStack(spacing: Theme.Space.s) {
                         Text(title)
-                            .font(.sans(17, weight: .semibold))
-                        if package.plan == .yearly {
-                            Text("Best value")
-                                .font(.sans(11, weight: .bold))
-                                .foregroundStyle(Night.cobaltText)
-                                .padding(.horizontal, Theme.Space.s)
-                                .padding(.vertical, Theme.Space.xs)
-                                .background(Night.cobaltWash, in: .capsule)
-                        }
+                            .font(.sans(18, weight: .semibold))
                     }
-                    Text(period)
-                        .font(.sans(13))
-                        .foregroundStyle(Theme.muted)
-                    if let trial = package.freeTrialDescription(locale: locale) {
-                        Text(trial)
-                            .font(.sans(12.5, weight: .semibold))
-                            .foregroundStyle(Night.moss)
+                    if package.freeTrialDescription(locale: locale) != nil {
+                        Text("3-day free trial")
+                            .font(.sans(12, weight: .semibold))
+                            .foregroundStyle(Night.cobaltText)
                     }
                 }
                 Spacer(minLength: Theme.Space.s)
-                Text(package.price)
-                    .font(.serif(26, relativeTo: .title3))
-                    .foregroundStyle(isSelected ? Night.text : Night.textSoft)
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                VStack(alignment: .trailing, spacing: 0) {
+                    Text(package.price)
+                        .font(.serif(24, relativeTo: .title3))
+                        .foregroundStyle(isSelected ? Night.text : Night.textSoft)
+                        .monospacedDigit()
+                    Text(period)
+                        .font(.sans(12))
+                        .foregroundStyle(Theme.muted)
+                    if let monthlyEquivalent = package.monthlyEquivalentPrice() {
+                        HStack(spacing: Theme.Space.xs) {
+                            Text(verbatim: monthlyEquivalent)
+                            Text("per month")
+                        }
+                        .font(.sans(11.5, weight: .semibold))
+                        .foregroundStyle(Night.cobaltText)
+                    }
+                }
+                .fixedSize(horizontal: true, vertical: false)
+
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 19, weight: .semibold))
+                    .foregroundStyle(isSelected ? Night.cobaltText : Night.textFaint)
+                    .accessibilityHidden(true)
             }
             .padding(.horizontal, Theme.Space.m)
             .frame(minHeight: 76)
@@ -476,6 +586,163 @@ private struct PlanRow: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+private struct OutcomeComparison: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    let profile: OnboardingProfile?
+
+    var body: some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: Theme.Space.s))
+            : AnyLayout(HStackLayout(alignment: .bottom, spacing: -Theme.Space.l))
+
+        VStack(spacing: Theme.Space.m) {
+            layout {
+                if let profile {
+                    OutcomeCard(
+                        eyebrow: Text("Your usual day"),
+                        value: profile.currentDailySteps.formatted(),
+                        unit: Text("steps"),
+                        detail: nil,
+                        isHighlighted: false
+                    )
+                    OutcomeCard(
+                        eyebrow: Text("Daily movement goal"),
+                        value: profile.dailyStepGoal.formatted(),
+                        unit: Text("steps"),
+                        detail: goalDifference(for: profile),
+                        isHighlighted: true
+                    )
+                    .offset(y: dynamicTypeSize.isAccessibilitySize ? 0 : Theme.Space.l)
+                    .zIndex(1)
+                } else {
+                    OutcomeCard(
+                        eyebrow: Text("Move"),
+                        value: "500",
+                        unit: Text("steps"),
+                        detail: nil,
+                        isHighlighted: false
+                    )
+                    OutcomeCard(
+                        eyebrow: Text("Earn"),
+                        value: "5",
+                        unit: Text("minutes"),
+                        detail: nil,
+                        isHighlighted: true
+                    )
+                    .offset(y: dynamicTypeSize.isAccessibilitySize ? 0 : Theme.Space.l)
+                    .zIndex(1)
+                }
+            }
+            .padding(.bottom, dynamicTypeSize.isAccessibilitySize ? 0 : Theme.Space.l)
+
+            if let profile, let scrolling = profile.scrolling {
+                ScreenTimeComparison(profile: profile, scrolling: scrolling)
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    private func goalDifference(for profile: OnboardingProfile) -> Text? {
+        let difference = max(0, profile.dailyStepGoal - profile.currentDailySteps)
+        guard difference > 0 else { return nil }
+        return Text(verbatim: "+") + Text("\(difference.formatted()) steps/day")
+    }
+}
+
+private struct ScreenTimeComparison: View {
+    let profile: OnboardingProfile
+    let scrolling: OnboardingProfile.ScrollingBand
+
+    private var dailyEarnedMinutes: Int {
+        Projection(
+            profile: profile,
+            rule: EarningRule(source: .steps, amountRequired: 500, rewardSeconds: 300),
+            days: 1
+        ).earnedMinutes
+    }
+
+    var body: some View {
+        HStack(alignment: .center, spacing: Theme.Space.m) {
+            metric(value: Text(scrolling.label), caption: Text("Usual scrolling"), alignment: .leading)
+
+            Image(systemName: "arrow.right")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Night.cobaltText)
+                .accessibilityHidden(true)
+
+            metric(
+                value: Text("common.minutesValue \(dailyEarnedMinutes)"),
+                caption: Text("Screen time earned at your goal"),
+                alignment: .trailing
+            )
+        }
+        .padding(Theme.Space.m)
+        .background(Night.panel.opacity(0.55), in: .rect(cornerRadius: Theme.cornerRadius))
+        .accessibilityElement(children: .contain)
+    }
+
+    private func metric(value: Text, caption: Text, alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment, spacing: Theme.Space.xs) {
+            value
+                .font(.sans(17, weight: .semibold))
+                .foregroundStyle(Night.text)
+            caption
+                .font(.sans(11.5, weight: .medium))
+                .foregroundStyle(Night.textMuted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: alignment == .leading ? .leading : .trailing)
+        .multilineTextAlignment(alignment == .leading ? .leading : .trailing)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+private struct OutcomeCard: View {
+    let eyebrow: Text
+    let value: String
+    let unit: Text
+    let detail: Text?
+    let isHighlighted: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.xs) {
+            eyebrow
+                .font(.sans(13, weight: .semibold))
+                .foregroundStyle(isHighlighted ? Night.cobaltText : Night.textMuted)
+            Text(verbatim: value)
+                .font(.serif(34, relativeTo: .title))
+                .foregroundStyle(Night.text)
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            unit
+                .font(.sans(12, weight: .medium))
+                .foregroundStyle(Night.textSoft)
+            Group {
+                if let detail {
+                    detail
+                } else {
+                    Text(verbatim: " ")
+                }
+            }
+            .font(.sans(11.5, weight: .semibold))
+            .foregroundStyle(Night.cobaltText)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(Theme.Space.m)
+        .background(
+            isHighlighted ? Night.panel : Night.forestLift,
+            in: .rect(cornerRadius: Theme.cornerRadius)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: Theme.cornerRadius)
+                .stroke(isHighlighted ? Night.cobalt.opacity(0.7) : Night.edge)
+        }
+        .shadow(color: Night.groundDeep.opacity(0.45), radius: 18, y: 10)
+        .accessibilityElement(children: .combine)
     }
 }
 

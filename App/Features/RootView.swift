@@ -1,23 +1,48 @@
+import StoreKit
 import SwiftUI
 
 /// Onboarding until it is done, then the app's three top-level sections.
 struct RootView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.requestReview) private var requestReview
     @State private var selectedSection: AppSection = .home
-    @State private var sectionTransitionEdge: Edge = .trailing
     @State private var isShowingDetail = false
+    @State private var didStartSessionFromBlockedApp = false
+    @State private var celebratedStreakDays = 0
+    @AppStorage("streak.celebration.last-seen-day.v1") private var lastStreakCelebrationDay = ""
 
     var body: some View {
-        Group {
-            if !env.hasCompletedOnboarding {
-                OnboardingView()
-            } else if env.subscriptionManager.status == .unknown {
-                subscriptionLoading
-            } else if env.requiresSubscription {
-                ProPaywallView(allowsDismiss: false)
-            } else {
-                mainContent
+        ZStack {
+            Group {
+                if !env.hasCompletedOnboarding {
+                    OnboardingView()
+                } else if env.subscriptionManager.status == .unknown {
+                    subscriptionLoading
+                } else if env.requiresSubscription && !env.isUnlockPaywallDismissed {
+                    // Closable: in 1.2.2 the only person to reach this paywall left the app
+                    // from it, and a wall there also hid Settings, the way to unprotect apps.
+                    // Spending minutes still needs Pro; every unlock surface offers it again.
+                    ProPaywallView(source: .firstUnlock, onClose: env.dismissUnlockPaywall)
+                } else {
+                    mainContent
+                }
+            }
+
+            if let feedback = env.presentationFeedback {
+                EarnFeedbackOverlay(
+                    feedback: feedback,
+                    onFinished: { env.dismissPresentationFeedback(feedback) },
+                    onImpact: { env.triggerPresentationFeedbackHaptic(feedback) },
+                    shouldAnnounce: { env.shouldAnnouncePresentationFeedback(feedback) }
+                )
+                .zIndex(10)
+            }
+
+            if celebratedStreakDays > 0 {
+                StreakCelebrationView(days: celebratedStreakDays, onDismiss: dismissStreakCelebration)
+                    .transition(.opacity)
+                    .zIndex(20)
             }
         }
         // v6 is one nocturnal palette, deliberately the same in both system appearances: the
@@ -25,34 +50,83 @@ struct RootView: View {
         .preferredColorScheme(.dark)
         .tint(Night.cobalt)
         .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: env.hasCompletedOnboarding)
-        .onAppear { applyPendingRoute(env.pendingRoute) }
+        .onAppear {
+            applyPendingRoute(env.pendingRoute)
+            if isAdaptiveIntroPending {
+                env.setFeedbackPresentationSuspended(true, by: "root.adaptiveIntro")
+            }
+            if isPushupsIntroPending {
+                env.setFeedbackPresentationSuspended(true, by: "root.pushupsIntro")
+            }
+            presentStreakCelebrationIfNeeded()
+        }
         .onChange(of: env.pendingRoute) { _, route in
             applyPendingRoute(route)
         }
+        .onChange(of: env.shouldRequestReview) { _, shouldRequest in
+            guard shouldRequest else { return }
+            requestReview()
+            env.consumeReviewRequest()
+        }
+        .onChange(of: isAdaptiveIntroPending) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "root.adaptiveIntro")
+        }
+        .onChange(of: isPushupsIntroPending) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "root.pushupsIntro")
+        }
+        .onChange(of: streakCelebrationEligibilityToken) { _, _ in
+            presentStreakCelebrationIfNeeded()
+        }
         .fullScreenCover(isPresented: Binding(
-            get: { env.hasCompletedOnboarding && env.isPresentingBlockedAppDetail },
+            get: {
+                env.hasCompletedOnboarding
+                    && (!env.requiresSubscription || env.isUnlockPaywallDismissed)
+                    && env.isPresentingBlockedAppDetail
+            },
             set: { if !$0 { env.dismissBlockedAppDetail() } }
-        )) {
-            BlockedAppDetailView(onDismiss: env.dismissBlockedAppDetail)
+        ), onDismiss: {
+            env.setFeedbackPresentationSuspended(false, by: "root.blockedApp")
+            guard didStartSessionFromBlockedApp else { return }
+            didStartSessionFromBlockedApp = false
+            env.presentSessionStartedFeedback()
+        }) {
+            BlockedAppDetailView(
+                onDismiss: env.dismissBlockedAppDetail,
+                onSessionStarted: {
+                    didStartSessionFromBlockedApp = true
+                    env.dismissBlockedAppDetail()
+                },
+                onPushups: {
+                    env.analytics.track(.pushupsEntryTapped.withProperties([
+                        "source": .string("blocked_detail")
+                    ]))
+                    env.requestRoute(.pushups)
+                    env.dismissBlockedAppDetail()
+                }
+            )
+            .onAppear {
+                env.setFeedbackPresentationSuspended(true, by: "root.blockedApp")
+            }
         }
         .sheet(isPresented: Binding(
             get: { isAdaptiveIntroPending },
             set: { if !$0 { env.markAdaptiveIntroSeen() } }
-        )) {
+        ), onDismiss: {
+            env.setFeedbackPresentationSuspended(false, by: "root.adaptiveIntro")
+        }) {
             AdaptiveExistingUserView()
                 .interactiveDismissDisabled()
         }
         // Only one sheet can be presented from here, so someone owed both meets the adaptive
         // intro first and this one on the next launch.
         .sheet(isPresented: Binding(
-            get: {
-                env.hasCompletedOnboarding
-                    && env.subscriptionManager.isPro
-                    && !env.state.pushupsIntroSeen
-                    && !isAdaptiveIntroPending
-            },
+            get: { isPushupsIntroPending },
             set: { if !$0 { env.markPushupsIntroSeen() } }
-        )) {
+        ), onDismiss: {
+            env.setFeedbackPresentationSuspended(false, by: "root.pushupsIntro")
+        }) {
             PushupsIntroView(onStart: { env.requestRoute(.pushups) })
         }
     }
@@ -63,6 +137,24 @@ struct RootView: View {
             && env.subscriptionManager.isPro
             && env.profile.onboardingCompletedAt == nil
             && !env.state.adaptiveIntroSeen
+    }
+
+    private var isPushupsIntroPending: Bool {
+        env.hasCompletedOnboarding
+            && env.subscriptionManager.isPro
+            && !env.state.pushupsIntroSeen
+            && !isAdaptiveIntroPending
+    }
+
+    private var streakCelebrationEligibilityToken: String {
+        guard env.hasCompletedOnboarding,
+              env.subscriptionManager.isPro,
+              env.streakDays > 0,
+              env.presentationFeedback == nil,
+              !env.isPresentingBlockedAppDetail,
+              !isAdaptiveIntroPending,
+              !isPushupsIntroPending else { return "ineligible" }
+        return "\(env.state.ledger.day.description)-\(env.streakDays)"
     }
 
     private var subscriptionLoading: some View {
@@ -94,7 +186,7 @@ struct RootView: View {
                 }
             }
             .id(selectedSection)
-            .transition(sectionTransition)
+            .transition(.opacity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -109,18 +201,9 @@ struct RootView: View {
         .onChange(of: selectedSection) { _, _ in isShowingDetail = false }
     }
 
-    private var sectionTransition: AnyTransition {
-        guard !reduceMotion else { return .opacity }
-        return .asymmetric(
-            insertion: .move(edge: sectionTransitionEdge),
-            removal: .opacity.animation(.easeOut(duration: 0.16))
-        )
-    }
-
     private func selectSection(_ section: AppSection) {
         guard section != selectedSection else { return }
-        sectionTransitionEdge = section.index > selectedSection.index ? .trailing : .leading
-        withAnimation(reduceMotion ? .easeOut(duration: 0.15) : .snappy(duration: 0.36)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.15)) {
             selectedSection = section
         }
     }
@@ -132,5 +215,20 @@ struct RootView: View {
         // `.pushups` needs the Dashboard's navigation stack, so it consumes that one itself.
         guard route == .home else { return }
         env.consumePendingRoute()
+    }
+
+    private func presentStreakCelebrationIfNeeded() {
+        guard streakCelebrationEligibilityToken != "ineligible" else { return }
+        let day = env.state.ledger.day.description
+        guard lastStreakCelebrationDay != day, celebratedStreakDays == 0 else { return }
+
+        lastStreakCelebrationDay = day
+        celebratedStreakDays = env.streakDays
+        env.setFeedbackPresentationSuspended(true, by: "root.streakCelebration")
+    }
+
+    private func dismissStreakCelebration() {
+        celebratedStreakDays = 0
+        env.setFeedbackPresentationSuspended(false, by: "root.streakCelebration")
     }
 }

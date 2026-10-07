@@ -232,6 +232,12 @@ public enum ScreenTimeSessionEngine {
         next.currentSession?.settledAt = date
         next.currentSession?.consumedSeconds = consumed
         next.currentSession?.savedSeconds = saved
+        if status == .completed || status == .paused {
+            next.ledger.sessionCount += 1
+        }
+        if status == .paused {
+            next.ledger.returnedSessionSeconds += saved
+        }
         if newlyConsumed > 0 {
             next.ledger.walletTransactions.append(WalletTransaction(
                 kind: .consumed,

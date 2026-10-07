@@ -18,6 +18,7 @@ struct DashboardView: View {
     private enum HomeDestination: Hashable {
         case earnTime
         case pushups
+        case study
     }
 
     @State private var path: [HomeDestination] = []
@@ -26,6 +27,10 @@ struct DashboardView: View {
     @State private var isShowingJourneyResult = false
     @State private var selection = FamilyActivitySelection()
     @State private var selectedSessionMinutes = 5
+    @State private var didStartSession = false
+    @State private var isShowingPushupsPaywall = false
+    @State private var isShowingStudyPaywall = false
+    @State private var isShowingUnlockPaywall = false
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -39,31 +44,38 @@ struct DashboardView: View {
                     onChooseApps: { isShowingApps = true },
                     onSpend: {
                         guard env.wallet.availableMinutes > 0 else { return }
+                        guard !env.requiresSubscription else {
+                            isShowingUnlockPaywall = true
+                            return
+                        }
                         isShowingSpend = true
                     },
-                    onEarnMore: { path.append(.earnTime) }
+                    onEarnMore: { path.append(.earnTime) },
+                    onPushups: { openPushups(source: "home") }
                 )
 
-                if let feedback = env.presentationFeedback {
-                    EarnFeedbackOverlay(
-                        feedback: feedback,
-                        onFinished: { env.dismissPresentationFeedback(feedback) }
-                    )
-                    .zIndex(1)
-                }
             }
             .toolbar(.hidden, for: .navigationBar)
+            .fullScreenCover(isPresented: $isShowingPushupsPaywall) {
+                ProPaywallView(source: .pushups)
+            }
+            .fullScreenCover(isPresented: $isShowingStudyPaywall) {
+                ProPaywallView(source: .study)
+            }
+            .fullScreenCover(isPresented: $isShowingUnlockPaywall) {
+                ProPaywallView(source: .unlockAttempt)
+            }
             .navigationDestination(for: HomeDestination.self) { destination in
                 switch destination {
                 case .earnTime:
                     EarnTimeView(
-                        onPushups: { path.append(.pushups) }
+                        onPushups: { openPushups(source: "earn_time") },
+                        onStudy: openStudy
                     )
                 case .pushups:
-                    PushupsToEarnView(onUseMinutes: {
-                        path.removeAll()
-                        isShowingSpend = true
-                    })
+                    PushupsToEarnView(onUseMinutes: openSpendAfterReward)
+                case .study:
+                    StudyToEarnView(onUseMinutes: openSpendAfterReward)
                 }
             }
         }
@@ -92,6 +104,9 @@ struct DashboardView: View {
             selection = env.screenTime.selection
             isShowingJourneyResult = env.journey?.finalizedResult != nil
                 && env.journey?.completionAcknowledged == false
+            if env.profile.pendingGoalRecommendation != nil {
+                env.setFeedbackPresentationSuspended(true, by: "dashboard.goalRecommendation")
+            }
         }
         .onChange(of: path) { _, path in
             onNavigationDepthChange?(!path.isEmpty)
@@ -102,15 +117,45 @@ struct DashboardView: View {
                 selectedSessionMinutes = max(1, availableMinutes)
             }
         }
-        .sheet(isPresented: $isShowingApps, onDismiss: { selection = env.screenTime.selection }) {
+        .onChange(of: isShowingApps) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "dashboard.apps")
+        }
+        .onChange(of: isShowingSpend) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "dashboard.spend")
+        }
+        .onChange(of: isShowingJourneyResult) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "dashboard.journey")
+        }
+        .onChange(of: env.profile.pendingGoalRecommendation != nil) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "dashboard.goalRecommendation")
+        }
+        .sheet(isPresented: $isShowingApps, onDismiss: {
+            selection = env.screenTime.selection
+            env.setFeedbackPresentationSuspended(false, by: "dashboard.apps")
+        }) {
             AppSelectionView()
         }
-        .sheet(isPresented: $isShowingSpend) {
-            SpendSheet(selectedMinutes: $selectedSessionMinutes)
-                .presentationDetents([.height(430)])
+        .sheet(isPresented: $isShowingSpend, onDismiss: {
+            env.setFeedbackPresentationSuspended(false, by: "dashboard.spend")
+            guard didStartSession else { return }
+            didStartSession = false
+            env.presentSessionStartedFeedback()
+        }) {
+            SpendSheet(
+                selectedMinutes: $selectedSessionMinutes,
+                onStarted: { didStartSession = true }
+            )
+                .presentationDetents([.height(560), .large])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(isPresented: $isShowingJourneyResult, onDismiss: env.acknowledgeJourneyCompletion) {
+        .sheet(isPresented: $isShowingJourneyResult, onDismiss: {
+            env.acknowledgeJourneyCompletion()
+            env.setFeedbackPresentationSuspended(false, by: "dashboard.journey")
+        }) {
             if let journey = env.journey, let result = journey.finalizedResult {
                 JourneyResultView(journey: journey, result: result) {
                     env.acknowledgeJourneyCompletion()
@@ -121,163 +166,57 @@ struct DashboardView: View {
         .sheet(isPresented: Binding(
             get: { env.profile.pendingGoalRecommendation != nil },
             set: { if !$0, env.profile.pendingGoalRecommendation != nil { env.respondToGoalRecommendation(accept: false) } }
-        )) {
+        ), onDismiss: {
+            env.setFeedbackPresentationSuspended(false, by: "dashboard.goalRecommendation")
+        }) {
             GoalRecommendationView()
                 .interactiveDismissDisabled()
         }
     }
 
-    /// The push-up route is deep in this stack, so it is resolved here rather than in `RootView`.
+    /// Pushups lives in this stack, so deep links are resolved here rather than in `RootView`.
     private func applyPendingRoute(_ route: AppRoute?) {
         guard route == .pushups else { return }
         isShowingSpend = false
-        path = [.earnTime, .pushups]
         env.consumePendingRoute()
-    }
-}
-
-private struct EarnFeedbackOverlay: View {
-    let feedback: EarnPresentationFeedback
-    let onFinished: () -> Void
-    var reduceMotionOverride: Bool? = nil
-
-    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
-    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
-    @State private var phase = Phase.hidden
-
-    private enum Phase {
-        case hidden
-        case arrived
-        case settled
-        case exiting
+        guard env.featureAccess.canUseWorkoutEarning else {
+            isShowingPushupsPaywall = true
+            return
+        }
+        path = [.pushups]
     }
 
-    private var reduceMotion: Bool { reduceMotionOverride ?? systemReduceMotion }
-
-    private var title: LocalizedStringKey? {
-        switch feedback.event {
-        case let .screenTimeEarned(minutes): "feedback.earned \(minutes)"
-        case let .firstRewardEarned(minutes): "feedback.firstReward \(minutes)"
-        case let .dailyGoalCompleted(minutes): "feedback.goalComplete \(minutes)"
-        case .appUnlocked: "feedback.appsUnlocked"
-        case .appLocked: "feedback.appsLocked"
-        case .balanceExpired: "feedback.balanceEmpty"
-        case let .timeSaved(seconds):
-            seconds < 60 ? "feedback.timeSavedLessThanMinute" : "feedback.timeSaved \(seconds / 60)"
-        case .walletFull: "feedback.walletFull"
-        case let .streakUpdated(days): "feedback.streak \(days)"
-        case .error: nil
+    /// Someone who has not paid gets one push-up reward. Once it is used, push-ups open a paywall
+    /// they can close rather than a challenge the server would refuse at the claim.
+    private func openPushups(source: String) {
+        env.analytics.track(.pushupsEntryTapped.withProperties([
+            "source": .string(source),
+            "has_access": .bool(env.featureAccess.canUseWorkoutEarning)
+        ]))
+        guard env.featureAccess.canUseWorkoutEarning else {
+            isShowingPushupsPaywall = true
+            return
         }
+        path.append(.pushups)
     }
 
-    var body: some View {
-        Group {
-            if let title {
-                VStack {
-                    Text(title)
-                        .font(.sans(12, weight: .bold))
-                        .textCase(.uppercase)
-                        .kerning(1.2)
-                        .foregroundStyle(Night.cobaltText)
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 9)
-                        .background(.ultraThinMaterial, in: .capsule)
-                        .background(Night.panel.opacity(0.9), in: .capsule)
-                        .overlay {
-                            Capsule()
-                                .stroke(Night.cobalt.opacity(borderOpacity), lineWidth: 1)
-                        }
-                        .shadow(color: Night.cobalt.opacity(shadowOpacity), radius: 14, y: 5)
-                        .opacity(opacity)
-                        .scaleEffect(scale)
-                        .offset(y: offset)
-                        .accessibilityAddTraits(.isStaticText)
-                    Spacer()
-                }
-                .padding(.top, 64)
-                .accessibilityElement(children: .combine)
-                .allowsHitTesting(false)
-            }
+    private func openStudy() {
+        guard env.featureAccess.canUseFocusEarning else {
+            isShowingStudyPaywall = true
+            return
         }
-        .task(id: feedback.id) {
-            guard title != nil else {
-                onFinished()
-                return
-            }
-            await animatePresentation()
-        }
+        path.append(.study)
     }
 
-    private var opacity: Double {
-        switch phase {
-        case .hidden, .exiting: 0
-        case .arrived, .settled: 1
+    private func openSpendAfterReward() {
+        path.removeAll()
+        if env.screenTime.selection.isEmpty {
+            isShowingApps = true
+        } else if env.requiresSubscription {
+            isShowingUnlockPaywall = true
+        } else {
+            isShowingSpend = true
         }
-    }
-
-    private var scale: CGFloat {
-        guard !reduceMotion else { return 1 }
-        return switch phase {
-        case .hidden: 0.985
-        case .arrived, .settled: 1
-        case .exiting: 0.995
-        }
-    }
-
-    private var offset: CGFloat {
-        guard !reduceMotion else { return 0 }
-        return switch phase {
-        case .hidden: 8
-        case .arrived, .settled: 0
-        case .exiting: -6
-        }
-    }
-
-    private var borderOpacity: Double {
-        switch phase {
-        case .hidden, .exiting: 0
-        case .arrived: 0.55
-        case .settled: 0.22
-        }
-    }
-
-    private var shadowOpacity: Double {
-        switch phase {
-        case .arrived: 0.22
-        default: 0
-        }
-    }
-
-    @MainActor
-    private func animatePresentation() async {
-        phase = .hidden
-        await Task.yield()
-        guard !Task.isCancelled else { return }
-
-        withAnimation(.easeOut(duration: reduceMotion ? 0.18 : 0.32)) {
-            phase = .arrived
-        }
-        try? await Task.sleep(for: .milliseconds(reduceMotion ? 180 : 320))
-        guard !Task.isCancelled else { return }
-
-        try? await Task.sleep(for: .milliseconds(reduceMotion ? 100 : 160))
-        guard !Task.isCancelled else { return }
-
-        withAnimation(.easeOut(duration: reduceMotion ? 0.18 : 0.36)) {
-            phase = .settled
-        }
-        try? await Task.sleep(for: .milliseconds(reduceMotion ? 180 : 360))
-        guard !Task.isCancelled else { return }
-
-        try? await Task.sleep(for: .milliseconds(voiceOverEnabled ? 1_800 : 650))
-        guard !Task.isCancelled else { return }
-
-        withAnimation(.easeIn(duration: reduceMotion ? 0.18 : 0.36)) {
-            phase = .exiting
-        }
-        try? await Task.sleep(for: .milliseconds(reduceMotion ? 180 : 360))
-        guard !Task.isCancelled else { return }
-        onFinished()
     }
 }
 
@@ -285,11 +224,11 @@ private struct EarnFeedbackOverlay: View {
 
 /// Choosing how much of the balance to spend.
 ///
-/// Home has no start button — the design's spend row *is* the affordance — so the durations live
-/// here, one tap in.
+/// The duration, selected apps, and resulting balance are visible before the reservation begins.
 struct SpendSheet: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Binding var selectedMinutes: Int
     var onStarted: () -> Void = {}
 
@@ -304,52 +243,89 @@ struct SpendSheet: View {
         return durations
     }
 
+    private var minutesAfterSession: Int {
+        max(0, env.wallet.availableMinutes - selectedMinutes)
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.Space.m) {
-            Text("session.chooseDuration")
-                .font(.sans(11))
-                .textCase(.uppercase)
-                .kerning(1.5)
-                .foregroundStyle(Theme.muted)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Theme.Space.l) {
+                VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                    NightEyebrow(text: "session.chooseDuration")
+                    Text("home.useMinutes")
+                        .font(.serif(35))
+                        .foregroundStyle(Night.text)
+                }
 
-            HStack(spacing: Theme.Space.s) {
-                ForEach(presetDurations, id: \.self) { minutes in
-                    let isSelected = selectedMinutes == minutes
-                    Button {
-                        selectedMinutes = minutes
-                    } label: {
-                        Text("common.minutesValue \(minutes)")
-                            .font(.sans(15, weight: .semibold))
-                            .foregroundStyle(isSelected ? Color.white : Night.textSoft)
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: Theme.minTouchTarget)
-                            .background(
-                                isSelected ? Night.cobalt : Night.forestLift,
-                                in: .capsule
-                            )
+                HStack(alignment: .firstTextBaseline) {
+                    balanceFigure(env.wallet.availableMinutes, label: "session.available")
+                    Spacer(minLength: Theme.Space.s)
+                    Image(systemName: "arrow.right")
+                        .font(.sans(14, weight: .semibold))
+                        .foregroundStyle(Night.textDim)
+                    Spacer(minLength: Theme.Space.s)
+                    balanceFigure(minutesAfterSession, label: "session.after")
+                }
+                .padding(Theme.Space.m)
+                .background(Night.panel, in: .rect(cornerRadius: Night.cardRadius))
+
+                VStack(alignment: .leading, spacing: Theme.Space.m) {
+                    HStack(spacing: Theme.Space.s) {
+                        ForEach(presetDurations, id: \.self) { minutes in
+                            let isSelected = selectedMinutes == minutes
+                            Button {
+                                guard selectedMinutes != minutes else { return }
+                                selectedMinutes = minutes
+                                HapticManager.trigger(.light)
+                            } label: {
+                                Text("common.minutesValue \(minutes)")
+                                    .font(.sans(15, weight: .semibold))
+                                    .frame(maxWidth: .infinity)
+                                    .frame(minHeight: Theme.minTouchTarget)
+                            }
+                            .buttonStyle(DurationChoiceButtonStyle(isSelected: isSelected))
+                            .accessibilityAddTraits(isSelected ? .isSelected : [])
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(isSelected ? .isSelected : [])
+
+                    Stepper(value: $selectedMinutes, in: 1...max(1, env.maximumStartableMinutes)) {
+                        HStack {
+                            Text("session.customDuration")
+                                .font(.sans(14))
+                                .foregroundStyle(Night.textMuted)
+                            Spacer()
+                            Text("common.minutesValue \(selectedMinutes)")
+                                .font(.sans(16, weight: .semibold))
+                                .foregroundStyle(Night.text)
+                                .monospacedDigit()
+                                .contentTransition(.numericText(value: Double(selectedMinutes)))
+                        }
+                    }
+                    .tint(Night.cobalt)
+                }
+                .animation(reduceMotion ? nil : .snappy(duration: EarnMotion.quick), value: selectedMinutes)
+
+                Label("appSelection.count \(env.screenTime.selection.itemCount)", systemImage: "square.grid.2x2")
+                    .font(.sans(13, weight: .medium))
+                    .foregroundStyle(Night.textSoft)
+
+                Text("session.clockDisclaimer")
+                    .font(.sans(12.5))
+                    .foregroundStyle(Night.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let error = env.lastError {
+                    Text(error)
+                        .font(.sans(12.5))
+                        .foregroundStyle(Night.textSoft)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
-
-            Stepper(value: $selectedMinutes, in: 1...max(1, env.maximumStartableMinutes)) {
-                HStack {
-                    Text("session.customDuration")
-                        .font(.sans(14))
-                        .foregroundStyle(Theme.muted)
-                    Spacer()
-                    Text("common.minutesValue \(selectedMinutes)")
-                        .font(.sans(16, weight: .semibold))
-                        .monospacedDigit()
-                }
-            }
-
-            Text("session.clockDisclaimer")
-                .font(.sans(12.5))
-                .foregroundStyle(Theme.muted)
-                .fixedSize(horizontal: false, vertical: true)
-
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.xl)
+            .padding(.bottom, Theme.Space.m)
+        }
+        .safeAreaInset(edge: .bottom) {
             Button {
                 Task {
                     await env.startSession(durationMinutes: selectedMinutes)
@@ -361,32 +337,51 @@ struct SpendSheet: View {
             } label: {
                 HStack(spacing: Theme.Space.s) {
                     if env.isStartingSession {
-                        ProgressView().tint(Color.white).accessibilityHidden(true)
+                        ProgressView().tint(.white).accessibilityHidden(true)
                     }
                     Text("session.start \(selectedMinutes)")
                 }
             }
-            .buttonStyle(.pill)
+            .buttonStyle(.nightPill)
             .disabled(env.isStartingSession || selectedMinutes > env.maximumStartableMinutes)
-
-            if let error = env.lastError {
-                Text(error)
-                    .font(.sans(12.5))
-                    .foregroundStyle(Theme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            Spacer(minLength: 0)
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.s)
+            .padding(.bottom, Theme.Space.s)
+            .background(Night.ground)
         }
-        .padding(.horizontal, 28)
-        .padding(.top, Theme.Space.xl)
-        .padding(.bottom, Theme.Space.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .foregroundStyle(Theme.ink)
+        .foregroundStyle(Night.text)
         .background(Night.ground.ignoresSafeArea())
         .onAppear {
             selectedMinutes = min(max(1, selectedMinutes), max(1, env.maximumStartableMinutes))
         }
+    }
+
+    private func balanceFigure(_ minutes: Int, label: LocalizedStringKey) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(minutes.formatted())
+                .font(.serif(32))
+                .monospacedDigit()
+                .contentTransition(.numericText(value: Double(minutes)))
+            Text(label)
+                .font(.sans(12))
+                .foregroundStyle(Night.textMuted)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct DurationChoiceButtonStyle: ButtonStyle {
+    let isSelected: Bool
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(isSelected ? Color.white : Night.textSoft)
+            .background(isSelected ? Night.cobalt : Night.forestLift, in: .capsule)
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
+            .opacity(configuration.isPressed ? 0.82 : 1)
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }
 
@@ -530,25 +525,4 @@ private struct JourneyResultView: View {
             screenTime: MockScreenTimeService(status: .approved),
             health: MockHealthKitService(hasRequested: true, steps: 3_842)
         ))
-}
-
-#Preview("Earned feedback") {
-    ZStack {
-        SceneBackdrop(scene: .homeEvening).ignoresSafeArea()
-        EarnFeedbackOverlay(
-            feedback: EarnPresentationFeedback(event: .screenTimeEarned(minutes: 5)),
-            onFinished: {}
-        )
-    }
-}
-
-#Preview("Goal feedback - Reduce Motion") {
-    ZStack {
-        SceneBackdrop(scene: .homeEvening).ignoresSafeArea()
-        EarnFeedbackOverlay(
-            feedback: EarnPresentationFeedback(event: .dailyGoalCompleted(minutes: 5)),
-            onFinished: {},
-            reduceMotionOverride: true
-        )
-    }
 }

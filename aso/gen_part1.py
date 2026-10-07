@@ -8,7 +8,7 @@ M["en-US"] = dict(
  name="Earn Screen Time: Earnit",
  subtitle="App Blocker & Digital Detox",
  keywords="phone addiction,doomscrolling,self control,study focus timer,block distraction,limit,brainrot",
- promo="Now earn your minutes three ways: walk, study, or do push-ups. The apps you chose stay locked until you do.",
+ promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
 Earnit locks the apps that eat your day and keeps them locked until you do something worth doing. Walk. Study. Do push-ups. Every effort turns into minutes you can actually spend.
@@ -42,14 +42,14 @@ M["en-GB"] = dict(
  name="Earn Screen Time: Earnit",
  subtitle="App Blocker & Digital Detox",
  keywords="phone addiction,doomscrolling,self control,study focus timer,block distraction,limit,brainrot",
- promo="Now earn your minutes three ways: walk, study, or do press-ups. The apps you chose stay locked until you do.",
+ promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("PUSH-UPS","PRESS-UPS"))
 
 M["es-ES"] = dict(
  name="Ganar tiempo pantalla: Earnit",
  subtitle="Bloquear apps y detox digital",
  keywords="adiccion al movil,autocontrol,concentracion,estudiar,limite,bloqueo,habitos,dejar de scrollear",
- promo="Ahora ganas tus minutos de tres formas: caminando, estudiando o haciendo flexiones. Hasta entonces, las apps siguen bloqueadas.",
+ promo="Nuevo: prueba una serie real de flexiones en el propio onboarding y descubre cómo Earnit desbloquea tus apps. La cámara cuenta, el vídeo nunca se guarda.",
  desc="""Tu móvil no debería ser gratis. Gánatelo.
 
 Earnit bloquea las apps que te comen el día y las mantiene bloqueadas hasta que hagas algo que merezca la pena. Camina. Estudia. Haz flexiones. Cada esfuerzo se convierte en minutos que puedes gastar de verdad.
@@ -83,14 +83,14 @@ M["es-MX"] = dict(
  name="Ganar tiempo pantalla: Earnit",
  subtitle="Bloqueador de apps y detox",
  keywords="adiccion al celular,autocontrol,concentracion,estudiar,limite,bloqueo,habitos,dejar de scrollear",
- promo="Ahora ganas tus minutos de tres formas: caminando, estudiando o haciendo lagartijas. Hasta entonces, las apps siguen bloqueadas.",
+ promo="Nuevo: prueba una serie real de lagartijas en el propio onboarding y descubre cómo Earnit desbloquea tus apps. La cámara cuenta, el video nunca se guarda.",
  desc=M["es-ES"]["desc"].replace("móvil","celular").replace("flexiones","lagartijas").replace("FLEXIONES","LAGARTIJAS").replace("paseo","caminata").replace("pulsera ni reloj","banda ni reloj"))
 
 M["de-DE"] = dict(
  name="Bildschirmzeit: Earnit",
  subtitle="App Sperre & Digital Detox",
  keywords="verdienen,handysucht,selbstkontrolle,lernen,fokus,ablenkung,limit,gewohnheit,weniger scrollen",
- promo="Verdien deine Minuten jetzt auf drei Arten: laufen, lernen oder Liegestütze. Bis dahin bleiben deine Apps gesperrt.",
+ promo="Neu: Probier direkt im Onboarding einen echten Satz Liegestütze und erlebe, wie Earnit deine Apps freischaltet. Kamera zählt, Video wird nie gespeichert.",
  desc="""Dein Handy sollte nicht umsonst sein. Verdien es dir.
 
 Earnit sperrt die Apps, die dir den Tag wegfressen, und hält sie gesperrt, bis du etwas tust, das sich lohnt. Laufen. Lernen. Liegestütze. Jede Anstrengung wird zu Minuten, die du wirklich ausgeben kannst.
@@ -124,7 +124,7 @@ M["fr-FR"] = dict(
  name="Temps d'écran : Earnit",
  subtitle="Bloquer les applis & détox",
  keywords="gagner,addiction telephone,autodiscipline,concentration,etudier,limite,distraction,habitude",
- promo="Gagnez vos minutes de trois façons : marcher, réviser ou faire des pompes. D'ici là, vos applis restent bloquées.",
+ promo="Nouveau : essayez une vraie série de pompes dès l'onboarding et découvrez comment Earnit débloque vos applis. La caméra compte, la vidéo n'est jamais gardée.",
  desc="""Votre téléphone ne devrait pas être gratuit. Méritez-le.
 
 Earnit bloque les applis qui dévorent vos journées et les garde bloquées jusqu'à ce que vous fassiez quelque chose qui en vaut la peine. Marcher. Réviser. Faire des pompes. Chaque effort devient des minutes que vous pouvez réellement dépenser.

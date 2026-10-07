@@ -114,6 +114,47 @@ struct ActivityHistoryTests {
         #expect(totals.activeDays == 2)
     }
 
+    @Test("Progress totals include earning sources, consumption, and sessions")
+    func progressTotals() {
+        var history = ActivityHistory()
+        history.record(DaySummary(
+            day: day(-1),
+            activityAmount: 4_000,
+            stepEarnedSeconds: 600,
+            studyEarnedSeconds: 300,
+            pushupEarnedSeconds: 900,
+            consumedSeconds: 720,
+            sessionCount: 2,
+            returnedSeconds: 180
+        ))
+
+        let totals = history.totals(in: day(-1)...day(-1))
+        #expect(totals.stepEarnedSeconds == 600)
+        #expect(totals.studyEarnedSeconds == 300)
+        #expect(totals.pushupEarnedSeconds == 900)
+        #expect(totals.consumedSeconds == 720)
+        #expect(totals.sessionCount == 2)
+        #expect(totals.returnedSeconds == 180)
+        #expect(totals.netSeconds == 1_080)
+    }
+
+    @Test("The current month fills every date through today")
+    func monthFillsDates() {
+        let augustTwentieth = DayKey(year: 2026, month: 8, day: 20)
+        var history = ActivityHistory()
+        history.record(DaySummary(
+            day: DayKey(year: 2026, month: 8, day: 3),
+            activityAmount: 1_500,
+            earnedSeconds: 300
+        ))
+
+        let month = history.month(through: augustTwentieth)
+        #expect(month.count == 20)
+        #expect(month.first?.day == DayKey(year: 2026, month: 8, day: 1))
+        #expect(month[2].earnedSeconds == 300)
+        #expect(month.last?.day == augustTwentieth)
+    }
+
     @Test("Day summaries round-trip Pushups without classifying them as steps")
     func pushupCodableRoundTrip() throws {
         let summary = DaySummary(
@@ -129,5 +170,8 @@ struct ActivityHistoryTests {
         #expect(decoded.earnedSeconds == 1_800)
         #expect(decoded.stepEarnedSeconds == 600)
         #expect(decoded.pushupEarnedSeconds == 900)
+        #expect(decoded.consumedSeconds == 0)
+        #expect(decoded.sessionCount == 0)
+        #expect(decoded.hasUsageData)
     }
 }

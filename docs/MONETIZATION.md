@@ -24,10 +24,10 @@ RevenueCat. RevenueCat supplies packages and localized prices but does not contr
 `restrictedAppSelectionGate` wraps the existing Family Controls picker and never reads or derives
 token identities. Product UI is available only while the subscription entitlement is active.
 
-New users build their app selection during onboarding before seeing a mandatory personalized
-paywall. Activating the product requires an active `Earn your Screen Time Pro` entitlement from a
-trial subscription, direct subscription, or restore. There is no permanent free tier, and expired
-subscribers return to the non-dismissible subscription screen.
+New users build their app selection during onboarding and can spend one earned unlock before the
+mandatory paywall. Continuing after that preview requires an active `Earn your Screen Time Pro`
+entitlement from a trial subscription, direct subscription, or restore. There is no permanent free
+tier, and expired subscribers return to the non-dismissible subscription screen.
 The free trial lasts three days. Trial copy is shown only when RevenueCat reports a three-day free
 introductory offer and eligibility for the selected product.
 
@@ -50,13 +50,10 @@ These values are centralized in `App/Monetization/Entitlements.swift`. Change th
 StoreKit/App Store/RevenueCat product definitions if the final identifiers differ.
 
 The public RevenueCat SDK key is read from the `RevenueCatAPIKey` Info.plist value, backed by the
-`REVENUECAT_API_KEY` build setting in `project.yml`. Debug uses the project's `test_` RevenueCat Test
-Store key. Release intentionally uses an empty value and therefore cannot activate subscription
-access until the real Apple app is connected. Never submit an App Store build containing a `test_` key.
-
-When the Apple app is connected, set its `appl_` public SDK key for Release through CI or a local
-`.xcconfig`. Keep the generated `.xcodeproj` and any local `.xcconfig` overrides out of source
-control.
+`REVENUECAT_API_KEY` build setting in `project.yml`. The normal Debug and Release configurations
+use the Apple `appl_` public SDK key, so the paywall receives the actual Apple subscription offers.
+`DebugTestStore` uses RevenueCat's `test_` catalog for simulated purchases. Never submit an App
+Store build containing a `test_` key. Keep the generated `.xcodeproj` out of source control.
 
 The default/current RevenueCat Offering is used. Attach monthly and annual packages to it; no
 RevenueCat-hosted paywall is required. Terms and Privacy URLs are centralized as build settings in
@@ -64,28 +61,28 @@ RevenueCat-hosted paywall is required. Terms and Privacy URLs are centralized as
 checked-in values point to the repository's Terms and Privacy documents. Replace them with the final
 published legal-page URLs before distribution if those locations change.
 
-For the current Test Store project:
+For the separate `EarnYourScreenTime Test Store` scheme:
 
 1. Create a one-month subscription product with identifier `monthly`.
 2. Create a one-year subscription product with identifier `yearly`.
 3. Attach both products to the `Earn your Screen Time Pro` entitlement.
 4. Add `monthly` to the monthly package and `yearly` to the annual package in the current Offering.
-5. Configure a three-day free trial for both products.
-6. Run the normal `EarnYourScreenTime` scheme. RevenueCat presents its Test Store purchase modal,
+5. Run the `EarnYourScreenTime Test Store` scheme. RevenueCat presents its Test Store purchase modal,
    where success, failure, and cancellation can be simulated.
 
 Test Store purchases update `CustomerInfo` and renew on accelerated schedules. A monthly product
-renews every five minutes and a yearly product every hour, up to five renewals.
+renews every five minutes and a yearly product every hour, up to five renewals. Its current catalog
+does not report an introductory offer, so its paywall displays immediate billing rather than the
+three-day trial shown by Apple's products.
 
 ## Local StoreKit Testing
 
 `StoreKit/EarnYourScreenTime.storekit` separately defines `monthly` and `yearly` Apple
 auto-renewable subscriptions with three-day introductory offers in one subscription group. It is
-not used by RevenueCat Test Store:
-the current Debug `test_` key intentionally bypasses Apple's purchase flow.
+used by the `EarnYourScreenTime StoreKit` scheme when run directly from Xcode. The normal
+`EarnYourScreenTime` scheme instead loads offers from the Apple sandbox.
 
-Once an Apple `appl_` SDK key and Apple product mappings are available, regenerate with `make gen`,
-configure that Apple key for the StoreKit scheme, and run `EarnYourScreenTime StoreKit` from Xcode.
+Run `EarnYourScreenTime StoreKit` from Xcode to test the local offer without a sandbox account.
 Use Xcode's StoreKit transaction manager to accelerate renewals, expire subscriptions, interrupt
 purchases, and clear transaction history.
 

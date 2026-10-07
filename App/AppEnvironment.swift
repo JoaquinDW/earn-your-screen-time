@@ -2,6 +2,7 @@ import EarnDomain
 import FamilyControls
 import Foundation
 import SwiftUI
+import UserNotifications
 
 enum AppRoute: Equatable {
     case home
@@ -22,6 +23,8 @@ final class AppEnvironment {
     let exercise: any ExerciseServing
     let pendingExerciseClaims: PendingExerciseClaimStore
     private let sessionNotifications = SessionNotificationService()
+    private let reengagementNotifications = ReengagementNotificationService()
+    private let notificationOpenTracker = NotificationOpenTracker()
     private let liveActivities = EarnLiveActivityManager()
 
     private(set) var state: SharedState
@@ -31,11 +34,25 @@ final class AppEnvironment {
     private(set) var isPausingSession = false
     private(set) var appLanguage: AppLanguage
     private(set) var isPresentingBlockedAppDetail = false
-    /// Transient feedback for a transition that has already completed in the domain layer.
-    /// This is deliberately never persisted: reopening Home must not replay a celebration.
+    /// Transient feedback for transitions that already completed in the domain layer. Feedback is
+    /// queued so a secondary state such as a full wallet never replaces the reward that caused it.
+    /// None of this is persisted: reopening the app must not replay a celebration.
     private(set) var presentationFeedback: EarnPresentationFeedback?
+    private var pendingPresentationFeedback: [EarnPresentationFeedback] = []
+    private var feedbackPresentationSuspensions: Set<String> = []
+    private var feedbackHapticsTriggered: Set<UUID> = []
+    private var feedbackAnnouncementsDelivered: Set<UUID> = []
     private(set) var pendingRoute: AppRoute?
+    /// Whether the push-up camera flow is currently on screen. A system prompt — the review
+    /// request in particular — must never interrupt it.
+    private(set) var isExercising = false
+    /// Set once the review-prompt eligibility check passes; `RootView` consumes it to call
+    /// StoreKit's `requestReview` action, which only a view can invoke.
+    private(set) var shouldRequestReview = false
     private var identifiedBackendUserID: UUID?
+    /// The post-unlock paywall can be closed. Closing it lasts until the app next goes to the
+    /// background, so each return offers it once instead of locking the whole app behind it.
+    private(set) var isUnlockPaywallDismissed = false
 
     init(
         screenTime: ScreenTimeServing? = nil,
@@ -76,6 +93,11 @@ final class AppEnvironment {
             analytics.track(.earnScreenOpenedFromShield)
         }
         reportPendingSessionSettlement()
+        // Set this early in launch so a tap that cold-starts the app is still reported.
+        notificationOpenTracker.onOpen = { [weak self] kind in
+            self?.analytics.track(.notificationOpened.withProperties(["kind": .string(kind)]))
+        }
+        UNUserNotificationCenter.current().delegate = notificationOpenTracker
     }
 
     /// Screen Time simply does not work in the Simulator: authorization always fails and there
@@ -113,16 +135,48 @@ final class AppEnvironment {
     var supportedSessionDurations: [Int] { ScreenTimeSessionEngine.supportedDurations }
     var hasCompletedOnboarding: Bool { state.onboardingCompleted }
     var nextMilestone: NextMilestone { CreditEngine.nextMilestone(in: state.ledger) }
-    var featureAccess: FeatureAccess { subscriptionManager.featureAccess }
+    var featureAccess: FeatureAccess {
+        FeatureAccess(
+            subscriptionStatus: subscriptionManager.status,
+            isFreePreview: isInFreePreview,
+            hasFreePushupsReward: subscriptionManager.status == .free && !state.freePushupsRewardClaimed
+        )
+    }
     var hapticFeedbackEnabled: Bool { HapticManager.isEnabled }
 
     var profile: OnboardingProfile { state.onboarding }
-    var requiresSubscription: Bool { hasCompletedOnboarding && subscriptionManager.status == .free }
+    /// Onboarding no longer ends at a paywall: a free user walks, earns and spends one unlock
+    /// first, and only meets the paywall once that session is over.
+    var isInFreePreview: Bool { subscriptionManager.status == .free && state.isFreePreviewActive() }
+    var requiresSubscription: Bool {
+        hasCompletedOnboarding && subscriptionManager.status == .free && !state.isFreePreviewActive()
+    }
     /// The daily step target the user picked during onboarding.
     var dailyStepGoal: Int { state.dailyStepGoal }
     var projection: Projection { Projection(profile: state.onboarding, rule: state.ledger.rule) }
     var streakDays: Int { state.history.streak(endingOn: state.ledger.day, including: state.ledger) }
-    var week: [DaySummary] { state.history.week(endingOn: state.ledger.day, including: state.ledger) }
+    var progressToday: DaySummary {
+        let summary = DaySummary(ledger: state.ledger)
+        return DaySummary(
+            day: summary.day,
+            activityAmount: summary.activityAmount,
+            stepEarnedSeconds: summary.stepEarnedSeconds,
+            studyEarnedSeconds: summary.studyEarnedSeconds,
+            pushupEarnedSeconds: summary.pushupEarnedSeconds,
+            consumedSeconds: currentConsumedSeconds(),
+            sessionCount: summary.sessionCount,
+            returnedSeconds: summary.returnedSeconds,
+            hasUsageData: true
+        )
+    }
+    var week: [DaySummary] {
+        state.history.week(endingOn: state.ledger.day, including: state.ledger).map {
+            $0.day == state.ledger.day ? progressToday : $0
+        }
+    }
+    var month: [DaySummary] {
+        state.history.month(through: state.ledger.day, including: progressToday)
+    }
     var journey: ThirtyDayJourney? { state.journey }
     var journeyDay: Int { state.journey?.elapsedDay(asOf: state.ledger.day) ?? 0 }
     var journeyProgress: ThirtyDayJourney.Progress? {
@@ -131,8 +185,15 @@ final class AppEnvironment {
     var monthTotals: ActivityHistory.Totals {
         state.history.totals(
             forMonthContaining: state.ledger.day,
-            including: DaySummary(ledger: state.ledger)
+            including: progressToday
         )
+    }
+
+    func progressTotals(for summaries: [DaySummary]) -> ActivityHistory.Totals {
+        guard let first = summaries.first, let last = summaries.last else {
+            return state.history.totals(from: state.ledger.day, through: state.ledger.day, including: progressToday)
+        }
+        return ActivityHistory(days: summaries).totals(from: first.day, through: last.day)
     }
 
     /// 0…1 through today's step goal.
@@ -147,6 +208,12 @@ final class AppEnvironment {
 
     /// Minutes credited today, before anything was spent.
     var earnedMinutesToday: Int { wallet.earnedSeconds / 60 }
+    /// Every minute earned in the kept history, today included.
+    var earnedMinutesSoFar: Int {
+        let today = state.ledger.day
+        let past = state.history.days.filter { $0.day != today }.reduce(0) { $0 + $1.earnedSeconds }
+        return (past + wallet.earnedSeconds) / 60
+    }
     var consumedMinutesToday: Int { currentConsumedSeconds() / 60 }
     var walletBalanceMinutes: Int { currentWalletBalanceSeconds() / 60 }
     var maximumStartableMinutes: Int {
@@ -205,7 +272,15 @@ final class AppEnvironment {
         }
         let configuration = try await exercise.configuration()
         guard configuration.enabled else { throw ExerciseAccessError.disabled }
-        guard configuration.entitled else { throw ExerciseAccessError.subscriptionRequired }
+        guard configuration.entitled else {
+            // The server counts free rewards per account, which can outlive this install's state
+            // (the backend identity survives a reinstall). Adopt its answer so the next tap on
+            // push-ups offers the paywall instead of failing here again.
+            if subscriptionManager.status == .free, !state.freePushupsRewardClaimed {
+                state = SharedStore.shared.mutate { $0.freePushupsRewardClaimed = true }
+            }
+            throw ExerciseAccessError.subscriptionRequired
+        }
         guard configuration.updateRequired != true else { throw ExerciseAccessError.updateRequired }
         return configuration
     }
@@ -231,8 +306,13 @@ final class AppEnvironment {
         }
         switch result {
         case .applied:
+            let isFreeReward = subscriptionManager.status != .pro
+            if isFreeReward {
+                state = SharedStore.shared.mutate { $0.freePushupsRewardClaimed = true }
+            }
             analytics.track(.pushupsRewardClaimed.withProperties([
-                "reward_seconds": .int(reward.amountSeconds)
+                "reward_seconds": .int(reward.amountSeconds),
+                "free_reward": .bool(isFreeReward)
             ]))
             analytics.track(.rewardCompleted.withProperties([
                 "reward_minutes": .int(reward.amountSeconds / 60),
@@ -243,6 +323,7 @@ final class AppEnvironment {
                 "balance_seconds": .int(state.ledger.wallet.remainingValueSeconds),
                 "earning_method": .string(EarningMethod.pushups.rawValue)
             ]))
+            trackFirstActiveRewardIfNeeded(method: .pushups, seconds: reward.amountSeconds)
             HapticManager.trigger(.earned)
             synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
             return true
@@ -283,6 +364,7 @@ final class AppEnvironment {
                 "balance_seconds": .int(state.ledger.wallet.remainingValueSeconds),
                 "earning_method": .string(EarningMethod.study.rawValue)
             ]))
+            trackFirstActiveRewardIfNeeded(method: .study, seconds: reward.amountSeconds)
             HapticManager.trigger(.earned)
             synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
             return true
@@ -319,21 +401,36 @@ final class AppEnvironment {
                 outcome = applied
             }
             if let outcome, outcome.didAward {
+                let earnedTimeBalance = EarnedTimeBalance(
+                    beforeMinutes: previousLedger.wallet.remainingValueSeconds / 60,
+                    afterMinutes: outcome.ledger.wallet.remainingValueSeconds / 60
+                )
                 let reachedGoal = previousLedger.activityAmount < dailyStepGoal
                     && outcome.ledger.activityAmount >= dailyStepGoal
                 let earnedFirstReward = outcome.didAwardSteps && !hadEarnedFirstReward
                 let currentStreak = streakDays
                 if earnedFirstReward {
-                    publish(.firstRewardEarned(minutes: outcome.awardedStepSeconds / 60))
-                    livePresentation = .earned(minutes: outcome.awardedStepSeconds / 60)
+                    publish(
+                        .firstRewardEarned(minutes: outcome.awardedSeconds / 60),
+                        earnedTimeBalance: earnedTimeBalance
+                    )
+                    livePresentation = .earned(minutes: outcome.awardedSeconds / 60)
                     analytics.track(.firstRewardEarned.withProperties([
-                        "reward_minutes": .int(outcome.awardedStepSeconds / 60)
+                        "reward_minutes": .int(outcome.awardedStepSeconds / 60),
+                        "earning_method": .string(EarningMethod.steps.rawValue),
+                        "during_onboarding": .bool(!hasCompletedOnboarding)
                     ]))
                 } else if outcome.didAwardGoalBonus || reachedGoal {
-                    publish(.dailyGoalCompleted(minutes: outcome.awardedGoalBonusSeconds / 60))
+                    publish(
+                        .dailyGoalCompleted(minutes: outcome.awardedSeconds / 60),
+                        earnedTimeBalance: earnedTimeBalance
+                    )
                     livePresentation = .goalCompleted
                 } else {
-                    publish(.screenTimeEarned(minutes: outcome.awardedSeconds / 60))
+                    publish(
+                        .screenTimeEarned(minutes: outcome.awardedSeconds / 60),
+                        earnedTimeBalance: earnedTimeBalance
+                    )
                     livePresentation = .earned(minutes: outcome.awardedSeconds / 60)
                 }
                 if outcome.didAwardGoalBonus || reachedGoal {
@@ -345,10 +442,14 @@ final class AppEnvironment {
                     // Earning feedback is more important than a routine streak tick.
                     // The numeric streak still transitions with the refreshed state.
                 }
-                analytics.track(.rewardCompleted.withProperties(["reward_minutes": .int(outcome.awardedSeconds / 60)]))
+                analytics.track(.rewardCompleted.withProperties([
+                    "reward_minutes": .int(outcome.awardedSeconds / 60),
+                    "earning_method": .string(EarningMethod.steps.rawValue)
+                ]))
                 analytics.track(.minutesEarned.withProperties([
                     "seconds": .int(outcome.awardedSeconds),
-                    "balance_seconds": .int(outcome.ledger.wallet.remainingValueSeconds)
+                    "balance_seconds": .int(outcome.ledger.wallet.remainingValueSeconds),
+                    "earning_method": .string(EarningMethod.steps.rawValue)
                 ]))
             }
             if let outcome, outcome.didReachWalletCapacity {
@@ -372,11 +473,57 @@ final class AppEnvironment {
     /// Refreshes immediately on foreground, then re-reads shared state once more because
     /// DeviceActivity may finish delivering a session callback just after the scene becomes active.
     func refreshAfterBecomingActive() async {
+        trackActiveDayIfNeeded()
         await refresh()
+        await rescheduleReengagementNotifications()
         presentShieldDetailIfRequested()
         try? await Task.sleep(for: .milliseconds(800))
         guard !Task.isCancelled else { return }
         reload()
+        // The unlock count alone may already qualify; foreground is what catches the moment
+        // the two-day wait finishes on its own, with no new unlock to trigger the check.
+        evaluateReviewPromptEligibility()
+    }
+
+    /// Marks whether the push-up camera flow is on screen, so the review prompt never fires
+    /// over it.
+    func setExercising(_ isExercising: Bool) {
+        self.isExercising = isExercising
+    }
+
+    /// Leaving the app is the moment the inactivity nudges should count from, and the moment the
+    /// closed unlock paywall earns another showing.
+    func sceneDidEnterBackground() async {
+        isUnlockPaywallDismissed = false
+        await rescheduleReengagementNotifications()
+    }
+
+    func dismissUnlockPaywall() {
+        isUnlockPaywallDismissed = true
+    }
+
+    /// Asks for notification permission and reports the answer. Returns whether notifications
+    /// are allowed afterwards, including when they already were.
+    @discardableResult
+    func requestNotificationPermission(source: String) async -> Bool {
+        let context: AnalyticsProperties = ["source": .string(source)]
+        analytics.track(.notificationsPermissionRequested.withProperties(context))
+        let status = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+        let granted: Bool
+        if status == .notDetermined {
+            granted = (try? await UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .sound]
+            )) ?? false
+        } else {
+            granted = status == .authorized || status == .provisional
+        }
+        analytics.track((granted ? AnalyticsEvent.notificationsPermissionGranted : .notificationsPermissionDenied)
+            .withProperties(context.merging(["already_determined": .bool(status != .notDetermined)]) { $1 }))
+        return granted
+    }
+
+    func consumeReviewRequest() {
+        shouldRequestReview = false
     }
 
     /// Re-reads shared state without touching HealthKit (the extension may have changed it).
@@ -413,8 +560,9 @@ final class AppEnvironment {
             state.onboarding = finalizedProfile
             state.onboardingCompleted = true
             state.adaptiveIntroSeen = true
-            // Onboarding introduces push-ups itself, so a fresh user is never owed the announcement.
-            state.pushupsIntroSeen = true
+            // Someone who ran the demo has already met push-ups. Someone who skipped it is
+            // owed the offer from Home, which is what the announcement sheet is for.
+            state.pushupsIntroSeen = state.onboardingPushupDemo == .completed
             state.hasEarnedFirstReward = false
             state.goalProgressionCooldownUntil = today.adding(days: 7)
             state.ledger.rule = adaptiveRule
@@ -427,12 +575,17 @@ final class AppEnvironment {
             state.ledger.transactions = []
             state.journey = ThirtyDayJourney(startDay: state.ledger.day, dailyGoal: finalizedProfile.dailyStepGoal)
         }
-        analytics.track(.onboardingCompleted.withProperties([
+        var completion: AnalyticsProperties = [
             "baseline_steps": .int(profile.baselineDailySteps ?? 0),
             "selected_goal": .int(profile.dailyStepGoal),
             "earn_rate_steps": .int(adaptiveRule.amountRequired),
-            "earn_rate_minutes": .int(adaptiveRule.rewardMinutes)
-        ]))
+            "earn_rate_minutes": .int(adaptiveRule.rewardMinutes),
+            "pushups_demo": .string(state.onboardingPushupDemo.rawValue)
+        ]
+        if let startedAt = profile.onboardingStartedAt {
+            completion["onboarding_duration_seconds"] = .int(Int(now.timeIntervalSince(startedAt).rounded()))
+        }
+        analytics.track(.onboardingCompleted.withProperties(completion))
         synchronizeLiveActivity()
     }
 
@@ -454,6 +607,46 @@ final class AppEnvironment {
     func dismissPresentationFeedback(_ feedback: EarnPresentationFeedback) {
         guard presentationFeedback?.id == feedback.id else { return }
         presentationFeedback = nil
+        feedbackHapticsTriggered.remove(feedback.id)
+        feedbackAnnouncementsDelivered.remove(feedback.id)
+        guard feedbackPresentationSuspensions.isEmpty,
+              !pendingPresentationFeedback.isEmpty else { return }
+        presentNextFeedback()
+    }
+
+    /// The spend sheet dismisses before presenting this event so its receipt is never hidden
+    /// behind the modal transition.
+    func presentSessionStartedFeedback() {
+        publish(.appUnlocked)
+    }
+
+    func shouldAnnouncePresentationFeedback(_ feedback: EarnPresentationFeedback) -> Bool {
+        feedbackAnnouncementsDelivered.insert(feedback.id).inserted
+    }
+
+    func triggerPresentationFeedbackHaptic(_ feedback: EarnPresentationFeedback) {
+        guard presentationFeedback?.id == feedback.id else { return }
+        triggerFeedbackHaptic(feedback)
+    }
+
+    /// Modal presentations live in a separate SwiftUI layer. Events produced behind one wait
+    /// until its owning surface is visible again rather than running an unseen timer.
+    func setFeedbackPresentationSuspended(_ isSuspended: Bool, by surface: String) {
+        if isSuspended {
+            let wasActive = !feedbackPresentationSuspensions.isEmpty
+            feedbackPresentationSuspensions.insert(surface)
+            if !wasActive, let current = presentationFeedback {
+                presentationFeedback = nil
+                pendingPresentationFeedback.insert(current, at: 0)
+            }
+            return
+        }
+
+        feedbackPresentationSuspensions.remove(surface)
+        guard feedbackPresentationSuspensions.isEmpty,
+              presentationFeedback == nil,
+              !pendingPresentationFeedback.isEmpty else { return }
+        presentNextFeedback()
     }
 
     func setHapticFeedbackEnabled(_ isEnabled: Bool) {
@@ -497,7 +690,9 @@ final class AppEnvironment {
     }
 
     func startSession(durationMinutes: Int) async {
-        guard !isStartingSession else { return }
+        // Every surface that can unlock (Home, the blocked-app detail) funnels through here, so
+        // this is the one place the spent free unlock is enforced.
+        guard !isStartingSession, !requiresSubscription else { return }
         isStartingSession = true
         defer { isStartingSession = false }
         HapticManager.prepare(.unlocked)
@@ -510,13 +705,15 @@ final class AppEnvironment {
                 await sessionNotifications.schedule(for: session, language: appLanguage)
             }
             lastError = nil
-            publish(.appUnlocked)
             synchronizeLiveActivity(presentation: .unlocked)
             analytics.track(.sessionStarted.withProperties([
                 "wallet_balance_before": .int(walletBalanceBefore),
                 "wallet_balance_after": .int(state.ledger.wallet.availableSeconds),
                 "session_duration": .int(durationMinutes * 60)
             ]))
+            trackFirstRealUnlockIfNeeded(durationMinutes: durationMinutes)
+            state = SharedStore.shared.mutate { $0.successfulUnlockCount += 1 }
+            evaluateReviewPromptEligibility()
         } catch ScreenTimeSessionError.insufficientBalance {
             analytics.track(.unlockAttemptWithoutBalance.withProperties([
                 "requested_minutes": .int(durationMinutes),
@@ -565,9 +762,19 @@ final class AppEnvironment {
     }
 
     func updateRestrictedSelection(_ selection: FamilyActivitySelection) {
+        let previousCount = state.restrictedItemCount
         screenTime.selection = selection
         state = screenTime.reconcile()
+        if state.restrictedItemCount != previousCount {
+            analytics.track(.restrictedAppsChanged.withProperties([
+                "previous_count": .int(previousCount),
+                "new_count": .int(state.restrictedItemCount),
+                "during_onboarding": .bool(!hasCompletedOnboarding),
+                "is_pro": .bool(subscriptionManager.isPro)
+            ]))
+        }
         reportPendingSessionSettlement()
+        trackFirstAppBlockedIfNeeded()
         synchronizeLiveActivity()
     }
 
@@ -642,6 +849,124 @@ final class AppEnvironment {
         state = SharedStore.shared.mutate { $0.pushupsIntroSeen = true }
     }
 
+    /// Remembers how the onboarding push-up demo ended. A completed demo is never downgraded
+    /// by a later skip, so re-entering the step cannot erase the fact that it worked.
+    func recordOnboardingPushupDemo(_ outcome: OnboardingPushupDemoOutcome) {
+        guard outcome != .notAttempted else { return }
+        state = SharedStore.shared.mutate { state in
+            guard state.onboardingPushupDemo != .completed else { return }
+            state.onboardingPushupDemo = outcome
+        }
+    }
+
+    /// The first time the user protects at least one app, in onboarding or later in Settings.
+    private func trackFirstAppBlockedIfNeeded() {
+        guard state.hasRestrictedApps, !state.firstAppBlockedTracked else { return }
+        state = SharedStore.shared.mutate { $0.firstAppBlockedTracked = true }
+        analytics.track(.firstAppBlocked.withProperties([
+            "app_count": .int(state.restrictedItemCount)
+        ]))
+    }
+
+    /// The first reward the person worked for, whichever way they earned it.
+    private func trackFirstActiveRewardIfNeeded(method: EarningMethod, seconds: Int) {
+        guard !state.firstActiveRewardTracked else { return }
+        state = SharedStore.shared.mutate { $0.firstActiveRewardTracked = true }
+        var properties: AnalyticsProperties = [
+            "earning_method": .string(method.rawValue),
+            "reward_minutes": .int(seconds / 60),
+            "during_onboarding": .bool(!hasCompletedOnboarding)
+        ]
+        if let completedAt = state.onboarding.onboardingCompletedAt {
+            properties["minutes_since_onboarding"] = .int(Int(Date().timeIntervalSince(completedAt) / 60))
+        }
+        analytics.track(.firstActiveRewardEarned.withProperties(properties))
+    }
+
+    /// Once per local day the app is in the foreground. Kept in the app's own defaults: only the
+    /// app reports analytics, so the extensions never need this.
+    func trackActiveDayIfNeeded(now: Date = Date()) {
+        let defaults = UserDefaults.standard
+        let today = DayKey(date: now)
+        let lastKey = "analytics.activeDay.last"
+        let countKey = "analytics.activeDay.count"
+        guard defaults.string(forKey: lastKey) != today.description else { return }
+        let previous = defaults.string(forKey: lastKey).flatMap(Self.dayKey(from:))
+        let count = defaults.integer(forKey: countKey) + 1
+        defaults.set(today.description, forKey: lastKey)
+        defaults.set(count, forKey: countKey)
+
+        var properties: AnalyticsProperties = [
+            "active_day_number": .int(count),
+            "onboarding_completed": .bool(hasCompletedOnboarding),
+            "is_pro": .bool(subscriptionManager.isPro),
+            "has_restricted_apps": .bool(state.hasRestrictedApps),
+            "balance_minutes": .int(wallet.availableMinutes)
+        ]
+        if let previous, let gap = Self.days(from: previous, to: today) {
+            properties["days_since_last_active"] = .int(gap)
+        }
+        if let completedAt = state.onboarding.onboardingCompletedAt,
+           let sinceOnboarding = Self.days(from: DayKey(date: completedAt), to: today) {
+            properties["days_since_onboarding"] = .int(sinceOnboarding)
+        }
+        analytics.track(.appActiveDay.withProperties(properties))
+    }
+
+    private static func dayKey(from description: String) -> DayKey? {
+        let parts = description.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        return DayKey(year: parts[0], month: parts[1], day: parts[2])
+    }
+
+    private static func days(from start: DayKey, to end: DayKey) -> Int? {
+        guard let startDate = start.startOfDay(), let endDate = end.startOfDay() else { return nil }
+        return Calendar.current.dateComponents([.day], from: startDate, to: endDate).day
+    }
+
+    /// Nudges are only for people who finished setup; before that there is nothing to return to.
+    private func rescheduleReengagementNotifications() async {
+        guard hasCompletedOnboarding else {
+            reengagementNotifications.cancelAll()
+            return
+        }
+        await reengagementNotifications.reschedule(
+            ReengagementNotificationService.Snapshot(
+                availableMinutes: wallet.availableMinutes,
+                stepsPerReward: state.ledger.rule.amountRequired,
+                rewardMinutes: state.ledger.rule.rewardMinutes
+            ),
+            language: appLanguage
+        )
+    }
+
+    /// The first session opened with earned minutes — the end of the activation funnel.
+    private func trackFirstRealUnlockIfNeeded(durationMinutes: Int) {
+        guard !state.firstRealUnlockTracked else { return }
+        state = SharedStore.shared.mutate { $0.firstRealUnlockTracked = true }
+        analytics.track(.firstRealUnlockCompleted.withProperties([
+            "session_duration": .int(durationMinutes * 60),
+            "demo_outcome": .string(state.onboardingPushupDemo.rawValue),
+            // A free user's first unlock is the free one; the paywall follows its session.
+            "is_free_unlock": .bool(subscriptionManager.status != .pro)
+        ]))
+    }
+
+    /// Apple's guidance is to ask for a review only once real usage exists, never mid-task.
+    /// Here that means: three unlocks actually completed, at least two days into using the app,
+    /// and not in the middle of the push-up camera flow. Requested at most once per install.
+    private func evaluateReviewPromptEligibility() {
+        guard !state.reviewPromptRequested,
+              !isExercising,
+              state.successfulUnlockCount >= 3,
+              let onboardingCompletedAt = state.onboarding.onboardingCompletedAt,
+              Date().timeIntervalSince(onboardingCompletedAt) >= 2 * 24 * 60 * 60
+        else { return }
+        state = SharedStore.shared.mutate { $0.reviewPromptRequested = true }
+        analytics.track(.reviewPromptRequested)
+        shouldRequestReview = true
+    }
+
     // MARK: - Debug helpers (Phase 2 spike)
 
     func grantDebugCredit(seconds: Int) {
@@ -699,9 +1024,14 @@ final class AppEnvironment {
         OnboardingRouteStorage.reset()
         isPresentingBlockedAppDetail = false
         presentationFeedback = nil
+        pendingPresentationFeedback.removeAll()
+        feedbackPresentationSuspensions.removeAll()
+        feedbackHapticsTriggered.removeAll()
+        feedbackAnnouncementsDelivered.removeAll()
         state = SharedStore.shared.mutate { state in
             state.onboarding = OnboardingProfile()
             state.onboardingCompleted = false
+            state.onboardingPushupDemo = .notAttempted
         }
         synchronizeLiveActivity()
     }
@@ -711,13 +1041,52 @@ final class AppEnvironment {
     }
 
     func triggerDebugFeedback(_ event: EarnPresentationEvent) {
-        publish(event)
+        let earnedTimeBalance = event.earnedMinutes.map { minutes in
+            EarnedTimeBalance(
+                beforeMinutes: walletBalanceMinutes,
+                afterMinutes: min(
+                    ScreenTimeWallet.maximumSavedSeconds / 60,
+                    walletBalanceMinutes + minutes
+                )
+            )
+        }
+        publish(event, earnedTimeBalance: earnedTimeBalance)
     }
     #endif
 
-    private func publish(_ event: EarnPresentationEvent, haptic: EarnHaptic? = nil) {
-        presentationFeedback = EarnPresentationFeedback(event: event)
-        HapticManager.trigger(haptic ?? event.haptic ?? .light)
+    private func publish(
+        _ event: EarnPresentationEvent,
+        haptic: EarnHaptic? = nil,
+        earnedTimeBalance: EarnedTimeBalance? = nil
+    ) {
+        let feedback = EarnPresentationFeedback(
+            event: event,
+            haptic: haptic,
+            earnedTimeBalance: earnedTimeBalance
+        )
+        if event == .error {
+            HapticManager.trigger(haptic ?? event.haptic ?? .light)
+            return
+        }
+        if !feedbackPresentationSuspensions.isEmpty {
+            pendingPresentationFeedback.append(feedback)
+            return
+        }
+        if presentationFeedback == nil {
+            presentationFeedback = feedback
+        } else {
+            pendingPresentationFeedback.append(feedback)
+        }
+    }
+
+    private func triggerFeedbackHaptic(_ feedback: EarnPresentationFeedback) {
+        guard feedbackHapticsTriggered.insert(feedback.id).inserted else { return }
+        HapticManager.trigger(feedback.haptic ?? feedback.event.haptic ?? .light)
+    }
+
+    private func presentNextFeedback() {
+        let next = pendingPresentationFeedback.removeFirst()
+        presentationFeedback = next
     }
 
     private func reportPendingSessionSettlement() {

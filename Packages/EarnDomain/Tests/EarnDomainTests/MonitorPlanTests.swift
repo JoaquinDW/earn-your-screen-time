@@ -181,6 +181,7 @@ struct ScreenTimeSessionTests {
         #expect(completed.ledger.wallet.consumedSeconds == 900)
         #expect(completed.ledger.wallet.reservedSeconds == 0)
         #expect(completed.ledger.walletTransactions.last?.amountSeconds == 900)
+        #expect(completed.ledger.sessionCount == 1)
     }
 
     @Test("Pausing after midnight returns the unconsumed remainder")
@@ -211,6 +212,8 @@ struct ScreenTimeSessionTests {
         #expect(paused.ledger.wallet.consumedSeconds == 300)
         #expect(paused.ledger.wallet.availableSeconds == 600)
         #expect(paused.ledger.walletTransactions.last?.amountSeconds == 300)
+        #expect(paused.ledger.sessionCount == 1)
+        #expect(paused.ledger.returnedSessionSeconds == 600)
     }
 
     @Test("Only one session can be active")
@@ -255,6 +258,7 @@ struct ScreenTimeSessionTests {
         #expect(recovered.activeSession(at: sessionNow.addingTimeInterval(300)) == nil)
         #expect(recovered.ledger.wallet.availableMinutes == 5)
         #expect(recovered.ledger.wallet.consumedSeconds == 300)
+        #expect(recovered.ledger.sessionCount == 1)
     }
 
     @Test("Pausing charges elapsed wall-clock time and returns the rest")
@@ -275,6 +279,8 @@ struct ScreenTimeSessionTests {
         #expect(paused.ledger.wallet.consumedSeconds == 120)
         #expect(paused.ledger.wallet.reservedSeconds == 0)
         #expect(paused.ledger.walletTransactions.last?.kind == .consumed)
+        #expect(paused.ledger.sessionCount == 1)
+        #expect(paused.ledger.returnedSessionSeconds == 180)
     }
 
     @Test("Pausing twice cannot consume twice")
@@ -293,6 +299,8 @@ struct ScreenTimeSessionTests {
             at: sessionNow.addingTimeInterval(240)
         )
         #expect(repeated == paused)
+        #expect(repeated.ledger.sessionCount == 1)
+        #expect(repeated.ledger.returnedSessionSeconds == 240)
     }
 
     @Test("Earning during a session does not extend its end")

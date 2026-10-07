@@ -16,6 +16,12 @@ enum PostHogAttribution {
         PostHogConfiguration().isAvailable
     }
 
+    /// The anonymous PostHog id for this install, handed to RevenueCat so the purchase events it
+    /// forwards (trial conversions, renewals, cancellations) land on the same person as the app's.
+    static var distinctID: String? {
+        didInitializeSDK ? PostHogSDK.shared.getDistinctId() : nil
+    }
+
     @discardableResult
     static func configureIfAvailable() -> Bool {
         let configuration = PostHogConfiguration()
@@ -27,12 +33,14 @@ enum PostHogAttribution {
         guard let apiKey = configuration.apiKey else { return false }
 
         let config = PostHogConfig(projectToken: apiKey, host: configuration.host)
-        // Only the app's ~90 manually-instrumented events are ever sent; no autocapture and no
-        // session replay, so a screen never leaks data PRIVACY.md forbids in analytics.
-        config.captureApplicationLifecycleEvents = false
+        // The manually-instrumented events, plus app open/background/install (no screen content)
+        // so retention can be measured, plus crash reports. Still no autocapture of views or
+        // touches and no session replay, so a screen never leaks data PRIVACY.md forbids.
+        config.captureApplicationLifecycleEvents = true
         config.captureScreenViews = false
         config.captureElementInteractions = false
         config.sessionReplay = false
+        config.errorTrackingConfig.autoCapture = true
 
         PostHogSDK.shared.setup(config)
         PostHogSDK.shared.register(["environment": buildEnvironment])

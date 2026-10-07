@@ -9,11 +9,68 @@ the status table before continuing.
 | Phase | State |
 |---|---|
 | 1 Keyword research | **Done** — `01-keyword-research.md` |
-| 2 Store metadata (16 locales) | **Done and verified live** on App Store Connect version 1.1 |
-| 3 Screenshots | **Skipped** by choice — only en-US has a set; other locales fall back to English |
+| 2 Store metadata (16 locales) | **Done and verified live** — name/subtitle/keywords/description on 1.1 (now `READY_FOR_SALE`); release notes + promotional text refreshed and verified live on draft **1.2** for this submission |
+| 3 Screenshots | **en-US/en-GB/es-ES/es-MX/de-DE done** on draft version 1.2 (`APP_IPHONE_65`, 6 each); the other 11 locales still have no set and fall back to English |
 | 4 Territory pricing (GNI bands) | **Applied** — `aso/pricing.py`, 130 of 175 territories cut on both subscriptions |
 | 5 In-app strings | **5 of 12 locales translated and merged into the app** (de, fr, it, ja, pt-BR) |
 | 6 Submission | **Not started** |
+
+## Phase 3 — screenshots on version 1.2
+
+Screenshots attach to an editable `appStoreVersion`, and all four existing versions
+(1.0–1.1) were already `READY_FOR_SALE` — no draft to attach to. Created **1.2**
+(`fdeb596c-9821-4b3a-aca7-3eaf2cbee43a`, `PREPARE_FOR_SUBMISSION`, no build attached
+yet, so it cannot be submitted as-is) and re-pushed all 16 locales' description/
+keywords/promotional text/release notes/support URL onto it — creating a version via
+the API does **not** carry that text forward, only the screenshots do, and skipping
+this step would have shipped an all-English 1.2 over the localized 1.1 listing.
+
+Source screenshots came in at 853×1844, short of the `APP_IPHONE_65` requirement
+(1242×2688 — checked from the existing en-US set); upscaled 1.46× with
+`ffmpeg -vf scale=1242:2688:flags=lanczos` before upload. A screenshot set carried
+forward from the prior version arrives pre-populated with the old images — the
+en-US set on 1.2 inherited 1.1's 7 screenshots and had to be cleared before the new
+6 replaced them; en-GB/es-ES/es-MX/de-DE had no prior set and uploaded clean.
+
+Remaining locales (fr-FR, it, pt-BR, nl-NL, pl, tr, ru, ja, ko, zh-Hans, ar-SA) have
+no screenshot set on 1.2 and fall back to English, same as before. To finish one:
+export at 1242×2688 (or 1284×2778), then write an uploader following `push.py`'s
+`asc()` pattern pointed at `fdeb596c-9821-4b3a-aca7-3eaf2cbee43a` — GET the locale's
+`appStoreVersionLocalization` id, POST/reuse its `appScreenshotSet`
+(`APP_IPHONE_65`), then per image: POST `appScreenshots` (fileName/fileSize) to get
+`uploadOperations`, PUT each byte range with its given headers, PATCH
+`uploaded: true` + md5 `sourceFileChecksum`. Check for a carried-forward set with
+stale images first (see above) before adding new ones — it silently fills to the
+10-screenshot cap and mixes old with new.
+
+## Phase 2b — release notes & promotional text for 1.2
+
+`reconcile.py`/`verify.py`/`push_whatsnew.py`/`push.py`/`push_support_url.py` all still
+pointed `VERSION_ID` at **1.1**, which shipped and is now `READY_FOR_SALE` (no longer
+editable except promotional text) — 1.1 became live between the screenshot work above and
+this pass. Updated all five scripts' `VERSION_ID` to **1.2**
+(`fdeb596c-9821-4b3a-aca7-3eaf2cbee43a`), the actual `PREPARE_FOR_SUBMISSION` draft.
+
+This version's changes (refreshed screenshots, an onboarding step that lets you try a real
+push-up set and feel it unlock your apps, PostHog analytics, and an App Store rating
+prompt) are user-facing only for the onboarding demo and the rating prompt — screenshots
+and analytics aren't things the app tells the user about, so the release notes cover the
+demo and the rating ask and fold the rest into a generic "under the hood" line rather than
+mentioning analytics by name.
+
+- **Release notes** (`aso/whatsnew.py`) rewritten for all 16 locales, describing the new
+  onboarding push-up demo and the App Store rating prompt. Pushed with
+  `python3 aso/push_whatsnew.py --write` (targeted PATCH of `whatsNew` only, same pattern
+  as before).
+- **Promotional text** — the evergreen "three ways to earn" pitch replaced with a line
+  about the new onboarding demo, edited at the source (`promo=` in `gen_part1/2/3.py`) so
+  a future full `aso/build.py --write` + `aso/reconcile.py` won't regress it. Regenerated
+  with `aso/build.py --write`, pushed with the new `aso/push_promo.py --write` (targeted
+  PATCH of `promotionalText` only — name/subtitle/keywords/description weren't touched).
+- Both verified live via `python3 aso/verify.py`: all 16 locales read back clean, no
+  fallback-to-English, no stale text.
+- **Not done**: submission. The user asked to prepare the metadata only, not send 1.2 to
+  review — and it couldn't be submitted yet regardless, since no build is attached to 1.2.
 
 ## Phase 2 — what is live
 

@@ -195,43 +195,43 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Earnit"
+            "value": "Pushups in Earnit"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir Earnit"
+            "value": "Flexiones en Earnit"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Earnit öffnen"
+            "value": "Liegestütze mit Earnit"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ouvrir Earnit"
+            "value": "Pompes dans Earnit"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apri Earnit"
+            "value": "Flessioni in Earnit"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir o Earnit"
+            "value": "Flexões no Earnit"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Earnit を開く"
+            "value": "Earnit で腕立て伏せ"
           }
         }
       }
@@ -665,43 +665,43 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Walk %1$lld more steps · earn %2$lld min in about %3$lld min."
+            "value": "Do pushups in Earnit now, or walk %1$lld more steps for %2$lld min."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Camina %1$lld pasos más · gana %2$lld min en unos %3$lld min."
+            "value": "Haz flexiones en Earnit ahora, o camina %1$lld pasos más para ganar %2$lld min."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Geh noch %1$lld Schritte · %2$lld Min. in etwa %3$lld Min."
+            "value": "Mach jetzt Liegestütze in Earnit oder geh noch %1$lld Schritte für %2$lld Min."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Marche %1$lld pas de plus · %2$lld min dans environ %3$lld min."
+            "value": "Fais des pompes dans Earnit, ou marche encore %1$lld pas pour gagner %2$lld min."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cammina altri %1$lld passi · %2$lld min tra circa %3$lld min."
+            "value": "Fai flessioni in Earnit, oppure cammina altri %1$lld passi per guadagnare %2$lld min."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Caminhe mais %1$lld passos · ganhe %2$lld min em uns %3$lld min."
+            "value": "Faça flexões no Earnit ou caminhe mais %1$lld passos para ganhar %2$lld min."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "あと %1$lld 歩 · およそ %3$lld 分で %2$lld 分を獲得。"
+            "value": "Earnit で腕立て伏せ、またはあと %1$lld 歩で %2$lld 分を獲得。"
           }
         }
       }
@@ -712,43 +712,43 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Move to earn time before you scroll."
+            "value": "Open Earnit for pushups, or walk to earn time."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muévete para ganar tiempo antes de hacer scroll."
+            "value": "Abre Earnit para hacer flexiones, o camina para ganar tiempo."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Beweg dich, um Zeit zu verdienen – vor dem Scrollen."
+            "value": "Öffne Earnit für Liegestütze oder geh, um Zeit zu verdienen."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bouge pour gagner du temps avant de scroller."
+            "value": "Ouvre Earnit pour faire des pompes, ou marche pour gagner du temps."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muoviti per guadagnare tempo prima di scrollare."
+            "value": "Apri Earnit per fare flessioni, oppure cammina per guadagnare tempo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se mexa para ganhar tempo antes de rolar a tela."
+            "value": "Abra o Earnit para fazer flexões ou caminhe para ganhar tempo."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "スクロールする前に、体を動かして時間を稼ぎましょう。"
+            "value": "Earnit で腕立て伏せをするか、歩いて時間を稼ぎましょう。"
           }
         }
       }
@@ -806,43 +806,43 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Earnit to get your latest progress."
+            "value": "Open Earnit to do pushups or refresh your steps."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abre Earnit para actualizar tu progreso."
+            "value": "Abre Earnit para hacer flexiones o actualizar tus pasos."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Öffne Earnit für deinen aktuellen Fortschritt."
+            "value": "Öffne Earnit für Liegestütze oder aktualisiere deine Schritte."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ouvre Earnit pour voir ta progression la plus récente."
+            "value": "Ouvre Earnit pour faire des pompes ou actualiser tes pas."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apri Earnit per vedere i progressi aggiornati."
+            "value": "Apri Earnit per fare flessioni o aggiornare i tuoi passi."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra o Earnit para ver seu progresso mais recente."
+            "value": "Abra o Earnit para fazer flexões ou atualizar seus passos."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Earnit を開くと最新の進捗になります。"
+            "value": "Earnit で腕立て伏せをするか、歩数を更新できます。"
           }
         }
       }

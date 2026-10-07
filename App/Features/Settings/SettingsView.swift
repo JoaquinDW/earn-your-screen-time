@@ -18,6 +18,7 @@ private enum SettingsDestination: Hashable {
 struct SettingsView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
 
     var showsDoneButton = true
     var onNavigationDepthChange: ((Bool) -> Void)? = nil
@@ -38,6 +39,11 @@ struct SettingsView: View {
     }
 
     private var hasChanges: Bool { editedRule != env.ledger.rule }
+
+    /// Deep-links straight to the write-a-review sheet on the app's own App Store page.
+    private static let appStoreReviewURL = URL(
+        string: "https://apps.apple.com/us/app/earn-screen-time-earnit/id6804905841?action=write-review"
+    )!
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -69,7 +75,10 @@ struct SettingsView: View {
                         )
                     }
                     if dailyStepGoal != env.dailyStepGoal {
-                        Button("Save daily goal") { env.updateDailyGoal(dailyStepGoal) }
+                        Button("Save daily goal") {
+                            track("daily_goal_saved", ["previous_goal": .int(env.dailyStepGoal), "new_goal": .int(dailyStepGoal)])
+                            env.updateDailyGoal(dailyStepGoal)
+                        }
                     }
                 } header: {
                     sectionHeader("Movement goal")
@@ -97,6 +106,7 @@ struct SettingsView: View {
                 if hasChanges {
                     Section {
                         Button("settings.saveRule") {
+                            track("rule_save_tapped", ["steps": .int(stepsRequired), "minutes": .int(rewardMinutes)])
                             requestRuleChange()
                         }
                     } footer: {
@@ -118,13 +128,24 @@ struct SettingsView: View {
                     if env.subscriptionManager.isPro,
                        env.subscriptionManager.isRevenueCatConfigured {
                         Button("settings.subscription.manage") {
+                            track("subscription_manage_tapped")
                             isShowingCustomerCenter = true
                         }
                     } else {
-                        Button("settings.subscription.upgrade") { isShowingPaywall = true }
+                        Button("settings.subscription.upgrade") {
+                            track("subscription_upgrade_tapped")
+                            isShowingPaywall = true
+                        }
                     }
                 } header: {
                     sectionHeader("settings.subscription.section")
+                }
+
+                Section {
+                    Button("settings.rateApp") {
+                        env.analytics.track(.rateAppTapped)
+                        openURL(SettingsView.appStoreReviewURL)
+                    }
                 }
 
                 #if DEBUG
@@ -139,6 +160,11 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Button {
+                        isShowingPaywall = true
+                    } label: {
+                        Text(verbatim: "Debug: show Pro paywall")
+                    }
                     Button("settings.debugCredit") { env.grantDebugCredit(seconds: 300) }
                     Button("settings.resetDay", role: .destructive) { env.resetToday() }
                     Button("settings.replayOnboarding", role: .destructive) { env.replayOnboarding() }
@@ -192,7 +218,10 @@ struct SettingsView: View {
                 isPresented: $isShowingRuleChangeConfirm,
                 titleVisibility: .visible
             ) {
-                Button("settings.rule.confirmApply") { env.updateRule(editedRule) }
+                Button("settings.rule.confirmApply") {
+                    track("rule_changed", ["steps": .int(stepsRequired), "minutes": .int(rewardMinutes)])
+                    env.updateRule(editedRule)
+                }
                 Button("common.cancel", role: .cancel) {}
             } message: {
                 Text("settings.rule.confirmMessage")
@@ -200,18 +229,35 @@ struct SettingsView: View {
             .fullScreenCover(
                 isPresented: $isShowingPaywall,
                 onDismiss: {
+                    env.setFeedbackPresentationSuspended(false, by: "settings.paywall")
                     if env.subscriptionManager.isPro, hasChanges {
                         isShowingRuleChangeConfirm = true
                     }
                 },
-                content: { ProPaywallView() }
+                content: { ProPaywallView(source: .settings) }
             )
-            .sheet(isPresented: $isShowingCustomerCenter) {
+            .sheet(isPresented: $isShowingCustomerCenter, onDismiss: {
+                env.setFeedbackPresentationSuspended(false, by: "settings.customerCenter")
+            }) {
                 SubscriptionCustomerCenterView()
             }
         }
         .onChange(of: path) { _, path in
             onNavigationDepthChange?(!path.isEmpty)
+            // Four of five people who finished onboarding in 1.2.2 opened Settings within a
+            // minute; the app list is the likeliest reason, and the one worth knowing about.
+            if path.last == .apps { track("apps_opened") }
+        }
+        .onChange(of: isShowingRuleChangeConfirm) { _, isPresented in
+            env.setFeedbackPresentationSuspended(isPresented, by: "settings.ruleConfirmation")
+        }
+        .onChange(of: isShowingPaywall) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "settings.paywall")
+        }
+        .onChange(of: isShowingCustomerCenter) { _, isPresented in
+            guard isPresented else { return }
+            env.setFeedbackPresentationSuspended(true, by: "settings.customerCenter")
         }
         .onDisappear {
             onNavigationDepthChange?(false)
@@ -267,15 +313,25 @@ struct SettingsView: View {
     private var languageBinding: Binding<AppLanguage> {
         Binding(
             get: { env.appLanguage },
-            set: { env.setAppLanguage($0) }
+            set: {
+                track("language_changed", ["language": .string($0.rawValue)])
+                env.setAppLanguage($0)
+            }
         )
     }
 
     private var hapticFeedbackBinding: Binding<Bool> {
         Binding(
             get: { env.hapticFeedbackEnabled },
-            set: { env.setHapticFeedbackEnabled($0) }
+            set: {
+                track("haptics_toggled", ["enabled": .bool($0)])
+                env.setHapticFeedbackEnabled($0)
+            }
         )
+    }
+
+    private func track(_ action: String, _ properties: AnalyticsProperties = [:]) {
+        env.analytics.track(.settingsAction.withProperties(properties.merging(["action": .string(action)]) { $1 }))
     }
 
     private func requestRuleChange() {

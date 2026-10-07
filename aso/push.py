@@ -4,7 +4,7 @@ sys.path.insert(0, "aso")
 import build as B, whatsnew
 
 ASC = "/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-VERSION_ID = "67b1afb0-ec48-49a3-89a1-2bff6fe068a8"
+VERSION_ID = "fdeb596c-9821-4b3a-aca7-3eaf2cbee43a"
 APPINFO_ID = "7e699c16-00d6-4b90-af60-0f00458d5cb8"
 
 def asc(method, path, body=None):

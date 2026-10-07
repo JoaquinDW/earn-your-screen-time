@@ -46,7 +46,7 @@ struct SharedStateMigrationTests {
         #expect(state.onboarding == OnboardingProfile())
         #expect(state.history.days.isEmpty)
         #expect(state.dailyStepGoal == 8_000)
-        #expect(state.schemaVersion == 10)
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
         #expect(state.currentSession == nil)
         #expect(state.journey == nil)
         #expect(state.ledger.dailyGoal == 0)
@@ -210,7 +210,7 @@ struct SharedStateMigrationTests {
         """
 
         let state = try SharedState.decoded(from: Data(v6.utf8))
-        #expect(state.schemaVersion == 10)
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
         #expect(state.ledger.wallet.carriedSeconds == 300)
         #expect(state.ledger.wallet.earnedSeconds == 1_200)
         #expect(state.ledger.wallet.consumedSeconds == 600)
@@ -221,6 +221,7 @@ struct SharedStateMigrationTests {
         #expect(state.history.days.first?.stepEarnedSeconds == 1_200)
         #expect(state.history.days.first?.studyEarnedSeconds == 0)
         #expect(state.history.days.first?.pushupEarnedSeconds == 0)
+        #expect(state.history.days.first?.hasUsageData == false)
     }
 
     @Test("A v8 Study receipt list migrates to generic IDs despite malformed optional fields")
@@ -239,9 +240,157 @@ struct SharedStateMigrationTests {
         """
 
         let state = try SharedState.decoded(from: Data(v8.utf8))
-        #expect(state.schemaVersion == 10)
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
         #expect(state.ledger.wallet.earnedSeconds == 900)
         #expect(state.appliedRewardIDs == [receiptID])
         #expect(state.appliedStudyReceiptIDs == [receiptID])
+    }
+
+    @Test("The onboarding demo outcome survives a round trip")
+    func roundTripsTheOnboardingDemoOutcome() throws {
+        var state = SharedState.initial(day: DayKey(year: 2026, month: 9, day: 17))
+        state.onboardingPushupDemo = .completed
+        state.firstAppBlockedTracked = true
+
+        let decoded = try SharedState.decoded(from: state.encoded())
+
+        #expect(decoded.onboardingPushupDemo == .completed)
+        #expect(decoded.firstAppBlockedTracked)
+        #expect(!decoded.firstRealUnlockTracked)
+        #expect(decoded == state)
+    }
+
+    /// The activation funnel starts at v11, so an install that already blocks apps and has
+    /// already spent minutes must not report either "first" the day it upgrades.
+    @Test("A pre-v11 install with apps and spent minutes starts with the funnel latched")
+    func migratesV10ActivationLatches() throws {
+        let v10 = """
+        {
+          "schemaVersion": 10,
+          "restrictedItemCount": 4,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 1200, "consumedSeconds": 300 }
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v10.utf8))
+
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
+        #expect(state.onboardingPushupDemo == .notAttempted)
+        #expect(state.firstAppBlockedTracked)
+        #expect(state.firstRealUnlockTracked)
+    }
+
+    @Test("The successful-unlock count and review-prompt latch survive a round trip")
+    func roundTripsReviewPromptState() throws {
+        var state = SharedState.initial(day: DayKey(year: 2026, month: 9, day: 17))
+        state.successfulUnlockCount = 3
+        state.reviewPromptRequested = true
+
+        let decoded = try SharedState.decoded(from: state.encoded())
+
+        #expect(decoded.successfulUnlockCount == 3)
+        #expect(decoded.reviewPromptRequested)
+        #expect(decoded == state)
+    }
+
+    @Test("The free push-up reward latch survives a round trip and defaults to unused")
+    func freePushupsRewardLatch() throws {
+        let v13 = """
+        {
+          "schemaVersion": 13,
+          "ledger": {
+            "day": { "year": 2026, "month": 9, "day": 28 },
+            "wallet": { "earnedSeconds": 300 }
+          }
+        }
+        """
+        var state = try SharedState.decoded(from: Data(v13.utf8))
+        #expect(!state.freePushupsRewardClaimed)
+        #expect(state.ledger.wallet.earnedSeconds == 300)
+
+        state.freePushupsRewardClaimed = true
+        let decoded = try SharedState.decoded(from: state.encoded())
+        #expect(decoded.freePushupsRewardClaimed)
+        #expect(decoded == state)
+    }
+
+    @Test("A pre-v14 install that already redeemed a server reward starts with the active-reward latch set")
+    func migratesV13ActiveRewardLatch() throws {
+        let v13 = """
+        {
+          "schemaVersion": 13,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 300 }
+          },
+          "appliedRewardIDs": ["7C1A4E0B-2F5D-4B8E-9C3A-1D2E3F4A5B6C"]
+        }
+        """
+        let state = try SharedState.decoded(from: Data(v13.utf8))
+        #expect(state.firstActiveRewardTracked)
+        #expect(state.ledger.wallet.earnedSeconds == 300)
+    }
+
+    @Test("A pre-v14 install with only step rewards can still report its first active reward")
+    func migratesV13WithoutActiveReward() throws {
+        let v13 = """
+        {
+          "schemaVersion": 13,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 600 }
+          },
+          "hasEarnedFirstReward": true
+        }
+        """
+        var state = try SharedState.decoded(from: Data(v13.utf8))
+        #expect(!state.firstActiveRewardTracked)
+
+        state.firstActiveRewardTracked = true
+        let decoded = try SharedState.decoded(from: state.encoded())
+        #expect(decoded.firstActiveRewardTracked)
+        #expect(decoded == state)
+    }
+
+    @Test("A pre-v12 install starts with no unlocks counted and the review prompt not yet requested")
+    func migratesV11WithoutReviewPromptState() throws {
+        let v11 = """
+        {
+          "schemaVersion": 11,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 600 }
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v11.utf8))
+
+        #expect(state.successfulUnlockCount == 0)
+        #expect(!state.reviewPromptRequested)
+        #expect(state.ledger.sessionCount == 0)
+        #expect(state.ledger.returnedSessionSeconds == 0)
+    }
+
+    @Test("A pre-v11 install that never blocked an app can still report its first")
+    func migratesV10WithoutFalseLatches() throws {
+        let v10 = """
+        {
+          "schemaVersion": 10,
+          "restrictedItemCount": 0,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 600 }
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v10.utf8))
+
+        #expect(!state.firstAppBlockedTracked)
+        #expect(!state.firstRealUnlockTracked)
     }
 }

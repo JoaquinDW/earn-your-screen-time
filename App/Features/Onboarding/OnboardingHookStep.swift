@@ -4,11 +4,8 @@ import SwiftUI
 ///
 /// This is one of only two illustrated moments in onboarding — a ridge above the city at dusk,
 /// the phone small in his hand — and it earns the artwork because it is the only screen whose
-/// job is the idea rather than a setting. Everything between here and the first walk is plain
-/// ground, so that when the illustration returns it still means something.
-///
-/// The promise is stated once, in the display serif, and then three plain lines say what the app
-/// actually does. No numbers, no badges: nothing has been earned yet.
+/// job is the idea rather than a setting. The first screen gives one concrete earn rate; the
+/// following questions and mechanism screen explain the rest of the loop.
 struct OnboardingHookStep: View {
     let onContinue: () -> Void
 
@@ -34,12 +31,13 @@ struct OnboardingHookStep: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 14)
 
-                        VStack(alignment: .leading, spacing: 14) {
-                            OnboardingPoint(text: "onboarding.hook.point.scroll")
-                            OnboardingPoint(text: "onboarding.hook.point.move")
-                            OnboardingPoint(text: "onboarding.hook.point.choice")
-                        }
-                        .padding(.top, Theme.Space.l)
+                        Label("5 min / 500 steps", systemImage: "figure.walk")
+                            .font(.sans(14, weight: .semibold))
+                            .foregroundStyle(Night.cobaltText)
+                            .padding(.horizontal, Theme.Space.m)
+                            .frame(minHeight: Theme.minTouchTarget)
+                            .background(Night.cobaltWash, in: .capsule)
+                            .padding(.top, Theme.Space.l)
                     }
                     .padding(.horizontal, Theme.Space.gutter)
                     .padding(.top, Theme.Space.l)

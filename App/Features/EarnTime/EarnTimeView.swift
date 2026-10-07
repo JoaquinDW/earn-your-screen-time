@@ -16,7 +16,10 @@ struct EarnTimeView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.locale) private var locale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isConnectingHealth = false
+    @State private var healthConnectionError: String?
     var onPushups: () -> Void = {}
+    var onStudy: () -> Void = {}
 
     private static let heroShare: CGFloat = 0.54
 
@@ -30,6 +33,11 @@ struct EarnTimeView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 hero
+                if env.health.isAvailable && !env.health.hasRequestedAuthorization {
+                    healthConnectionPrompt
+                        .padding(.horizontal, Theme.Space.l)
+                        .padding(.top, Theme.Space.l)
+                }
                 rules.padding(.top, Theme.Space.xl)
                 footnote.padding(.top, Theme.Space.xl)
             }
@@ -75,6 +83,10 @@ struct EarnTimeView: View {
                     Text("earn.minutesEarnedToday \(env.earnedMinutesToday)")
                         .foregroundStyle(env.earnedMinutesToday > 0 ? Night.moss : Night.textFaint)
                         .contentTransition(.numericText(value: Double(env.earnedMinutesToday)))
+                        .animation(
+                            reduceMotion ? nil : .easeOut(duration: 0.5),
+                            value: env.earnedMinutesToday
+                        )
                 }
                 .font(.sans(12.5))
                 .lineLimit(1)
@@ -96,6 +108,10 @@ struct EarnTimeView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .contentTransition(.numericText(value: Double(env.ledger.activityAmount)))
+                    .animation(
+                        reduceMotion ? nil : .easeOut(duration: 0.5),
+                        value: env.ledger.activityAmount
+                    )
                 Text("earn.stepsUnit")
                     .font(.sans(16))
                     .foregroundStyle(Night.textMuted)
@@ -116,6 +132,42 @@ struct EarnTimeView: View {
     }
 
     // MARK: - Rules
+
+    private var healthConnectionPrompt: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.s) {
+            Text("Connect Apple Health to earn minutes from walking.")
+                .font(.sans(15, weight: .semibold))
+                .foregroundStyle(Night.text)
+            Button {
+                Task {
+                    isConnectingHealth = true
+                    healthConnectionError = nil
+                    do {
+                        try await env.health.requestAuthorization()
+                        await env.refresh()
+                    } catch {
+                        healthConnectionError = error.localizedDescription
+                    }
+                    isConnectingHealth = false
+                }
+            } label: {
+                HStack(spacing: Theme.Space.s) {
+                    if isConnectingHealth { ProgressView().tint(Night.cobaltText) }
+                    Text("Connect Apple Health")
+                }
+            }
+            .buttonStyle(.quietLink)
+            .disabled(isConnectingHealth)
+            if let healthConnectionError {
+                Text(healthConnectionError)
+                    .font(.sans(12))
+                    .foregroundStyle(Theme.coralDeep)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(Theme.Space.m)
+        .background(Night.panel, in: .rect(cornerRadius: Night.panelRadius))
+    }
 
     private var rules: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -146,6 +198,18 @@ struct EarnTimeView: View {
             }
             .buttonStyle(.plain)
             .accessibilityHint(Text("pushups.entry.hint", tableName: PushupsLocalization.tableName))
+
+            Button(action: onStudy) {
+                EarningRuleCard(
+                    title: "study.title",
+                    titleTableName: "StudyLocalizable",
+                    detail: Text("study.entry.detail", tableName: "StudyLocalizable"),
+                    glyph: "book.closed",
+                    state: .available
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("study.entry.hint", tableName: "StudyLocalizable"))
         }
         .padding(.horizontal, Theme.Space.l)
     }

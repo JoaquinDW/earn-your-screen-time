@@ -9,6 +9,21 @@ struct PaywallPackage: Identifiable {
 
     var id: PaywallPlan { plan }
     var price: String { package.storeProduct.localizedPriceString }
+    /// "$0.00" in the storefront's own currency, for the trial's "due today" line.
+    var zeroPrice: String {
+        package.storeProduct.priceFormatter?.string(from: 0) ?? "0"
+    }
+
+    func monthlyEquivalentPrice() -> String? {
+        guard plan == .yearly,
+              let formatter = package.storeProduct.priceFormatter?.copy() as? NumberFormatter else {
+            return nil
+        }
+        let monthlyPrice = NSDecimalNumber(decimal: package.storeProduct.price)
+            .dividing(by: NSDecimalNumber(value: 12))
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: monthlyPrice)
+    }
 
     func freeTrialDescription(locale: Locale) -> String? {
         guard isEligibleForFreeTrial,
@@ -16,8 +31,39 @@ struct PaywallPackage: Identifiable {
               discount.paymentMode == .freeTrial,
               discount.subscriptionPeriod.unit == .day,
               discount.subscriptionPeriod.value == 3 else { return nil }
-        return String(localized: "3-day free trial", locale: locale)
+        return Self.localized("3-day free trial", locale: locale)
     }
+
+    static func localized(_ key: String, locale: Locale) -> String {
+        let identifiers = [
+            locale.identifier.replacingOccurrences(of: "_", with: "-"),
+            locale.language.languageCode?.identifier
+        ].compactMap { $0 }
+
+        for identifier in identifiers {
+            if let path = Bundle.main.path(forResource: identifier, ofType: "lproj"),
+               let bundle = Bundle(path: path) {
+                return bundle.localizedString(forKey: key, value: key, table: nil)
+            }
+        }
+        return key
+    }
+}
+
+/// Where the paywall was opened from, reported on every paywall event so conversion can be
+/// read per entry point.
+enum PaywallSource: String {
+    /// The paywall after the free unlock's session has ended. It can be closed; closing it only
+    /// lasts until the app next goes to the background.
+    case firstUnlock = "first_unlock"
+    /// Someone who closed that paywall tried to spend minutes again.
+    case unlockAttempt = "unlock_attempt"
+    /// Protecting apps beyond the free allowance.
+    case appSelection = "app_selection"
+    /// Push-ups after the one free push-up reward has been used.
+    case pushups
+    case study
+    case settings
 }
 
 struct PaywallAlert: Identifiable {
@@ -45,28 +91,38 @@ final class PaywallViewModel {
     /// DEBUG/Sandbox/TestFlight builds so App Store users never see internal detail.
     private(set) var loadDiagnostic: String?
     var alert: PaywallAlert?
+    /// Shown after someone backs out of Apple's purchase sheet: price surprise at that sheet is
+    /// the one objection the paywall can still answer.
+    private(set) var showsCancelNudge = false
 
     private let subscriptionManager: SubscriptionManager
     private let analytics: any PaywallAnalyticsProtocol
+    private let source: PaywallSource
     private var hasTrackedView = false
+    /// A successful purchase must not be repeatable from the same screen: a second tap while the
+    /// paywall is dismissing used to replay the whole purchase and double-report it.
+    private var hasActivated = false
     private var loadTask: Task<Void, Never>?
     private var loadGeneration = 0
 
     var isProcessing: Bool { isPurchasing || isRestoring }
-    var canPurchase: Bool { selectedPackage != nil && !isLoading && !isProcessing }
+    var canPurchase: Bool { selectedPackage != nil && !isLoading && !isProcessing && !hasActivated }
+    var trialPackage: PaywallPackage? { packages.first(where: \.isEligibleForFreeTrial) }
 
     init(
         subscriptionManager: SubscriptionManager,
+        source: PaywallSource,
         analytics: any PaywallAnalyticsProtocol = PaywallAnalytics()
     ) {
         self.subscriptionManager = subscriptionManager
+        self.source = source
         self.analytics = analytics
     }
 
     func viewAppeared() async {
         if !hasTrackedView {
             hasTrackedView = true
-            analytics.track(.paywallViewed)
+            analytics.track(.paywallViewed.withProperties(context))
         }
         // Reappearing after a failed load retries instead of keeping the error forever.
         guard packages.isEmpty, !isLoading else { return }
@@ -74,7 +130,18 @@ final class PaywallViewModel {
     }
 
     func paywallClosed() {
-        analytics.track(.paywallClosed)
+        analytics.track(.paywallClosed.withProperties(context))
+    }
+
+    /// Properties shared by every paywall event. Prices are the localized App Store strings,
+    /// which identify a storefront, never a person.
+    private var context: AnalyticsProperties {
+        var properties: AnalyticsProperties = ["source": .string(source.rawValue)]
+        if let selectedPackage {
+            properties["trial_eligible"] = .bool(selectedPackage.isEligibleForFreeTrial)
+            properties["price"] = .string(selectedPackage.price)
+        }
+        return properties
     }
 
     /// Starts a fresh load, superseding any in-flight one. A previous attempt stuck on a
@@ -143,6 +210,13 @@ final class PaywallViewModel {
             ]
             selectedPackage = packages.first { $0.plan == .yearly }
             isLoading = false
+            analytics.track(.paywallOfferLoaded.withProperties([
+                "source": .string(source.rawValue),
+                "trial_eligible_monthly": .bool(packages[0].isEligibleForFreeTrial),
+                "trial_eligible_yearly": .bool(packages[1].isEligibleForFreeTrial),
+                "price_monthly": .string(packages[0].price),
+                "price_yearly": .string(packages[1].price)
+            ]))
             MonetizationLog.info(
                 "Offering '\(offering.identifier)' loaded with products: "
                     + "\(monthly.storeProduct.productIdentifier), \(yearly.storeProduct.productIdentifier)"
@@ -184,52 +258,64 @@ final class PaywallViewModel {
     func selectPackage(_ package: PaywallPackage) {
         guard !isProcessing, selectedPackage?.plan != package.plan else { return }
         selectedPackage = package
-        analytics.track(.planSelected(package.plan))
+        analytics.track(.planSelected(package.plan).withProperties(context))
     }
 
     func purchase() async -> Bool {
         guard canPurchase, let selectedPackage else { return false }
         isPurchasing = true
-        analytics.track(.purchaseStarted(selectedPackage.plan))
+        showsCancelNudge = false
+        let context = context
+        analytics.track(.purchaseStarted(selectedPackage.plan).withProperties(context))
         defer { isPurchasing = false }
 
         do {
             let result = try await subscriptionManager.purchase(package: selectedPackage.package)
             if result.userCancelled {
-                analytics.track(.purchaseCancelled(selectedPackage.plan))
+                analytics.track(.purchaseCancelled(selectedPackage.plan).withProperties(context))
+                offerTrialAfterCancel()
                 return false
             }
             guard subscriptionManager.isPro else {
                 throw PaywallConfigurationError.entitlementInactive
             }
-            analytics.track(.purchaseCompleted(selectedPackage.plan))
+            hasActivated = true
+            analytics.track(.purchaseCompleted(selectedPackage.plan).withProperties(context))
+            let planContext = context.merging(["plan": .string(selectedPackage.plan.rawValue)]) { current, _ in current }
             if selectedPackage.isEligibleForFreeTrial {
-                analytics.track(.trialStarted.withProperties([
-                    "plan": .string(selectedPackage.plan.rawValue)
-                ]))
+                analytics.track(.trialStarted.withProperties(planContext))
             }
-            analytics.track(.subscriptionStarted.withProperties([
-                "plan": .string(selectedPackage.plan.rawValue)
-            ]))
+            analytics.track(.subscriptionStarted.withProperties(planContext))
             return true
         } catch PaywallConfigurationError.entitlementInactive {
             let error = PaywallConfigurationError.entitlementInactive
             subscriptionManager.record(error, operation: "Purchase entitlement validation")
-            analytics.track(.purchaseFailed(selectedPackage.plan))
+            analytics.track(.purchaseFailed(selectedPackage.plan).withProperties(context))
             alert = PaywallAlert(kind: .entitlementInactive)
             return false
         } catch {
             subscriptionManager.record(error, operation: "Purchase")
-            analytics.track(.purchaseFailed(selectedPackage.plan))
+            analytics.track(.purchaseFailed(selectedPackage.plan).withProperties(context))
             alert = PaywallAlert(kind: .purchase)
             return false
         }
     }
 
+    /// Backing out of Apple's sheet usually means the price read as a charge today. When a
+    /// free trial exists, move the selection onto it and say plainly that nothing is charged.
+    private func offerTrialAfterCancel() {
+        guard let trialPackage else { return }
+        if selectedPackage?.plan != trialPackage.plan {
+            selectedPackage = trialPackage
+        }
+        showsCancelNudge = true
+        analytics.track(.paywallCancelNudgeShown.withProperties(context))
+    }
+
     func restorePurchases() async -> Bool {
-        guard !isProcessing else { return false }
+        guard !isProcessing, !hasActivated else { return false }
         isRestoring = true
-        analytics.track(.restoreStarted)
+        analytics.track(.restoreStarted.withProperties(context))
         defer { isRestoring = false }
 
         do {
@@ -238,7 +324,8 @@ final class PaywallViewModel {
                 alert = PaywallAlert(kind: .noSubscription)
                 return false
             }
-            analytics.track(.restoreCompleted)
+            hasActivated = true
+            analytics.track(.restoreCompleted.withProperties(context))
             return true
         } catch {
             subscriptionManager.record(error, operation: "Restore")

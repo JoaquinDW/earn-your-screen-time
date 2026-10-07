@@ -52,6 +52,7 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
             )
         }
         Purchases.shared.delegate = self
+        linkAnalyticsIdentity()
         MonetizationLog.info(
             "RevenueCat configured; key prefix: \(apiKey.prefix(5)); bundle: "
                 + "\(Bundle.main.bundleIdentifier ?? "unknown"); sandbox: \(MonetizationBuild.isSandbox)"
@@ -86,16 +87,25 @@ final class RevenueCatSubscriptionService: NSObject, SubscriptionServiceProtocol
         try await Purchases.shared.restorePurchases()
     }
 
+    /// Lets RevenueCat's PostHog integration attribute server-side events — the trial converting
+    /// to a paid period happens on Apple's side and never passes through the app.
+    private func linkAnalyticsIdentity() {
+        guard let distinctID = PostHogAttribution.distinctID else { return }
+        Purchases.shared.attribution.setPostHogUserID(distinctID)
+    }
+
     func refreshCustomerInfo() async throws -> CustomerInfo {
         try await Purchases.shared.customerInfo(fetchPolicy: .fetchCurrent)
     }
 
     func identify(appUserID: String) async throws -> CustomerInfo {
         try await withCheckedThrowingContinuation { continuation in
-            Purchases.shared.logIn(appUserID) { customerInfo, _, error in
+            Purchases.shared.logIn(appUserID) { [weak self] customerInfo, _, error in
                 if let error {
                     continuation.resume(throwing: error)
                 } else if let customerInfo {
+                    // Subscriber attributes belong to the RevenueCat user, and logIn switches it.
+                    self?.linkAnalyticsIdentity()
                     continuation.resume(returning: customerInfo)
                 } else {
                     continuation.resume(throwing: SubscriptionIdentificationError.missingCustomerInfo)

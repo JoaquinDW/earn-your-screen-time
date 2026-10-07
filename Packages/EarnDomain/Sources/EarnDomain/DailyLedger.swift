@@ -22,6 +22,10 @@ public struct DailyLedger: Codable, Equatable, Sendable {
     public var transactions: [EarnTransaction]
     public var walletTransactions: [WalletTransaction]
     public var rewardTransactions: [RewardTransaction]
+    /// Sessions that reached a user-visible end state today. Technical cancellations do not count.
+    public var sessionCount: Int
+    /// Reservation time returned when the user explicitly ended a session early.
+    public var returnedSessionSeconds: Int
 
     public init(
         day: DayKey,
@@ -35,7 +39,9 @@ public struct DailyLedger: Codable, Equatable, Sendable {
         goalBonusAwarded: Bool = false,
         transactions: [EarnTransaction] = [],
         walletTransactions: [WalletTransaction] = [],
-        rewardTransactions: [RewardTransaction] = []
+        rewardTransactions: [RewardTransaction] = [],
+        sessionCount: Int = 0,
+        returnedSessionSeconds: Int = 0
     ) {
         self.day = day
         self.rule = rule
@@ -49,6 +55,8 @@ public struct DailyLedger: Codable, Equatable, Sendable {
         self.transactions = transactions
         self.walletTransactions = walletTransactions
         self.rewardTransactions = rewardTransactions
+        self.sessionCount = max(0, sessionCount)
+        self.returnedSessionSeconds = max(0, returnedSessionSeconds)
     }
 
     /// Activity that counts toward the current rule.
@@ -57,7 +65,7 @@ public struct DailyLedger: Codable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case day, rule, activityAmount, baselineAmount, milestonesRewarded, wallet
         case dailyGoal, goalBonusSeconds, goalBonusAwarded, transactions, walletTransactions
-        case rewardTransactions
+        case rewardTransactions, sessionCount, returnedSessionSeconds
     }
 
     public init(from decoder: Decoder) throws {
@@ -74,7 +82,9 @@ public struct DailyLedger: Codable, Equatable, Sendable {
             goalBonusAwarded: try container.decodeIfPresent(Bool.self, forKey: .goalBonusAwarded) ?? false,
             transactions: try container.decodeIfPresent([EarnTransaction].self, forKey: .transactions) ?? [],
             walletTransactions: try container.decodeIfPresent([WalletTransaction].self, forKey: .walletTransactions) ?? [],
-            rewardTransactions: try container.decodeIfPresent([RewardTransaction].self, forKey: .rewardTransactions) ?? []
+            rewardTransactions: try container.decodeIfPresent([RewardTransaction].self, forKey: .rewardTransactions) ?? [],
+            sessionCount: try container.decodeIfPresent(Int.self, forKey: .sessionCount) ?? 0,
+            returnedSessionSeconds: try container.decodeIfPresent(Int.self, forKey: .returnedSessionSeconds) ?? 0
         )
     }
 }

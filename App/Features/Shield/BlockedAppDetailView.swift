@@ -14,15 +14,19 @@ import SwiftUI
 /// never covers the person. The actions sit in a footer that fades into the ground rather than
 /// cutting him off with an edge.
 ///
-/// The state machine, the copy keys and every action are unchanged from v5: this is a redress of
-/// `ShieldViewModel`, not a new behaviour.
+/// `ShieldViewModel` still owns the presentation state. When no minutes are available, this surface
+/// also offers the existing Pushups flow as the fastest route back to earned time.
 struct BlockedAppDetailView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let onDismiss: () -> Void
+    var onSessionStarted: () -> Void = {}
+    var onPushups: () -> Void = {}
     @State private var isChoosingDuration = false
     @State private var selectedMinutes = 5
+    @State private var didStartSession = false
+    @State private var isShowingUnlockPaywall = false
 
     private static let scene = IllustratedScene.blockedBench
 
@@ -51,10 +55,20 @@ struct BlockedAppDetailView: View {
         .tint(Night.cobalt)
         .preferredColorScheme(.dark)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.28), value: viewModel.state)
-        .sheet(isPresented: $isChoosingDuration) {
-            SpendSheet(selectedMinutes: $selectedMinutes, onStarted: onDismiss)
-                .presentationDetents([.height(430)])
+        .sheet(isPresented: $isChoosingDuration, onDismiss: {
+            guard didStartSession else { return }
+            didStartSession = false
+            onSessionStarted()
+        }) {
+            SpendSheet(
+                selectedMinutes: $selectedMinutes,
+                onStarted: { didStartSession = true }
+            )
+                .presentationDetents([.height(560), .large])
                 .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(isPresented: $isShowingUnlockPaywall) {
+            ProPaywallView(source: .unlockAttempt)
         }
     }
 
@@ -152,11 +166,25 @@ struct BlockedAppDetailView: View {
 
     private var actions: some View {
         VStack(spacing: 4) {
-            EarnPrimaryButton(
-                label: primaryLabel,
-                isEnabled: !env.isRefreshing && !env.isStartingSession,
-                action: primaryAction
-            )
+            if canOfferPushups {
+                EarnPrimaryButton(
+                    label: Text("shield.detail.action.pushups"),
+                    action: onPushups
+                )
+
+                Button(action: primaryAction) {
+                    primaryLabel
+                }
+                .buttonStyle(.quiet)
+                .disabled(env.isRefreshing || env.isStartingSession)
+                .frame(maxWidth: .infinity)
+            } else {
+                EarnPrimaryButton(
+                    label: primaryLabel,
+                    isEnabled: !env.isRefreshing && !env.isStartingSession,
+                    action: primaryAction
+                )
+            }
 
             Button("shield.detail.notNow", action: onDismiss)
                 .buttonStyle(.quiet)
@@ -178,10 +206,14 @@ struct BlockedAppDetailView: View {
         }
     }
 
+    private var canOfferPushups: Bool {
+        env.screenTime.authorizationStatus.isApproved && viewModel.availableMinutes == 0
+    }
+
     // MARK: - Copy
     //
-    // Unchanged from v5 — the states and their strings were already written to be a boundary
-    // rather than a punishment, and they stay exactly as translated.
+    // The state copy remains a boundary rather than a punishment; only the actions below it adapt
+    // to whether the user already has time available.
 
     private var eyebrow: LocalizedStringKey {
         return switch viewModel.state {
@@ -245,6 +277,8 @@ struct BlockedAppDetailView: View {
             } else if !env.health.hasRequestedAuthorization {
                 try? await env.health.requestAuthorization()
                 await env.refresh()
+            } else if viewModel.state == .rewardAvailable, env.requiresSubscription {
+                isShowingUnlockPaywall = true
             } else if viewModel.state == .rewardAvailable {
                 selectedMinutes = min(max(1, selectedMinutes), viewModel.availableMinutes)
                 isChoosingDuration = true

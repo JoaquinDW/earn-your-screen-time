@@ -19,7 +19,7 @@ Deno.serve(async (request) => {
     const { data: configuration, error } = await client.from(
       "exercise_configuration",
     ).select(
-      "enabled,entitlement_required,daily_cap_seconds,session_ttl_seconds,minimum_app_version,detection_version,minimum_pose_confidence,down_elbow_angle_degrees,up_elbow_angle_degrees,minimum_body_angle_degrees,minimum_rep_duration_seconds",
+      "enabled,entitlement_required,free_rewards_per_user,daily_cap_seconds,session_ttl_seconds,minimum_app_version,detection_version,minimum_pose_confidence,down_elbow_angle_degrees,up_elbow_angle_degrees,minimum_body_angle_degrees,minimum_rep_duration_seconds",
     ).eq("id", true).single();
     if (error) throw error;
     const { data: challenges, error: challengesError } = await client.from(
@@ -46,9 +46,23 @@ Deno.serve(async (request) => {
     const tomorrow = new Date();
     tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
     tomorrow.setUTCHours(0, 0, 0, 0);
-    const entitled = configuration.entitlement_required
+    const subscribed = configuration.entitlement_required
       ? await entitlementForUser(client, user.id)
       : true;
+    // Mirrors private.exercise_reward_allowed: someone who has not paid gets
+    // `free_rewards_per_user` push-up rewards over the account's lifetime.
+    const { count: lifetimeRewards, error: lifetimeError } = await client.from(
+      "reward_transactions",
+    ).select("id", { count: "exact", head: true }).eq("user_id", user.id).eq(
+      "source_type",
+      "pushups",
+    );
+    if (lifetimeError) throw lifetimeError;
+    const freeRewardsRemaining = subscribed ? 0 : Math.max(
+      0,
+      configuration.free_rewards_per_user - (lifetimeRewards ?? 0),
+    );
+    const entitled = subscribed || freeRewardsRemaining > 0;
 
     return json({
       configuration: {
@@ -76,6 +90,7 @@ Deno.serve(async (request) => {
         })),
       },
       entitled,
+      freeRewardsRemaining,
       updateRequired: appVersion === null
         ? null
         : !versionAtLeast(appVersion, configuration.minimum_app_version),

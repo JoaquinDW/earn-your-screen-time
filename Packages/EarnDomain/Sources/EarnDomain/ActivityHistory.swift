@@ -12,6 +12,11 @@ public struct DaySummary: Codable, Equatable, Sendable {
     public let stepEarnedSeconds: Int
     public let studyEarnedSeconds: Int
     public let pushupEarnedSeconds: Int
+    public let consumedSeconds: Int
+    public let sessionCount: Int
+    public let returnedSeconds: Int
+    /// False for payloads written before usage history existed and for calendar gaps.
+    public let hasUsageData: Bool
 
     public init(day: DayKey, activityAmount: Int, earnedSeconds: Int) {
         self.init(
@@ -19,7 +24,11 @@ public struct DaySummary: Codable, Equatable, Sendable {
             activityAmount: activityAmount,
             stepEarnedSeconds: earnedSeconds,
             studyEarnedSeconds: 0,
-            pushupEarnedSeconds: 0
+            pushupEarnedSeconds: 0,
+            consumedSeconds: 0,
+            sessionCount: 0,
+            returnedSeconds: 0,
+            hasUsageData: true
         )
     }
 
@@ -28,13 +37,21 @@ public struct DaySummary: Codable, Equatable, Sendable {
         activityAmount: Int,
         stepEarnedSeconds: Int,
         studyEarnedSeconds: Int,
-        pushupEarnedSeconds: Int = 0
+        pushupEarnedSeconds: Int = 0,
+        consumedSeconds: Int = 0,
+        sessionCount: Int = 0,
+        returnedSeconds: Int = 0,
+        hasUsageData: Bool = true
     ) {
         self.day = day
         self.activityAmount = max(0, activityAmount)
         self.stepEarnedSeconds = max(0, stepEarnedSeconds)
         self.studyEarnedSeconds = max(0, studyEarnedSeconds)
         self.pushupEarnedSeconds = max(0, pushupEarnedSeconds)
+        self.consumedSeconds = max(0, consumedSeconds)
+        self.sessionCount = max(0, sessionCount)
+        self.returnedSeconds = max(0, returnedSeconds)
+        self.hasUsageData = hasUsageData
         earnedSeconds = self.stepEarnedSeconds + self.studyEarnedSeconds + self.pushupEarnedSeconds
     }
 
@@ -54,16 +71,24 @@ public struct DaySummary: Codable, Equatable, Sendable {
             activityAmount: ledger.activityAmount,
             stepEarnedSeconds: max(0, ledger.wallet.earnedSeconds - studySeconds - pushupSeconds),
             studyEarnedSeconds: studySeconds,
-            pushupEarnedSeconds: pushupSeconds
+            pushupEarnedSeconds: pushupSeconds,
+            consumedSeconds: ledger.wallet.consumedSeconds,
+            sessionCount: ledger.sessionCount,
+            returnedSeconds: ledger.returnedSessionSeconds
         )
     }
 
     public var earnedMinutes: Int { earnedSeconds / 60 }
+    public var consumedMinutes: Int { consumedSeconds / 60 }
+    public var returnedMinutes: Int { returnedSeconds / 60 }
+    public var netSeconds: Int { earnedSeconds - consumedSeconds }
     /// A day only counts toward a streak if it actually earned something.
     public var didEarn: Bool { earnedSeconds > 0 }
 
     private enum CodingKeys: String, CodingKey {
         case day, activityAmount, earnedSeconds, stepEarnedSeconds, studyEarnedSeconds, pushupEarnedSeconds
+        case consumedSeconds, sessionCount, returnedSeconds
+        case hasUsageData
     }
 
     public init(from decoder: Decoder) throws {
@@ -71,13 +96,20 @@ public struct DaySummary: Codable, Equatable, Sendable {
         let historicalEarnedSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .earnedSeconds) ?? 0)
         let studySeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .studyEarnedSeconds) ?? 0)
         let pushupSeconds = max(0, try container.decodeIfPresent(Int.self, forKey: .pushupEarnedSeconds) ?? 0)
+        let hasPersistedUsage = container.contains(.consumedSeconds)
+            || container.contains(.sessionCount)
+            || container.contains(.returnedSeconds)
         self.init(
             day: try container.decode(DayKey.self, forKey: .day),
             activityAmount: try container.decodeIfPresent(Int.self, forKey: .activityAmount) ?? 0,
             stepEarnedSeconds: try container.decodeIfPresent(Int.self, forKey: .stepEarnedSeconds)
                 ?? max(0, historicalEarnedSeconds - studySeconds - pushupSeconds),
             studyEarnedSeconds: studySeconds,
-            pushupEarnedSeconds: pushupSeconds
+            pushupEarnedSeconds: pushupSeconds,
+            consumedSeconds: try container.decodeIfPresent(Int.self, forKey: .consumedSeconds) ?? 0,
+            sessionCount: try container.decodeIfPresent(Int.self, forKey: .sessionCount) ?? 0,
+            returnedSeconds: try container.decodeIfPresent(Int.self, forKey: .returnedSeconds) ?? 0,
+            hasUsageData: try container.decodeIfPresent(Bool.self, forKey: .hasUsageData) ?? hasPersistedUsage
         )
     }
 }
@@ -113,10 +145,19 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
     public struct Totals: Equatable, Sendable {
         public let activityAmount: Int
         public let earnedSeconds: Int
+        public let stepEarnedSeconds: Int
+        public let studyEarnedSeconds: Int
+        public let pushupEarnedSeconds: Int
+        public let consumedSeconds: Int
+        public let sessionCount: Int
+        public let returnedSeconds: Int
         public let activeDays: Int
 
         public var steps: Int { activityAmount }
         public var earnedMinutes: Int { earnedSeconds / 60 }
+        public var consumedMinutes: Int { consumedSeconds / 60 }
+        public var returnedMinutes: Int { returnedSeconds / 60 }
+        public var netSeconds: Int { earnedSeconds - consumedSeconds }
     }
 
     /// Totals for an inclusive day range. A live summary may replace a stored summary for its day.
@@ -125,13 +166,31 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
         through end: DayKey,
         including liveSummary: DaySummary? = nil
     ) -> Totals {
-        guard start <= end else { return Totals(activityAmount: 0, earnedSeconds: 0, activeDays: 0) }
+        guard start <= end else {
+            return Totals(
+                activityAmount: 0,
+                earnedSeconds: 0,
+                stepEarnedSeconds: 0,
+                studyEarnedSeconds: 0,
+                pushupEarnedSeconds: 0,
+                consumedSeconds: 0,
+                sessionCount: 0,
+                returnedSeconds: 0,
+                activeDays: 0
+            )
+        }
         var byDay = Dictionary(uniqueKeysWithValues: days.map { ($0.day, $0) })
         if let liveSummary { byDay[liveSummary.day] = liveSummary }
         let summaries = byDay.values.filter { $0.day >= start && $0.day <= end }
         return Totals(
             activityAmount: summaries.reduce(0) { $0 + $1.activityAmount },
             earnedSeconds: summaries.reduce(0) { $0 + $1.earnedSeconds },
+            stepEarnedSeconds: summaries.reduce(0) { $0 + $1.stepEarnedSeconds },
+            studyEarnedSeconds: summaries.reduce(0) { $0 + $1.studyEarnedSeconds },
+            pushupEarnedSeconds: summaries.reduce(0) { $0 + $1.pushupEarnedSeconds },
+            consumedSeconds: summaries.reduce(0) { $0 + $1.consumedSeconds },
+            sessionCount: summaries.reduce(0) { $0 + $1.sessionCount },
+            returnedSeconds: summaries.reduce(0) { $0 + $1.returnedSeconds },
             activeDays: summaries.count { $0.activityAmount > 0 }
         )
     }
@@ -148,7 +207,19 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
         guard let date = day.startOfDay(calendar: calendar),
               let interval = calendar.dateInterval(of: .month, for: date),
               let lastDate = calendar.date(byAdding: .day, value: -1, to: interval.end)
-        else { return Totals(activityAmount: 0, earnedSeconds: 0, activeDays: 0) }
+        else {
+            return Totals(
+                activityAmount: 0,
+                earnedSeconds: 0,
+                stepEarnedSeconds: 0,
+                studyEarnedSeconds: 0,
+                pushupEarnedSeconds: 0,
+                consumedSeconds: 0,
+                sessionCount: 0,
+                returnedSeconds: 0,
+                activeDays: 0
+            )
+        }
         return totals(
             from: DayKey(date: interval.start, calendar: calendar),
             through: DayKey(date: lastDate, calendar: calendar),
@@ -165,8 +236,42 @@ public struct ActivityHistory: Codable, Equatable, Sendable {
         }
         return (0..<7).reversed().compactMap { offset in
             guard let day = today.adding(days: -offset, calendar: calendar) else { return nil }
-            return byDay[day] ?? DaySummary(day: day, activityAmount: 0, earnedSeconds: 0)
+            return byDay[day] ?? DaySummary(
+                day: day,
+                activityAmount: 0,
+                stepEarnedSeconds: 0,
+                studyEarnedSeconds: 0,
+                hasUsageData: false
+            )
         }
+    }
+
+    /// Calendar month through `today`, with empty dates included so the month view keeps its shape.
+    public func month(
+        through today: DayKey,
+        including todaySummary: DaySummary? = nil,
+        calendar: Calendar = .current
+    ) -> [DaySummary] {
+        guard let date = today.startOfDay(calendar: calendar),
+              let interval = calendar.dateInterval(of: .month, for: date) else { return [] }
+        let first = DayKey(date: interval.start, calendar: calendar)
+        var byDay = Dictionary(uniqueKeysWithValues: days.map { ($0.day, $0) })
+        if let todaySummary, todaySummary.day == today { byDay[today] = todaySummary }
+
+        var result: [DaySummary] = []
+        var cursor = first
+        while cursor <= today {
+            result.append(byDay[cursor] ?? DaySummary(
+                day: cursor,
+                activityAmount: 0,
+                stepEarnedSeconds: 0,
+                studyEarnedSeconds: 0,
+                hasUsageData: false
+            ))
+            guard let next = cursor.adding(days: 1, calendar: calendar), next > cursor else { break }
+            cursor = next
+        }
+        return result
     }
 
     /// Consecutive days that earned something, counting back from `today`.

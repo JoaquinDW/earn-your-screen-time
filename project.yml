@@ -11,12 +11,13 @@ options:
 
 configs:
   Debug: debug
+  DebugTestStore: debug
   Release: release
 
 settings:
   base:
-    MARKETING_VERSION: "1.0.2"
-    CURRENT_PROJECT_VERSION: "5"
+    MARKETING_VERSION: "1.3.0"
+    CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
     # Keep signing here because XcodeGen replaces manual project.pbxproj changes.
@@ -97,8 +98,11 @@ targets:
         POSTHOG_API_KEY: "phc_naqXniUtwWXVmZwkud33JHr6LkX9CP2rQfJJoavEjbuu"
         POSTHOG_HOST: "https://us.i.posthog.com"
       configs:
-        # Public Test Store key. Release intentionally has no key until the Apple app is connected.
+        # Default Debug uses Apple's sandbox products and their real trial terms.
         Debug:
+          REVENUECAT_API_KEY: appl_VwoOkdJRRkvyFcadPsnkQUvgvOf
+        # Keep RevenueCat's simulated purchases available as a separate Xcode scheme.
+        DebugTestStore:
           REVENUECAT_API_KEY: test_WQzWgKDQJvCwnbkXvlBZisaXHwE
         Release:
           REVENUECAT_API_KEY: appl_VwoOkdJRRkvyFcadPsnkQUvgvOf
@@ -193,5 +197,16 @@ schemes:
       storeKitConfiguration: StoreKit/EarnYourScreenTime.storekit
     test:
       config: Debug
+    archive:
+      config: Release
+
+  EarnYourScreenTime Test Store:
+    build:
+      targets:
+        EarnYourScreenTime: all
+    run:
+      config: DebugTestStore
+    test:
+      config: DebugTestStore
     archive:
       config: Release

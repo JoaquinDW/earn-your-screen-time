@@ -27,25 +27,24 @@ struct DashboardHome: View {
     let onChooseApps: () -> Void
     let onSpend: () -> Void
     let onEarnMore: () -> Void
+    let onPushups: () -> Void
 
     private static let scene = IllustratedScene.homeEvening
 
     var body: some View {
-        VStack(spacing: 0) {
-            header
-
-            Spacer(minLength: Theme.Space.m)
-
-            balance
-
-            Spacer(minLength: Theme.Space.l)
-
-            if env.activeSession == nil {
-                spendSection
+        ScrollView {
+            VStack(spacing: 0) {
+                header
+                balance.padding(.top, Theme.Space.xxl)
+                if env.activeSession == nil && !selection.isEmpty {
+                    spendSection.padding(.top, Theme.Space.xl)
+                }
             }
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.bottom, Theme.Space.l)
         }
-        .padding(.horizontal, Theme.Space.gutter)
-        // The UI column stops where the man begins.
+        .scrollBounceBehavior(.basedOnSize)
+        // The initial viewport stops where the man begins; larger text can scroll within it.
         .clearOfFigure(in: Self.scene)
         .frame(maxHeight: .infinity, alignment: .top)
     }
@@ -63,8 +62,7 @@ struct DashboardHome: View {
 
             Group {
                 if env.streakDays > 0 {
-                    Text("dashboard.streak \(env.streakDays)")
-                        .contentTransition(.numericText(value: Double(env.streakDays)))
+                    StreakBadge(days: env.streakDays)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -96,6 +94,7 @@ struct DashboardHome: View {
                         .minimumScaleFactor(0.5)
                         .monospacedDigit()
                         .contentTransition(.numericText(value: Double(available)))
+                        .animation(reduceMotion ? nil : .easeOut(duration: 0.5), value: available)
                     Text("home.unit.minutes")
                         .font(.sans(19))
                         .foregroundStyle(Night.textMuted)
@@ -109,15 +108,33 @@ struct DashboardHome: View {
 
                 action.padding(.top, 28)
 
-                if available > 0 {
-                    Text("earn.nextReward \(env.nextMilestone.remainingAmount) \(env.nextMilestone.rewardMinutes)")
-                        .font(.sans(13))
-                        .foregroundStyle(Night.textFaint)
-                        .contentTransition(.numericText(value: Double(env.nextMilestone.remainingAmount)))
-                        .padding(.top, Theme.Space.m)
+                if env.activeSession == nil && available == 0 {
+                    quickPushupsAction.padding(.top, Theme.Space.xs)
                 }
 
-                todayTotals(consumed: consumed).padding(.top, 6)
+                todayTotals(consumed: consumed).padding(.top, Theme.Space.m)
+
+                if env.activeSession == nil {
+                    Button(action: onEarnMore) {
+                        VStack(spacing: 8) {
+                            HStack {
+                                Text("earn.nextReward \(env.nextMilestone.remainingAmount) \(env.nextMilestone.rewardMinutes)")
+                                    .font(.sans(12.5, weight: .medium))
+                                    .foregroundStyle(Night.textSoft)
+                                Spacer(minLength: Theme.Space.s)
+                                Image(systemName: "chevron.right")
+                                    .font(.sans(10, weight: .semibold))
+                                    .foregroundStyle(Night.cobaltText)
+                            }
+                            TickMeter(progress: env.milestoneProgress, height: 11, tickCount: 38)
+                        }
+                        .frame(minHeight: Theme.minTouchTarget)
+                        .contentShape(.rect)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, Theme.Space.s)
+                    .accessibilityHint(Text("home.earnMoreTime"))
+                }
 
                 if let error = env.lastError {
                     Text(error)
@@ -139,18 +156,48 @@ struct DashboardHome: View {
         .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.lastError)
     }
 
-    /// The one cobalt thing on the screen at rest — or the running session, which replaces it.
+    /// The next action follows the balance: earn at zero, choose apps if needed, then spend.
     @ViewBuilder
     private var action: some View {
         if let session = env.activeSession {
             ActiveSessionBand(session: session)
+                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
+        } else if env.wallet.availableMinutes > 0 {
+            Button(action: selection.isEmpty ? onChooseApps : onSpend) {
+                Label(
+                    selection.isEmpty ? "home.chooseApps" : "home.useMinutes",
+                    systemImage: selection.isEmpty ? "square.grid.2x2" : "play.fill"
+                )
+            }
+            .buttonStyle(.nightPill)
+            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
         } else {
             Button(action: onEarnMore) {
                 Label("home.earnMoreTime", systemImage: "plus")
                     .labelStyle(.titleAndIcon)
             }
-            .buttonStyle(.nightPill(prominent: false))
+            .buttonStyle(.nightPill)
+            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
         }
+    }
+
+    private var quickPushupsAction: some View {
+        Button(action: onPushups) {
+            HStack(spacing: Theme.Space.s) {
+                Image(systemName: "figure.strengthtraining.traditional")
+                    .accessibilityHidden(true)
+                PushupsText("pushups.entry.quick")
+                Image(systemName: "chevron.right")
+                    .font(.sans(10, weight: .semibold))
+                    .accessibilityHidden(true)
+            }
+            .font(.sans(13.5, weight: .semibold))
+            .foregroundStyle(Night.cobaltText)
+            .frame(minHeight: Theme.minTouchTarget)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint(Text("pushups.entry.hint", tableName: PushupsLocalization.tableName))
     }
 
     /// The day's totals, and the only place on Home that pulls fresh steps — this screen has no
@@ -162,9 +209,18 @@ struct DashboardHome: View {
             HStack(spacing: 6) {
                 Text("home.stepsTodayCount \(env.ledger.activityAmount.formatted(.number.locale(locale)))")
                     .contentTransition(.numericText(value: Double(env.ledger.activityAmount)))
+                    .animation(
+                        reduceMotion ? nil : .easeOut(duration: 0.5),
+                        value: env.ledger.activityAmount
+                    )
                 Text(verbatim: "·").opacity(0.5)
                 Text("earn.minutesEarnedToday \(env.earnedMinutesToday)")
                     .foregroundStyle(env.earnedMinutesToday > 0 ? Night.moss : Night.textGhost)
+                    .contentTransition(.numericText(value: Double(env.earnedMinutesToday)))
+                    .animation(
+                        reduceMotion ? nil : .easeOut(duration: 0.5),
+                        value: env.earnedMinutesToday
+                    )
                 if consumed > 0 {
                     Text(verbatim: "·").opacity(0.5)
                     Text("home.minutesUsed \(consumed)")
@@ -196,11 +252,7 @@ struct DashboardHome: View {
     private var spendSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline) {
-                NightEyebrow(
-                    text: env.wallet.availableMinutes > 0
-                        ? "dashboard.readyToSpend"
-                        : "home.nextRewardTitle"
-                )
+                NightEyebrow(text: "home.protectedApps")
                 Spacer(minLength: Theme.Space.s)
                 Button("home.edit", action: onChooseApps)
                     .font(.sans(13, weight: .medium))
@@ -209,26 +261,19 @@ struct DashboardHome: View {
             }
             .padding(.horizontal, 4)
 
-            if env.wallet.availableMinutes <= 0 {
-                nextRewardPanel
-            } else if spendableTokens.isEmpty {
+            if spendableTokens.isEmpty {
                 VStack(spacing: 0) {
                     NightHairline()
-                    Button(action: onChooseApps) {
+                    Button(action: onSpend) {
                         HStack(spacing: 12) {
-                            Image(systemName: selection.isEmpty ? "plus" : "square.grid.2x2")
+                            Image(systemName: "square.grid.2x2")
                                 .font(.sans(13, weight: .semibold))
                                 .foregroundStyle(Night.textMuted)
                                 .frame(width: 34, height: 34)
                                 .background(Night.forestLift.opacity(0.62), in: .rect(cornerRadius: 10))
                                 .accessibilityHidden(true)
-                            // A selection can be nothing but categories, which have no per-app
-                            // row to draw. Edit remains the route into Apple's picker.
-                            Text(
-                                selection.isEmpty
-                                    ? "dashboard.noAppsSelected"
-                                    : "appSelection.count \(selection.itemCount)"
-                            )
+                            // A category-only selection has no app token row to draw.
+                            Text("appSelection.count \(selection.itemCount)")
                             .font(.sans(14, weight: .medium))
                             .foregroundStyle(Night.textSoft)
                             .lineLimit(2)
@@ -243,6 +288,7 @@ struct DashboardHome: View {
                         .contentShape(.rect)
                     }
                     .buttonStyle(SpendListRowButtonStyle())
+                    .disabled(env.wallet.availableMinutes <= 0)
                     NightHairline()
                 }
             } else {
@@ -257,51 +303,6 @@ struct DashboardHome: View {
                 }
             }
         }
-    }
-
-    private var nextRewardPanel: some View {
-        NightPanel {
-            VStack(alignment: .leading, spacing: 14) {
-                HStack(spacing: 13) {
-                    Image(systemName: "figure.walk")
-                        .font(.sans(16, weight: .semibold))
-                        .foregroundStyle(Night.cobaltText)
-                        .frame(width: 38, height: 38)
-                        .background(Night.cobaltWash, in: .rect(cornerRadius: 11))
-                        .accessibilityHidden(true)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("home.stepsUntilReward \(env.nextMilestone.remainingAmount)")
-                            .font(.sans(15, weight: .semibold))
-                            .foregroundStyle(Night.text)
-                            .contentTransition(
-                                .numericText(value: Double(env.nextMilestone.remainingAmount))
-                            )
-                        Text(
-                            selection.isEmpty
-                                ? "home.chooseAppsForReward"
-                                : "home.appsPaused"
-                        )
-                        .font(.sans(12.5))
-                        .foregroundStyle(Night.textMuted)
-                        .fixedSize(horizontal: false, vertical: true)
-                    }
-
-                    Spacer(minLength: Theme.Space.s)
-
-                    Text("home.rewardValue \(env.nextMilestone.rewardMinutes)")
-                        .font(.serif(24, relativeTo: .title3))
-                        .foregroundStyle(Night.cobaltText)
-                        .monospacedDigit()
-                        .lineLimit(1)
-                }
-
-                TickMeter(progress: env.milestoneProgress, height: 12, tickCount: 38)
-            }
-            .padding(.horizontal, Theme.Space.m)
-            .padding(.vertical, 15)
-        }
-        .accessibilityElement(children: .combine)
     }
 
     /// Screen Time hands us opaque tokens; three of them is what the compact list has room for above

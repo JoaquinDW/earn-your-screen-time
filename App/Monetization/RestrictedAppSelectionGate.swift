@@ -19,7 +19,7 @@ private struct RestrictedAppSelectionGate: ViewModifier {
                 onDismiss: {
                     if !env.subscriptionManager.isPro { pendingSelection = nil }
                 },
-                content: { ProPaywallView() }
+                content: { ProPaywallView(source: .appSelection) }
             )
             .sheet(
                 isPresented: $isRemovalPromptPresented,

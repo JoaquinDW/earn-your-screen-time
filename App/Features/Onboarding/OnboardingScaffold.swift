@@ -8,21 +8,48 @@ import SwiftUI
 /// instead of sitting on a plate.
 struct OnboardingScaffold<Content: View, Action: View>: View {
     let onBack: (() -> Void)?
+    let progress: Double?
     @ViewBuilder let content: Content
     @ViewBuilder let action: Action
 
     init(
         onBack: (() -> Void)? = nil,
+        progress: Double? = nil,
         @ViewBuilder content: () -> Content,
         @ViewBuilder action: () -> Action
     ) {
         self.onBack = onBack
+        self.progress = progress
         self.content = content()
         self.action = action()
     }
 
     var body: some View {
         VStack(spacing: 0) {
+            if onBack != nil || progress != nil {
+                HStack(spacing: Theme.Space.m) {
+                    if let onBack {
+                        Button(action: onBack) {
+                            Image(systemName: "chevron.left")
+                                .font(.sans(16, weight: .semibold))
+                                .foregroundStyle(Night.text)
+                                .frame(width: Theme.minTouchTarget, height: Theme.minTouchTarget)
+                                .contentShape(.rect)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Back")
+                    }
+                    if let progress {
+                        TickMeter(progress: progress, height: 8, tickCount: 42)
+                            .accessibilityElement()
+                            .accessibilityLabel("Onboarding progress")
+                            .accessibilityValue(Text("\(Int((progress * 100).rounded()))%"))
+                    }
+                }
+                .padding(.horizontal, Theme.Space.gutter)
+                .padding(.top, Theme.Space.s)
+            }
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) { content }
                     .padding(.horizontal, Theme.Space.gutter)
@@ -32,14 +59,7 @@ struct OnboardingScaffold<Content: View, Action: View>: View {
             }
             .scrollBounceBehavior(.basedOnSize)
 
-            VStack(spacing: 2) {
-                action
-                if let onBack {
-                    Button("Back", action: onBack)
-                        .buttonStyle(.quiet)
-                        .frame(maxWidth: .infinity)
-                }
-            }
+            VStack(spacing: 2) { action }
             .padding(.horizontal, Theme.Space.gutter)
             .padding(.top, Theme.Space.s)
             .padding(.bottom, Theme.Space.s)

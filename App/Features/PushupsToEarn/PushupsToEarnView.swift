@@ -6,7 +6,9 @@ struct PushupsToEarnView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var model = PushupsToEarnModel()
+    @State private var rewardPresented = false
 
     let onUseMinutes: () -> Void
 
@@ -33,7 +35,13 @@ struct PushupsToEarnView: View {
         .toolbarBackground(Night.ground, for: .navigationBar)
         .trackScreen("pushups_to_earn", analytics: env.analytics)
         .task { await model.appeared(in: env) }
-        .onDisappear { model.close(in: env) }
+        // The camera being on screen is "exercising" for anything (like the review prompt) that
+        // must never interrupt it.
+        .onChange(of: usesCamera) { _, isUsingCamera in env.setExercising(isUsingCamera) }
+        .onDisappear {
+            model.close(in: env)
+            env.setExercising(false)
+        }
     }
 
     private var usesCamera: Bool {
@@ -467,6 +475,19 @@ struct PushupsToEarnView: View {
             .buttonStyle(.quietLink)
             .frame(maxWidth: .infinity)
         }
+        .opacity(rewardPresented ? 1 : 0)
+        .scaleEffect(rewardPresented || reduceMotion ? 1 : 0.98, anchor: .topLeading)
+        .offset(y: rewardPresented || reduceMotion ? 0 : 12)
+        .onAppear {
+            if reduceMotion {
+                rewardPresented = true
+            } else {
+                withAnimation(.snappy(duration: EarnMotion.reward)) {
+                    rewardPresented = true
+                }
+            }
+        }
+        .onDisappear { rewardPresented = false }
     }
 
     private var dailyCap: some View {

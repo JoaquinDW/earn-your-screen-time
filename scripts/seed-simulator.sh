@@ -45,20 +45,29 @@ today = datetime.date.today()
 def key(d):
     return {"year": d.year, "month": d.month, "day": d.day}
 
-# Seis días previos con racha, para poder ver "Esta semana" y el contador de racha.
+# Un mes móvil de datos variados para revisar Día, Semana y Mes en Progreso.
 random.seed(steps)
 history = []
-for back in range(6, 0, -1):
+for back in range(30, 0, -1):
     d = today - datetime.timedelta(days=back)
     day_steps = random.randrange(2500, 9000, 100)
+    step_earned = (day_steps // rule["amountRequired"]) * rule["rewardSeconds"]
+    study_earned = 900 if back % 8 == 0 else 0
+    pushup_earned = 600 if back % 6 == 0 else 0
+    day_consumed = min(step_earned + study_earned + pushup_earned, random.randrange(0, 2700, 300))
     history.append({
         "day": key(d),
         "activityAmount": day_steps,
-        "earnedSeconds": (day_steps // rule["amountRequired"]) * rule["rewardSeconds"],
+        "stepEarnedSeconds": step_earned,
+        "studyEarnedSeconds": study_earned,
+        "pushupEarnedSeconds": pushup_earned,
+        "consumedSeconds": day_consumed,
+        "sessionCount": day_consumed // 600,
+        "returnedSeconds": 180 if day_consumed and back % 3 == 0 else 0,
     })
 
 state = {
-    "schemaVersion": 5, "onboardingCompleted": onboarded, "restrictedItemCount": 5,
+    "schemaVersion": 13, "onboardingCompleted": onboarded, "restrictedItemCount": 5,
     "hasEarnedFirstReward": onboarded, "adaptiveIntroSeen": onboarded,
     "shieldsApplied": True, "currentSession": None,
     "onboarding": {
@@ -80,6 +89,12 @@ state = {
         "wallet": {"earnedSeconds": milestones * rule["rewardSeconds"], "consumedSeconds": consumed},
         "dailyGoal": 4000, "goalBonusSeconds": 600,
         "goalBonusAwarded": steps >= 4000, "transactions": [],
+        "walletTransactions": [{
+            "kind": "earned", "amountSeconds": milestones * rule["rewardSeconds"],
+            "source": "steps", "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        }],
+        "sessionCount": max(0, consumed // 600),
+        "returnedSessionSeconds": 180 if consumed else 0,
     },
 }
 for path in paths:
