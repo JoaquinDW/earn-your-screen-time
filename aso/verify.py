@@ -3,7 +3,7 @@ import json, subprocess, sys, time
 sys.path.insert(0, "aso")
 import build as B, whatsnew
 ASC="/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-V="fdeb596c-9821-4b3a-aca7-3eaf2cbee43a"; A="7e699c16-00d6-4b90-af60-0f00458d5cb8"
+V="4dafd77d-77aa-4bb9-9187-979c7f6e420e"; A="b5370e75-460e-4bb7-b721-2ed575e04da0"
 def get(p, tries=4):
     # A verify run straight after a write run gets rate-limited; a bare read used to
     # blow up on the missing "data" key and look like a failed push.

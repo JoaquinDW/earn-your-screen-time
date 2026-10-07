@@ -15,6 +15,14 @@ the status table before continuing.
 | 5 In-app strings | **5 of 12 locales translated and merged into the app** (de, fr, it, ja, pt-BR) |
 | 6 Submission | **Not started** |
 
+**1.3.0 draft** (`4dafd77d-77aa-4bb9-9187-979c7f6e420e`, `PREPARE_FOR_SUBMISSION`, no build yet)
+was created 2026-10-07; every script here now points at it and at the editable appInfo
+`b5370e75-460e-4bb7-b721-2ed575e04da0`. Description, keywords, support URL and screenshots
+carried over from live 1.2.2; release notes (squats + inactivity reminders) were pushed for all
+16 locales. Note: the live en-US name/subtitle/keywords and the (empty) promotional text were
+edited in App Store Connect after `metadata.json` was generated, so `verify.py` reports them as
+mismatches. Do not run `reconcile.py`/`push.py` without first deciding which side is right.
+
 ## Phase 3 — screenshots on version 1.2
 
 Screenshots attach to an editable `appStoreVersion`, and all four existing versions

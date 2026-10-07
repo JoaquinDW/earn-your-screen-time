@@ -12,7 +12,7 @@ sys.path.insert(0, "aso")
 import build as B, whatsnew
 
 ASC = "/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-VERSION_ID = "a2c9a87a-abe0-47aa-b533-0550d2eae712"
+VERSION_ID = "4dafd77d-77aa-4bb9-9187-979c7f6e420e"
 DRY = "--write" not in sys.argv
 
 def asc(method, path, body=None, tries=4):
