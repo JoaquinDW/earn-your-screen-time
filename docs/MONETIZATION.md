@@ -3,7 +3,7 @@
 ## Offers
 
 The app offers **monthly with an eligible three-day free trial** and **lifetime without a trial**.
-Lifetime is selected first, with a US base price of **USD 30**. Every displayed price comes from
+Lifetime is selected first, with a US base price of **USD 30**, banded by purchasing power like the subscriptions (`aso/pricing_lifetime.py`; Argentina pays USD 17.99). Every displayed price comes from
 StoreKit in the customer's currency. The yearly option is hidden in the new app version.
 
 | Store | Product identifier | RevenueCat package |
