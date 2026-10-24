@@ -15,12 +15,16 @@ struct ProPaywallView: View {
     /// A spelled-out way past the paywall under the purchase button, for where the close button
     /// alone would read as leaving rather than as carrying on for free.
     var declineTitle: LocalizedStringKey?
+    /// What the free plan still gives, under the headline, for a paywall that blocks something
+    /// free users get back later. Without it, closing reads as giving up the apps for good.
+    var freePlanNote: LocalizedStringKey?
 
     init(
         source: PaywallSource,
         profile: OnboardingProfile? = nil,
         allowsDismiss: Bool = true,
         declineTitle: LocalizedStringKey? = nil,
+        freePlanNote: LocalizedStringKey? = nil,
         onActivated: (() -> Void)? = nil,
         onClose: (() -> Void)? = nil
     ) {
@@ -28,6 +32,7 @@ struct ProPaywallView: View {
         self.profile = profile
         self.allowsDismiss = allowsDismiss
         self.declineTitle = declineTitle
+        self.freePlanNote = freePlanNote
         self.onActivated = onActivated
         self.onClose = onClose
     }
@@ -45,6 +50,7 @@ struct ProPaywallView: View {
             earnedMinutes: env.earnedMinutesSoFar,
             allowsDismiss: allowsDismiss,
             declineTitle: declineTitle,
+            freePlanNote: freePlanNote,
             activated: { onActivated?() ?? dismiss() },
             dismiss: { onClose?() ?? dismiss() }
         )
@@ -61,6 +67,7 @@ private struct ProPaywallContent: View {
     let earnedMinutes: Int
     let allowsDismiss: Bool
     let declineTitle: LocalizedStringKey?
+    let freePlanNote: LocalizedStringKey?
     let activated: () -> Void
     let dismiss: () -> Void
 
@@ -76,6 +83,7 @@ private struct ProPaywallContent: View {
         earnedMinutes: Int,
         allowsDismiss: Bool,
         declineTitle: LocalizedStringKey?,
+        freePlanNote: LocalizedStringKey?,
         activated: @escaping () -> Void,
         dismiss: @escaping () -> Void
     ) {
@@ -84,6 +92,7 @@ private struct ProPaywallContent: View {
         self.earnedMinutes = earnedMinutes
         self.allowsDismiss = allowsDismiss
         self.declineTitle = declineTitle
+        self.freePlanNote = freePlanNote
         self.activated = activated
         self.dismiss = dismiss
     }
@@ -228,6 +237,14 @@ private struct ProPaywallContent: View {
             .foregroundStyle(Night.textSoft)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
+
+            if let freePlanNote, !viewModel.isLifetimeUpgrade {
+                Text(freePlanNote)
+                    .font(.sans(14))
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, Theme.Space.gutter)

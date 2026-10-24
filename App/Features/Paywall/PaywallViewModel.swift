@@ -56,8 +56,8 @@ enum PaywallSource: String {
     /// The closable trial offer right after the plan is accepted. In 1.2.2–1.3.0 the only other
     /// automatic paywall sat behind the first spent unlock, which two in thirteen people reached.
     case onboarding
-    /// The paywall after the free unlock's session has ended. It can be closed; closing it only
-    /// lasts until the app next goes to the background.
+    /// The paywall after the day's free unlock session has ended. It can be closed; closing it
+    /// lasts for the rest of the day.
     case firstUnlock = "first_unlock"
     /// Someone who closed that paywall tried to spend minutes again.
     case unlockAttempt = "unlock_attempt"

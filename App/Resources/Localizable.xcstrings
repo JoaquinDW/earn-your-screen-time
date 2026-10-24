@@ -1,6 +1,53 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu desbloqueo gratis vuelve mañana. Con Pro, desbloquea cada vez que te lo ganes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine kostenlose Freischaltung kommt morgen wieder. Mit Pro schaltest du frei, wann immer du es dir verdient hast."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ton déblocage gratuit revient demain. Avec Pro, débloque dès que tu l’as mérité."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il tuo sblocco gratuito torna domani. Con Pro, sblocca ogni volta che te lo sei guadagnato."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料のロック解除は明日また使えます。Proなら、稼いだらいつでも解除できます。"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu desbloqueio grátis volta amanhã. Com o Pro, desbloqueie sempre que conquistar."
+          }
+        }
+      }
+    },
     "Switch to Lifetime": {
       "extractionState": "manual",
       "localizations": {

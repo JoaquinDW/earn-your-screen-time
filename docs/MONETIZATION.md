@@ -45,7 +45,9 @@ recurring subscription from being sold as lifetime access.
 For an existing Pro subscriber, the upgrade paywall requires only the Lifetime package; a missing
 monthly product must not block that purchase. The normal free-user paywall requires both.
 
-The free earned-unlock preview and its closable paywall are unchanged. Access decisions remain in
+A free user gets one earned unlock a day (`SharedState.isFreePreviewActive`). After that day's
+session ends the closable paywall appears; closing it hides it until the next day, when the free
+unlock returns. Access decisions remain in
 `FeatureAccess`; Screen Time shield decisions remain in `RestrictionCoordinator`.
 
 ## Existing subscribers and installed versions
