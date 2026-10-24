@@ -47,6 +47,8 @@ struct WeekView: View {
                     .padding(.top, Theme.Space.xxl)
                 sessionSection
                     .padding(.top, Theme.Space.xxl)
+                impactSection
+                    .padding(.top, Theme.Space.xxl)
                 insightScene
                     .padding(.top, Theme.Space.xxl)
                 if let journey = env.journey, let progress = env.journeyProgress {
@@ -396,6 +398,30 @@ struct WeekView: View {
         .accessibilityElement(children: .combine)
     }
 
+    /// What the period amounted to beyond the ledger: opens skipped, time reclaimed against the
+    /// onboarding baseline. It is also where the period's card is shared from.
+    private var impactSection: some View {
+        let impact = env.impact(for: summaries)
+        return VStack(alignment: .leading, spacing: Theme.Space.m) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("impact.section.title")
+                    .font(.serif(28))
+                Text("impact.section.subtitle")
+                    .font(.sans(12.5, weight: .medium))
+                    .foregroundStyle(Night.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ImpactMetrics(impact: impact)
+            if impact.reclaimedSeconds != nil {
+                Text("impact.reclaimed.footnote")
+                    .font(.sans(12))
+                    .foregroundStyle(Night.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ProgressShareActions(impact: impact, period: period.impactPeriod, source: "progress")
+        }
+    }
+
     private var insightScene: some View {
         VStack(alignment: .leading, spacing: Theme.Space.s) {
             Spacer(minLength: 90)
@@ -523,6 +549,13 @@ private enum ProgressPeriod: String, CaseIterable, Identifiable {
     case month
 
     var id: Self { self }
+    var impactPeriod: ImpactPeriod {
+        switch self {
+        case .day: .today
+        case .week: .week
+        case .month: .month
+        }
+    }
     var title: LocalizedStringKey {
         switch self {
         case .day: "progress.period.day"

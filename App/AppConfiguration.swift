@@ -5,6 +5,8 @@ enum AppConfiguration {
     static let privacyPolicyURL = configuredURL(for: "PrivacyPolicyURL")
     static let supabaseURL = configuredURL(for: "SupabaseURL")
     static let supabasePublishableKey = configuredString(for: "SupabasePublishableKey")
+    /// The App Store page shared with friends. Apple redirects it to the viewer's own storefront.
+    static let appStoreURL = URL(string: "https://apps.apple.com/app/id6804905841")!
 
     private static func configuredURL(for key: String, bundle: Bundle = .main) -> URL? {
         guard let value = bundle.object(forInfoDictionaryKey: key) as? String,

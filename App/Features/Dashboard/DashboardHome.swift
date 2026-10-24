@@ -29,6 +29,8 @@ struct DashboardHome: View {
     let onEarnMore: () -> Void
     let onPushups: () -> Void
 
+    @State private var isShowingImpact = false
+
     private static let scene = IllustratedScene.homeEvening
 
     var body: some View {
@@ -47,6 +49,11 @@ struct DashboardHome: View {
         // The initial viewport stops where the man begins; larger text can scroll within it.
         .clearOfFigure(in: Self.scene)
         .frame(maxHeight: .infinity, alignment: .top)
+        .sheet(isPresented: $isShowingImpact) {
+            ImpactReportView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
     }
 
     // MARK: - Header
@@ -113,6 +120,10 @@ struct DashboardHome: View {
                 }
 
                 todayTotals(consumed: consumed).padding(.top, Theme.Space.m)
+
+                if env.activeSession == nil, env.impact(for: [env.progressToday]).hasContent {
+                    impactLink
+                }
 
                 if env.activeSession == nil {
                     Button(action: onEarnMore) {
@@ -242,6 +253,34 @@ struct DashboardHome: View {
         .buttonStyle(.plain)
         .disabled(env.isRefreshing)
         .accessibilityHint(Text("dashboard.refreshSteps"))
+    }
+
+    /// The way into today's report. It names the skipped opens when there are some, because
+    /// that is the number nothing else on Home shows.
+    private var impactLink: some View {
+        Button { isShowingImpact = true } label: {
+            HStack(spacing: 6) {
+                Image(systemName: env.skippedOpensToday > 0 ? "hand.raised" : "sparkles")
+                    .accessibilityHidden(true)
+                Group {
+                    if env.skippedOpensToday > 0 {
+                        Text("home.impact.skipped \(env.skippedOpensToday)")
+                    } else {
+                        Text("home.impact.link")
+                    }
+                }
+                Image(systemName: "chevron.right")
+                    .font(.sans(10, weight: .semibold))
+                    .accessibilityHidden(true)
+            }
+            .font(.sans(12.5, weight: .semibold))
+            .foregroundStyle(Night.cobaltText)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .frame(minHeight: Theme.minTouchTarget)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Ready to spend
