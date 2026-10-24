@@ -1,4 +1,3 @@
-• Earn your first minutes right away: finish setup with a few push-ups and unlock straight after.
-• Optional reminders when your apps have been waiting a while, so your plan doesn't fade.
-• The Pro screen after your free unlock can now be closed, keeping Home and Settings within reach.
-• Bug fixes and improvements.
+New: add the Earnit widget to your Home or Lock Screen to see minutes ready to spend and your progress at a glance. During an unlock, it shows the time left.
+
+Choose a time for an optional daily walking reminder. Earnit can also notify you when steps earn minutes, even while the app is closed. Manage notifications and the widget in Settings.

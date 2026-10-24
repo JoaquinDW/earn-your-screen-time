@@ -1,4 +1,3 @@
-• İlk dakikalarını hemen kazan: kurulumu birkaç şınavla bitir ve hemen ardından kilidi aç.
-• Uygulamaların bir süredir beklerken gelen isteğe bağlı hatırlatmalarla planın yarıda kalmasın.
-• Ücretsiz kilit açmanın ardından çıkan Pro ekranı artık kapatılabiliyor; Ana Sayfa ve Ayarlar her zaman elinin altında.
-• Hata düzeltmeleri ve iyileştirmeler.
+Yeni: Kullanılabilir dakikalarını ve ilerlemeni bir bakışta görmek için Earnit araç takımını Ana Ekranına veya Kilit Ekranına ekle. Kilit açma sırasında kalan süreyi gösterir.
+
+İsteğe bağlı günlük yürüyüş hatırlatıcısı için bir saat seç. Earnit, uygulama kapalıyken bile adımların sana dakika kazandırdığında haber verebilir. Bildirimleri ve araç takımını Ayarlar’dan yönetebilirsin.

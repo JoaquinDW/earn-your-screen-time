@@ -1,4 +1,3 @@
-• Verdien je eerste minuten meteen: rond de installatie af met een paar push-ups en ontgrendel direct.
-• Optionele herinneringen als je apps een tijdje hebben gewacht, zodat je plan niet verwatert.
-• Het Pro-scherm na je gratis ontgrendeling kun je nu sluiten, zodat Home en Instellingen bereikbaar blijven.
-• Bugfixes en verbeteringen.
+Nieuw: voeg de Earnit-widget toe aan je beginscherm of toegangsscherm om je beschikbare minuten en voortgang in één oogopslag te zien. Tijdens een ontgrendeling toont hij de resterende tijd.
+
+Kies een tijd voor een optionele dagelijkse wandelherinnering. Earnit kan je ook laten weten wanneer je met stappen minuten verdient, zelfs als de app gesloten is. Beheer meldingen en de widget in Instellingen.

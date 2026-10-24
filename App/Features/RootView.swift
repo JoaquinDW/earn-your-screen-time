@@ -119,6 +119,12 @@ struct RootView: View {
             AdaptiveExistingUserView()
                 .interactiveDismissDisabled()
         }
+        .sheet(isPresented: Binding(
+            get: { isWidgetOfferPending },
+            set: { if !$0 { env.markWidgetOfferSeen() } }
+        )) {
+            WidgetOfferView(source: "first_reward")
+        }
         // Only one sheet can be presented from here, so someone owed both meets the adaptive
         // intro first and this one on the next launch.
         .sheet(isPresented: Binding(
@@ -144,6 +150,20 @@ struct RootView: View {
             && env.subscriptionManager.isPro
             && !env.state.pushupsIntroSeen
             && !isAdaptiveIntroPending
+    }
+
+    /// Waits for the earned-minutes celebration to finish and for nothing else to be on screen,
+    /// so it reads as the next beat of that moment ("keep these on your Home Screen").
+    private var isWidgetOfferPending: Bool {
+        env.shouldOfferWidget
+            && (!env.requiresSubscription || env.isUnlockPaywallDismissed)
+            && env.presentationFeedback == nil
+            && !env.isPresentingBlockedAppDetail
+            && !env.isExercising
+            && !isShowingDetail
+            && !isAdaptiveIntroPending
+            && !isPushupsIntroPending
+            && celebratedStreakDays == 0
     }
 
     private var streakCelebrationEligibilityToken: String {

@@ -1,4 +1,5 @@
 import EarnDomain
+import StoreKit
 import SwiftUI
 
 struct ProPaywallView: View {
@@ -11,17 +12,22 @@ struct ProPaywallView: View {
     var onActivated: (() -> Void)?
     /// For a paywall shown in place rather than presented, where `dismiss` has nothing to close.
     var onClose: (() -> Void)?
+    /// A spelled-out way past the paywall under the purchase button, for where the close button
+    /// alone would read as leaving rather than as carrying on for free.
+    var declineTitle: LocalizedStringKey?
 
     init(
         source: PaywallSource,
         profile: OnboardingProfile? = nil,
         allowsDismiss: Bool = true,
+        declineTitle: LocalizedStringKey? = nil,
         onActivated: (() -> Void)? = nil,
         onClose: (() -> Void)? = nil
     ) {
         self.source = source
         self.profile = profile
         self.allowsDismiss = allowsDismiss
+        self.declineTitle = declineTitle
         self.onActivated = onActivated
         self.onClose = onClose
     }
@@ -38,6 +44,7 @@ struct ProPaywallView: View {
             profile: resolvedProfile,
             earnedMinutes: env.earnedMinutesSoFar,
             allowsDismiss: allowsDismiss,
+            declineTitle: declineTitle,
             activated: { onActivated?() ?? dismiss() },
             dismiss: { onClose?() ?? dismiss() }
         )
@@ -47,11 +54,13 @@ struct ProPaywallView: View {
 private struct ProPaywallContent: View {
     @Environment(\.locale) private var locale
     @State private var viewModel: PaywallViewModel
+    @State private var isShowingSubscriptionManagement = false
     let profile: OnboardingProfile?
     /// Minutes this person has already earned by moving. Once there are any, they are the
     /// paywall's opening line: proof beats promise.
     let earnedMinutes: Int
     let allowsDismiss: Bool
+    let declineTitle: LocalizedStringKey?
     let activated: () -> Void
     let dismiss: () -> Void
 
@@ -66,6 +75,7 @@ private struct ProPaywallContent: View {
         profile: OnboardingProfile?,
         earnedMinutes: Int,
         allowsDismiss: Bool,
+        declineTitle: LocalizedStringKey?,
         activated: @escaping () -> Void,
         dismiss: @escaping () -> Void
     ) {
@@ -73,6 +83,7 @@ private struct ProPaywallContent: View {
         self.profile = profile
         self.earnedMinutes = earnedMinutes
         self.allowsDismiss = allowsDismiss
+        self.declineTitle = declineTitle
         self.activated = activated
         self.dismiss = dismiss
     }
@@ -82,8 +93,9 @@ private struct ProPaywallContent: View {
             header
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    subscriptionUpgradeNotice
                     hero
-                    benefits
+                    if !viewModel.isLifetimeUpgrade { benefits }
                     pricing
                     trialTimeline
                     cancelNudge
@@ -100,6 +112,7 @@ private struct ProPaywallContent: View {
             VStack(spacing: 0) {
                 purchaseButton
                 purchaseSummary
+                declineButton
             }
             .padding(.bottom, Theme.Space.s)
             .background {
@@ -108,7 +121,39 @@ private struct ProPaywallContent: View {
             }
         }
         .task { await viewModel.viewAppeared() }
+        .interactiveDismissDisabled(viewModel.isProcessing)
         .alert(item: $viewModel.alert, content: alert(for:))
+        .manageSubscriptionsSheet(isPresented: $isShowingSubscriptionManagement)
+        .onChange(of: isShowingSubscriptionManagement) { _, isPresented in
+            if !isPresented { activated() }
+        }
+    }
+
+    @ViewBuilder
+    private var subscriptionUpgradeNotice: some View {
+        if viewModel.isLifetimeUpgrade {
+            VStack(alignment: .leading, spacing: Theme.Space.s) {
+                Text("Switch to Lifetime")
+                    .font(.headline)
+                Text("Buying Lifetime does not cancel your subscription. Manage its renewal in the App Store to avoid further charges.")
+                    .font(.subheadline)
+                    .foregroundStyle(Night.textSoft)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Theme.Space.m)
+            .background(Night.panel, in: RoundedRectangle(cornerRadius: Theme.cornerRadius))
+            .padding(.horizontal, Theme.Space.gutter)
+            .padding(.top, Theme.Space.m)
+        }
+    }
+
+    private func completeActivation() {
+        if viewModel.hasLifetimeAccess, viewModel.hasActiveSubscription {
+            viewModel.alert = PaywallAlert(kind: .lifetimeActivated)
+        } else {
+            activated()
+        }
     }
 
     private var header: some View {
@@ -125,6 +170,7 @@ private struct ProPaywallContent: View {
                         .background(Night.panel, in: .circle)
                 }
                 .buttonStyle(.plain)
+                .disabled(viewModel.isProcessing)
                 .accessibilityLabel("Close paywall")
             }
             Spacer()
@@ -137,7 +183,9 @@ private struct ProPaywallContent: View {
     private var hero: some View {
         VStack(spacing: Theme.Space.m) {
             Group {
-                if trialPackage != nil {
+                if viewModel.isLifetimeUpgrade {
+                    Text("Lifetime Pro")
+                } else if trialPackage != nil {
                     Text("3-day free trial")
                 } else if profile == nil {
                     Text("paywall.eyebrow")
@@ -147,13 +195,15 @@ private struct ProPaywallContent: View {
             }
             .eyebrowStyle(Night.textSoft)
 
-            if earnedMinutes > 0 {
+            if earnedMinutes > 0, !viewModel.isLifetimeUpgrade {
                 earnedProof
             }
 
             Group {
                 if trialPackage != nil {
                     Text("Try Earnit Pro free for 3 days.")
+                } else if viewModel.selectedPackage?.plan == .lifetime {
+                    Text("Earnit Pro. Yours for life.")
                 } else {
                     Text("Keep your momentum going.")
                 }
@@ -168,6 +218,8 @@ private struct ProPaywallContent: View {
             Group {
                 if trialPackage != nil {
                     Text("No charge today or during your 3-day trial.")
+                } else if viewModel.selectedPackage?.plan == .lifetime {
+                    Text("Pay once. Keep earning and unlocking your chosen apps. No subscription.")
                 } else {
                     Text("Go Pro to keep earning and unlocking your chosen apps.")
                 }
@@ -298,7 +350,7 @@ private struct ProPaywallContent: View {
                 PlanSkeleton()
             } else if viewModel.loadFailed {
                 VStack(spacing: Theme.Space.m) {
-                    Text("Unable to load subscription options.")
+                    Text("Unable to load purchase options.")
                         .font(.sans(17, weight: .semibold))
                     Text("Please try again.")
                         .font(.sans(15))
@@ -323,7 +375,7 @@ private struct ProPaywallContent: View {
                 .padding(.vertical, Theme.Space.l)
                 .accessibilityElement(children: .combine)
             } else {
-                ForEach(viewModel.packages.sorted { $0.plan == .yearly && $1.plan != .yearly }) { package in
+                ForEach(viewModel.packages) { package in
                     PlanRow(
                         package: package,
                         isSelected: viewModel.selectedPackage?.plan == package.plan,
@@ -335,13 +387,13 @@ private struct ProPaywallContent: View {
         .padding(.horizontal, Theme.Space.gutter)
         .padding(.top, Theme.Space.m)
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Subscription plans")
+        .accessibilityLabel("Purchase options")
     }
 
     private var purchaseButton: some View {
         Button {
             Task {
-                if await viewModel.purchase() { activated() }
+                if await viewModel.purchase() { completeActivation() }
             }
         } label: {
             HStack(spacing: Theme.Space.s) {
@@ -355,7 +407,9 @@ private struct ProPaywallContent: View {
         .disabled(!viewModel.canPurchase)
         .accessibilityHint(
             trialPackage == nil
-                ? Text("Purchases the selected subscription through the App Store")
+                ? (viewModel.selectedPackage?.plan == .lifetime
+                    ? Text("Purchases lifetime Pro access through the App Store")
+                    : Text("Purchases the selected subscription through the App Store"))
                 : Text("Starts a 3-day free trial through the App Store. No charge until the trial ends.")
         )
         .padding(.horizontal, Theme.Space.gutter)
@@ -365,11 +419,12 @@ private struct ProPaywallContent: View {
     private var purchaseButtonTitle: Text {
         if viewModel.isPurchasing { return Text("Processing purchase") }
         guard let package = viewModel.selectedPackage else {
-            return Text("Choose a subscription")
+            return Text("Continue")
         }
         if package.freeTrialDescription(locale: locale) != nil {
             return Text("Start My 3-Day Free Trial")
         }
+        if package.plan == .lifetime { return Text("Unlock for \(package.price)") }
         return Text("Subscribe for \(package.price) \(billingPeriod(for: package))")
     }
 
@@ -377,7 +432,9 @@ private struct ProPaywallContent: View {
     private var purchaseSummary: some View {
         if let package = viewModel.selectedPackage {
             VStack(spacing: 3) {
-                if trialPackage != nil {
+                if package.plan == .lifetime {
+                    Text("One-time payment. Lifetime Pro access.")
+                } else if trialPackage != nil {
                     Text("No charge today or during your 3-day trial.")
                         .font(.sans(14, weight: .bold))
                         .foregroundStyle(Night.cobaltText)
@@ -399,8 +456,27 @@ private struct ProPaywallContent: View {
         }
     }
 
+    @ViewBuilder
+    private var declineButton: some View {
+        if allowsDismiss, let declineTitle {
+            Button(declineTitle) {
+                viewModel.paywallClosed()
+                dismiss()
+            }
+            .buttonStyle(.quiet)
+            .disabled(viewModel.isProcessing)
+            .padding(.horizontal, Theme.Space.gutter)
+        }
+    }
+
     private var renewalDisclosure: some View {
-        Text("Subscription renews automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in App Store settings.")
+        Group {
+            if viewModel.selectedPackage?.plan == .lifetime {
+                Text("Pay once for lifetime Pro access. No automatic renewals.")
+            } else if viewModel.selectedPackage != nil {
+                Text("Subscription renews automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in App Store settings.")
+            }
+        }
             .font(.sans(11.5))
             .foregroundStyle(Night.textMuted)
             .multilineTextAlignment(.center)
@@ -413,6 +489,7 @@ private struct ProPaywallContent: View {
         switch package.plan {
         case .monthly: PaywallPackage.localized("per month", locale: locale)
         case .yearly: PaywallPackage.localized("per year", locale: locale)
+        case .lifetime: PaywallPackage.localized("one time", locale: locale)
         }
     }
 
@@ -445,7 +522,7 @@ private struct ProPaywallContent: View {
     private var restoreButton: some View {
         Button {
             Task {
-                if await viewModel.restorePurchases() { activated() }
+                if await viewModel.restorePurchases() { completeActivation() }
             }
         } label: {
             HStack(spacing: Theme.Space.xs) {
@@ -466,10 +543,10 @@ private struct ProPaywallContent: View {
         case .purchase:
             Alert(
                 title: Text("Couldn't complete purchase"),
-                message: Text("Something went wrong while processing your subscription. Please try again."),
+                message: Text("Something went wrong while processing your purchase. Please try again."),
                 primaryButton: .default(Text("Try again")) {
                     Task {
-                        if await viewModel.purchase() { activated() }
+                        if await viewModel.purchase() { completeActivation() }
                     }
                 },
                 secondaryButton: .cancel()
@@ -477,10 +554,10 @@ private struct ProPaywallContent: View {
         case .entitlementInactive:
             Alert(
                 title: Text("Your membership wasn't activated"),
-                message: Text("The purchase completed, but subscription access could not be verified. Try restoring purchases. If this continues, contact support."),
+                message: Text("The purchase completed, but Pro access could not be verified. Try restoring purchases. If this continues, contact support."),
                 primaryButton: .default(Text("Restore Purchases")) {
                     Task {
-                        if await viewModel.restorePurchases() { activated() }
+                        if await viewModel.restorePurchases() { completeActivation() }
                     }
                 },
                 secondaryButton: .cancel()
@@ -488,18 +565,33 @@ private struct ProPaywallContent: View {
         case .restore:
             Alert(
                 title: Text("Couldn't restore purchases"),
-                message: Text("Something went wrong while restoring your subscription. Please try again."),
+                message: Text("Something went wrong while restoring your purchases. Please try again."),
                 primaryButton: .default(Text("Try again")) {
                     Task {
-                        if await viewModel.restorePurchases() { activated() }
+                        if await viewModel.restorePurchases() { completeActivation() }
                     }
                 },
                 secondaryButton: .cancel()
             )
+        case .noLifetime:
+            Alert(
+                title: Text("No Lifetime purchase found"),
+                message: Text("No Lifetime purchase was found for this Apple Account. Any existing subscription remains unchanged."),
+                dismissButton: .default(Text("OK"))
+            )
+        case .lifetimeActivated:
+            Alert(
+                title: Text("Lifetime Pro is active"),
+                message: Text("Lifetime is active. If your subscription is still set to renew, cancel it in the App Store to avoid further charges."),
+                primaryButton: .default(Text("Manage subscription")) {
+                    isShowingSubscriptionManagement = true
+                },
+                secondaryButton: .cancel(Text("Done")) { activated() }
+            )
         case .noSubscription:
             Alert(
-                title: Text("No subscription found"),
-                message: Text("We couldn't find an active subscription for this Apple Account."),
+                title: Text("No purchase found"),
+                message: Text("We couldn't find a Pro purchase for this Apple Account."),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -516,6 +608,7 @@ private struct PlanRow: View {
         switch package.plan {
         case .monthly: PaywallPackage.localized("Monthly", locale: locale)
         case .yearly: PaywallPackage.localized("Yearly", locale: locale)
+        case .lifetime: PaywallPackage.localized("Lifetime", locale: locale)
         }
     }
 
@@ -523,6 +616,7 @@ private struct PlanRow: View {
         switch package.plan {
         case .monthly: PaywallPackage.localized("per month", locale: locale)
         case .yearly: PaywallPackage.localized("per year", locale: locale)
+        case .lifetime: PaywallPackage.localized("one time", locale: locale)
         }
     }
 
@@ -766,6 +860,6 @@ private struct PlanSkeleton: View {
                 .stroke(Night.edge, lineWidth: 1)
         }
         .accessibilityElement()
-        .accessibilityLabel("Loading subscription option")
+        .accessibilityLabel("Loading purchase option")
     }
 }

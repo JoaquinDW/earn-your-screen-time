@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+  <title id="title">Your phone should not be free</title>
+  <desc id="desc">A Meta static ad explaining how walking 500 steps earns five minutes of intentional app access with Earnit.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F6EDDB"/><stop offset="1" stop-color="#DFEFC4"/></linearGradient><filter id="shadow" x="-30%" y="-20%" width="160%" height="160%"><feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#173A31" flood-opacity=".2"/></filter></defs>
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <text x="78" y="106" fill="#123F34" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="-2">earnit</text>
+  <text x="78" y="248" fill="#123F34" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="87" font-weight="800" letter-spacing="-4">Your phone</text>
+  <text x="78" y="343" fill="#123F34" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="87" font-weight="800" letter-spacing="-4">shouldn’t be free.</text>
+  <text x="78" y="417" fill="#48645B" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="35">Make scrolling a deliberate choice.</text>
+  <g filter="url(#shadow)">
+    <rect x="290" y="518" width="500" height="520" rx="75" fill="#173A31"/>
+    <rect x="318" y="557" width="444" height="442" rx="52" fill="#F5F4E9"/>
+    <rect x="460" y="593" width="160" height="28" rx="14" fill="#173A31" opacity=".14"/>
+    <circle cx="540" cy="761" r="101" fill="#D8F49C"/>
+    <rect x="472" y="754" width="136" height="106" rx="20" fill="#123F34"/>
+    <path d="M494 754v-27c0-61 92-61 92 0v27" fill="none" stroke="#123F34" stroke-width="25" stroke-linecap="round"/>
+    <circle cx="540" cy="806" r="11" fill="#D8F49C"/>
+    <rect x="491" y="927" width="98" height="11" rx="6" fill="#173A31" opacity=".18"/>
+  </g>
+  <g font-family="Avenir Next, Helvetica, Arial, sans-serif">
+    <rect x="78" y="1086" width="274" height="108" rx="32" fill="#123F34"/><text x="215" y="1149" text-anchor="middle" fill="#D8F49C" font-size="42" font-weight="800">500 steps</text>
+    <path d="M385 1140h94" stroke="#123F34" stroke-width="9" stroke-linecap="round"/><path d="M450 1112l30 28-30 28" fill="none" stroke="#123F34" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="520" y="1086" width="482" height="108" rx="32" fill="#D8F49C"/><text x="761" y="1149" text-anchor="middle" fill="#123F34" font-size="42" font-weight="800">5 minutes to spend</text>
+    <text x="540" y="1266" text-anchor="middle" fill="#48645B" font-size="29" font-weight="600">Selected apps re-lock when your session ends.</text>
+  </g>
+</svg>

@@ -5,4 +5,5 @@ enum Entitlements {
 enum SubscriptionProducts {
     static let monthly = "monthly"
     static let yearly = "yearly"
+    static let lifetime = "lifetime"
 }

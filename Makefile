@@ -8,7 +8,7 @@ SCHEME    := EarnYourScreenTime
 SIMULATOR := platform=iOS Simulator,name=iPhone 17 Pro
 DERIVED   := .build/DerivedData
 
-.PHONY: all gen test build device open clean
+.PHONY: all gen test test-monetization build device open clean
 
 all: gen test build
 
@@ -19,6 +19,12 @@ gen:
 ## Corre los tests de la lógica de dominio en la Mac (no necesita iPhone ni simulador)
 test:
 	cd Packages/EarnDomain && swift test
+
+## Verifica compras, restauraciones y el paso de suscripción a Lifetime con servicios simulados.
+test-monetization: gen
+	xcodebuild test -project $(PROJECT) -scheme $(SCHEME) \
+		-destination '$(SIMULATOR)' -derivedDataPath $(DERIVED) \
+		CODE_SIGNING_ALLOWED=NO -only-testing:EarnMonetizationTests
 
 ## Compila la app para el simulador (sin firmar: sirve aunque no tengas cuenta Apple)
 build:

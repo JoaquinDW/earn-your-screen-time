@@ -6,6 +6,8 @@ import RevenueCat
 @Observable
 final class SubscriptionManager {
     private(set) var status: SubscriptionStatus = .unknown
+    private(set) var hasLifetimeAccess = false
+    private(set) var hasActiveSubscription = false
     private(set) var lastError: String?
 
     let configuration: RevenueCatConfiguration
@@ -14,6 +16,7 @@ final class SubscriptionManager {
     private var customerInfoRevision = 0
 
     var isPro: Bool { status == .pro }
+    var canUpgradeToLifetime: Bool { isPro && !hasLifetimeAccess }
     var featureAccess: FeatureAccess { FeatureAccess(subscriptionStatus: status) }
     var isRevenueCatConfigured: Bool { service.isConfigured }
     var configurationSummary: String { service.configurationSummary }
@@ -26,6 +29,7 @@ final class SubscriptionManager {
         self.service = service ?? RevenueCatSubscriptionService(configuration: configuration)
 
         self.service.customerInfoUpdateHandler = { [weak self] customerInfo in
+            self?.customerInfoRevision += 1
             self?.apply(customerInfo, source: "delegate")
         }
 
@@ -75,7 +79,7 @@ final class SubscriptionManager {
         customerInfoRevision += 1
         apply(result.customerInfo, source: "purchase")
 
-        if !result.userCancelled, !isPro {
+        if !result.userCancelled, !hasAccess(for: package) {
             do {
                 let customerInfo = try await service.refreshCustomerInfo()
                 customerInfoRevision += 1
@@ -85,8 +89,13 @@ final class SubscriptionManager {
             }
         }
 
-        if isPro { lastError = nil }
+        if hasAccess(for: package) { lastError = nil }
         return result
+    }
+
+    /// Existing monthly access cannot verify a new lifetime purchase.
+    func hasAccess(for package: Package) -> Bool {
+        package.packageType == .lifetime ? hasLifetimeAccess : isPro
     }
 
     func restorePurchases() async throws -> CustomerInfo {
@@ -118,9 +127,15 @@ final class SubscriptionManager {
     }
 
     private func apply(_ customerInfo: CustomerInfo, source: String) {
-        let newStatus: SubscriptionStatus = customerInfo.entitlements[Entitlements.pro]?.isActive == true
+        let entitlement = customerInfo.entitlements[Entitlements.pro]
+        let newStatus: SubscriptionStatus = entitlement?.isActive == true
             ? .pro
             : .free
+        hasLifetimeAccess = newStatus == .pro
+            && entitlement?.productIdentifier == SubscriptionProducts.lifetime
+            && entitlement?.expirationDate == nil
+        // Keep checking subscriptions independently: buying Lifetime does not cancel them.
+        hasActiveSubscription = !customerInfo.activeSubscriptions.isEmpty
         status = newStatus
         let activeEntitlements = customerInfo.entitlements.active.keys.sorted()
         let entitlementSummary = activeEntitlements.isEmpty ? "none" : activeEntitlements.joined(separator: ", ")

@@ -9,19 +9,22 @@ the status table before continuing.
 | Phase | State |
 |---|---|
 | 1 Keyword research | **Done** — `01-keyword-research.md` |
-| 2 Store metadata (16 locales) | **Done and verified live** — name/subtitle/keywords/description on 1.1 (now `READY_FOR_SALE`); release notes + promotional text refreshed and verified live on draft **1.2** for this submission |
+| 2 Store metadata (16 locales) | **Done** — 1.3.1 release notes saved and read back in all 16 locales; existing listing metadata carried forward |
 | 3 Screenshots | **en-US/en-GB/es-ES/es-MX/de-DE done** on draft version 1.2 (`APP_IPHONE_65`, 6 each); the other 11 locales still have no set and fall back to English |
 | 4 Territory pricing (GNI bands) | **Applied** — `aso/pricing.py`, 130 of 175 territories cut on both subscriptions |
 | 5 In-app strings | **5 of 12 locales translated and merged into the app** (de, fr, it, ja, pt-BR) |
 | 6 Submission | **Not started** |
 
-**1.3.0 draft** (`4dafd77d-77aa-4bb9-9187-979c7f6e420e`, `PREPARE_FOR_SUBMISSION`, no build yet)
-was created 2026-10-07; every script here now points at it and at the editable appInfo
-`b5370e75-460e-4bb7-b721-2ed575e04da0`. Description, keywords, support URL and screenshots
-carried over from live 1.2.2; release notes (squats + inactivity reminders) were pushed for all
-16 locales. Note: the live en-US name/subtitle/keywords and the (empty) promotional text were
-edited in App Store Connect after `metadata.json` was generated, so `verify.py` reports them as
-mismatches. Do not run `reconcile.py`/`push.py` without first deciding which side is right.
+**1.3.1 draft** (`1ff3dd9c-547b-473d-800f-2cf226e9c0a2`, `PREPARE_FOR_SUBMISSION`, no build attached)
+was already present on 2026-10-12. Version-specific scripts now point at it and the editable
+appInfo `b5370e75-460e-4bb7-b721-2ed575e04da0`. Its release notes cover the widget and
+progress notifications in all 16 locales; `aso/verify.py` read them back. The review notes
+explain that HealthKit background delivery needs a physical iPhone and has not been validated
+in the simulator. The version has not been submitted for review.
+
+The live en-US name/subtitle/keywords and the empty promotional text differ from the local ASO
+sources, so `verify.py` reports those existing mismatches. Do not run `reconcile.py`/`push.py`
+without first deciding which side is right. Version 1.3.0 is `READY_FOR_SALE`.
 
 ## Phase 3 — screenshots on version 1.2
 

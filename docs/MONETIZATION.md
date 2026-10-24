@@ -1,183 +1,136 @@
 # Monetization
 
+## Offers
+
+The app offers **monthly with an eligible three-day free trial** and **lifetime without a trial**.
+Lifetime is selected first, with a US base price of **USD 30**. Every displayed price comes from
+StoreKit in the customer's currency. The yearly option is hidden in the new app version.
+
+| Store | Product identifier | RevenueCat package |
+| --- | --- | --- |
+| Apple | `com.balthasardeweert.earnyourscreentime.pro.monthly` | `$rc_monthly` |
+| Apple | `lifetime` | `$rc_lifetime` |
+| Test Store | `monthly` | `$rc_monthly` |
+| Test Store | `lifetime` | `$rc_lifetime` |
+
+Lifetime is a **non-consumable**, never a subscription or consumable. Apple product ID:
+`6824755138`; RevenueCat Apple product ID: `prod81c2efe98b`. All products grant the existing
+`Earn your Screen Time Pro` entitlement.
+
+The monthly price and its existing three-day introductory offer remain unchanged. Trial messaging
+requires both an actual three-day introductory offer and customer eligibility. Lifetime never
+shows a free trial, monthly equivalent, or automatic-renewal disclosure. Canceling its purchase
+sheet leaves Lifetime selected and does not switch the user into a subscription.
+
 ## Architecture
 
-Monetization is app-only under `App/Monetization`. RevenueCat is not linked into `Shared` or the
-Device Activity extension. Screen-time credits remain exclusively in `EarnDomain` and cannot be
-purchased.
+Monetization is app-only. RevenueCat is not linked into `Shared` or the Device Activity extension.
+Screen-time credits remain exclusively in `EarnDomain` and cannot be purchased.
 
-`AppEnvironment` owns one `SubscriptionManager`, which configures RevenueCat once during app
-startup and explicitly selects RevenueCat's StoreKit 2 implementation. SwiftUI reads:
+`AppEnvironment` owns one `SubscriptionManager`, configured with StoreKit 2. SwiftUI uses:
 
 - `subscriptionManager.status`: `unknown`, `free`, or `pro`
-- `subscriptionManager.isPro`: convenience access to the active entitlement
-- `env.featureAccess`: centralized active-subscription capabilities
+- `subscriptionManager.isPro`: active entitlement access
+- `env.featureAccess`: centralized product capabilities
 
-An unavailable network refresh does not change the last known status. RevenueCat cached
-`CustomerInfo` is applied before a refresh when available. A build with no SDK key intentionally
-keeps subscription access inactive instead of trying to initialize RevenueCat.
+RevenueCat cached `CustomerInfo` is applied before a refresh. Failed network refreshes preserve
+last-known access. Both active subscriptions and lifetime purchases use the same entitlement check;
+a lifetime entitlement does not need an expiration date. A missing SDK key leaves access inactive.
 
-`ProPaywallView` is a fully app-owned SwiftUI paywall. `PaywallViewModel` owns its loading,
-selection, purchase, restore, and error state; `SubscriptionService` is the only layer that calls
-RevenueCat. RevenueCat supplies packages and localized prices but does not control paywall UI.
+`ProPaywallView` owns the SwiftUI presentation. `PaywallViewModel` owns loading, selection,
+purchase, restore, and errors. `SubscriptionService` calls RevenueCat. The paywall uses the current
+offering and requires valid monthly and lifetime packages. Product type validation prevents a
+recurring subscription from being sold as lifetime access.
 
-`restrictedAppSelectionGate` wraps the existing Family Controls picker and never reads or derives
-token identities. Product UI is available only while the subscription entitlement is active.
+For an existing Pro subscriber, the upgrade paywall requires only the Lifetime package; a missing
+monthly product must not block that purchase. The normal free-user paywall requires both.
 
-New users build their app selection during onboarding and can spend one earned unlock before the
-mandatory paywall. Continuing after that preview requires an active `Earn your Screen Time Pro`
-entitlement from a trial subscription, direct subscription, or restore. There is no permanent free
-tier, and expired subscribers return to the non-dismissible subscription screen.
-The free trial lasts three days. Trial copy is shown only when RevenueCat reports a three-day free
-introductory offer and eligibility for the selected product.
+The free earned-unlock preview and its closable paywall are unchanged. Access decisions remain in
+`FeatureAccess`; Screen Time shield decisions remain in `RestrictionCoordinator`.
 
-## RevenueCat Configuration
+## Existing subscribers and installed versions
 
-The single entitlement is:
+Keep the annual product attached to the Pro entitlement. Existing monthly and annual customers
+retain access while their entitlement is active, and Restore Purchases continues to work.
 
-```text
-Earn your Screen Time Pro
-```
+Keep `$rc_annual` in the current RevenueCat offering alongside monthly/lifetime: older installed
+versions require both monthly and annual to load their paywall. The new app explicitly displays
+only lifetime and monthly. Removing the old package before those versions have migrated would
+break their paywall. Do not cancel existing subscriptions or remove their product mappings.
 
-Expected product identifiers are currently:
+## Configuration
 
-```text
-monthly
-yearly
-```
+The current offering is `default` (`ofrng93996309c6`). It does not require a RevenueCat-hosted
+paywall. Attach lifetime to both `$rc_lifetime` and `Earn your Screen Time Pro`.
 
-These values are centralized in `App/Monetization/Entitlements.swift`. Change them there and in the
-StoreKit/App Store/RevenueCat product definitions if the final identifiers differ.
+The public SDK key comes from `RevenueCatAPIKey` in Info.plist and `REVENUECAT_API_KEY` in
+`project.yml`. Debug and Release use Apple's `appl_` key. `DebugTestStore` uses a `test_` key;
+never submit that configuration to the App Store. The generated Xcode project is ignored.
 
-The public RevenueCat SDK key is read from the `RevenueCatAPIKey` Info.plist value, backed by the
-`REVENUECAT_API_KEY` build setting in `project.yml`. The normal Debug and Release configurations
-use the Apple `appl_` public SDK key, so the paywall receives the actual Apple subscription offers.
-`DebugTestStore` uses RevenueCat's `test_` catalog for simulated purchases. Never submit an App
-Store build containing a `test_` key. Keep the generated `.xcodeproj` out of source control.
+Terms and Privacy URLs are build settings in `project.yml`. Publish updated `TERMS.md` before
+release so the live document describes both monthly subscriptions and lifetime purchases.
 
-The default/current RevenueCat Offering is used. Attach monthly and annual packages to it; no
-RevenueCat-hosted paywall is required. Terms and Privacy URLs are centralized as build settings in
-`project.yml` and exposed through Info.plist rather than duplicated in views. Their checked-in
-checked-in values point to the repository's Terms and Privacy documents. Replace them with the final
-published legal-page URLs before distribution if those locations change.
+## Testing
 
-For the separate `EarnYourScreenTime Test Store` scheme:
+- `make all`: regenerate project, run domain tests, build simulator app.
+- `make test-monetization`: simulator unit tests with mocked RevenueCat responses for
+  subscription-to-Lifetime purchases, cancellation, restoration and entitlement validation.
+- `EarnYourScreenTime Test Store`: simulated purchases, cancellation, failure, and restore. Create
+  `monthly` and non-consumable `lifetime` in Test Store and attach them to the same Pro entitlement
+  and respective packages. Test Store does not represent Apple's trial eligibility.
+- `EarnYourScreenTime StoreKit`: local StoreKit catalog, including USD 30 lifetime and legacy
+  subscription fixtures. The Apple products must match RevenueCat's identifiers; export the
+  StoreKit public certificate and upload it to RevenueCat's StoreKit testing settings.
+- Apple Sandbox/TestFlight: verify the actual monthly trial, lifetime immediate payment, purchase
+  cancellation, restoration after reinstall, existing annual access, and refund/revocation.
 
-1. Create a one-month subscription product with identifier `monthly`.
-2. Create a one-year subscription product with identifier `yearly`.
-3. Attach both products to the `Earn your Screen Time Pro` entitlement.
-4. Add `monthly` to the monthly package and `yearly` to the annual package in the current Offering.
-5. Run the `EarnYourScreenTime Test Store` scheme. RevenueCat presents its Test Store purchase modal,
-   where success, failure, and cancellation can be simulated.
+Lifetime must emit `purchase_completed` with `plan=lifetime`, without `trial_started` or
+`subscription_started`. Monthly retains its existing subscription/trial events. Offer events
+include both localized prices, monthly eligibility, and the paywall entry point.
 
-Test Store purchases update `CustomerInfo` and renew on accelerated schedules. A monthly product
-renews every five minutes and a yearly product every hour, up to five renewals. Its current catalog
-does not report an introductory offer, so its paywall displays immediate billing rather than the
-three-day trial shown by Apple's products.
+Settings offers **Switch to Lifetime** to Pro subscribers who do not already own Lifetime.
+That paywall displays only Lifetime, without a trial, and explains that the purchase does not
+cancel the existing subscription. Purchase and restore completion must verify the active Pro
+entitlement's `lifetime` product with no expiration; existing monthly/annual Pro access alone
+cannot complete this flow. A post-purchase prompt opens Apple's subscription management sheet,
+and Settings retains a cancellation reminder while an active subscription also exists. Lifetime
+owners see **Lifetime Pro** and no upgrade button. A canceled subscription may remain active
+until expiry, so the reminder explicitly applies only if renewal is still enabled.
 
-## Local StoreKit Testing
+Settings opens RevenueCat Customer Center under **Manage purchases** for Pro users. Restore
+callbacks update the manager immediately. Configure support/refund and subscription management
+paths in Customer Center; the latter still matters to existing subscribers.
 
-`StoreKit/EarnYourScreenTime.storekit` separately defines `monthly` and `yearly` Apple
-auto-renewable subscriptions with three-day introductory offers in one subscription group. It is
-used by the `EarnYourScreenTime StoreKit` scheme when run directly from Xcode. The normal
-`EarnYourScreenTime` scheme instead loads offers from the Apple sandbox.
+## Release
 
-Run `EarnYourScreenTime StoreKit` from Xcode to test the local offer without a sandbox account.
-Use Xcode's StoreKit transaction manager to accelerate renewals, expire subscriptions, interrupt
-purchases, and clear transaction history.
+Version **1.3.2 (2)** adds the subscriber upgrade path. For App Review, an existing monthly or
+annual subscriber can use **Settings → Plan → Switch to Lifetime**. A free user can use
+**Settings → Plan → Explore Pro**. The reviewer no longer needs to clear sandbox purchase history
+to find Lifetime. Build 2 must be uploaded and assigned before these instructions apply.
 
-RevenueCat must know how local products map to the entitlement before its paywall can sell them:
+Configured on October 19, 2026 (Argentina): Apple reports `READY_TO_SUBMIT`, with the USD 30
+price, availability in 175 territories, English/Spanish metadata, review notes, and a processed
+review screenshot. RevenueCat Apple and Test Store lifetime products are attached to Pro and
+`$rc_lifetime` in `default`. Simulator screenshots are in `.build/monetization-review/`.
 
-1. Create a RevenueCat project/app and configure its public SDK key.
-2. Add `monthly` and `yearly` as Apple products in RevenueCat.
-3. Attach both products to the `Earn your Screen Time Pro` entitlement.
-4. Add monthly and annual packages to the current Offering.
-5. In Xcode, open the `.storekit` file and use **Editor > Save Public Certificate**.
-6. Upload that certificate in the RevenueCat iOS app's StoreKit testing framework settings.
-7. Run the `EarnYourScreenTime StoreKit` scheme directly from Xcode.
 
-Without an Apple RevenueCat SDK key/product mapping, the app cannot activate and displays the
-non-purchasing fallback. The local StoreKit file alone cannot produce the RevenueCat
-entitlement. Xcode local tests are useful for transaction lifecycle behavior, but RevenueCat notes
-that some Xcode cancellation/refund simulations are not fully represented in its dashboard.
+The product and price configuration are separate from app release. Complete Apple review metadata
+and the review screenshot, submit the new non-consumable with a version containing this paywall,
+and verify Apple Sandbox/TestFlight before releasing. Do not distribute a build whose current
+RevenueCat offering cannot return both monthly and lifetime products.
 
-## App Store Connect And RevenueCat
+## Diagnostics
 
-Once products exist in App Store Connect:
+Sandbox/TestFlight builds display configuration details and log them under `Monetization`:
 
-1. Connect the App Store Connect app to the RevenueCat project.
-2. Import the monthly and yearly products into RevenueCat.
-3. Attach both products to the `Earn your Screen Time Pro` entitlement.
-4. Attach monthly and annual packages to the current Offering.
-5. Configure a three-day free trial for both products in App Store Connect.
-6. Configure the production RevenueCat Apple SDK key for Release builds.
-
-## Diagnosing An Empty Paywall
-
-An empty paywall in TestFlight and in App Review is the same failure, and it blocks the reviewer
-behind the non-dismissible subscription screen (Guideline 2.1 rejection). `PaywallViewModel`
-distinguishes the causes instead of reporting one generic "missing packages" error:
-
-| Diagnostic | Cause |
+| Diagnostic | Check |
 | --- | --- |
-| `RevenueCat is not configured` | `REVENUECAT_API_KEY` did not reach Info.plist for this configuration. |
-| `no current offering` | No offering is marked Current in the RevenueCat dashboard. |
-| `zero available packages` | RevenueCat has the offering, but StoreKit returned no products for this bundle. Almost always the Paid Applications Agreement, a product still in "Missing Metadata", or a product identifier that differs from App Store Connect. |
-| `no $rc_monthly / $rc_annual package` | Products are attached to custom packages instead of the monthly and annual package slots the paywall reads. |
-| `timed out after 20s` | StoreKit never answered the product request. |
+| Not configured | Public SDK key in the built Info.plist |
+| No current offering | RevenueCat current/default offering |
+| Zero available packages | Apple agreements, product metadata, identifiers, availability |
+| Missing monthly package | `$rc_monthly` with an auto-renewable subscription |
+| Missing lifetime package | `$rc_lifetime` with a non-consumable |
+| Entitlement inactive after purchase | Product attached to the exact Pro entitlement identifier |
+| Offer loading timeout | StoreKit product request/network availability |
 
-The message is shown on the paywall itself in DEBUG, Apple Sandbox and TestFlight builds
-(`MonetizationBuild.isSandbox`) and hidden in App Store builds. It is always written to the
-unified log: connect the device and filter Console.app by the `Monetization` category, or by the
-`RevenueCat` subsystem for the SDK's own verbose product-request log, which is enabled in sandbox
-builds and reduced to `.error` in App Store builds.
-
-A mismatch between `Entitlements.pro` and the RevenueCat entitlement **identifier** (not its
-display name) logs `Entitlement mismatch` whenever a customer has some other active entitlement.
-That fault lets the purchase succeed while leaving the app locked.
-
-## Customer Center
-
-Active subscribers see **Manage subscription** in Settings. This presents RevenueCatUI's
-`CustomerCenterView` through `SubscriptionCustomerCenterView`, keeping RevenueCat APIs inside the
-monetization layer. Restore callbacks update `SubscriptionManager` immediately.
-
-Configure and publish Customer Center in the RevenueCat dashboard before production. Include the
-appropriate subscription management, cancellation, refund/support, and restore paths. Inactive
-users continue to use Restore Purchases from the paywall.
-
-For Apple Sandbox, disable the local StoreKit configuration by using the normal
-`EarnYourScreenTime` scheme. Sign into a Sandbox Apple Account on a physical device, purchase and
-restore, then test renewal, expiration, billing retry, and cancellation. Repeat the purchase and
-restore flows through TestFlight before release. Sandbox timing and prices are not production
-behavior.
-
-## Subscription Access
-
-`App/Monetization/FeatureAccess.swift` is the source of truth for product capabilities. An active
-subscription unlocks the product; an inactive subscription has no product access. This is not a
-freemium capability matrix.
-
-Future gates should consume `FeatureAccess` rather than import RevenueCat or compare entitlement
-strings. RevenueCat code should remain confined to the monetization layer.
-
-## TODO once Apple Developer account is active
-
-- Create a subscription group in App Store Connect.
-- Create the monthly subscription.
-- Create the annual subscription.
-- Configure a three-day free trial for both subscriptions.
-- Add localization and pricing.
-- Complete required subscription metadata and review information.
-- Accept paid-app agreements and complete tax/banking requirements.
-- Connect the App Store Connect app to RevenueCat.
-- Import products into RevenueCat.
-- Attach products to an Offering.
-- Attach products to the `Earn your Screen Time Pro` entitlement.
-- Configure the production RevenueCat SDK key.
-- Confirm the production Terms of Service and Privacy Policy URLs in `project.yml`.
-- Configure and publish RevenueCat Customer Center.
-- Test purchases using Apple Sandbox.
-- Test through TestFlight.
-- Verify restore purchases.
-- Verify subscription renewal, expiration, billing retry, and cancellation behavior.
+Purchase completion alone never grants Pro: the active RevenueCat entitlement must be verified.

@@ -1,4 +1,3 @@
-• Verdiene deine ersten Minuten sofort: Schließ die Einrichtung mit ein paar Liegestützen ab und schalte direkt frei.
-• Optionale Erinnerungen, wenn deine Apps eine Weile gewartet haben, damit dein Plan nicht einschläft.
-• Der Pro-Bildschirm nach deiner kostenlosen Freischaltung lässt sich jetzt schließen – Start und Einstellungen bleiben erreichbar.
-• Fehlerbehebungen und Verbesserungen.
+Neu: Mit dem Earnit-Widget auf dem Home- oder Sperrbildschirm siehst du deine verfügbaren Minuten und deinen Fortschritt auf einen Blick. Während einer Freigabe zeigt es die verbleibende Zeit.
+
+Wähle eine Uhrzeit für die optionale tägliche Erinnerung ans Gehen. Earnit kann dich auch benachrichtigen, wenn du durch Schritte Minuten verdienst – selbst bei geschlossener App. Benachrichtigungen und Widget verwaltest du in den Einstellungen.

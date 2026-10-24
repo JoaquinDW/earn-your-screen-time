@@ -5,5 +5,6 @@ import WidgetKit
 struct EarnLiveActivityBundle: WidgetBundle {
     var body: some Widget {
         EarnLiveActivityWidget()
+        EarnWalletWidget()
     }
 }

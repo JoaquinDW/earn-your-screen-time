@@ -53,6 +53,9 @@ struct PaywallPackage: Identifiable {
 /// Where the paywall was opened from, reported on every paywall event so conversion can be
 /// read per entry point.
 enum PaywallSource: String {
+    /// The closable trial offer right after the plan is accepted. In 1.2.2–1.3.0 the only other
+    /// automatic paywall sat behind the first spent unlock, which two in thirteen people reached.
+    case onboarding
     /// The paywall after the free unlock's session has ended. It can be closed; closing it only
     /// lasts until the app next goes to the background.
     case firstUnlock = "first_unlock"
@@ -72,6 +75,8 @@ struct PaywallAlert: Identifiable {
         case entitlementInactive
         case restore
         case noSubscription
+        case noLifetime
+        case lifetimeActivated
     }
 
     let kind: Kind
@@ -105,8 +110,16 @@ final class PaywallViewModel {
     private var loadTask: Task<Void, Never>?
     private var loadGeneration = 0
 
+    /// Capture the intent when opening. It must survive customer-info updates during checkout.
+    let isLifetimeUpgrade: Bool
+    var hasLifetimeAccess: Bool { subscriptionManager.hasLifetimeAccess }
+    var hasActiveSubscription: Bool { subscriptionManager.hasActiveSubscription }
+
     var isProcessing: Bool { isPurchasing || isRestoring }
-    var canPurchase: Bool { selectedPackage != nil && !isLoading && !isProcessing && !hasActivated }
+    var canPurchase: Bool {
+        selectedPackage != nil && !isLoading && !isProcessing && !hasActivated
+            && !hasLifetimeAccess
+    }
     var trialPackage: PaywallPackage? { packages.first(where: \.isEligibleForFreeTrial) }
 
     init(
@@ -115,6 +128,7 @@ final class PaywallViewModel {
         analytics: any PaywallAnalyticsProtocol = PaywallAnalytics()
     ) {
         self.subscriptionManager = subscriptionManager
+        self.isLifetimeUpgrade = subscriptionManager.canUpgradeToLifetime
         self.source = source
         self.analytics = analytics
     }
@@ -178,49 +192,44 @@ final class PaywallViewModel {
                 throw PaywallOfferingError.emptyOffering(identifier: offering.identifier)
             }
             let availableIdentifiers = offering.availablePackages.map(\.identifier)
-            guard let monthly = offering.monthly else {
-                throw PaywallOfferingError.missingMonthlyPackage(
+            guard let lifetime = offering.lifetime,
+                  lifetime.storeProduct.productType == .nonConsumable else {
+                throw PaywallOfferingError.missingLifetimePackage(
                     identifier: offering.identifier,
                     available: availableIdentifiers
                 )
             }
-            guard let yearly = offering.annual else {
-                throw PaywallOfferingError.missingAnnualPackage(
-                    identifier: offering.identifier,
-                    available: availableIdentifiers
-                )
+            if isLifetimeUpgrade {
+                packages = [PaywallPackage(plan: .lifetime, package: lifetime, isEligibleForFreeTrial: false)]
+            } else {
+                guard let monthly = offering.monthly,
+                      monthly.storeProduct.productType == .autoRenewableSubscription else {
+                    throw PaywallOfferingError.missingMonthlyPackage(
+                        identifier: offering.identifier, available: availableIdentifiers
+                    )
+                }
+                let eligibleProducts = await subscriptionManager.eligibleFreeTrialProductIdentifiers(packages: [monthly])
+                guard generation == loadGeneration else { return }
+                packages = [
+                    PaywallPackage(plan: .lifetime, package: lifetime, isEligibleForFreeTrial: false),
+                    PaywallPackage(plan: .monthly, package: monthly,
+                        isEligibleForFreeTrial: eligibleProducts.contains(monthly.storeProduct.productIdentifier))
+                ]
             }
-
-            let eligibleProducts = await subscriptionManager.eligibleFreeTrialProductIdentifiers(
-                packages: [monthly, yearly]
-            )
-            guard generation == loadGeneration else { return }
-
-            packages = [
-                PaywallPackage(
-                    plan: .monthly,
-                    package: monthly,
-                    isEligibleForFreeTrial: eligibleProducts.contains(monthly.storeProduct.productIdentifier)
-                ),
-                PaywallPackage(
-                    plan: .yearly,
-                    package: yearly,
-                    isEligibleForFreeTrial: eligibleProducts.contains(yearly.storeProduct.productIdentifier)
-                )
-            ]
-            selectedPackage = packages.first { $0.plan == .yearly }
+            selectedPackage = packages.first
             isLoading = false
-            analytics.track(.paywallOfferLoaded.withProperties([
-                "source": .string(source.rawValue),
-                "trial_eligible_monthly": .bool(packages[0].isEligibleForFreeTrial),
-                "trial_eligible_yearly": .bool(packages[1].isEligibleForFreeTrial),
-                "price_monthly": .string(packages[0].price),
-                "price_yearly": .string(packages[1].price)
-            ]))
-            MonetizationLog.info(
-                "Offering '\(offering.identifier)' loaded with products: "
-                    + "\(monthly.storeProduct.productIdentifier), \(yearly.storeProduct.productIdentifier)"
-            )
+            var offerProperties: AnalyticsProperties = [
+                "price_lifetime": .string(packages[0].price),
+                "lifetime_upgrade": .bool(isLifetimeUpgrade),
+                "trial_eligible_monthly": .bool(packages.contains { $0.isEligibleForFreeTrial })
+            ]
+            if let monthly = packages.first(where: { $0.plan == .monthly }) {
+                offerProperties["price_monthly"] = .string(monthly.price)
+            }
+            analytics.track(.paywallOfferLoaded.withProperties(context.merging(offerProperties) { current, _ in current }))
+            MonetizationLog.info("Offering '\(offering.identifier)' loaded: "
+                + packages.map { $0.package.storeProduct.productIdentifier }.joined(separator: ", "))
+
         } catch {
             guard generation == loadGeneration else { return }
             loadFailed = true
@@ -276,7 +285,7 @@ final class PaywallViewModel {
                 offerTrialAfterCancel()
                 return false
             }
-            guard subscriptionManager.isPro else {
+            guard subscriptionManager.hasAccess(for: selectedPackage.package) else {
                 throw PaywallConfigurationError.entitlementInactive
             }
             hasActivated = true
@@ -285,7 +294,9 @@ final class PaywallViewModel {
             if selectedPackage.isEligibleForFreeTrial {
                 analytics.track(.trialStarted.withProperties(planContext))
             }
-            analytics.track(.subscriptionStarted.withProperties(planContext))
+            if selectedPackage.plan != .lifetime {
+                analytics.track(.subscriptionStarted.withProperties(planContext))
+            }
             return true
         } catch PaywallConfigurationError.entitlementInactive {
             let error = PaywallConfigurationError.entitlementInactive
@@ -304,7 +315,7 @@ final class PaywallViewModel {
     /// Backing out of Apple's sheet usually means the price read as a charge today. When a
     /// free trial exists, move the selection onto it and say plainly that nothing is charged.
     private func offerTrialAfterCancel() {
-        guard let trialPackage else { return }
+        guard selectedPackage?.plan != .lifetime, let trialPackage else { return }
         if selectedPackage?.plan != trialPackage.plan {
             selectedPackage = trialPackage
         }
@@ -320,6 +331,10 @@ final class PaywallViewModel {
 
         do {
             _ = try await subscriptionManager.restorePurchases()
+            if isLifetimeUpgrade, !subscriptionManager.hasLifetimeAccess {
+                alert = PaywallAlert(kind: .noLifetime)
+                return false
+            }
             guard subscriptionManager.isPro else {
                 alert = PaywallAlert(kind: .noSubscription)
                 return false
@@ -344,7 +359,7 @@ private enum PaywallOfferingError: LocalizedError {
     case noCurrentOffering(offeringIdentifiers: [String])
     case emptyOffering(identifier: String)
     case missingMonthlyPackage(identifier: String, available: [String])
-    case missingAnnualPackage(identifier: String, available: [String])
+    case missingLifetimePackage(identifier: String, available: [String])
     case timedOut(seconds: Double)
 
     var errorDescription: String? {
@@ -357,14 +372,14 @@ private enum PaywallOfferingError: LocalizedError {
                 + "Mark an offering as Current in the RevenueCat dashboard."
         case let .emptyOffering(identifier):
             return "Offering '\(identifier)' has zero available packages. StoreKit returned no products "
-                + "for this bundle: check the Paid Applications Agreement, that both subscriptions are "
+                + "for this bundle: check the Paid Applications Agreement, that the lifetime purchase is "
                 + "at least 'Ready to Submit', and that the product identifiers in RevenueCat match "
                 + "App Store Connect exactly."
         case let .missingMonthlyPackage(identifier, available):
-            return "Offering '\(identifier)' has no $rc_monthly package. Available: "
+            return "Offering '\(identifier)' needs a $rc_monthly auto-renewable subscription. Available: "
                 + "\(available.joined(separator: ", "))."
-        case let .missingAnnualPackage(identifier, available):
-            return "Offering '\(identifier)' has no $rc_annual package. Available: "
+        case let .missingLifetimePackage(identifier, available):
+            return "Offering '\(identifier)' needs a $rc_lifetime package containing a non-consumable product. Available: "
                 + "\(available.joined(separator: ", "))."
         case let .timedOut(seconds):
             return "Loading offerings timed out after \(Int(seconds))s. StoreKit did not answer the "

@@ -16,7 +16,7 @@ one, in a single pass.
 import json, subprocess, sys, time
 
 ASC = "/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-VERSION_ID = "4dafd77d-77aa-4bb9-9187-979c7f6e420e"
+VERSION_ID = "1ff3dd9c-547b-473d-800f-2cf226e9c0a2"
 SOURCE_LOCALE = "en-US"
 DRY = "--write" not in sys.argv
 

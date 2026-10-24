@@ -38,6 +38,10 @@ protocol HealthKitServing: AnyObject {
     /// Average steps over the recent valid completed days in the user's local calendar.
     /// Returns `nil` until at least three valid days are available; denial is indistinguishable.
     func recentAverageSteps() async throws -> Int?
+    /// Calls `onUpdate` whenever new steps are written, including by waking the app in the
+    /// background (at most hourly for steps). Safe to call repeatedly; only the first call after
+    /// authorization was requested starts observing.
+    func observeStepUpdates(_ onUpdate: @escaping @MainActor () async -> Void)
 }
 
 @MainActor
@@ -73,6 +77,27 @@ final class LiveHealthKitService: HealthKitServing {
 
     func recentAverageSteps() async throws -> Int? {
         try await recentDailySteps().baselineSteps
+    }
+
+    private var stepObserver: HKObserverQuery?
+
+    /// Background delivery has to be re-registered on every launch, including the background
+    /// launch it causes, which is why the app calls this from `AppEnvironment.init`.
+    func observeStepUpdates(_ onUpdate: @escaping @MainActor () async -> Void) {
+        guard isAvailable, hasRequestedAuthorization, stepObserver == nil else { return }
+        let query = HKObserverQuery(sampleType: stepType, predicate: nil) { _, completionHandler, error in
+            guard error == nil else {
+                completionHandler()
+                return
+            }
+            Task { @MainActor in
+                await onUpdate()
+                completionHandler()
+            }
+        }
+        stepObserver = query
+        store.execute(query)
+        store.enableBackgroundDelivery(for: stepType, frequency: .hourly) { _, _ in }
     }
 
     func recentDailySteps() async throws -> DailyStepResult {
@@ -155,6 +180,9 @@ final class MockHealthKitService: HealthKitServing {
         if let injectedError { throw injectedError }
         return steps ?? SharedStore.shared.load().ledger.activityAmount
     }
+
+    /// The Simulator has no step stream to observe.
+    func observeStepUpdates(_ onUpdate: @escaping @MainActor () async -> Void) {}
 
     func recentAverageSteps() async throws -> Int? {
         guard isAvailable else { throw HealthKitError.unavailable }

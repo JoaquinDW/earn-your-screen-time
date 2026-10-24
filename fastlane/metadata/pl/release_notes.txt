@@ -1,4 +1,3 @@
-• Zdobądź pierwsze minuty od razu: zakończ konfigurację kilkoma pompkami i odblokuj od razu potem.
-• Opcjonalne przypomnienia, gdy twoje aplikacje czekają od dłuższego czasu, żeby plan nie wygasł.
-• Ekran Pro po darmowym odblokowaniu można teraz zamknąć, więc Start i Ustawienia są zawsze pod ręką.
-• Poprawki błędów i ulepszenia.
+Nowość: dodaj widżet Earnit do ekranu początkowego lub ekranu blokady, aby szybko sprawdzić dostępne minuty i postępy. Podczas odblokowania pokazuje pozostały czas.
+
+Wybierz godzinę opcjonalnego codziennego przypomnienia o spacerze. Earnit może też powiadomić Cię, gdy kroki przyniosą kolejne minuty, nawet przy zamkniętej aplikacji. Powiadomieniami i widżetem zarządzasz w Ustawieniach.

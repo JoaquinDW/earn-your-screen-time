@@ -4,7 +4,26 @@
 
   ],
   "products" : [
-
+    {
+      "displayPrice" : "30.00",
+      "familyShareable" : false,
+      "internalID" : "23AD5E11-C3DE-4DB2-AB2C-35AD2A03FB55",
+      "localizations" : [
+        {
+          "description" : "Pay once for lifetime Pro access. No subscription.",
+          "displayName" : "Earnit Pro Lifetime",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Un solo pago para acceder a Pro de por vida. Sin suscripción.",
+          "displayName" : "Earnit Pro de por vida",
+          "locale" : "es_ES"
+        }
+      ],
+      "productID" : "lifetime",
+      "referenceName" : "Earnit Pro Lifetime",
+      "type" : "NonConsumable"
+    }
   ],
   "settings" : {
     "_applicationInternalID" : "",

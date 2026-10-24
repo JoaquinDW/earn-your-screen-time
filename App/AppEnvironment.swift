@@ -3,6 +3,7 @@ import FamilyControls
 import Foundation
 import SwiftUI
 import UserNotifications
+import WidgetKit
 
 enum AppRoute: Equatable {
     case home
@@ -53,6 +54,9 @@ final class AppEnvironment {
     /// The post-unlock paywall can be closed. Closing it lasts until the app next goes to the
     /// background, so each return offers it once instead of locking the whole app behind it.
     private(set) var isUnlockPaywallDismissed = false
+    @ObservationIgnored private var lastWalletWidgetSignature: [Int] = []
+    private var dailyReminderPreference = DailyReminderPreference.saved
+    private let progressNotifications = ProgressNotificationService()
 
     init(
         screenTime: ScreenTimeServing? = nil,
@@ -98,6 +102,99 @@ final class AppEnvironment {
             self?.analytics.track(.notificationOpened.withProperties(["kind": .string(kind)]))
         }
         UNUserNotificationCenter.current().delegate = notificationOpenTracker
+        startObservingSteps()
+    }
+
+    /// Steps written while the app is closed wake it (at most hourly), so minutes are credited
+    /// and announced while the phone is still in a pocket instead of on the next open.
+    func startObservingSteps() {
+        health.observeStepUpdates { [weak self] in
+            await self?.handleStepUpdateInBackground()
+        }
+    }
+
+    private func handleStepUpdateInBackground() async {
+        // In the foreground, becoming active already refreshes and celebrates in the app. With
+        // the phone locked, Health data is unreadable and the read would only record an error.
+        guard hasCompletedOnboarding,
+              UIApplication.shared.applicationState != .active,
+              UIApplication.shared.isProtectedDataAvailable else { return }
+        let before = SharedStore.shared.load()
+        await refresh()
+        let after = state.ledger
+        let sameDay = before.ledger.day == after.day
+        let earnedSeconds = after.wallet.earnedSeconds - (sameDay ? before.ledger.wallet.earnedSeconds : 0)
+        let reachedGoal = (sameDay ? before.ledger.activityAmount : 0) < dailyStepGoal
+            && after.activityAmount >= dailyStepGoal
+        if earnedSeconds >= 60 {
+            await progressNotifications.notifyEarned(
+                minutes: earnedSeconds / 60,
+                reachedGoal: reachedGoal,
+                snapshot: progressSnapshot,
+                language: appLanguage
+            )
+            analytics.track(.progressNotificationDelivered.withProperties([
+                "kind": .string(reachedGoal ? "goal_reached" : "minutes_earned"),
+                "minutes": .int(earnedSeconds / 60)
+            ]))
+        }
+        await rescheduleReengagementNotifications()
+    }
+
+    private var progressSnapshot: ProgressNotificationService.Snapshot {
+        ProgressNotificationService.Snapshot(
+            steps: state.ledger.activityAmount,
+            dailyGoal: dailyStepGoal,
+            goalBonusMinutes: state.ledger.goalBonusSeconds / 60,
+            goalReached: state.ledger.activityAmount >= dailyStepGoal,
+            availableMinutes: wallet.availableMinutes,
+            stepsPerReward: state.ledger.rule.amountRequired,
+            rewardMinutes: state.ledger.rule.rewardMinutes
+        )
+    }
+
+    /// Whether the wallet widget is on the Home or Lock Screen. Hides the offer to add it.
+    private(set) var hasWalletWidget = false
+    private static let widgetInstalledTrackedKey = "widget.installedTracked"
+
+    private func refreshWidgetInstallation() async {
+        let configurations = (try? await WidgetCenter.shared.currentConfigurations()) ?? []
+        let walletWidgets = configurations.filter { $0.kind == "EarnWalletWidget" }
+        hasWalletWidget = !walletWidgets.isEmpty
+        guard hasWalletWidget, !AppGroup.defaults.bool(forKey: Self.widgetInstalledTrackedKey) else { return }
+        AppGroup.defaults.set(true, forKey: Self.widgetInstalledTrackedKey)
+        analytics.track(.widgetInstalled.withProperties([
+            "families": .string(walletWidgets.map { "\($0.family)" }.sorted().joined(separator: ","))
+        ]))
+    }
+
+    private static let widgetOfferSeenKey = "widget.offerSeen"
+    private(set) var hasSeenWidgetOffer = AppGroup.defaults.bool(forKey: AppEnvironment.widgetOfferSeenKey)
+
+    /// Offered once, after the first minutes are earned: before that the widget would only say 0.
+    var shouldOfferWidget: Bool {
+        hasCompletedOnboarding
+            && !hasSeenWidgetOffer
+            && !hasWalletWidget
+            && (state.hasEarnedFirstReward || state.ledger.wallet.earnedSeconds > 0)
+    }
+
+    func markWidgetOfferSeen() {
+        hasSeenWidgetOffer = true
+        AppGroup.defaults.set(true, forKey: Self.widgetOfferSeenKey)
+    }
+
+    var dailyReminder: DailyReminderPreference { dailyReminderPreference }
+
+    func setDailyReminder(_ preference: DailyReminderPreference) async {
+        guard preference != dailyReminderPreference else { return }
+        dailyReminderPreference = preference
+        preference.save()
+        analytics.track(.dailyReminderChanged.withProperties([
+            "enabled": .bool(preference.isEnabled),
+            "hour": .int(preference.hour)
+        ]))
+        await rescheduleReengagementNotifications()
     }
 
     /// Screen Time simply does not work in the Simulator: authorization always fails and there
@@ -477,7 +574,10 @@ final class AppEnvironment {
     /// DeviceActivity may finish delivering a session callback just after the scene becomes active.
     func refreshAfterBecomingActive() async {
         trackActiveDayIfNeeded()
+        // Health access may have been granted since launch (onboarding asks for it).
+        startObservingSteps()
         await refresh()
+        await refreshWidgetInstallation()
         await rescheduleReengagementNotifications()
         presentShieldDetailIfRequested()
         try? await Task.sleep(for: .milliseconds(800))
@@ -928,9 +1028,11 @@ final class AppEnvironment {
     }
 
     /// Nudges are only for people who finished setup; before that there is nothing to return to.
+    /// The daily reminder is rewritten alongside them, from the same moment's numbers.
     private func rescheduleReengagementNotifications() async {
         guard hasCompletedOnboarding else {
             reengagementNotifications.cancelAll()
+            await progressNotifications.cancelDailyReminders()
             return
         }
         await reengagementNotifications.reschedule(
@@ -939,6 +1041,13 @@ final class AppEnvironment {
                 stepsPerReward: state.ledger.rule.amountRequired,
                 rewardMinutes: state.ledger.rule.rewardMinutes
             ),
+            language: appLanguage,
+            // The daily reminder already reaches someone who stayed away a day.
+            skippingDayOne: dailyReminderPreference.isEnabled
+        )
+        await progressNotifications.rescheduleDailyReminder(
+            progressSnapshot,
+            preference: dailyReminderPreference,
             language: appLanguage
         )
     }
@@ -1020,6 +1129,24 @@ final class AppEnvironment {
             ),
             presentation: presentation
         )
+        reloadWalletWidgetIfChanged()
+    }
+
+    /// Every place that changes the wallet already passes through the Live Activity sync, so the
+    /// Home and Lock Screen widgets follow from here. Reloads outside the foreground count against
+    /// a daily budget, hence only when something the widget shows has moved.
+    private func reloadWalletWidgetIfChanged() {
+        let signature = [
+            state.onboardingCompleted ? 1 : 0,
+            state.ledger.wallet.availableSeconds,
+            state.ledger.wallet.earnedSeconds,
+            state.ledger.activityAmount,
+            Int(state.activeSession()?.endsAt.timeIntervalSince1970 ?? 0),
+            appLanguage.hashValue
+        ]
+        guard signature != lastWalletWidgetSignature else { return }
+        lastWalletWidgetSignature = signature
+        WidgetCenter.shared.reloadTimelines(ofKind: "EarnWalletWidget")
     }
 
     #if DEBUG

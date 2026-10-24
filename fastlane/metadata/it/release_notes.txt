@@ -1,4 +1,3 @@
-• Guadagna subito i tuoi primi minuti: completa la configurazione con qualche piegamento e sblocca subito dopo.
-• Promemoria facoltativi quando le tue app aspettano da un po', così il tuo piano non si spegne.
-• La schermata Pro dopo lo sblocco gratuito ora si può chiudere: Home e Impostazioni restano a portata di mano.
-• Correzioni e miglioramenti.
+Novità: aggiungi il widget di Earnit alla schermata Home o alla schermata di blocco per vedere a colpo d’occhio i minuti disponibili e i tuoi progressi. Durante uno sblocco mostra il tempo rimanente.
+
+Scegli l’ora di un promemoria quotidiano facoltativo per camminare. Earnit può avvisarti quando i tuoi passi ti fanno guadagnare minuti, anche con l’app chiusa. Gestisci notifiche e widget nelle Impostazioni.

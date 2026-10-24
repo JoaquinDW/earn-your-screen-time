@@ -16,8 +16,8 @@ configs:
 
 settings:
   base:
-    MARKETING_VERSION: "1.3.0"
-    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "1.3.2"
+    CURRENT_PROJECT_VERSION: "2"
     SWIFT_VERSION: "5.0"
     CODE_SIGN_STYLE: Automatic
     # Keep signing here because XcodeGen replaces manual project.pbxproj changes.
@@ -45,6 +45,21 @@ fileGroups:
   - StoreKit/EarnYourScreenTime.storekit
 
 targets:
+  EarnMonetizationTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/EarnMonetizationTests
+    dependencies:
+      - target: EarnYourScreenTime
+      - package: RevenueCat
+        product: RevenueCat
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.monetizationtests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Earnit.app/Earnit"
+
   EarnYourScreenTime:
     type: application
     platform: iOS
@@ -52,6 +67,9 @@ targets:
       - path: App
       - path: Shared
       - path: LiveActivitySupport
+      # The widget offer previews the real widget view with the person's own numbers.
+      - path: Extensions/EarnLiveActivity/EarnWalletWidget.swift
+      - path: Extensions/EarnLiveActivity/WidgetAssets.xcassets
     dependencies:
       - package: EarnDomain
       - package: RevenueCat
@@ -166,11 +184,20 @@ targets:
     sources:
       - path: Extensions/EarnLiveActivity
       - path: LiveActivitySupport
+      # The home and lock screen widgets read the wallet straight from the shared state.
+      - path: Shared/AppGroup.swift
+      - path: Shared/SharedStore.swift
+      # The wallet widget sets its numbers in the app's own typefaces.
+      - path: App/Resources/Fonts
+        buildPhase: resources
+    dependencies:
+      - package: EarnDomain
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.liveactivity
         PRODUCT_NAME: EarnLiveActivityExtension
         INFOPLIST_FILE: Extensions/EarnLiveActivity/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extensions/EarnLiveActivity/EarnLiveActivityExtension.entitlements
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
         APPLICATION_EXTENSION_API_ONLY: YES
@@ -185,6 +212,8 @@ schemes:
       config: Debug
     test:
       config: Debug
+      targets:
+        - EarnMonetizationTests
     archive:
       config: Release
 

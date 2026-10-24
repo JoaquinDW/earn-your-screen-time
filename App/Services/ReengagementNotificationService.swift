@@ -40,13 +40,18 @@ final class ReengagementNotificationService {
 
     private let center = UNUserNotificationCenter.current()
 
-    func reschedule(_ snapshot: Snapshot, language: AppLanguage, now: Date = Date()) async {
+    func reschedule(
+        _ snapshot: Snapshot,
+        language: AppLanguage,
+        skippingDayOne: Bool = false,
+        now: Date = Date()
+    ) async {
         cancelAll()
         let settings = await center.notificationSettings()
         guard settings.authorizationStatus == .authorized
                 || settings.authorizationStatus == .provisional else { return }
 
-        for kind in Kind.allCases {
+        for kind in Kind.allCases where !(skippingDayOne && kind == .inactiveDay1) {
             guard let components = Self.deliveryComponents(daysAfter: kind.daysAfterLastOpen, from: now) else {
                 continue
             }

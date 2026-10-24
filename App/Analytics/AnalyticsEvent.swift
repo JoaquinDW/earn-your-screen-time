@@ -1,6 +1,7 @@
 enum AnalyticsPlan: String, Sendable {
     case monthly
     case yearly
+    case lifetime
 }
 
 enum AnalyticsPropertyValue: Sendable, Equatable {
@@ -172,6 +173,14 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let notificationsPermissionDenied = AnalyticsEvent("notifications_permission_denied")
     /// Someone opened the app by tapping a local notification; `kind` names which one.
     static let notificationOpened = AnalyticsEvent("notification_opened")
+    /// Minutes earned while the app was in the background were announced; `kind` is
+    /// `minutes_earned` or `goal_reached`.
+    static let progressNotificationDelivered = AnalyticsEvent("progress_notification_delivered")
+    static let dailyReminderChanged = AnalyticsEvent("daily_reminder_changed")
+    /// The Home Screen widget offer; `action` is `viewed`, `add_tapped` or `dismissed`.
+    static let widgetPrompt = AnalyticsEvent("widget_prompt")
+    /// The widget timeline was read by WidgetKit at least once — the widget is installed.
+    static let widgetInstalled = AnalyticsEvent("widget_installed")
 
     static func planSelected(_ plan: AnalyticsPlan) -> AnalyticsEvent {
         AnalyticsEvent("plan_selected", properties: ["plan": .string(plan.rawValue)])

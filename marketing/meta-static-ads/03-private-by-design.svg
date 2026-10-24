@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+  <title id="title">Does Earnit see the apps you select?</title>
+  <desc id="desc">A Meta FAQ static explaining that app selections and health and motion data stay private and on device.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1C4940"/><stop offset="1" stop-color="#0A2822"/></linearGradient><filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000" flood-opacity=".25"/></filter></defs>
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <path d="M0 1180C250 1070 355 1320 595 1200S895 1060 1080 1140v210H0z" fill="#154B3F" opacity=".7"/>
+  <text x="78" y="105" fill="#D8F49C" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="-2">earnit</text>
+  <g filter="url(#shadow)">
+    <rect x="78" y="205" width="924" height="735" rx="52" fill="#F5F4E9"/>
+    <rect x="78" y="205" width="924" height="174" rx="52" fill="#D8F49C"/>
+    <path d="M78 327h924v52H78z" fill="#D8F49C"/>
+    <text x="139" y="307" fill="#123F34" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="41" font-weight="800">FAQ</text>
+    <text x="138" y="487" fill="#173A31" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="61" font-weight="800" letter-spacing="-2">Does Earnit see</text>
+    <text x="138" y="557" fill="#173A31" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="61" font-weight="800" letter-spacing="-2">the apps I select?</text>
+    <circle cx="846" cy="500" r="90" fill="#D8F49C"/>
+    <path d="M812 506l24 25 48-61" fill="none" stroke="#123F34" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="138" y="682" fill="#0E5B49" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="64" font-weight="800">No.</text>
+    <text x="138" y="754" fill="#48645B" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="34" font-weight="600">Your app selections stay private.</text>
+    <text x="138" y="806" fill="#48645B" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="34" font-weight="600">Health and motion data stay on-device.</text>
+    <path d="M138 858h804" stroke="#D5DDD3" stroke-width="3"/>
+    <text x="138" y="899" fill="#6A8178" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="25" font-weight="600">Push-up video, images and body landmarks are not recorded, saved or uploaded.</text>
+  </g>
+  <text x="540" y="1080" text-anchor="middle" fill="white" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="55" font-weight="800" letter-spacing="-2">A boundary, not surveillance.</text>
+  <text x="540" y="1142" text-anchor="middle" fill="#B7D4C8" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="31" font-weight="600">Move first. Scroll later.</text>
+  <rect x="331" y="1215" width="418" height="76" rx="38" fill="#D8F49C"/>
+  <text x="540" y="1265" text-anchor="middle" fill="#123F34" font-family="Avenir Next, Helvetica, Arial, sans-serif" font-size="30" font-weight="800">Start your three-day trial</text>
+</svg>

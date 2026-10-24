@@ -29,6 +29,7 @@ struct SettingsView: View {
     @State private var isShowingRuleChangeConfirm = false
     @State private var isShowingPaywall = false
     @State private var isShowingCustomerCenter = false
+    @State private var isShowingWidgetOffer = false
     @State private var path: [SettingsDestination] = []
 
     private let stepOptions = [250, 500, 750, 1_000, 1_500, 2_000, 3_000]
@@ -123,6 +124,27 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle("settings.reminder.toggle", isOn: reminderEnabledBinding)
+                    if env.dailyReminder.isEnabled {
+                        DatePicker(
+                            "settings.reminder.time",
+                            selection: reminderTimeBinding,
+                            displayedComponents: .hourAndMinute
+                        )
+                    }
+                    if !env.hasWalletWidget {
+                        Button("settings.widget.add") {
+                            track("widget_offer_opened")
+                            isShowingWidgetOffer = true
+                        }
+                    }
+                } header: {
+                    sectionHeader("settings.reminder.section")
+                } footer: {
+                    Text("settings.reminder.footer")
+                }
+
+                Section {
                     LabeledContent("settings.subscription.status", value: subscriptionStatusLabel)
 
                     if env.subscriptionManager.isPro,
@@ -130,6 +152,12 @@ struct SettingsView: View {
                         Button("settings.subscription.manage") {
                             track("subscription_manage_tapped")
                             isShowingCustomerCenter = true
+                        }
+                        if env.subscriptionManager.canUpgradeToLifetime {
+                            Button("Switch to Lifetime") {
+                                track("lifetime_upgrade_tapped")
+                                isShowingPaywall = true
+                            }
                         }
                     } else {
                         Button("settings.subscription.upgrade") {
@@ -139,6 +167,11 @@ struct SettingsView: View {
                     }
                 } header: {
                     sectionHeader("settings.subscription.section")
+                } footer: {
+                    if env.subscriptionManager.hasLifetimeAccess,
+                       env.subscriptionManager.hasActiveSubscription {
+                        Text("Lifetime is active. If your subscription is still set to renew, cancel it in the App Store to avoid further charges.")
+                    }
                 }
 
                 Section {
@@ -236,6 +269,9 @@ struct SettingsView: View {
                 },
                 content: { ProPaywallView(source: .settings) }
             )
+            .sheet(isPresented: $isShowingWidgetOffer) {
+                WidgetOfferView(source: "settings")
+            }
             .sheet(isPresented: $isShowingCustomerCenter, onDismiss: {
                 env.setFeedbackPresentationSuspended(false, by: "settings.customerCenter")
             }) {
@@ -294,7 +330,8 @@ struct SettingsView: View {
         case .free:
             String(localized: "subscription.status.free", locale: env.appLanguage.locale)
         case .pro:
-            String(localized: "subscription.status.pro", locale: env.appLanguage.locale)
+            String(localized: env.subscriptionManager.hasLifetimeAccess
+                ? "Lifetime Pro" : "subscription.status.pro", locale: env.appLanguage.locale)
         }
     }
 
@@ -326,6 +363,43 @@ struct SettingsView: View {
             set: {
                 track("haptics_toggled", ["enabled": .bool($0)])
                 env.setHapticFeedbackEnabled($0)
+            }
+        )
+    }
+
+    /// Turning the reminder on is also the moment to ask for permission, for anyone who said
+    /// "Not now" during onboarding.
+    private var reminderEnabledBinding: Binding<Bool> {
+        Binding(
+            get: { env.dailyReminder.isEnabled },
+            set: { isEnabled in
+                var preference = env.dailyReminder
+                preference.isEnabled = isEnabled
+                Task {
+                    if isEnabled { _ = await env.requestNotificationPermission(source: "settings") }
+                    await env.setDailyReminder(preference)
+                }
+            }
+        )
+    }
+
+    private var reminderTimeBinding: Binding<Date> {
+        Binding(
+            get: {
+                let preference = env.dailyReminder
+                return Calendar.current.date(
+                    bySettingHour: preference.hour,
+                    minute: preference.minute,
+                    second: 0,
+                    of: Date()
+                ) ?? Date()
+            },
+            set: { date in
+                let components = Calendar.current.dateComponents([.hour, .minute], from: date)
+                var preference = env.dailyReminder
+                preference.hour = components.hour ?? preference.hour
+                preference.minute = components.minute ?? preference.minute
+                Task { await env.setDailyReminder(preference) }
             }
         )
     }

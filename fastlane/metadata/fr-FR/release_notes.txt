@@ -1,4 +1,3 @@
-• Gagne tes premières minutes tout de suite : termine la configuration avec quelques pompes et débloque aussitôt.
-• Des rappels facultatifs quand tes apps attendent depuis un moment, pour que ton plan ne s'essouffle pas.
-• L'écran Pro après ton déblocage gratuit peut maintenant être fermé : Accueil et Réglages restent accessibles.
-• Corrections et améliorations.
+Nouveau : ajoutez le widget Earnit à l’écran d’accueil ou verrouillé pour voir vos minutes disponibles et votre progression en un coup d’œil. Pendant un déverrouillage, il affiche le temps restant.
+
+Choisissez l’heure d’un rappel quotidien facultatif pour marcher. Earnit peut aussi vous avertir lorsque vos pas vous font gagner des minutes, même si l’app est fermée. Gérez les notifications et le widget dans Réglages.

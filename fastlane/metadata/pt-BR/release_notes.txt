@@ -1,4 +1,3 @@
-• Ganhe seus primeiros minutos na hora: termine a configuração com algumas flexões e desbloqueie logo em seguida.
-• Lembretes opcionais quando seus apps estiverem esperando há um tempo, para seu plano não esfriar.
-• A tela do Pro depois do desbloqueio grátis agora pode ser fechada, e Início e Ajustes ficam à mão.
-• Correções e melhorias.
+Novidade: adicione o widget do Earnit à tela de Início ou de Bloqueio para ver seus minutos disponíveis e seu progresso rapidamente. Durante um desbloqueio, ele mostra o tempo restante.
+
+Escolha o horário de um lembrete diário opcional para caminhar. O Earnit também pode avisar quando seus passos renderem minutos, mesmo com o app fechado. Gerencie as notificações e o widget em Ajustes.

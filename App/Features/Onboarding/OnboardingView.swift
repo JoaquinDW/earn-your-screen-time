@@ -46,6 +46,10 @@ struct OnboardingView: View {
     @State private var isRequestingNotifications = false
     @State private var healthMessage: String?
     @State private var isShowingScienceSource = false
+    @State private var reminderTime: Date = {
+        let saved = DailyReminderPreference.saved
+        return Calendar.current.date(bySettingHour: saved.hour, minute: saved.minute, second: 0, of: Date()) ?? Date()
+    }()
 
     /// Someone who left on the paywall under v7 resumes at the mission: that screen and the
     /// paywall's position after the first unlock both assume they have already set up.
@@ -186,6 +190,8 @@ struct OnboardingView: View {
             planStep
         case .customize:
             customizeStep
+        case .trial:
+            trialStep
         case .notifications:
             notificationsStep
         case .mission:
@@ -435,27 +441,74 @@ struct OnboardingView: View {
         }
     }
 
+    /// The trial offer, straight after "Start my plan" — the moment intent peaks. In 1.2.2–1.3.0
+    /// the only automatic paywall followed the first spent unlock, and most people left before
+    /// spending one. Unlike v7's wall at this spot it can be closed: declining carries on to the
+    /// free unlock, and the post-unlock paywall still follows it.
+    @ViewBuilder
+    private var trialStep: some View {
+        if env.subscriptionManager.isPro {
+            Color.clear.onAppear(perform: advance)
+        } else {
+            ProPaywallView(
+                source: .onboarding,
+                profile: profile,
+                declineTitle: "Not now, try one free unlock first",
+                onActivated: advance,
+                onClose: advance
+            )
+        }
+    }
+
     /// Asked before the first earn because reminders are what bring someone back on day two, and
     /// in 1.2.2 nobody who finished onboarding came back. This screen goes first so the system
     /// prompt only appears for people who already said yes to the idea.
+    ///
+    /// v9 shows the notifications themselves instead of describing them, the way AppBlock,
+    /// BePresent and Blockin prime the prompt, and lets the person pick when the daily one lands
+    /// (Bend, Lyfta, Duolingo). "Reminders" in the abstract reads as spam; "+5 min earned" does not.
     private var notificationsStep: some View {
-        step("Want a nudge when it's worth coming back?", back: goBack) {
-            VStack(spacing: Theme.Space.m) {
-                permissionRow("bell.badge.fill", "If your apps have waited a while", Night.cobaltText)
-                permissionRow("timer", "Before an unlock runs out", Night.textSoft)
+        step("We only nudge you when it matters.", back: goBack) {
+            NotificationExamples(
+                stepsPerReward: 500,
+                rewardMinutes: 5,
+                dailyGoal: profile.dailyStepGoal,
+                reminderTime: reminderTime
+            )
+            .padding(.bottom, Theme.Space.l)
+            HStack {
+                Label("Daily walk reminder", systemImage: "bell.fill")
+                    .font(.sans(15, weight: .semibold))
+                    .foregroundStyle(Night.text)
+                Spacer()
+                DatePicker(
+                    "Daily walk reminder",
+                    selection: $reminderTime,
+                    displayedComponents: .hourAndMinute
+                )
+                .labelsHidden()
+                .colorScheme(.dark)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, Theme.Space.l)
-            Text("A few reminders at most. You can turn them off any time in iOS Settings.")
+            .padding(.horizontal, Theme.Space.m)
+            .padding(.vertical, Theme.Space.s)
+            .background(Night.panel, in: .rect(cornerRadius: Theme.cornerRadius))
+            Text("No spam. Change or turn them off any time in Settings.")
                 .font(.sans(13.5))
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Theme.Space.m)
         } action: {
             Button {
                 guard !isRequestingNotifications else { return }
                 isRequestingNotifications = true
                 Task {
+                    let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
                     await env.requestNotificationPermission(source: "onboarding")
+                    await env.setDailyReminder(DailyReminderPreference(
+                        isEnabled: true,
+                        hour: components.hour ?? 18,
+                        minute: components.minute ?? 0
+                    ))
                     isRequestingNotifications = false
                     advance()
                 }
@@ -494,7 +547,12 @@ struct OnboardingView: View {
         Task {
             await env.activateAdaptivePlan(profile)
             // Home's navigation stack picks this up as soon as it appears.
-            if withPushups { env.requestRoute(.pushups) }
+            if withPushups {
+                // Someone who started a trial during onboarding is Pro, and Pro users who skipped
+                // the demo are owed the push-ups announcement — which would open over the camera.
+                env.markPushupsIntroSeen()
+                env.requestRoute(.pushups)
+            }
         }
     }
 
@@ -748,9 +806,10 @@ struct OnboardingView: View {
         /// The optional push-up demo. Every one of these three is skippable, and none of them
         /// asks for Screen Time, which is why they sit before `apps` rather than inside it.
         case pushupsIntro, pushupsDemo, pushupsLater
-        case apps, plan, customize, notifications, mission
+        case apps, plan, customize, trial, notifications, mission
 
-        /// v7 ended onboarding at a paywall; v8 moves it after the first unlock.
+        /// v7 ended onboarding at a paywall; v8 moves it after the first unlock. `trial` is a
+        /// new raw value so nobody resuming from that old route lands on the new offer.
         static let legacyPaywallRawValue = "paywall"
         static let progressCount = 12
         var progress: Int {
@@ -766,7 +825,8 @@ struct OnboardingView: View {
             case .pushupsIntro, .pushupsDemo, .pushupsLater: 8
             case .apps: 9
             case .plan, .customize: 10
-            case .notifications: 11
+            // Full screen, with no progress rule of its own.
+            case .trial, .notifications: 11
             case .mission: 12
             }
         }
@@ -785,7 +845,8 @@ struct OnboardingView: View {
             case .apps: .plan
             // Customizing returns to the plan rather than skipping past it, so the number the
             // new goal produces is the thing that sends you on.
-            case .plan, .customize: .notifications
+            case .plan, .customize: .trial
+            case .trial: .notifications
             case .notifications: .mission
             case .mission: nil
             }
@@ -808,6 +869,8 @@ struct OnboardingView: View {
             case .apps: .goal
             case .plan: .apps
             case .customize: .plan
+            // The offer is not a step to walk back into.
+            case .trial: nil
             case .notifications: .plan
             case .mission: nil
             }
