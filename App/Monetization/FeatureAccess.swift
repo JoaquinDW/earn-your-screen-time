@@ -1,7 +1,7 @@
 struct FeatureAccess: Equatable {
     let subscriptionStatus: SubscriptionStatus
-    /// A free user who has not yet spent the one unlock that precedes the paywall. They need
-    /// protected apps for that unlock to mean anything.
+    /// A free user who has not yet spent today's unlock, the one that precedes the paywall. They
+    /// need protected apps for that unlock to mean anything.
     var isFreePreview = false
     /// Someone who has not paid gets one push-up reward (enforced per account on the server).
     var hasFreePushupsReward = false

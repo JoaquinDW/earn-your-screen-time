@@ -63,7 +63,10 @@ struct DashboardView: View {
                 ProPaywallView(source: .study)
             }
             .fullScreenCover(isPresented: $isShowingUnlockPaywall) {
-                ProPaywallView(source: .unlockAttempt)
+                ProPaywallView(
+                    source: .unlockAttempt,
+                    freePlanNote: "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it."
+                )
             }
             .navigationDestination(for: HomeDestination.self) { destination in
                 switch destination {

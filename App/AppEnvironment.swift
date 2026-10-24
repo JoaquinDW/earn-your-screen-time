@@ -51,9 +51,12 @@ final class AppEnvironment {
     /// StoreKit's `requestReview` action, which only a view can invoke.
     private(set) var shouldRequestReview = false
     private var identifiedBackendUserID: UUID?
-    /// The post-unlock paywall can be closed. Closing it lasts until the app next goes to the
-    /// background, so each return offers it once instead of locking the whole app behind it.
-    private(set) var isUnlockPaywallDismissed = false
+    /// The post-unlock paywall can be closed, and closing it lasts for the rest of the day. It used
+    /// to come back on every return from the background: in 1.3.2 one person met it eight times in
+    /// seven minutes. Tomorrow brings a new free unlock, and the paywall after it.
+    private var unlockPaywallDismissedDay = AppGroup.defaults.string(forKey: AppEnvironment.unlockPaywallDismissedDayKey)
+    var isUnlockPaywallDismissed: Bool { unlockPaywallDismissedDay == state.ledger.day.description }
+    private static let unlockPaywallDismissedDayKey = "paywall.unlock.dismissed-day.v1"
     @ObservationIgnored private var lastWalletWidgetSignature: [Int] = []
     private var dailyReminderPreference = DailyReminderPreference.saved
     private let progressNotifications = ProgressNotificationService()
@@ -242,8 +245,8 @@ final class AppEnvironment {
     var hapticFeedbackEnabled: Bool { HapticManager.isEnabled }
 
     var profile: OnboardingProfile { state.onboarding }
-    /// Onboarding no longer ends at a paywall: a free user walks, earns and spends one unlock
-    /// first, and only meets the paywall once that session is over.
+    /// Onboarding no longer ends at a paywall: a free user walks, earns and spends one unlock a
+    /// day, and only meets the paywall once that day's session is over.
     var isInFreePreview: Bool { subscriptionManager.status == .free && state.isFreePreviewActive() }
     var requiresSubscription: Bool {
         hasCompletedOnboarding && subscriptionManager.status == .free && !state.isFreePreviewActive()
@@ -594,15 +597,15 @@ final class AppEnvironment {
         self.isExercising = isExercising
     }
 
-    /// Leaving the app is the moment the inactivity nudges should count from, and the moment the
-    /// closed unlock paywall earns another showing.
+    /// Leaving the app is the moment the inactivity nudges should count from.
     func sceneDidEnterBackground() async {
-        isUnlockPaywallDismissed = false
         await rescheduleReengagementNotifications()
     }
 
     func dismissUnlockPaywall() {
-        isUnlockPaywallDismissed = true
+        let day = state.ledger.day.description
+        unlockPaywallDismissedDay = day
+        AppGroup.defaults.set(day, forKey: Self.unlockPaywallDismissedDayKey)
     }
 
     /// Asks for notification permission and reports the answer. Returns whether notifications
@@ -794,7 +797,7 @@ final class AppEnvironment {
 
     func startSession(durationMinutes: Int) async {
         // Every surface that can unlock (Home, the blocked-app detail) funnels through here, so
-        // this is the one place the spent free unlock is enforced.
+        // this is the one place the daily free unlock is enforced.
         guard !isStartingSession, !requiresSubscription else { return }
         isStartingSession = true
         defer { isStartingSession = false }

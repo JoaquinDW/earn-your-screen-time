@@ -3,7 +3,7 @@
 ## Offers
 
 The app offers **monthly with an eligible three-day free trial** and **lifetime without a trial**.
-Lifetime is selected first, with a US base price of **USD 30**. Every displayed price comes from
+Lifetime is selected first, with a US base price of **USD 30**, banded by purchasing power like the subscriptions (`aso/pricing_lifetime.py`; Argentina pays USD 17.99). Every displayed price comes from
 StoreKit in the customer's currency. The yearly option is hidden in the new app version.
 
 | Store | Product identifier | RevenueCat package |
@@ -45,7 +45,9 @@ recurring subscription from being sold as lifetime access.
 For an existing Pro subscriber, the upgrade paywall requires only the Lifetime package; a missing
 monthly product must not block that purchase. The normal free-user paywall requires both.
 
-The free earned-unlock preview and its closable paywall are unchanged. Access decisions remain in
+A free user gets one earned unlock a day (`SharedState.isFreePreviewActive`). After that day's
+session ends the closable paywall appears; closing it hides it until the next day, when the free
+unlock returns. Access decisions remain in
 `FeatureAccess`; Screen Time shield decisions remain in `RestrictionCoordinator`.
 
 ## Existing subscribers and installed versions

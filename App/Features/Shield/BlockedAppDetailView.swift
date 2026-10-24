@@ -68,7 +68,10 @@ struct BlockedAppDetailView: View {
                 .presentationDragIndicator(.visible)
         }
         .fullScreenCover(isPresented: $isShowingUnlockPaywall) {
-            ProPaywallView(source: .unlockAttempt)
+            ProPaywallView(
+                source: .unlockAttempt,
+                freePlanNote: "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it."
+            )
         }
     }
 

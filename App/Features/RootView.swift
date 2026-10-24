@@ -22,8 +22,12 @@ struct RootView: View {
                 } else if env.requiresSubscription && !env.isUnlockPaywallDismissed {
                     // Closable: in 1.2.2 the only person to reach this paywall left the app
                     // from it, and a wall there also hid Settings, the way to unprotect apps.
-                    // Spending minutes still needs Pro; every unlock surface offers it again.
-                    ProPaywallView(source: .firstUnlock, onClose: env.dismissUnlockPaywall)
+                    // A second unlock the same day needs Pro; every unlock surface offers it again.
+                    ProPaywallView(
+                        source: .firstUnlock,
+                        freePlanNote: "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it.",
+                        onClose: env.dismissUnlockPaywall
+                    )
                 } else {
                     mainContent
                 }

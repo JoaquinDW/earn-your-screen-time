@@ -124,14 +124,21 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// Steps a day the user is aiming for.
     public var dailyStepGoal: Int { onboarding.dailyStepGoal }
 
-    /// Whether the one unlock a free user gets before the paywall has been spent.
-    public var hasSpentFreeUnlock: Bool { firstRealUnlockTracked || successfulUnlockCount > 0 }
+    /// Whether today's free unlock has been used: a session settled today, or one started today
+    /// that the extension has not settled yet. A ledger left over from an earlier day counts for
+    /// nothing, so the allowance returns at midnight even before the app rolls the day over.
+    public func hasUsedFreeUnlock(on day: DayKey) -> Bool {
+        if ledger.day == day, ledger.sessionCount > 0 { return true }
+        guard let currentSession else { return false }
+        return DayKey(date: currentSession.startedAt) == day
+    }
 
-    /// A free user keeps full access until their first earned unlock is over: through the
-    /// earning, the unlock itself, and the session it opened. The paywall follows the proof,
-    /// never interrupts it.
+    /// A free user gets one earned unlock a day, with full access through the earning, the
+    /// unlock itself and the session it opened. The paywall follows the proof, never interrupts
+    /// it. In 1.3.2 the free allowance was one unlock per install, and of 31 people who finished
+    /// onboarding, 3 came back on a later day: there was nothing left to come back for unpaid.
     public func isFreePreviewActive(at date: Date = Date()) -> Bool {
-        !hasSpentFreeUnlock || activeSession(at: date) != nil
+        activeSession(at: date) != nil || !hasUsedFreeUnlock(on: DayKey(date: date))
     }
 
     // MARK: - Serialization
