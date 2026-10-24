@@ -181,6 +181,16 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let widgetPrompt = AnalyticsEvent("widget_prompt")
     /// The widget timeline was read by WidgetKit at least once — the widget is installed.
     static let widgetInstalled = AnalyticsEvent("widget_installed")
+    /// Someone met a shield and chose to stay out. Skips taken on the system shield are counted
+    /// by the extension and reported in a batch when the app next opens; `source` says which,
+    /// and `count` how many the event covers.
+    static let shieldOpenSkipped = AnalyticsEvent("shield_open_skipped")
+    /// The breathing pause on the blocked-app screen ran out; `outcome` is what came next.
+    static let mindfulPauseFinished = AnalyticsEvent("mindful_pause_finished")
+    /// The impact report was opened; `source` says from where.
+    static let impactReportViewed = AnalyticsEvent("impact_report_viewed")
+    /// The share sheet for the progress card was opened; `kind` is `progress` or `challenge`.
+    static let progressShareTapped = AnalyticsEvent("progress_share_tapped")
 
     static func planSelected(_ plan: AnalyticsPlan) -> AnalyticsEvent {
         AnalyticsEvent("plan_selected", properties: ["plan": .string(plan.rawValue)])

@@ -49,3 +49,25 @@ Not in the library: Brick, Clearspace, Roots, Stepz. No widget screens from Opal
 - New notifications: minutes earned while the app is closed (HealthKit background delivery, at most hourly), and a daily walk reminder worded from today's actual progress. The reminder is skipped once the goal is met and is adjustable in Settings. When it is on, it replaces the day-1 inactivity nudge.
 - A wallet widget for the Home Screen (small and medium) and the Lock Screen (circular, rectangular and inline). It shows minutes ready, steps to the next reward, the streak, and a countdown during an unlock.
 - The widget is offered once, after the first minutes are earned, so the preview shows a real number. The preview is the actual widget view, followed by numbered add steps. It can also be opened again from Settings.
+
+## Pause, impact and sharing — October 2026
+
+Third pass, from the apps' App Store pages and reviews rather than Appllama screens.
+
+| App | Pattern relevant to Earnit |
+| --- | --- |
+| one sec | A breath before the app opens, then "still want to?". The count of opens it prevented is the product's headline number. |
+| Opal | A daily Focus Score, a Focus Report compared with peers, and milestones made to be shared. |
+| Pushscroll | Exercise to unlock, with screen time reports and progress sharing. |
+| BePresent, Jomo | Friends, accountability partners and weekly leagues. Not built: they need a backend. |
+
+### What we applied
+
+- Every shield offers a way to stay out (iOS 26.5+), and taking it counts as an open skipped. Before
+  iOS 26.5 the shield's only button closes, so that counts too.
+- With minutes to spend, the blocked-app screen holds the unlock for one five-second breath, then
+  asks whether the person still wants the app. "Save for later" counts as a skipped open.
+- An impact report: time reclaimed against the low end of the scrolling band chosen in onboarding,
+  opens skipped, minutes earned and steps. It is on Home ("See your day") for today and in Progress
+  for the selected day, week or month.
+- A story-sized progress card to share, and a "Challenge a friend" message with the App Store link.

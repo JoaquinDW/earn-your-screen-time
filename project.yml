@@ -169,6 +169,10 @@ targets:
       - path: Extensions/ShieldAction
       - path: Shared/AppGroup.swift
       - path: Shared/ShieldLaunchIntent.swift
+      # "Not now" on the shield counts as an open the person skipped.
+      - path: Shared/SkippedOpenStore.swift
+    dependencies:
+      - package: EarnDomain
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.balthasardeweert.earnyourscreentime.shieldaction

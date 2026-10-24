@@ -54,6 +54,11 @@ Filter or break down any PostHog insight by `environment` to exclude development
   to see which earning method people actually finish versus abandon. The `pushups_*` events cover
   both camera exercises; break them down by their `exercise` property (`pushup` or `squat`).
   `exercise_selected` fires when someone switches exercise in the picker.
+- **Pause, impact and sharing**: `shield_open_skipped` counts opens skipped at a shield (`source`
+  `system_shield` arrives in a batch with `count` when the app next opens; `blocked_detail` is the
+  in-app screen). `mindful_pause_finished` has `outcome` `unlocked`, `skipped_during_pause` or
+  `skipped_after_pause`. `impact_report_viewed` and `progress_share_tapped` (`kind` `progress` or
+  `challenge`, plus `source` and `period`) measure the report and the share surfaces.
 - **Retention**: use `onboarding_completed` as the activation event and any later `screen_viewed` or
   `minutes_earned` event as the return event, filtered to `environment=release`.
 

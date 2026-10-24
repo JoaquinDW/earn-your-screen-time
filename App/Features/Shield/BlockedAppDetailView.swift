@@ -27,8 +27,15 @@ struct BlockedAppDetailView: View {
     @State private var selectedMinutes = 5
     @State private var didStartSession = false
     @State private var isShowingUnlockPaywall = false
+    /// Seconds left in the breathing pause; zero once it has run or when it does not apply.
+    @State private var pauseRemaining = 0
+    @State private var didPause = false
 
     private static let scene = IllustratedScene.blockedBench
+    /// one sec's pause: long enough for one slow breath, short enough not to feel like a penalty.
+    private static let pauseSeconds = 5
+
+    private var isPausing: Bool { pauseRemaining > 0 }
 
     private var viewModel: ShieldViewModel { ShieldViewModel(sharedState: env.state) }
 
@@ -55,6 +62,9 @@ struct BlockedAppDetailView: View {
         .tint(Night.cobalt)
         .preferredColorScheme(.dark)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.28), value: viewModel.state)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.28), value: isPausing)
+        // Keyed on eligibility: the balance may only arrive after a refresh.
+        .task(id: shouldPause) { await runPauseIfNeeded() }
         .sheet(isPresented: $isChoosingDuration, onDismiss: {
             guard didStartSession else { return }
             didStartSession = false
@@ -146,6 +156,8 @@ struct BlockedAppDetailView: View {
                     .foregroundStyle(Night.textMuted)
             }
             .accessibilityElement(children: .combine)
+        } else if isPausing {
+            BreathingPause(seconds: Self.pauseSeconds, remaining: pauseRemaining)
         } else if viewModel.state == .rewardAvailable {
             EarnedTimeBadge(minutes: viewModel.availableMinutes)
         } else {
@@ -184,12 +196,12 @@ struct BlockedAppDetailView: View {
             } else {
                 EarnPrimaryButton(
                     label: primaryLabel,
-                    isEnabled: !env.isRefreshing && !env.isStartingSession,
+                    isEnabled: !env.isRefreshing && !env.isStartingSession && !isPausing,
                     action: primaryAction
                 )
             }
 
-            Button("shield.detail.notNow", action: onDismiss)
+            Button("shield.detail.notNow", action: skip)
                 .buttonStyle(.quiet)
                 .frame(maxWidth: .infinity)
         }
@@ -245,6 +257,8 @@ struct BlockedAppDetailView: View {
         if env.health.hasRequestedAuthorization, !viewModel.hasActivityData {
             return "shield.detail.updatingSupport"
         }
+        if isPausing { return "shield.detail.pause.breathe" }
+        if didPause, viewModel.state == .rewardAvailable { return "shield.detail.pause.ask" }
         return switch viewModel.state {
         case .noTime, .progress:
             "shield.detail.support.progress \(viewModel.stepsRemaining) \(viewModel.rewardMinutes)"
@@ -266,10 +280,53 @@ struct BlockedAppDetailView: View {
         if !env.health.hasRequestedAuthorization {
             return Text("shield.detail.action.connectHealth")
         }
+        if isPausing {
+            return Text("shield.detail.pause.countdown \(pauseRemaining)")
+        }
         if viewModel.state == .rewardAvailable {
             return Text("session.chooseDuration")
         }
         return Text("shield.detail.action.update")
+    }
+
+    // MARK: - The pause
+    //
+    // The shield already stopped the reflex; this is the moment between it and the unlock. With
+    // minutes in the bank nothing else stands between the person and the app, so a breath is
+    // the one thing that turns a reflex into a choice. Without minutes, earning them is the pause.
+
+    private var shouldPause: Bool {
+        env.screenTime.authorizationStatus.isApproved
+            && env.health.hasRequestedAuthorization
+            && viewModel.hasActivityData
+            && viewModel.state == .rewardAvailable
+    }
+
+    private func runPauseIfNeeded() async {
+        guard shouldPause, !didPause else { return }
+        didPause = true
+        pauseRemaining = Self.pauseSeconds
+        while pauseRemaining > 0 {
+            try? await Task.sleep(for: .seconds(1))
+            guard !Task.isCancelled else {
+                // Never leave the unlock disabled behind an interrupted pause.
+                pauseRemaining = 0
+                return
+            }
+            pauseRemaining -= 1
+        }
+        HapticManager.trigger(.light)
+    }
+
+    /// Leaving without the app is the outcome the pause exists for, so it is counted.
+    private func skip() {
+        if didPause {
+            env.analytics.track(.mindfulPauseFinished.withProperties([
+                "outcome": .string(isPausing ? "skipped_during_pause" : "skipped_after_pause")
+            ]))
+        }
+        env.recordSkippedOpen()
+        onDismiss()
     }
 
     private func primaryAction() {
@@ -283,10 +340,55 @@ struct BlockedAppDetailView: View {
             } else if viewModel.state == .rewardAvailable, env.requiresSubscription {
                 isShowingUnlockPaywall = true
             } else if viewModel.state == .rewardAvailable {
+                if didPause {
+                    env.analytics.track(.mindfulPauseFinished.withProperties(["outcome": .string("unlocked")]))
+                }
                 selectedMinutes = min(max(1, selectedMinutes), viewModel.availableMinutes)
                 isChoosingDuration = true
             } else {
                 await env.refresh()
+            }
+        }
+    }
+}
+
+/// One slow breath: the ring grows for the in-breath and settles for the out-breath, once.
+private struct BreathingPause: View {
+    let seconds: Int
+    let remaining: Int
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isInhaling = false
+
+    var body: some View {
+        HStack(spacing: Theme.Space.m) {
+            ZStack {
+                Circle()
+                    .stroke(Night.cobalt.opacity(0.35), lineWidth: 1)
+                Circle()
+                    .fill(Night.cobaltWash)
+                    .overlay(Circle().stroke(Night.cobalt.opacity(0.8), lineWidth: 1.5))
+                    .scaleEffect(reduceMotion ? 0.8 : (isInhaling ? 1 : 0.45))
+            }
+            .frame(width: 64, height: 64)
+            .accessibilityHidden(true)
+
+            Text(isInhaling ? LocalizedStringKey("shield.detail.pause.in") : "shield.detail.pause.out")
+                .font(.sans(15, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
+                .contentTransition(.opacity)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("shield.detail.pause.countdown \(remaining)"))
+        .task {
+            // In for a little under half the pause, out for the rest. Reduce Motion keeps the
+            // words and drops the movement.
+            let inhale = Double(seconds) * 0.45
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: inhale)) { isInhaling = true }
+            try? await Task.sleep(for: .seconds(inhale))
+            guard !Task.isCancelled else { return }
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: Double(seconds) - inhale)) {
+                isInhaling = false
             }
         }
     }

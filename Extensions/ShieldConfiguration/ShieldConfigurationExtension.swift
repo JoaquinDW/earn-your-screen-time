@@ -128,9 +128,13 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
         }
     }
 
+    /// The pause one sec is built on: every shield offers a way to stay out, and taking it is
+    /// counted as an open skipped. Before iOS 26.5 the primary button already closes.
     private func secondaryButtonTitle(for viewModel: ShieldViewModel) -> String? {
-        guard #available(iOS 26.5, *), viewModel.state == .rewardAvailable else { return nil }
-        return localized("shield.action.notNow")
+        guard #available(iOS 26.5, *) else { return nil }
+        return viewModel.state == .rewardAvailable
+            ? localized("shield.action.notNow")
+            : localized("shield.action.skip")
     }
 
     private func localized(_ key: String) -> String {

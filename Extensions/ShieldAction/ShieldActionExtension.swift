@@ -30,6 +30,7 @@ final class ShieldActionExtension: ShieldActionDelegate {
     private func response(for action: ShieldAction) -> ShieldActionResponse {
         if action == .secondaryButtonPressed {
             logger.notice("event=shield_secondary_action")
+            SkippedOpenStore.recordSkip()
             return .close
         }
         guard action == .primaryButtonPressed else { return .none }
@@ -41,6 +42,8 @@ final class ShieldActionExtension: ShieldActionDelegate {
         }
         // Before iOS 26.5 no public API can open the parent app from a shield. Closing the
         // restricted app is the safest useful response and leaves every restriction intact.
+        // The button says "Close", so pressing it is the person choosing to stay out.
+        SkippedOpenStore.recordSkip()
         return .close
     }
 }

@@ -35,6 +35,10 @@ final class AppEnvironment {
     private(set) var isPausingSession = false
     private(set) var appLanguage: AppLanguage
     private(set) var isPresentingBlockedAppDetail = false
+    /// Opens skipped at a shield, by day. The shield action extension writes it while the app is
+    /// closed, so every reconcile reads it again.
+    private(set) var skippedOpens = SkippedOpenStore.load()
+    private static let reportedSkippedOpensKey = "analytics.skippedOpens.reported.v1"
     /// Transient feedback for transitions that already completed in the domain layer. Feedback is
     /// queued so a secondary state such as a full wallet never replaces the reward that caused it.
     /// None of this is persisted: reopening the app must not replay a celebration.
@@ -643,6 +647,7 @@ final class AppEnvironment {
     ) {
         let previousSession = state.currentSession
         state = nextState
+        syncSkippedOpens()
         reportPendingSessionSettlement()
         guard previousSession?.status == .active,
               nextState.currentSession?.id == previousSession?.id,
@@ -761,6 +766,45 @@ final class AppEnvironment {
 
     func dismissBlockedAppDetail() {
         isPresentingBlockedAppDetail = false
+    }
+
+    var skippedOpensToday: Int { skippedOpens.count(on: state.ledger.day) }
+
+    /// The blocked-app screen's "not now": the person came for an app and left without it.
+    func recordSkippedOpen() {
+        // Report the extension's skips first, so they are not folded into this one.
+        syncSkippedOpens()
+        skippedOpens = SkippedOpenStore.recordSkip()
+        AppGroup.defaults.set(skippedOpens.totalRecorded, forKey: Self.reportedSkippedOpensKey)
+        analytics.track(.shieldOpenSkipped.withProperties([
+            "source": .string("blocked_detail"),
+            "count": .int(1)
+        ]))
+    }
+
+    /// Picks up skips the shield action extension recorded and reports the new ones once.
+    private func syncSkippedOpens() {
+        let log = SkippedOpenStore.load()
+        if log != skippedOpens { skippedOpens = log }
+        let reported = AppGroup.defaults.integer(forKey: Self.reportedSkippedOpensKey)
+        guard log.totalRecorded > reported else { return }
+        AppGroup.defaults.set(log.totalRecorded, forKey: Self.reportedSkippedOpensKey)
+        analytics.track(.shieldOpenSkipped.withProperties([
+            "source": .string("system_shield"),
+            "count": .int(log.totalRecorded - reported)
+        ]))
+    }
+
+    /// The impact report for a run of days. Reclaimed time is only claimed while apps are
+    /// protected, because that is what the onboarding baseline is compared against.
+    func impact(for summaries: [DaySummary], now: Date = Date()) -> ImpactSummary {
+        ImpactSummary(
+            summaries: summaries,
+            skippedOpens: skippedOpens.total(on: summaries.map(\.day)),
+            scrolling: state.hasRestrictedApps ? state.onboarding.scrolling : nil,
+            today: state.ledger.day,
+            todayElapsedFraction: ImpactSummary.wakingDayFraction(at: now)
+        )
     }
 
     func handleDeepLink(_ url: URL) {
