@@ -1,4 +1,4 @@
-// Renders every page in src/ to en-US/ and es/ at 1290 x 2796 (6.9" iPhone).
+// Renders every page in src/ to 6.9-inch/en-US/ and 6.9-inch/es/ at 1290 x 2796.
 // Run through render.sh, which builds the Spanish pages first.
 const { chromium } = require('playwright');
 const path = require('path');
@@ -14,8 +14,8 @@ const fs = require('fs');
     await page.goto('file://' + path.join(src, file));
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
-    await page.screenshot({ path: path.join(__dirname, es ? 'es' : 'en-US', name + '.png') });
-    console.log((es ? 'es/' : 'en-US/') + name + '.png');
+    await page.screenshot({ path: path.join(__dirname, '6.9-inch', es ? 'es' : 'en-US', name + '.png') });
+    console.log('6.9-inch/' + (es ? 'es/' : 'en-US/') + name + '.png');
   }
   await browser.close();
 })();

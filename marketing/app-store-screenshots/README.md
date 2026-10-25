@@ -1,6 +1,12 @@
 # Earn Screen Time — App Store screenshots
 
-Five 1290 × 2796 PNGs (6.9" iPhone), in English (`en-US/`) and Spanish (`es/`, written in neutral *tú* Spanish so it works for es-MX and es-ES).
+Five PNGs in English (`en-US/`) and Spanish (`es/`, written in neutral *tú* Spanish so it works for es-MX and es-ES), in each size App Store Connect asks for:
+
+| Folder | Size | App Store Connect slot |
+| --- | --- | --- |
+| `6.9-inch/` | 1290 × 2796 | iPhone 6.9" |
+| `6.3-inch/` | 1206 × 2622 | iPhone 6.1" / 6.3" |
+| `6.1-inch/` | 1179 × 2556 | iPhone 6.1" / 6.3" (older size) |
 
 | # | Headline (EN) | Headline (ES) | Shows |
 | --- | --- | --- | --- |
@@ -18,6 +24,6 @@ Five 1290 × 2796 PNGs (6.9" iPhone), in English (`en-US/`) and Spanish (`es/`, 
 
 ## Editing
 
-Edit the pages in `src/` (shared styles in `base.css` and `light.css`, the status bar and tick meters in `common.js`). Spanish copy is a list of exact string swaps in `make_es.py`; it fails loudly if an English string it expects has changed. Then run `./render.sh`, which needs Python 3 and Node with Playwright and Chromium.
+Edit the pages in `src/` (shared styles in `base.css` and `light.css`, the status bar and tick meters in `common.js`). Spanish copy is a list of exact string swaps in `make_es.py`; it fails loudly if an English string it expects has changed. Then run `./render.sh`, which needs Python 3 with Pillow and Node with Playwright and Chromium. It renders the 6.9" set and `resize.py` scales it down to the smaller sizes.
 
 Nothing here uploads to App Store Connect.
