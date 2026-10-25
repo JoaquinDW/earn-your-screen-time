@@ -1,0 +1,892 @@
+{
+  "de": {
+    "headlines": [
+      [
+        "Mehr Bildschirmzeit?",
+        "10 Liegestütze."
+      ],
+      [
+        "Hol dir",
+        "den Abend zurück."
+      ],
+      [
+        "Jeder Spaziergang",
+        "bringt dir Zeit."
+      ],
+      [
+        "Zeit ist um?",
+        "Apps wieder zu."
+      ],
+      [
+        "Deine Zeit.",
+        "Deine Entscheidung."
+      ]
+    ],
+    "subtitles": [
+      "Deine Kamera zählt mit.",
+      "Sieh, wie viel Zeit du zurückgewinnst.",
+      "Aus Schritten werden Minuten.",
+      "Kein Aufschub. Keine „15 Minuten mehr“.",
+      "5, 10 oder 15 Minuten. Dann ist Schluss."
+    ],
+    "badges": [
+      [
+        "Auf dem iPhone",
+        "Wiederholungen zählen"
+      ],
+      [
+        "Keine Videos",
+        "werden je gespeichert"
+      ]
+    ],
+    "steps": "6.240",
+    "thousand": "1.000",
+    "duration": "1 Std. 20 Min.",
+    "minute": "{} Min.",
+    "ui": {
+      "keep": "Weiter so",
+      "saturday": "Samstag",
+      "until": "bis du Zeit verdienst",
+      "session": "10-Minuten-Session",
+      "again": "danach wieder gesperrt"
+    }
+  },
+  "fr": {
+    "headlines": [
+      [
+        "Du temps d’écran ?",
+        "Fais 10 pompes."
+      ],
+      [
+        "Retrouve",
+        "tes soirées."
+      ],
+      [
+        "Chaque balade",
+        "te fait gagner du temps."
+      ],
+      [
+        "Plus de temps ?",
+        "Les apps se rebloquent."
+      ],
+      [
+        "Tes minutes.",
+        "À ta façon."
+      ]
+    ],
+    "subtitles": [
+      "Ta caméra compte les répétitions.",
+      "Chaque minute retrouvée compte.",
+      "Tes pas deviennent des minutes.",
+      "Pas de report. Pas de « 15 minutes de plus ».",
+      "5, 10 ou 15 minutes. Puis les apps se bloquent."
+    ],
+    "badges": [
+      [
+        "Sur l’iPhone",
+        "comptage des répétitions"
+      ],
+      [
+        "Aucune vidéo",
+        "n’est jamais sauvegardée"
+      ]
+    ],
+    "steps": "6 240",
+    "thousand": "1 000",
+    "duration": "1 h 20 min",
+    "minute": "{} min",
+    "ui": {
+      "keep": "Continue comme ça",
+      "saturday": "Samedi",
+      "until": "jusqu’à gagner du temps",
+      "session": "Session de 10 min",
+      "again": "puis les apps se rebloquent"
+    }
+  },
+  "it": {
+    "headlines": [
+      [
+        "Vuoi più schermo?",
+        "Fai 10 flessioni."
+      ],
+      [
+        "Riprenditi",
+        "le tue serate."
+      ],
+      [
+        "Ogni passeggiata",
+        "ti regala tempo."
+      ],
+      [
+        "Tempo finito?",
+        "Le app si ribloccano."
+      ],
+      [
+        "Il tuo tempo.",
+        "Come vuoi tu."
+      ]
+    ],
+    "subtitles": [
+      "La fotocamera conta le ripetizioni.",
+      "Ogni minuto ritrovato conta.",
+      "I tuoi passi diventano minuti.",
+      "Niente rinvii. Niente «altri 15 minuti».",
+      "5, 10 o 15 minuti. Poi le app si bloccano."
+    ],
+    "badges": [
+      [
+        "Sul tuo iPhone",
+        "conteggio ripetizioni"
+      ],
+      [
+        "Nessun video",
+        "viene mai salvato"
+      ]
+    ],
+    "steps": "6.240",
+    "thousand": "1.000",
+    "duration": "1 h 20 min",
+    "minute": "{} min",
+    "ui": {
+      "keep": "Continua così",
+      "saturday": "Sabato",
+      "until": "finché non guadagni tempo",
+      "session": "Sessione di 10 min",
+      "again": "poi le app si ribloccano"
+    }
+  },
+  "ja": {
+    "headlines": [
+      [
+        "もっとスマホ時間？",
+        "腕立てを10回。"
+      ],
+      [
+        "取り戻そう、",
+        "自分の夜を。"
+      ],
+      [
+        "歩くたびに、",
+        "使える時間が増える。"
+      ],
+      [
+        "時間が来たら、",
+        "アプリはまたロック。"
+      ],
+      [
+        "ためた時間を、",
+        "自分のペースで。"
+      ]
+    ],
+    "subtitles": [
+      "カメラが回数をカウント。",
+      "取り戻した時間を、ひと目で。",
+      "歩数がスマホ時間に変わる。",
+      "先延ばしも、「あと15分」もなし。",
+      "5分・10分・15分。終わればまたロック。"
+    ],
+    "badges": [
+      [
+        "iPhone内で",
+        "回数をカウント"
+      ],
+      [
+        "動画は一切",
+        "保存しません"
+      ]
+    ],
+    "steps": "6,240",
+    "thousand": "1,000",
+    "duration": "1時間20分",
+    "minute": "{}分",
+    "ui": {
+      "keep": "その調子で",
+      "saturday": "土曜日",
+      "until": "時間を獲得するまで",
+      "session": "10分のセッション",
+      "again": "終わったらまたロック"
+    }
+  },
+  "pt-BR": {
+    "headlines": [
+      [
+        "Mais tempo de tela?",
+        "Faça 10 flexões."
+      ],
+      [
+        "Recupere",
+        "suas noites."
+      ],
+      [
+        "Cada caminhada",
+        "vira tempo de tela."
+      ],
+      [
+        "Acabou o tempo?",
+        "Os apps bloqueiam."
+      ],
+      [
+        "Seu tempo.",
+        "Do seu jeito."
+      ]
+    ],
+    "subtitles": [
+      "A câmera conta as repetições.",
+      "Veja cada minuto que você recuperou.",
+      "Seus passos viram minutos.",
+      "Sem adiar. Sem “só mais 15 minutos”.",
+      "5, 10 ou 15 minutos. Depois, bloqueia."
+    ],
+    "badges": [
+      [
+        "No iPhone",
+        "contagem de repetições"
+      ],
+      [
+        "Nenhum vídeo",
+        "é salvo, nunca"
+      ]
+    ],
+    "steps": "6.240",
+    "thousand": "1.000",
+    "duration": "1 h 20 min",
+    "minute": "{} min",
+    "ui": {
+      "keep": "Continue assim",
+      "saturday": "Sábado",
+      "until": "até você ganhar tempo",
+      "session": "Sessão de 10 min",
+      "again": "depois os apps bloqueiam"
+    }
+  },
+  "ko": {
+    "headlines": [
+      [
+        "화면 시간이 더 필요해요?",
+        "팔굽혀펴기 10번."
+      ],
+      [
+        "저녁 시간을",
+        "되찾으세요."
+      ],
+      [
+        "걸을 때마다",
+        "화면 시간이 쌓여요."
+      ],
+      [
+        "시간이 끝나면?",
+        "앱은 다시 잠겨요."
+      ],
+      [
+        "모은 시간은",
+        "내 방식대로."
+      ]
+    ],
+    "subtitles": [
+      "카메라가 횟수를 세어 줘요.",
+      "되찾은 시간을 한눈에 확인해요.",
+      "걸음이 화면 시간으로 바뀌어요.",
+      "미루기도, “15분만 더”도 없어요.",
+      "5분, 10분, 15분. 끝나면 다시 잠겨요."
+    ],
+    "badges": [
+      [
+        "기기 안에서",
+        "운동 횟수 계산"
+      ],
+      [
+        "동영상은",
+        "절대 저장 안 함"
+      ]
+    ],
+    "steps": "6,240",
+    "thousand": "1,000",
+    "duration": "1시간 20분",
+    "minute": "{}분",
+    "ui": {
+      "keep": "계속해 보세요",
+      "saturday": "토요일",
+      "until": "시간을 얻을 때까지",
+      "session": "10분 세션",
+      "again": "끝나면 앱이 다시 잠겨요",
+      "reps": "/ 팔굽혀펴기 %lld번",
+      "form": "자세가 좋아요 — 계속하세요",
+      "unlocked": "앱 잠금 해제",
+      "today": "오늘",
+      "day": "나의 하루",
+      "reclaimed": "예전보다 줄어든 스크롤 시간",
+      "skipped": "차단된 앱을 열지 않은 횟수",
+      "moving": "움직여서 얻은 화면 시간",
+      "steps": "걸음",
+      "estimate": "추정치예요. 시작할 때 알려 준 하루 스크롤 시간의 최솟값에서 Earnit으로 해제한 시간을 뺐어요.",
+      "share": "내 성과 공유",
+      "challenge": "친구에게 도전하기",
+      "done": "완료",
+      "streak": "%lld일 연속",
+      "availableTime": "사용 가능한 시간",
+      "spend": "앱에서 사용할 수 있어요",
+      "use": "내 시간 사용",
+      "stepsToday": "오늘 %1$@걸음",
+      "earnedToday": "오늘 +%lld분 획득",
+      "skippedToday": "오늘 열지 않은 앱: %lld회 · 나의 하루 보기",
+      "next": "다음 %2$lld분까지 %1$lld걸음",
+      "stepsCount": "%1$@걸음",
+      "almost": "거의 다 왔어요",
+      "left": "이제 %lld걸음만 더.",
+      "finish": "산책을 마치고 %lld분을 얻으세요. 앱은 기다려 줄 거예요.",
+      "progress": "%1$@ / %2$@걸음",
+      "walkLeft": "%1$lld걸음 남음 · 도보 약 %2$lld분",
+      "exercise": "팔굽혀펴기나 스쿼트로 시간 얻기",
+      "update": "걸음 수 새로고침",
+      "locked": "앱 잠김",
+      "choose": "세션 선택",
+      "available": "사용 가능",
+      "after": "세션 후",
+      "custom": "직접 설정",
+      "apps": "%lld개 선택",
+      "clock": "시간은 지금부터 시작되며 앱을 바꿔도 계속 흘러요. Earnit으로 돌아와 세션을 끝내면 남은 시간을 아낄 수 있어요.",
+      "start": "차단된 앱 %lld분 사용",
+      "earned": "+%lld분 획득"
+    }
+  },
+  "nl": {
+    "headlines": [
+      [
+        "Meer schermtijd?",
+        "Doe 10 push-ups."
+      ],
+      [
+        "Pak je",
+        "avonden terug."
+      ],
+      [
+        "Elke wandeling",
+        "levert tijd op."
+      ],
+      [
+        "Tijd voorbij?",
+        "Apps weer op slot."
+      ],
+      [
+        "Jouw tijd.",
+        "Jouw keuze."
+      ]
+    ],
+    "subtitles": [
+      "Je camera telt de herhalingen.",
+      "Elke teruggewonnen minuut in beeld.",
+      "Je stappen worden minuten.",
+      "Niet uitstellen. Geen ‘nog 15 minuten’.",
+      "5, 10 of 15 minuten. Dan gaan de apps op slot."
+    ],
+    "badges": [
+      [
+        "Op je iPhone",
+        "herhalingen tellen"
+      ],
+      [
+        "Nooit video",
+        "opgeslagen"
+      ]
+    ],
+    "steps": "6.240",
+    "thousand": "1.000",
+    "duration": "1 u 20 min",
+    "minute": "{} min",
+    "ui": {
+      "keep": "Ga zo door",
+      "saturday": "Zaterdag",
+      "until": "tot je tijd verdient",
+      "session": "Sessie van 10 min",
+      "again": "dan weer op slot",
+      "reps": "/ %lld push-ups",
+      "form": "Goede houding — ga zo door",
+      "unlocked": "Apps ontgrendeld",
+      "today": "Vandaag",
+      "day": "Jouw dag",
+      "reclaimed": "minder scrollen dan voorheen",
+      "skipped": "keer dat je een geblokkeerde app niet opende",
+      "moving": "schermtijd verdiend door te bewegen",
+      "steps": "stappen",
+      "estimate": "Een schatting: de ondergrens van je dagelijkse scrolltijd die je bij de start opgaf, min de tijd die je in Earnit vrijspeelde.",
+      "share": "Mijn voortgang delen",
+      "challenge": "Daag een vriend uit",
+      "done": "Klaar",
+      "streak": "%lld dagen op rij",
+      "availableTime": "Beschikbare tijd",
+      "spend": "om in je apps te besteden",
+      "use": "Mijn minuten gebruiken",
+      "stepsToday": "%1$@ stappen vandaag",
+      "earnedToday": "Vandaag +%lld min verdiend",
+      "skippedToday": "Apps vandaag overgeslagen: %lld · Bekijk je dag",
+      "next": "Nog %1$lld stappen tot je volgende %2$lld minuten",
+      "stepsCount": "%1$@ stappen",
+      "almost": "Bijna zover",
+      "left": "Nog maar %lld stappen.",
+      "finish": "Maak je wandeling af en verdien %lld min. Je apps kunnen wachten.",
+      "progress": "%1$@ / %2$@ stappen",
+      "walkLeft": "Nog %1$lld stappen · ~%2$lld min lopen",
+      "exercise": "Verdien tijd met push-ups of squats",
+      "update": "Mijn stappen bijwerken",
+      "locked": "Apps vergrendeld",
+      "choose": "Kies een sessie",
+      "available": "Beschikbaar",
+      "after": "Na de sessie",
+      "custom": "Zelf instellen",
+      "apps": "%lld geselecteerd",
+      "clock": "De tijd gaat nu in en loopt door als je van app wisselt. Ga terug naar Earnit om de sessie te stoppen en de rest te bewaren.",
+      "start": "Geblokkeerde apps %lld min gebruiken",
+      "earned": "+%lld min verdiend"
+    }
+  },
+  "pl": {
+    "headlines": [
+      [
+        "Więcej ekranu?",
+        "Zrób 10 pompek."
+      ],
+      [
+        "Odzyskaj",
+        "swoje wieczory."
+      ],
+      [
+        "Każdy spacer",
+        "daje ci czas."
+      ],
+      [
+        "Czas minął?",
+        "Wraca blokada."
+      ],
+      [
+        "Twój czas.",
+        "Na twoich zasadach."
+      ]
+    ],
+    "subtitles": [
+      "Kamera liczy powtórzenia.",
+      "Zobacz każdą odzyskaną minutę.",
+      "Twoje kroki zamieniają się w minuty.",
+      "Bez odkładania. Bez „jeszcze 15 minut”.",
+      "5, 10 lub 15 minut. Potem wraca blokada."
+    ],
+    "badges": [
+      [
+        "Na iPhonie",
+        "liczenie powtórzeń"
+      ],
+      [
+        "Żadne wideo",
+        "nie jest zapisywane"
+      ]
+    ],
+    "steps": "6 240",
+    "thousand": "1 000",
+    "duration": "1 godz. 20 min",
+    "minute": "{} min",
+    "ui": {
+      "keep": "Tak trzymaj",
+      "saturday": "Sobota",
+      "until": "aż zdobędziesz czas",
+      "session": "Sesja na 10 min",
+      "again": "potem znów blokada",
+      "reps": "/ %lld pompek",
+      "form": "Dobra technika — tak trzymaj",
+      "unlocked": "Aplikacje odblokowane",
+      "today": "Dzisiaj",
+      "day": "Twój dzień",
+      "reclaimed": "mniej przewijania niż wcześniej",
+      "skipped": "razy bez otwierania zablokowanej aplikacji",
+      "moving": "czasu przed ekranem za ruch",
+      "steps": "kroki",
+      "estimate": "Szacunek: dolna granica dziennego czasu przewijania podanego na początku, pomniejszona o czas odblokowany w Earnit.",
+      "share": "Udostępnij postępy",
+      "challenge": "Rzuć wyzwanie znajomemu",
+      "done": "Gotowe",
+      "streak": "Seria: %lld dni",
+      "availableTime": "Dostępny czas",
+      "spend": "do wykorzystania w aplikacjach",
+      "use": "Wykorzystaj minuty",
+      "stepsToday": "Dzisiaj %1$@ kroków",
+      "earnedToday": "Dziś zdobyte: +%lld min",
+      "skippedToday": "Pominięte aplikacje: %lld · Zobacz swój dzień",
+      "next": "Jeszcze %1$lld kroków do kolejnych %2$lld minut",
+      "stepsCount": "%1$@ kroków",
+      "almost": "Już blisko",
+      "left": "Jeszcze tylko %lld kroków.",
+      "finish": "Dokończ spacer i zdobądź %lld min. Aplikacje poczekają.",
+      "progress": "%1$@ / %2$@ kroków",
+      "walkLeft": "Zostało %1$lld kroków · ok. %2$lld min spaceru",
+      "exercise": "Zdobądź czas pompkami lub przysiadami",
+      "update": "Odśwież moje kroki",
+      "locked": "Aplikacje zablokowane",
+      "choose": "Wybierz sesję",
+      "available": "Dostępne",
+      "after": "Po sesji",
+      "custom": "Własny czas",
+      "apps": "Wybrane: %lld",
+      "clock": "Czas biegnie od teraz, nawet gdy zmienisz aplikację. Wróć do Earnit, by zakończyć sesję i zachować resztę.",
+      "start": "Korzystaj z aplikacji przez %lld min",
+      "earned": "+%lld min zdobyte"
+    }
+  },
+  "ru": {
+    "headlines": [
+      [
+        "Больше времени?",
+        "10 отжиманий."
+      ],
+      [
+        "Верни себе",
+        "свои вечера."
+      ],
+      [
+        "Каждая прогулка",
+        "дарит время."
+      ],
+      [
+        "Время вышло?",
+        "Снова под замком."
+      ],
+      [
+        "Твоё время.",
+        "Твои правила."
+      ]
+    ],
+    "subtitles": [
+      "Камера считает повторения.",
+      "Каждая минута снова твоя.",
+      "Шаги превращаются в минуты.",
+      "Без отсрочек. Без «ещё 15 минут».",
+      "5, 10 или 15 минут. Потом снова блокировка."
+    ],
+    "badges": [
+      [
+        "На iPhone",
+        "подсчёт повторений"
+      ],
+      [
+        "Видео никогда",
+        "не сохраняется"
+      ]
+    ],
+    "steps": "6 240",
+    "thousand": "1 000",
+    "duration": "1 ч 20 мин",
+    "minute": "{} мин",
+    "ui": {
+      "keep": "Так держать",
+      "saturday": "Суббота",
+      "until": "пока не заработаешь время",
+      "session": "Сеанс на 10 мин",
+      "again": "затем снова блокировка",
+      "reps": "/ %lld отжиманий",
+      "form": "Отличная техника — продолжай",
+      "unlocked": "Приложения разблокированы",
+      "today": "Сегодня",
+      "day": "Твой день",
+      "reclaimed": "меньше прокрутки, чем раньше",
+      "skipped": "раз без открытия заблокированного приложения",
+      "moving": "экранного времени за движение",
+      "steps": "шаги",
+      "estimate": "Оценка: нижняя граница времени прокрутки за день, указанного при старте, минус время, разблокированное в Earnit.",
+      "share": "Поделиться прогрессом",
+      "challenge": "Бросить вызов другу",
+      "done": "Готово",
+      "streak": "%lld дней подряд",
+      "availableTime": "Доступное время",
+      "spend": "для твоих приложений",
+      "use": "Использовать минуты",
+      "stepsToday": "Сегодня %1$@ шагов",
+      "earnedToday": "Сегодня заработано +%lld мин",
+      "skippedToday": "Пропущено открытий: %lld · Твой день",
+      "next": "Ещё %1$lld шагов до следующих %2$lld минут",
+      "stepsCount": "%1$@ шагов",
+      "almost": "Почти у цели",
+      "left": "Осталось всего %lld шагов.",
+      "finish": "Заверши прогулку и заработай %lld мин. Приложения подождут.",
+      "progress": "%1$@ / %2$@ шагов",
+      "walkLeft": "Ещё %1$lld шагов · ~%2$lld мин пешком",
+      "exercise": "Заработай время отжиманиями или приседаниями",
+      "update": "Обновить шаги",
+      "locked": "Приложения заблокированы",
+      "choose": "Выбери сеанс",
+      "available": "Доступно",
+      "after": "После сеанса",
+      "custom": "Своё время",
+      "apps": "Выбрано: %lld",
+      "clock": "Отсчёт начинается сейчас и продолжается при смене приложений. Вернись в Earnit, чтобы завершить сеанс и сохранить остаток.",
+      "start": "Открыть приложения на %lld мин",
+      "earned": "+%lld мин заработано"
+    }
+  },
+  "tr": {
+    "headlines": [
+      [
+        "Ekran süresi mi?",
+        "10 şınav çek."
+      ],
+      [
+        "Akşamlarını",
+        "geri kazan."
+      ],
+      [
+        "Her yürüyüş",
+        "sana zaman katar."
+      ],
+      [
+        "Süren bitti mi?",
+        "Uygulamalar kilitlenir."
+      ],
+      [
+        "Senin zamanın.",
+        "Senin kararın."
+      ]
+    ],
+    "subtitles": [
+      "Kameran tekrarları sayar.",
+      "Geri kazandığın her dakikayı gör.",
+      "Adımların dakikalara dönüşür.",
+      "Erteleme yok. “15 dakika daha” yok.",
+      "5, 10 ya da 15 dakika. Sonra yeniden kilit."
+    ],
+    "badges": [
+      [
+        "iPhone’da",
+        "tekrar sayımı"
+      ],
+      [
+        "Hiçbir video",
+        "asla kaydedilmez"
+      ]
+    ],
+    "steps": "6.240",
+    "thousand": "1.000",
+    "duration": "1 sa 20 dk",
+    "minute": "{} dk",
+    "ui": {
+      "keep": "Böyle devam et",
+      "saturday": "Cumartesi",
+      "until": "zaman kazanana kadar",
+      "session": "10 dk oturum",
+      "again": "sonra yeniden kilitlenir",
+      "reps": "/ %lld şınav",
+      "form": "Formun harika — devam et",
+      "unlocked": "Uygulamaların kilidi açıldı",
+      "today": "Bugün",
+      "day": "Günün",
+      "reclaimed": "eskisine göre daha az kaydırma",
+      "skipped": "engelli uygulamayı açmadığın an",
+      "moving": "hareket ederek kazanılan ekran süresi",
+      "steps": "adım",
+      "estimate": "Tahmini değer: başlangıçta belirttiğin günlük kaydırma süresinin alt sınırından Earnit’te açtığın süre çıkarılır.",
+      "share": "İlerlememi paylaş",
+      "challenge": "Bir arkadaşına meydan oku",
+      "done": "Bitti",
+      "streak": "%lld günlük seri",
+      "availableTime": "Kullanılabilir süre",
+      "spend": "uygulamalarında kullanmak için",
+      "use": "Dakikalarımı kullan",
+      "stepsToday": "Bugün %1$@ adım",
+      "earnedToday": "Bugün +%lld dk kazanıldı",
+      "skippedToday": "Bugün açılmayanlar: %lld · Gününü gör",
+      "next": "Sonraki %2$lld dakika için %1$lld adım",
+      "stepsCount": "%1$@ adım",
+      "almost": "Az kaldı",
+      "left": "Sadece %lld adım kaldı.",
+      "finish": "Yürüyüşü bitir, %lld dk kazan. Uygulamaların bekleyebilir.",
+      "progress": "%1$@ / %2$@ adım",
+      "walkLeft": "%1$lld adım kaldı · ~%2$lld dk yürüyüş",
+      "exercise": "Şınav veya squat ile zaman kazan",
+      "update": "Adımlarımı güncelle",
+      "locked": "Uygulamalar kilitli",
+      "choose": "Oturum seç",
+      "available": "Kullanılabilir",
+      "after": "Oturum sonrası",
+      "custom": "Özel süre",
+      "apps": "%lld seçili",
+      "clock": "Süre şimdi başlar ve uygulama değiştirsen de devam eder. Oturumu bitirip kalan süreyi saklamak için Earnit’e dön.",
+      "start": "Engelli uygulamaları %lld dk kullan",
+      "earned": "+%lld dk kazanıldı"
+    }
+  },
+  "zh-Hans": {
+    "headlines": [
+      [
+        "想多玩一会儿？",
+        "先做10个俯卧撑。"
+      ],
+      [
+        "把夜晚，",
+        "还给自己。"
+      ],
+      [
+        "每次散步，",
+        "都能换来时间。"
+      ],
+      [
+        "时间用完？",
+        "应用自动锁回。"
+      ],
+      [
+        "攒下的时间，",
+        "由你做主。"
+      ]
+    ],
+    "subtitles": [
+      "摄像头帮你数次数。",
+      "找回的每一分钟，都看得见。",
+      "把脚步变成屏幕时间。",
+      "不能推迟，也没有“再来15分钟”。",
+      "5、10或15分钟。结束后自动上锁。"
+    ],
+    "badges": [
+      [
+        "本机处理",
+        "自动计数"
+      ],
+      [
+        "任何视频",
+        "都不会保存"
+      ]
+    ],
+    "steps": "6,240",
+    "thousand": "1,000",
+    "duration": "1小时20分钟",
+    "minute": "{}分钟",
+    "ui": {
+      "keep": "继续保持",
+      "saturday": "星期六",
+      "until": "直到你赚到时间",
+      "session": "10分钟使用时段",
+      "again": "结束后应用重新上锁",
+      "reps": "/ %lld个俯卧撑",
+      "form": "动作很棒，继续加油",
+      "unlocked": "应用已解锁",
+      "today": "今天",
+      "day": "你的一天",
+      "reclaimed": "比以前少刷的时间",
+      "skipped": "没有打开被锁应用的次数",
+      "moving": "通过运动赚取的屏幕时间",
+      "steps": "步",
+      "estimate": "估算值：以你开始时填写的每日刷屏时长下限，减去在 Earnit 中解锁的时间。",
+      "share": "分享我的进步",
+      "challenge": "挑战好友",
+      "done": "完成",
+      "streak": "已连续%lld天",
+      "availableTime": "可用时间",
+      "spend": "可用于你的应用",
+      "use": "使用我的分钟数",
+      "stepsToday": "今天%1$@步",
+      "earnedToday": "今天赚取+%lld分钟",
+      "skippedToday": "今天跳过%lld次 · 查看今天",
+      "next": "再走%1$lld步，赚取下一个%2$lld分钟",
+      "stepsCount": "%1$@步",
+      "almost": "快到了",
+      "left": "只差%lld步。",
+      "finish": "走完这段路，赚取%lld分钟。应用可以等等。",
+      "progress": "%1$@ / %2$@步",
+      "walkLeft": "还差%1$lld步 · 约走%2$lld分钟",
+      "exercise": "做俯卧撑或深蹲赚取时间",
+      "update": "更新步数",
+      "locked": "应用已锁定",
+      "choose": "选择使用时段",
+      "available": "可用",
+      "after": "结束后",
+      "custom": "自定时长",
+      "apps": "已选%lld项",
+      "clock": "计时立即开始，切换应用后仍会继续。回到 Earnit 结束本次使用，即可保留剩余时间。",
+      "start": "使用被锁应用%lld分钟",
+      "earned": "+%lld分钟已赚取"
+    }
+  },
+  "ar": {
+    "headlines": [
+      [
+        "وقت أكثر للشاشة؟",
+        "ابدأ بـ10 ضغطات."
+      ],
+      [
+        "استعد",
+        "أمسياتك."
+      ],
+      [
+        "كل مشوار",
+        "يكسبك وقتًا."
+      ],
+      [
+        "انتهى الوقت؟",
+        "تُقفل التطبيقات."
+      ],
+      [
+        "وقتك لك.",
+        "استخدمه بطريقتك."
+      ]
+    ],
+    "subtitles": [
+      "الكاميرا تعدّ التكرارات.",
+      "كل دقيقة تستعيدها، تراها أمامك.",
+      "خطواتك تتحول إلى دقائق.",
+      "لا تأجيل. ولا «15 دقيقة إضافية».",
+      "5 أو 10 أو 15 دقيقة. ثم يعود القفل."
+    ],
+    "badges": [
+      [
+        "على جهازك",
+        "عدّ التكرارات"
+      ],
+      [
+        "لا فيديو",
+        "يُحفظ أبدًا"
+      ]
+    ],
+    "steps": "6٬240",
+    "thousand": "1٬000",
+    "duration": "1 س 20 د",
+    "minute": "{} د",
+    "ui": {
+      "keep": "واصل التقدم",
+      "saturday": "السبت",
+      "until": "حتى تكسب وقتًا",
+      "session": "جلسة من 10 دقائق",
+      "again": "ثم تعود التطبيقات للقفل",
+      "reps": "/ %lld ضغطات",
+      "form": "حركة ممتازة — استمر",
+      "unlocked": "فُتحت التطبيقات",
+      "today": "اليوم",
+      "day": "يومك",
+      "reclaimed": "أقل من وقت التصفح المعتاد",
+      "skipped": "مرة لم تفتح فيها تطبيقًا مقفلًا",
+      "moving": "من وقت الشاشة كسبتها بالحركة",
+      "steps": "خطوات",
+      "estimate": "تقدير: الحد الأدنى لوقت التصفح اليومي الذي حددته عند البدء، مطروحًا منه الوقت الذي فتحته في Earnit.",
+      "share": "مشاركة تقدمي",
+      "challenge": "تحدَّ صديقًا",
+      "done": "تم",
+      "streak": "%lld يومًا متتاليًا",
+      "availableTime": "الوقت المتاح",
+      "spend": "لتستخدمه في تطبيقاتك",
+      "use": "استخدام دقائقي",
+      "stepsToday": "%1$@ خطوة اليوم",
+      "earnedToday": "كسبت اليوم +%lld دقيقة",
+      "skippedToday": "مرات تجنّب التطبيقات: %lld · شاهد يومك",
+      "next": "%1$lld خطوة حتى تكسب %2$lld دقائق أخرى",
+      "stepsCount": "%1$@ خطوة",
+      "almost": "أوشكت على الوصول",
+      "left": "بقيت %lld خطوة فقط.",
+      "finish": "أكمل مشيك واكسب %lld دقائق. تطبيقاتك ستنتظر.",
+      "progress": "%1$@ / %2$@ خطوة",
+      "walkLeft": "بقيت %1$lld خطوة · نحو %2$lld دقائق مشيًا",
+      "exercise": "اكسب وقتًا بالضغط أو القرفصاء",
+      "update": "تحديث خطواتي",
+      "locked": "التطبيقات مقفلة",
+      "choose": "اختر جلسة",
+      "available": "متاح",
+      "after": "بعد الجلسة",
+      "custom": "مدة مخصصة",
+      "apps": "%lld محددة",
+      "clock": "يبدأ الوقت الآن ويستمر عند تبديل التطبيقات. عُد إلى Earnit لإنهاء الجلسة والاحتفاظ بالباقي.",
+      "start": "استخدم التطبيقات المقفلة لمدة %lld دقائق",
+      "earned": "+%lld دقائق مكتسبة"
+    }
+  }
+}

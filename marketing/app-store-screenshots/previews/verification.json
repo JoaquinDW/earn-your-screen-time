@@ -1,0 +1,81 @@
+{
+  "images": 210,
+  "languages": 14,
+  "sizes": {
+    "6.9-inch": [
+      1290,
+      2796
+    ],
+    "6.3-inch": [
+      1206,
+      2622
+    ],
+    "6.1-inch": [
+      1179,
+      2556
+    ]
+  },
+  "spanishBaseline": "8f0e006980da649881b0638f79e9d0aa82794c44",
+  "spanishPixelDiffs": [
+    {
+      "file": "marketing/app-store-screenshots/6.9-inch/es/01-pushups.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.9-inch/es/02-outcome.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.9-inch/es/03-walk.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.9-inch/es/04-lock.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.9-inch/es/05-sessions.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.3-inch/es/01-pushups.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.3-inch/es/02-outcome.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.3-inch/es/03-walk.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.3-inch/es/04-lock.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.3-inch/es/05-sessions.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.1-inch/es/01-pushups.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.1-inch/es/02-outcome.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.1-inch/es/03-walk.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.1-inch/es/04-lock.png",
+      "changedPixels": 0
+    },
+    {
+      "file": "marketing/app-store-screenshots/6.1-inch/es/05-sessions.png",
+      "changedPixels": 0
+    }
+  ]
+}

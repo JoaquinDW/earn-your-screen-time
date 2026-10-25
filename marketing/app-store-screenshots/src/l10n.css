@@ -1,0 +1,63 @@
+/* Localized pages only: en-US and the Spanish baseline never load this file. */
+@font-face { font-family: 'Noto Serif JP'; src: url('fonts/NotoSerifJP.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Sans JP'; src: url('fonts/NotoSansJP.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Serif KR'; src: url('fonts/NotoSerifKR.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Sans KR'; src: url('fonts/NotoSansKR.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Serif SC'; src: url('fonts/NotoSerifSC.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Sans SC'; src: url('fonts/NotoSansSC.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Naskh Arabic'; src: url('fonts/NotoNaskhArabic.woff2'); font-weight: 400 700; }
+@font-face { font-family: 'Noto Sans Arabic'; src: url('fonts/NotoSansArabic.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Serif'; src: url('fonts/NotoSerif.woff2'); font-weight: 100 900; }
+@font-face { font-family: 'Noto Sans'; src: url('fonts/NotoSans.woff2'); font-weight: 100 900; }
+:root { --serif: 'Instrument Serif'; --sans: Figtree; }
+:lang(ja) { --serif: 'Noto Serif JP'; --sans: 'Noto Sans JP'; }
+:lang(ko) { --serif: 'Noto Serif KR'; --sans: 'Noto Sans KR'; }
+:lang(zh-Hans) { --serif: 'Noto Serif SC'; --sans: 'Noto Sans SC'; }
+:lang(ru) { --serif: 'Noto Serif'; --sans: 'Noto Sans'; }
+:lang(ar) { --serif: 'Noto Naskh Arabic'; --sans: 'Noto Sans Arabic'; }
+body { font-family: var(--sans), sans-serif; }
+.headline, .serif, .laurel b, .count b, .sheet h1, .m b, .hrow .w,
+.num b, .msg h1, .bal b { font-family: var(--serif), serif; }
+.headline { white-space: nowrap; font-size: 176px; letter-spacing: -3px; }
+:lang(ja) .headline, :lang(ko) .headline, :lang(zh-Hans) .headline {
+  font-size: 128px; line-height: 1.28; letter-spacing: -4px;
+}
+:lang(ru) .headline { line-height: 1.12; }
+:lang(ar) .headline { font-size: 176px; line-height: 1.1; letter-spacing: 0; }
+.laurels { gap: 32px; padding: 0 64px; }
+.laurel { min-width: 0; }
+.laurel .lf { flex-shrink: 0; width: 68px; }
+.laurel .t { min-width: 0; }
+.laurel b { font-size: 64px; white-space: nowrap; }
+.laurel span { font-size: 29px; white-space: nowrap; }
+.card { max-width: 1150px; }
+.card .ic { flex-shrink: 0; }
+.card > div:last-child { min-width: 0; }
+.card b, .card span { white-space: nowrap; }
+.eyebrow { letter-spacing: .7px; }
+.npill, .pill { padding: 0 8px; text-align: center; }
+.npill svg, .pill svg { flex-shrink: 0; }
+.next > span:first-child { min-width: 0; }
+.hrow > span { white-space: nowrap; }
+.sb { padding: 6px; }
+.bal > div { min-width: 0; }
+.bal b, .bal span { white-space: nowrap; }
+.m { min-width: 0; }
+.m b { white-space: nowrap; }
+.count span, .guide, .prow { white-space: nowrap; }
+/* Text direction changes; the photographed scene, phone, and its tilt do not. */
+[dir=rtl] .brand { left: auto; right: 96px; }
+[dir=rtl] .brand span { direction: ltr; unicode-bidi: isolate; }
+[dir=rtl] .headline { left: 80px; right: 88px; text-align: right; }
+[dir=rtl] .sub { left: 104px; right: 96px; text-align: right; }
+[dir=rtl] .pt { direction: rtl; text-align: right; }
+[dir=rtl] .status { direction: ltr; }
+[dir=rtl] .count, [dir=rtl] .num, [dir=rtl] .m b, [dir=rtl] .bal b {
+  direction: ltr; unicode-bidi: isolate;
+}
+[dir=rtl] .home { text-align: center; }
+[dir=rtl] .home .hrow > span:first-child { text-align: right !important; }
+[dir=rtl] .home .hrow > span:last-child { text-align: left !important; }
+[dir=rtl] .cust b { margin-right: auto; margin-left: 12px; }
+[dir=rtl] .bal > div:last-child { text-align: left !important; }
+[dir=rtl] .x { left: auto; right: 20px; }

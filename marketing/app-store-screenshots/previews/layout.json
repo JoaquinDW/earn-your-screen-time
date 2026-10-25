@@ -1,0 +1,1614 @@
+[
+  {
+    "lang": "ar",
+    "name": "01-pushups",
+    "fonts": [
+      "Noto Naskh Arabic",
+      "Noto Sans Arabic"
+    ],
+    "errors": [],
+    "headlineSize": "173px",
+    "headline": "وقت أكثر للشاشة؟\nابدأ بـ١٠ ضغطات.",
+    "lines": [
+      {
+        "x": 82.328125,
+        "y": 237,
+        "width": 1119.671875,
+        "height": 295
+      },
+      {
+        "x": 144.9375,
+        "y": 427.296875,
+        "width": 1057.0625,
+        "height": 295
+      }
+    ]
+  },
+  {
+    "lang": "de",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "163px",
+    "headline": "Mehr Bildschirmzeit?\n10 Liegestütze.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 258,
+        "width": 1116.046875,
+        "height": 212
+      },
+      {
+        "x": 88,
+        "y": 407.953125,
+        "width": 765.4375,
+        "height": 212
+      }
+    ]
+  },
+  {
+    "lang": "es",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "¿Más pantalla?\nHaz 10 flexiones.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 821.546875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 956.328125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "fr",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Du temps d’écran ?\nFais 10 pompes.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 1058.15625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 906.109375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "en-US",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "200px",
+    "headline": "Screen time?\nDo 10 push-ups.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 252,
+        "width": 806.40625,
+        "height": 260
+      },
+      {
+        "x": 88,
+        "y": 436,
+        "width": 1064.40625,
+        "height": 260
+      }
+    ]
+  },
+  {
+    "lang": "it",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Vuoi più schermo?\nFai 10 flessioni.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 1037.046875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 890.78125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ja",
+    "name": "01-pushups",
+    "fonts": [
+      "Noto Serif JP ExtraLight",
+      "Noto Sans JP Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "もっとスマホ時間？\n腕立てを10回。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 1113.453125,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 867.59375,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "01-pushups",
+    "fonts": [
+      "Noto Serif KR ExtraLight",
+      "Noto Sans KR Thin"
+    ],
+    "errors": [],
+    "headlineSize": "106px",
+    "headline": "화면 시간이 더 필요해요?\n팔굽혀펴기 10번.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 281,
+        "width": 1112.875,
+        "height": 152
+      },
+      {
+        "x": 88,
+        "y": 416.671875,
+        "width": 751.296875,
+        "height": 152
+      }
+    ]
+  },
+  {
+    "lang": "nl",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Meer schermtijd?\nDoe 10 push-ups.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 975.96875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 1002.734375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pl",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Więcej ekranu?\nZrób 10 pompek.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 840.46875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 965.953125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pt-BR",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Mais tempo de tela?\nFaça 10 flexões.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 1111.125,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 879.359375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ru",
+    "name": "01-pushups",
+    "fonts": [
+      "Noto Serif",
+      "Noto Sans"
+    ],
+    "errors": [],
+    "headlineSize": "129px",
+    "headline": "Больше времени?\n10 отжиманий.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 274,
+        "width": 1115.75,
+        "height": 176
+      },
+      {
+        "x": 88,
+        "y": 418.46875,
+        "width": 944.765625,
+        "height": 176
+      }
+    ]
+  },
+  {
+    "lang": "tr",
+    "name": "01-pushups",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Ekran süresi mi?\n10 şınav çek.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 938.84375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 737.34375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "zh-Hans",
+    "name": "01-pushups",
+    "fonts": [
+      "Noto Serif SC ExtraLight",
+      "Noto Sans SC Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "想多玩一会儿？\n先做10个俯卧撑。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 868.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 991.59375,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ar",
+    "name": "02-outcome",
+    "fonts": [
+      "Noto Sans Arabic",
+      "Noto Naskh Arabic"
+    ],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "استعد\nأمسياتك.",
+    "lines": [
+      {
+        "x": 824.640625,
+        "y": 236,
+        "width": 377.359375,
+        "height": 300
+      },
+      {
+        "x": 629.109375,
+        "y": 429.59375,
+        "width": 572.890625,
+        "height": 300
+      }
+    ]
+  },
+  {
+    "lang": "de",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "175px",
+    "headline": "Hol dir\nden Abend zurück.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 257,
+        "width": 385.703125,
+        "height": 227
+      },
+      {
+        "x": 88,
+        "y": 418,
+        "width": 1118.359375,
+        "height": 227
+      }
+    ]
+  },
+  {
+    "lang": "es",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Recupera\ntus noches.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 519.765625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 639.421875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "fr",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Retrouve\ntes soirées.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 507.359375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 607.640625,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "en-US",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "200px",
+    "headline": "Win back\nyour evenings.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 252,
+        "width": 592.40625,
+        "height": 260
+      },
+      {
+        "x": 88,
+        "y": 436,
+        "width": 986.40625,
+        "height": 260
+      }
+    ]
+  },
+  {
+    "lang": "it",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Riprenditi\nle tue serate.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 580.90625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 723.78125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ja",
+    "name": "02-outcome",
+    "fonts": [
+      "Noto Serif JP ExtraLight",
+      "Noto Sans JP Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "取り戻そう、\n自分の夜を。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 744.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 744.015625,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "02-outcome",
+    "fonts": [
+      "Noto Serif KR ExtraLight",
+      "Noto Sans KR Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "저녁 시간을\n되찾으세요.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 633.921875,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 636.609375,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "nl",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Pak je\navonden terug.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 341.40625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 911.578125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pl",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Odzyskaj\nswoje wieczory.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 519.84375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 924.9375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pt-BR",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Recupere\nsuas noites.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 523.1875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 688.078125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ru",
+    "name": "02-outcome",
+    "fonts": [
+      "Noto Serif",
+      "Noto Sans"
+    ],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Верни себе\nсвои вечера.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 268,
+        "width": 951.390625,
+        "height": 240
+      },
+      {
+        "x": 88,
+        "y": 465.109375,
+        "width": 1067.359375,
+        "height": 240
+      }
+    ]
+  },
+  {
+    "lang": "tr",
+    "name": "02-outcome",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Akşamlarını\ngeri kazan.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 697.0625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 685.609375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "zh-Hans",
+    "name": "02-outcome",
+    "fonts": [
+      "Noto Serif SC ExtraLight",
+      "Noto Sans SC Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "把夜晚，\n还给自己。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 496.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 620.015625,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ar",
+    "name": "03-walk",
+    "fonts": [
+      "Noto Sans Arabic",
+      "Noto Naskh Arabic"
+    ],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "كل مشوار\nيكسبك وقتًا.",
+    "lines": [
+      {
+        "x": 596.90625,
+        "y": 236,
+        "width": 605.09375,
+        "height": 300
+      },
+      {
+        "x": 423.890625,
+        "y": 429.59375,
+        "width": 778.109375,
+        "height": 300
+      }
+    ]
+  },
+  {
+    "lang": "de",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Jeder Spaziergang\nbringt dir Zeit.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 1009.9375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 883.21875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "es",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Cada paso\nsuma minutos.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 573.671875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 909.328125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "fr",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "142px",
+    "headline": "Chaque balade\nte fait gagner du temps.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 262,
+        "width": 677.109375,
+        "height": 185
+      },
+      {
+        "x": 88,
+        "y": 392.625,
+        "width": 1116.265625,
+        "height": 185
+      }
+    ]
+  },
+  {
+    "lang": "en-US",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "200px",
+    "headline": "Every walk\nearns you time.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 252,
+        "width": 701.8125,
+        "height": 260
+      },
+      {
+        "x": 88,
+        "y": 436,
+        "width": 1050.609375,
+        "height": 260
+      }
+    ]
+  },
+  {
+    "lang": "it",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Ogni passeggiata\nti regala tempo.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 953.625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 935.328125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ja",
+    "name": "03-walk",
+    "fonts": [
+      "Noto Serif JP ExtraLight",
+      "Noto Sans JP Thin"
+    ],
+    "errors": [],
+    "headlineSize": "116px",
+    "headline": "歩くたびに、\n使える時間が増える。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 280,
+        "width": 672,
+        "height": 167
+      },
+      {
+        "x": 88,
+        "y": 428.46875,
+        "width": 1120,
+        "height": 167
+      }
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "03-walk",
+    "fonts": [
+      "Noto Sans KR Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "걸을 때마다\n화면 시간이 쌓여요.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 633.921875,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 1066.921875,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "nl",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Elke wandeling\nlevert tijd op.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 872.859375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 775.703125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pl",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Każdy spacer\ndaje ci czas.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 743.515625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 709.71875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pt-BR",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Cada caminhada\nvira tempo de tela.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 971.59375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 1109.1875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ru",
+    "name": "03-walk",
+    "fonts": [
+      "Noto Serif",
+      "Noto Sans"
+    ],
+    "errors": [],
+    "headlineSize": "132px",
+    "headline": "Каждая прогулка\nдарит время.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 273,
+        "width": 1114.625,
+        "height": 180
+      },
+      {
+        "x": 88,
+        "y": 420.828125,
+        "width": 842.734375,
+        "height": 180
+      }
+    ]
+  },
+  {
+    "lang": "tr",
+    "name": "03-walk",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "169px",
+    "headline": "Her yürüyüş\nsana zaman katar.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 258,
+        "width": 670.21875,
+        "height": 219
+      },
+      {
+        "x": 88,
+        "y": 413.46875,
+        "width": 1115.78125,
+        "height": 219
+      }
+    ]
+  },
+  {
+    "lang": "zh-Hans",
+    "name": "03-walk",
+    "fonts": [
+      "Noto Serif SC ExtraLight",
+      "Noto Sans SC Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "每次散步，\n都能换来时间。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 620.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 868.015625,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ar",
+    "name": "04-lock",
+    "fonts": [
+      "Noto Naskh Arabic",
+      "Noto Sans Arabic"
+    ],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "انتهى الوقت؟\nتُقفل التطبيقات.",
+    "lines": [
+      {
+        "x": 367.40625,
+        "y": 236,
+        "width": 834.59375,
+        "height": 300
+      },
+      {
+        "x": 209.703125,
+        "y": 429.59375,
+        "width": 992.296875,
+        "height": 300
+      }
+    ]
+  },
+  {
+    "lang": "de",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Zeit ist um?\nApps wieder zu.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 644.953125,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 931.109375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "es",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "¿Sin tiempo?\nTodo se bloquea.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 708.28125,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 947.65625,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "fr",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "149px",
+    "headline": "Plus de temps ?\nLes apps se rebloquent.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 261,
+        "width": 723.40625,
+        "height": 194
+      },
+      {
+        "x": 88,
+        "y": 398.078125,
+        "width": 1119.4375,
+        "height": 194
+      }
+    ]
+  },
+  {
+    "lang": "en-US",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "200px",
+    "headline": "Out of time?\nApps lock again.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 252,
+        "width": 779.8125,
+        "height": 260
+      },
+      {
+        "x": 88,
+        "y": 436,
+        "width": 1095.609375,
+        "height": 260
+      }
+    ]
+  },
+  {
+    "lang": "it",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "162px",
+    "headline": "Tempo finito?\nLe app si ribloccano.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 259,
+        "width": 712.359375,
+        "height": 210
+      },
+      {
+        "x": 88,
+        "y": 408.03125,
+        "width": 1115.875,
+        "height": 210
+      }
+    ]
+  },
+  {
+    "lang": "ja",
+    "name": "04-lock",
+    "fonts": [
+      "Noto Serif JP ExtraLight",
+      "Noto Sans JP Thin"
+    ],
+    "errors": [],
+    "headlineSize": "117px",
+    "headline": "時間が来たら、\nアプリはまたロック。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 280,
+        "width": 791.015625,
+        "height": 168
+      },
+      {
+        "x": 88,
+        "y": 429.75,
+        "width": 1118.3125,
+        "height": 168
+      }
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "04-lock",
+    "fonts": [
+      "Noto Serif KR ExtraLight",
+      "Noto Sans KR Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "시간이 끝나면?\n앱은 다시 잠겨요.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 805.515625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 947.265625,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "nl",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Tijd voorbij?\nApps weer op slot.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 707.078125,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 1028.9375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pl",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Czas minął?\nWraca blokada.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 687.546875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 945.1875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pt-BR",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "169px",
+    "headline": "Acabou o tempo?\nOs apps bloqueiam.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 258,
+        "width": 922.1875,
+        "height": 219
+      },
+      {
+        "x": 88,
+        "y": 413.46875,
+        "width": 1120.5625,
+        "height": 219
+      }
+    ]
+  },
+  {
+    "lang": "ru",
+    "name": "04-lock",
+    "fonts": [
+      "Noto Sans"
+    ],
+    "errors": [],
+    "headlineSize": "123px",
+    "headline": "Время вышло?\nСнова под замком.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 275,
+        "width": 881.703125,
+        "height": 167
+      },
+      {
+        "x": 88,
+        "y": 412.75,
+        "width": 1114.3125,
+        "height": 167
+      }
+    ]
+  },
+  {
+    "lang": "tr",
+    "name": "04-lock",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "139px",
+    "headline": "Süren bitti mi?\nUygulamalar kilitlenir.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 263,
+        "width": 645.703125,
+        "height": 181
+      },
+      {
+        "x": 88,
+        "y": 390.875,
+        "width": 1113.625,
+        "height": 181
+      }
+    ]
+  },
+  {
+    "lang": "zh-Hans",
+    "name": "04-lock",
+    "fonts": [
+      "Noto Serif SC ExtraLight",
+      "Noto Sans SC Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "时间用完？\n应用自动锁回。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 620.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 868.015625,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ar",
+    "name": "05-sessions",
+    "fonts": [
+      "Noto Naskh Arabic",
+      "Noto Sans Arabic"
+    ],
+    "errors": [],
+    "headlineSize": "163px",
+    "headline": "وقتك لك.\nاستخدمه بطريقتك.",
+    "lines": [
+      {
+        "x": 654.46875,
+        "y": 241,
+        "width": 547.53125,
+        "height": 277
+      },
+      {
+        "x": 83,
+        "y": 420.296875,
+        "width": 1119,
+        "height": 277
+      }
+    ]
+  },
+  {
+    "lang": "de",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "161px",
+    "headline": "Deine Zeit.\nDeine Entscheidung.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 259,
+        "width": 543.390625,
+        "height": 209
+      },
+      {
+        "x": 88,
+        "y": 407.109375,
+        "width": 1121.53125,
+        "height": 209
+      }
+    ]
+  },
+  {
+    "lang": "es",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Úsalo\na tu manera.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 306.140625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 783.609375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "fr",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Tes minutes.\nÀ ta façon.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 706.03125,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 630,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "en-US",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "200px",
+    "headline": "Spend it\non your terms.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 252,
+        "width": 525.015625,
+        "height": 260
+      },
+      {
+        "x": 88,
+        "y": 436,
+        "width": 987.8125,
+        "height": 260
+      }
+    ]
+  },
+  {
+    "lang": "it",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Il tuo tempo.\nCome vuoi tu.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 713.765625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 830.96875,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ja",
+    "name": "05-sessions",
+    "fonts": [
+      "Noto Serif JP ExtraLight",
+      "Noto Sans JP Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "ためた時間を、\n自分のペースで。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 868.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 983.046875,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "ko",
+    "name": "05-sessions",
+    "fonts": [
+      "Noto Serif KR ExtraLight",
+      "Noto Sans KR Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "모은 시간은\n내 방식대로.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 633.921875,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 672.296875,
+        "height": 184
+      }
+    ]
+  },
+  {
+    "lang": "nl",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Jouw tijd.\nJouw keuze.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 537.609375,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 702.859375,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "pl",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "159px",
+    "headline": "Twój czas.\nNa twoich zasadach.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 260,
+        "width": 514.90625,
+        "height": 206
+      },
+      {
+        "x": 88,
+        "y": 406.265625,
+        "width": 1116.90625,
+        "height": 206
+      }
+    ]
+  },
+  {
+    "lang": "pt-BR",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Seu tempo.\nDo seu jeito.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 628.421875,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 700.390625,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "ru",
+    "name": "05-sessions",
+    "fonts": [
+      "Noto Serif",
+      "Noto Sans"
+    ],
+    "errors": [],
+    "headlineSize": "160px",
+    "headline": "Твоё время.\nТвои правила.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 270,
+        "width": 913.890625,
+        "height": 218
+      },
+      {
+        "x": 88,
+        "y": 449.1875,
+        "width": 1115.5625,
+        "height": 218
+      }
+    ]
+  },
+  {
+    "lang": "tr",
+    "name": "05-sessions",
+    "fonts": [],
+    "errors": [],
+    "headlineSize": "176px",
+    "headline": "Senin zamanın.\nSenin kararın.",
+    "lines": [
+      {
+        "x": 88,
+        "y": 256,
+        "width": 895.390625,
+        "height": 229
+      },
+      {
+        "x": 88,
+        "y": 417.90625,
+        "width": 910.703125,
+        "height": 229
+      }
+    ]
+  },
+  {
+    "lang": "zh-Hans",
+    "name": "05-sessions",
+    "fonts": [
+      "Noto Sans SC Thin"
+    ],
+    "errors": [],
+    "headlineSize": "128px",
+    "headline": "攒下的时间，\n由你做主。",
+    "lines": [
+      {
+        "x": 88,
+        "y": 279,
+        "width": 744.015625,
+        "height": 184
+      },
+      {
+        "x": 88,
+        "y": 442.828125,
+        "width": 620.015625,
+        "height": 184
+      }
+    ]
+  }
+]
