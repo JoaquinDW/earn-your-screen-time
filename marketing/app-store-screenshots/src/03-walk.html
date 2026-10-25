@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="light.css">
+<style>
+  .home { position: absolute; inset: 0; padding: 62px 28px 0; text-align: center; }
+  .hrow { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .hrow .w { font-family: "Instrument Serif"; font-size: 21px; font-weight: 400; color: var(--text); }
+  .sb { color: var(--cobalt-text); background: rgba(46,92,230,.16); border: 1px solid rgba(46,92,230,.35); border-radius: 999px; padding: 6px 10px; }
+  .num { margin-top: 10px; display: flex; justify-content: center; align-items: baseline; gap: 8px; }
+  .num b { font-family: "Instrument Serif"; font-weight: 400; font-size: 112px; line-height: 1; }
+  .num span { font-size: 19px; color: var(--muted); }
+  .to { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .tot { font-size: 12px; color: #4E6159; margin-top: 18px; } .tot em { font-style: normal; color: var(--moss); }
+  .imp { font-size: 12.5px; font-weight: 600; color: var(--cobalt-text); margin-top: 14px; }
+  .next { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; color: var(--soft); margin-top: 22px; }
+</style></head>
+<body>
+  <div class="bg"></div>
+  <div class="brand"><img src="../../../App/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png"><span>Earn Screen Time</span></div>
+  <div class="headline">Every walk<br><em>earns you time.</em></div>
+  <div class="sub">Your steps turn into minutes.</div>
+  <div class="phone"><div class="screen"><div class="pt">
+    <div class="scene" style="background-image: url('../../../App/Resources/Assets.xcassets/Scenes/home-evening.imageset/home-evening.png')"></div>
+    <div class="home">
+      <div class="hrow"><span style="flex:1;text-align:left">Saturday</span><span class="w">Earnit</span><span style="flex:1;text-align:right"><span class="sb">🔥 12-day streak</span></span></div>
+      <div class="eyebrow" style="margin-top:56px">Available time</div>
+      <div class="num"><b>25</b><span>min</span></div>
+      <div class="to">to spend on your apps</div>
+      <div class="npill" style="margin-top:28px"><svg width="12" height="13" viewBox="0 0 12 13"><path d="M1 1l10 5.5L1 12z" fill="#fff"/></svg>Use my minutes</div>
+      <div class="tot">6,240 steps today · <em>40 min earned</em></div>
+      <div class="imp">✋ Apps skipped today: 14 · See your day ›</div>
+      <div class="next"><span>760 steps until your next 5 minutes</span><span style="color:var(--cobalt-text)">›</span></div>
+      <div class="ticks" data-p=".24" data-n="38" style="height:11px;margin-top:8px"></div>
+    </div>
+  </div></div></div>
+  <div class="card" style="right:56px; top:2420px"><div class="ic"><svg width="60" height="60" viewBox="0 0 24 24"><circle cx="13" cy="3.5" r="2.2" fill="#fff"/><path d="M10 8l-3 4 2 1 2-2.5 1 4-3 6.5 2 1 3.5-6 2.5 3v4h2v-5l-2.5-3-1-4 2 2h3v-2h-2l-3-3.5c-.6-.6-1.6-.8-2.4-.3z" fill="#fff"/></svg></div>
+    <div><b>6,240 steps</b><span>+30 min earned</span></div></div>
+  <script src="common.js"></script>
+</body></html>
