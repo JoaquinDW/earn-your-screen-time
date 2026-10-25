@@ -1,0 +1,30 @@
+/* The store set's light system: the icon's ivory and navy, cobalt as the one accent. */
+:root { --ivory: #F5F0E3; --navy: #0B1F45; --navy-soft: #3B4A68; }
+html, body { background: var(--ivory); }
+.bg { background: radial-gradient(1100px 900px at 85% 1700px, rgba(46,92,230,.13), transparent 70%), var(--ivory); }
+.tilt-r .bg { background: radial-gradient(1100px 900px at 15% 1700px, rgba(46,92,230,.13), transparent 70%), var(--ivory); }
+.brand { top: 120px; left: 96px; gap: 28px; }
+.brand img { width: 120px; height: 120px; border-radius: 28px; box-shadow: 0 10px 24px rgba(11,31,69,.25); }
+.brand span { font-family: "Instrument Serif"; font-weight: 400; font-size: 92px; color: var(--navy); letter-spacing: -1px; }
+.headline { top: 290px; left: 88px; color: var(--navy); font-size: 200px; line-height: .92; letter-spacing: -4px; }
+.headline em { font-style: italic; color: var(--cobalt); }
+.sub { top: 700px; left: 96px; color: var(--navy-soft); font-size: 58px; font-weight: 600; }
+.phone { top: 1000px; transform: rotate(-5deg); background: #11161c; }
+.tilt-r .phone { transform: rotate(5deg); }
+
+.card { position: absolute; background: #fff; border-radius: 48px; padding: 40px 48px; transform: rotate(4deg);
+  display: flex; align-items: center; gap: 32px; box-shadow: 0 30px 70px rgba(11,31,69,.28); color: var(--navy); }
+.tilt-r .card { transform: rotate(-4deg); }
+.card .ic { width: 110px; height: 110px; border-radius: 30px; background: var(--cobalt); display: flex; align-items: center; justify-content: center; }
+.card b { display: block; font-size: 50px; font-weight: 700; }
+.card span { display: block; font-size: 40px; font-weight: 600; color: var(--cobalt); margin-top: 4px; }
+
+/* App pieces, in points. */
+.scene { position: absolute; inset: 0; background-size: cover; background-position: center bottom; }
+.ticks { display: flex; }
+.ticks i { flex: 1; display: flex; justify-content: center; }
+.ticks i::after { content: ""; width: 1.5px; background: rgba(236,243,238,.16); }
+.ticks i.on::after { background: var(--cobalt); }
+.npill { display: flex; justify-content: center; align-items: center; gap: 8px; height: 50px; border-radius: 999px; background: var(--cobalt);
+  color: #fff; font-size: 15px; font-weight: 600; box-shadow: 0 8px 18px rgba(46,92,230,.42); }
+.quiet { text-align: center; font-size: 15px; font-weight: 600; color: var(--soft); padding: 13px 0; }
