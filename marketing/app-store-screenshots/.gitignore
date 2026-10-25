@@ -1,0 +1,4 @@
+src/*.*.html
+__pycache__/
+node_modules/
+previews/first-pass.json

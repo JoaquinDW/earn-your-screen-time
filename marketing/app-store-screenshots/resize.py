@@ -2,12 +2,13 @@
 # The aspect ratios differ by under 0.3%, so a straight resize doesn't visibly distort.
 import os
 from PIL import Image
+from make_l10n import LANGUAGES
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SIZES = {'6.3-inch': (1206, 2622), '6.1-inch': (1179, 2556)}
 
 for folder, size in SIZES.items():
-    for lang in ('en-US', 'es'):
+    for lang in LANGUAGES:
         source = os.path.join(ROOT, '6.9-inch', lang)
         target = os.path.join(ROOT, folder, lang)
         os.makedirs(target, exist_ok=True)

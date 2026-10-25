@@ -1,0 +1,6 @@
+{
+  "name": "earnit-store-screenshots",
+  "private": true,
+  "scripts": { "render": "./render.sh", "first": "python3 make_l10n.py && node render.js --first" },
+  "devDependencies": { "playwright": "1.62.1" }
+}

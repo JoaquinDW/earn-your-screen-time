@@ -26,7 +26,33 @@ The live en-US name/subtitle/keywords and the empty promotional text differ from
 sources, so `verify.py` reports those existing mismatches. Do not run `reconcile.py`/`push.py`
 without first deciding which side is right. Version 1.3.0 is `READY_FOR_SALE`.
 
-## Phase 3 — screenshots on version 1.2
+## Phase 3 — screenshots
+
+### Localized five-shot refresh — awaiting approval
+
+Prepared **14 rendered language sets for all 16 store locales** in
+`marketing/app-store-screenshots/`, including 1290×2796, 1206×2622 and 1179×2556
+exports and a five-shot contact sheet per language. English serves en-US/en-GB;
+Spanish serves es-ES/es-MX. The other twelve sets are de, fr, it, ja, ko, nl, pl,
+pt-BR, ru, tr, zh-Hans and ar. In-phone copy reads the shipped catalogs by English
+value wherever translations exist. Additional script fonts are bundled locally.
+
+**Upload status: pending the user's contact-sheet approval. Nothing has been
+uploaded or deleted in this refresh.** A read-only API request found draft
+**1.3.3**, `PREPARE_FOR_SUBMISSION`, on 2026-10-24. The uploader must discover the
+editable version again at execution time; do not reuse a saved version ID.
+
+After approval, confirm accepted dimensions through API evidence before the first
+upload, targeting `APP_IPHONE_67` with the 1290×2796 files and `APP_IPHONE_61` with
+the 1206×2622 files. List each locale's existing screenshots before deleting them,
+replace each target set with exactly five images ordered 01→05, and read back
+all 32 sets until every asset is `COMPLETE`. Record the actual version, display
+types, deletion inventory and locale-by-display-type verification here after
+upload. Do not change listing metadata, prices, builds or review submission.
+
+Review gallery: `marketing/app-store-screenshots/previews/index.html`.
+
+### Earlier upload — version 1.2
 
 Screenshots attach to an editable `appStoreVersion`, and all four existing versions
 (1.0–1.1) were already `READY_FOR_SALE` — no draft to attach to. Created **1.2**
