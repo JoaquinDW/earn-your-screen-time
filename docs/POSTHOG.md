@@ -51,14 +51,19 @@ Filter or break down any PostHog insight by `environment` to exclude development
   wiring needed, PostHog just needs to be configured to receive it.
 - **Earn-method comparison**: compare `first_earn_started`/`reward_completed` (steps),
   `pushups_session_started`/`pushups_reward_claimed`, and `study_scan_started`/`study_reward_granted`
-  to see which earning method people actually finish versus abandon. The `pushups_*` events cover
-  both camera exercises; break them down by their `exercise` property (`pushup` or `squat`).
+  to see which earning method people actually finish versus abandon. The `pushups_*` events cover all
+  camera exercises; break them down by their `exercise` property (`pushup`, `squat`,
+  `jumping_jack` or `lunge`).
   `exercise_selected` fires when someone switches exercise in the picker.
 - **Pause, impact and sharing**: `shield_open_skipped` counts opens skipped at a shield (`source`
   `system_shield` arrives in a batch with `count` when the app next opens; `blocked_detail` is the
   in-app screen). `mindful_pause_finished` has `outcome` `unlocked`, `skipped_during_pause` or
   `skipped_after_pause`. `impact_report_viewed` and `progress_share_tapped` (`kind` `progress` or
   `challenge`, plus `source` and `period`) measure the report and the share surfaces.
+- **Schedules and strict mode**: `block_schedule_changed` (`enabled`, and for a schedule
+  `start_minute`, `duration_minutes`, `weekday_count`), `strict_mode_started` (`duration_hours`,
+  `has_schedule`) and `strict_mode_refused_change` (`change` `apps`, `rule` or `schedule`), which shows
+  how often strict mode actually stops someone.
 - **Retention**: use `onboarding_completed` as the activation event and any later `screen_viewed` or
   `minutes_earned` event as the return event, filtered to `environment=release`.
 

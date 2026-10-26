@@ -32,6 +32,12 @@ final class MonitorExtension: DeviceActivityMonitor {
     }
 
     private func finishSession(for activity: DeviceActivityName) {
+        // The blocking window and strict mode only need the shields brought up to date.
+        if MonitorScheduler.isPolicyActivity(activity) {
+            logger.notice("Policy interval changed: \(activity.rawValue, privacy: .public)")
+            RestrictionCoordinator.shared.reconcile(refreshMonitoring: false)
+            return
+        }
         guard let sessionID = SessionMonitorPlan.sessionID(fromActivityName: activity.rawValue) else {
             logger.error("Ignoring unknown session activity: \(activity.rawValue, privacy: .public)")
             return

@@ -3,8 +3,9 @@ import { entitlementForUser } from "../_shared/revenuecat.ts";
 import { errorResponse, HttpError, json, method } from "../_shared/response.ts";
 import { validAppVersion, versionAtLeast } from "../_shared/pushups.ts";
 
-// Push-ups and squats share one daily cap and one free reward.
-const EXERCISE_REWARD_SOURCES = ["pushups", "squats"];
+// Every camera exercise shares one daily cap and one free reward.
+// Mirrors private.exercise_reward_sources().
+const EXERCISE_REWARD_SOURCES = ["pushups", "squats", "jumping_jacks", "lunges"];
 
 Deno.serve(async (request) => {
   try {
@@ -22,7 +23,7 @@ Deno.serve(async (request) => {
     const { data: configuration, error } = await client.from(
       "exercise_configuration",
     ).select(
-      "enabled,entitlement_required,free_rewards_per_user,daily_cap_seconds,session_ttl_seconds,minimum_app_version,detection_version,minimum_pose_confidence,down_elbow_angle_degrees,up_elbow_angle_degrees,minimum_body_angle_degrees,minimum_rep_duration_seconds,squat_enabled,squat_minimum_pose_confidence,squat_bottom_depth_score,squat_minimum_rep_duration_seconds",
+      "enabled,entitlement_required,free_rewards_per_user,daily_cap_seconds,session_ttl_seconds,minimum_app_version,detection_version,minimum_pose_confidence,down_elbow_angle_degrees,up_elbow_angle_degrees,minimum_body_angle_degrees,minimum_rep_duration_seconds,squat_enabled,squat_minimum_pose_confidence,squat_bottom_depth_score,squat_minimum_rep_duration_seconds,jumping_jack_enabled,jumping_jack_minimum_pose_confidence,jumping_jack_minimum_rep_duration_seconds,lunge_enabled,lunge_minimum_pose_confidence,lunge_bottom_depth_score,lunge_minimum_rep_duration_seconds",
     ).eq("id", true).single();
     if (error) throw error;
     const { data: challenges, error: challengesError } = await client.from(
@@ -106,6 +107,32 @@ Deno.serve(async (request) => {
             ),
           },
           challenges: challengesFor("squat"),
+        },
+        // Older clients ignore these keys.
+        jumpingJacks: {
+          enabled: configuration.jumping_jack_enabled,
+          poseThresholds: {
+            minimumConfidence: Number(
+              configuration.jumping_jack_minimum_pose_confidence,
+            ),
+            minimumRepDurationSeconds: Number(
+              configuration.jumping_jack_minimum_rep_duration_seconds,
+            ),
+          },
+          challenges: challengesFor("jumping_jack"),
+        },
+        lunges: {
+          enabled: configuration.lunge_enabled,
+          poseThresholds: {
+            minimumConfidence: Number(
+              configuration.lunge_minimum_pose_confidence,
+            ),
+            bottomDepthScore: Number(configuration.lunge_bottom_depth_score),
+            minimumRepDurationSeconds: Number(
+              configuration.lunge_minimum_rep_duration_seconds,
+            ),
+          },
+          challenges: challengesFor("lunge"),
         },
       },
       entitled,

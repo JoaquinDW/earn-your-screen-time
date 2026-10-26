@@ -4,10 +4,20 @@ import FamilyControls
 import Foundation
 import OSLog
 
-/// Carries one explicit access session in a non-repeating DeviceActivity schedule.
+/// Carries one explicit access session in a non-repeating DeviceActivity schedule, plus the two
+/// policy activities: the daily blocking window and the end of strict mode.
 struct MonitorScheduler {
     static let shared = MonitorScheduler()
     private static let legacyActivityName = DeviceActivityName("earnYourScreenTimeDaily")
+    static let blockWindowActivityName = DeviceActivityName("earnitBlockWindow")
+    static let strictModeActivityName = DeviceActivityName("earnitStrictMode")
+    /// DeviceActivity refuses intervals shorter than this.
+    private static let minimumIntervalSeconds: TimeInterval = 15 * 60
+
+    /// Policy activities only ask for a reconcile; they never finish a session.
+    static func isPolicyActivity(_ activity: DeviceActivityName) -> Bool {
+        activity == blockWindowActivityName || activity == strictModeActivityName
+    }
     private static let logger = Logger(
         subsystem: "com.balthasardeweert.earnyourscreentime",
         category: "DeviceActivityScheduler"
@@ -23,6 +33,8 @@ struct MonitorScheduler {
     private enum Key {
         static let registration = "shared.sessionMonitorRegistration.v2"
         static let legacyRegistration = "shared.monitorRegistration.v1"
+        static let blockWindow = "shared.blockWindowRegistration.v1"
+        static let strictModeEnd = "shared.strictModeRegistration.v1"
     }
 
     private var center: DeviceActivityCenter { DeviceActivityCenter() }
@@ -100,6 +112,76 @@ struct MonitorScheduler {
         }
         clearRegistration()
         defaults.removeObject(forKey: Key.legacyRegistration)
+    }
+
+    // MARK: - Policy
+
+    /// Keeps the blocking window and the strict-mode end registered to match `state`. Session
+    /// changes never touch these: `stopAll` only stops session activities.
+    func refreshPolicy(state: SharedState, now: Date = Date()) throws {
+        refreshStrictModeEnd(state.isStrictModeActive(at: now) ? state.strictModeUntil : nil, now: now)
+        try refreshBlockWindow(state.blockSchedule)
+    }
+
+    /// One daily interval from the window's start to its end; DeviceActivity carries intervals
+    /// across midnight. Weekdays are not part of the interval: every callback reconciles and
+    /// `BlockSchedule.isBlocking` decides, so on a day off the callback finds nothing to shield.
+    private func refreshBlockWindow(_ schedule: BlockSchedule?) throws {
+        let name = Self.blockWindowActivityName
+        guard let schedule else {
+            if center.activities.contains(name) {
+                center.stopMonitoring([name])
+            }
+            defaults.removeObject(forKey: Key.blockWindow)
+            return
+        }
+
+        let stored = defaults.data(forKey: Key.blockWindow)
+            .flatMap { try? JSONDecoder().decode(BlockSchedule.self, from: $0) }
+        if stored == schedule, center.activities.contains(name) { return }
+
+        center.stopMonitoring([name])
+        let deviceSchedule = DeviceActivitySchedule(
+            intervalStart: DateComponents(hour: schedule.startMinute / 60, minute: schedule.startMinute % 60),
+            intervalEnd: DateComponents(hour: schedule.endMinute / 60, minute: schedule.endMinute % 60),
+            repeats: true
+        )
+        try center.startMonitoring(name, during: deviceSchedule)
+        defaults.set(try JSONEncoder().encode(schedule), forKey: Key.blockWindow)
+        Self.logger.notice("Started block window monitor")
+    }
+
+    /// A one-off interval ending when strict mode does, so the app-removal lock is lifted even if
+    /// Earnit is never opened. Failing to register it is not fatal: the next reconcile after the
+    /// end date lifts the lock too.
+    private func refreshStrictModeEnd(_ end: Date?, now: Date) {
+        let name = Self.strictModeActivityName
+        guard let end else {
+            if center.activities.contains(name) {
+                center.stopMonitoring([name])
+            }
+            defaults.removeObject(forKey: Key.strictModeEnd)
+            return
+        }
+
+        let stored = defaults.object(forKey: Key.strictModeEnd) as? Date
+        if stored == end, center.activities.contains(name) { return }
+        guard end.timeIntervalSince(now) >= Self.minimumIntervalSeconds else { return }
+
+        center.stopMonitoring([name])
+        let calendar = Calendar.current
+        let components: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
+        let schedule = DeviceActivitySchedule(
+            intervalStart: calendar.dateComponents(components, from: now.addingTimeInterval(-1)),
+            intervalEnd: calendar.dateComponents(components, from: end),
+            repeats: false
+        )
+        do {
+            try center.startMonitoring(name, during: schedule)
+            defaults.set(end, forKey: Key.strictModeEnd)
+        } catch {
+            Self.logger.error("Could not monitor the end of strict mode: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     var isMonitoring: Bool {

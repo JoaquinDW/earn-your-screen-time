@@ -173,6 +173,10 @@ struct DashboardHome: View {
         if let session = env.activeSession {
             ActiveSessionBand(session: session)
                 .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
+        } else if !selection.isEmpty, let schedule = env.blockSchedule, !schedule.isBlocking(at: .now) {
+            // Outside blocking hours the apps are open; spending minutes would only waste them.
+            freeHoursBand(resumesAt: schedule.nextChange(after: .now))
+                .transition(.opacity)
         } else if env.wallet.availableMinutes > 0 {
             Button(action: selection.isEmpty ? onChooseApps : onSpend) {
                 Label(
@@ -190,6 +194,36 @@ struct DashboardHome: View {
             .buttonStyle(.nightPill)
             .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
         }
+    }
+
+    private func freeHoursBand(resumesAt: Date?) -> some View {
+        HStack(spacing: Theme.Space.s) {
+            Image(systemName: "moon.stars")
+                .foregroundStyle(Night.moss)
+                .accessibilityHidden(true)
+            Group {
+                if let resumesAt {
+                    Text("home.schedule.free \(resumeLabel(resumesAt))")
+                } else {
+                    Text("home.schedule.freeNow")
+                }
+            }
+            .font(.sans(14, weight: .semibold))
+            .foregroundStyle(Night.textSoft)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, Theme.Space.m)
+        .frame(minHeight: 52)
+        .background(Night.panel, in: .capsule)
+    }
+
+    /// "18:00" later today, "Mon 09:00" on another day.
+    private func resumeLabel(_ date: Date) -> String {
+        let time = Date.FormatStyle.dateTime.hour().minute().locale(locale)
+        return Calendar.current.isDateInToday(date)
+            ? date.formatted(time)
+            : date.formatted(time.weekday(.abbreviated))
     }
 
     private var quickPushupsAction: some View {

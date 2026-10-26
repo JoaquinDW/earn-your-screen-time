@@ -2,13 +2,15 @@ import Foundation
 
 /// Where earned screen time comes from.
 ///
-/// Steps and camera-counted pushups and squats are implemented, while the domain is modelled around the
+/// Steps and camera-counted exercises are implemented, while the domain is modelled around the
 /// abstraction so workouts / focus sessions / distance goals can be added without
 /// reshaping persisted data (PRD §25).
 public enum EarningSource: String, Codable, Sendable, CaseIterable {
     case steps
     case pushups
     case squats
+    case jumpingJacks = "jumping_jacks"
+    case lunges
     case workout
     case focusSession
     case runningDistance
@@ -16,7 +18,7 @@ public enum EarningSource: String, Codable, Sendable, CaseIterable {
     case custom
 
     /// Sources the app can actually measure today.
-    public static var implemented: [EarningSource] { [.steps, .pushups, .squats] }
+    public static var implemented: [EarningSource] { [.steps, .pushups, .squats, .jumpingJacks, .lunges] }
 
     public var isImplemented: Bool { Self.implemented.contains(self) }
 }

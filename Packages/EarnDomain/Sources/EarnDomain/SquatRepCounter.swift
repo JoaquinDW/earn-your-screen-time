@@ -45,7 +45,19 @@ public struct SquatPoseThresholds: Codable, Equatable, Sendable {
 /// Facing the lens the thigh points at the camera and the knee angle barely changes on screen,
 /// but the vertical hip-to-knee gap still collapses, so the same signal works head-on and in
 /// profile. Dividing by the shin height keeps it independent of how far away the phone is.
+///
+/// Lunges use the same counter measuring only the deeper leg: at the bottom of a lunge the
+/// front thigh is level, so its hip-to-knee gap collapses just as a squat's does, while the
+/// back leg folds under and says nothing useful. Each leg's lunge counts as one repetition.
 public struct SquatRepCounter: Equatable, Sendable {
+    /// Which legs the depth is read from.
+    public enum LegMeasure: String, Equatable, Sendable {
+        /// Both legs together: a squat.
+        case both
+        /// The leg that is deeper: alternating lunges.
+        case deepest
+    }
+
     public enum Status: String, Equatable, Sendable {
         case poseLost
         case lowConfidence
@@ -86,6 +98,7 @@ public struct SquatRepCounter: Equatable, Sendable {
     }
 
     public let thresholds: SquatPoseThresholds
+    public let measure: LegMeasure
     public private(set) var repetitionCount: Int
     private var phase: Phase = .waitingForTop
     private var cycleStartedAt: TimeInterval?
@@ -93,8 +106,13 @@ public struct SquatRepCounter: Equatable, Sendable {
     private var poseLostAt: TimeInterval?
     private var topRatio: Double?
 
-    public init(thresholds: SquatPoseThresholds = SquatPoseThresholds(), repetitionCount: Int = 0) {
+    public init(
+        thresholds: SquatPoseThresholds = SquatPoseThresholds(),
+        measure: LegMeasure = .both,
+        repetitionCount: Int = 0
+    ) {
         self.thresholds = thresholds
+        self.measure = measure
         self.repetitionCount = max(0, repetitionCount)
     }
 
@@ -121,16 +139,13 @@ public struct SquatRepCounter: Equatable, Sendable {
 
         let count = Double(usable.count)
         let hipY = usable.reduce(0) { $0 + $1.hip.y } / count
-        let thigh = usable.reduce(0) { $0 + ($1.hip.y - $1.knee.y) } / count
-        let shin = usable.reduce(0) { $0 + ($1.knee.y - $1.ankle.y) } / count
-        guard shin >= thresholds.minimumShinHeight, !isTorsoBelowHips(in: pose, hipY: hipY) else {
+        guard let ratio = depthRatio(of: usable), !isTorsoBelowHips(in: pose, hipY: hipY) else {
             return invalidPose(at: pose.timestamp, status: .notUpright, guidance: .standUpright)
         }
 
         recoverIfNeeded(at: pose.timestamp)
         poseLostAt = nil
 
-        let ratio = max(0, thigh) / shin
         let score = depthScore(for: ratio)
 
         func output(_ status: Status, _ guidance: Guidance, didCountRep: Bool = false) -> Output {
@@ -180,6 +195,24 @@ public struct SquatRepCounter: Equatable, Sendable {
     }
 
     // MARK: - Depth
+
+    /// Thigh height over shin height, or `nil` when no leg stands tall enough to read.
+    private func depthRatio(of legs: [Leg]) -> Double? {
+        switch measure {
+        case .both:
+            let count = Double(legs.count)
+            let thigh = legs.reduce(0) { $0 + ($1.hip.y - $1.knee.y) } / count
+            let shin = legs.reduce(0) { $0 + ($1.knee.y - $1.ankle.y) } / count
+            guard shin >= thresholds.minimumShinHeight else { return nil }
+            return max(0, thigh) / shin
+        case .deepest:
+            // The back leg's shin lies nearly flat at the bottom of a lunge; it cannot be read.
+            return legs
+                .filter { $0.knee.y - $0.ankle.y >= thresholds.minimumShinHeight }
+                .map { max(0, $0.hip.y - $0.knee.y) / ($0.knee.y - $0.ankle.y) }
+                .min()
+        }
+    }
 
     private func depthScore(for ratio: Double) -> Double {
         guard let topRatio, topRatio > 0 else { return 0 }

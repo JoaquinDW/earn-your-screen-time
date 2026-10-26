@@ -124,10 +124,16 @@ struct PushupsToEarnView: View {
         }
     }
 
-    /// Two exercises, one choice: a segmented capsule rather than a menu, so both options are
-    /// visible before anyone decides they cannot do push-ups.
+    /// Every exercise visible at once rather than behind a menu, so all of them are seen before
+    /// anyone decides they cannot do push-ups. Two sit in one capsule; more wrap two by two.
     private var exerciseSelector: some View {
-        HStack(spacing: Theme.Space.xs) {
+        LazyVGrid(
+            columns: Array(
+                repeating: GridItem(.flexible(), spacing: Theme.Space.xs),
+                count: min(2, max(1, model.availableExercises.count))
+            ),
+            spacing: Theme.Space.xs
+        ) {
             ForEach(model.availableExercises, id: \.self) { exercise in
                 let selected = model.exercise == exercise
                 Button {
@@ -138,6 +144,9 @@ struct PushupsToEarnView: View {
                     PushupsText(exercise.nameKey)
                         .font(.sans(16, weight: .semibold))
                         .foregroundStyle(selected ? Night.text : Night.textMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .padding(.horizontal, Theme.Space.xs)
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .background(selected ? Night.cobaltWash : .clear, in: .capsule)
                         .overlay {
@@ -150,7 +159,10 @@ struct PushupsToEarnView: View {
             }
         }
         .padding(Theme.Space.xs)
-        .background(Night.panel, in: .capsule)
+        .background(
+            Night.panel,
+            in: .rect(cornerRadius: model.availableExercises.count > 2 ? 26 : 30)
+        )
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("exercise.picker.label", tableName: PushupsLocalization.tableName))
     }
@@ -420,7 +432,7 @@ struct PushupsToEarnView: View {
         case .tooFar: "arrow.down.forward.and.arrow.up.backward"
         case .lighting: "lightbulb.max"
         case .moveBack: "arrow.up.backward.and.arrow.down.forward"
-        case .posture: model.exercise == .squat ? "figure.stand" : "figure.strengthtraining.traditional"
+        case .posture: model.exercise == .pushup ? "figure.strengthtraining.traditional" : "figure.stand"
         case .startPosition: "arrow.up.circle"
         case .holding: "checkmark.circle.fill"
         }
