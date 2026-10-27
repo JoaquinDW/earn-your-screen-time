@@ -139,3 +139,11 @@ reconcile, al abrir la app.
 El horario de bloqueo se aplica con callbacks de una actividad diaria repetitiva, que como el resto
 pueden llegar con retraso (sección 5). Con la app cerrada, los shields pueden subir o bajar unos
 segundos o minutos tarde respecto a la hora elegida.
+
+## 19. Amigos depende de que la app corra y de la identidad anónima
+
+El aviso de "no llegó a su meta" sale cuando el teléfono sube el día de ayer como final, es decir, la
+primera vez que la app corre después de medianoche (al abrirla o con una actualización de pasos en
+background, más o menos cada hora). Si la app no corre, no hay aviso. La identidad es anónima: al
+reinstalar la app se pierde el perfil y hay que volver a agregar a los amigos. Los push necesitan la clave
+APNs configurada en Supabase; sin ella solo existe la bandeja dentro de la app.

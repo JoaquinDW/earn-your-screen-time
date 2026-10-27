@@ -197,6 +197,19 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let strictModeStarted = AnalyticsEvent("strict_mode_started")
     /// Strict mode refused a change that would have weakened blocking; `change` says which.
     static let strictModeRefusedChange = AnalyticsEvent("strict_mode_refused_change")
+    /// Friends: a profile was created (`social_profile_created`) or deleted.
+    static let socialProfileCreated = AnalyticsEvent("social_profile_created")
+    static let socialProfileDeleted = AnalyticsEvent("social_profile_deleted")
+    /// `share_misses`: whether friends are told when this person misses their goal.
+    static let socialSettingChanged = AnalyticsEvent("social_setting_changed")
+    static let friendAdded = AnalyticsEvent("friend_added")
+    static let friendRemoved = AnalyticsEvent("friend_removed")
+    /// A nudge or a cheer; `kind` says which, `friend_missed_yesterday` whether it followed a miss.
+    static let friendMessageSent = AnalyticsEvent("friend_message_sent")
+    /// The share sheet for an invite was opened; `kind` is `friend` or `squad`.
+    static let friendInviteShared = AnalyticsEvent("friend_invite_shared")
+    static let squadCreated = AnalyticsEvent("squad_created")
+    static let squadJoined = AnalyticsEvent("squad_joined")
 
     static func planSelected(_ plan: AnalyticsPlan) -> AnalyticsEvent {
         AnalyticsEvent("plan_selected", properties: ["plan": .string(plan.rawValue)])

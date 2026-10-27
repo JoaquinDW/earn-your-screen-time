@@ -28,6 +28,7 @@ struct DashboardHome: View {
     let onSpend: () -> Void
     let onEarnMore: () -> Void
     let onPushups: () -> Void
+    let onFriends: () -> Void
 
     @State private var isShowingImpact = false
 
@@ -67,10 +68,11 @@ struct DashboardHome: View {
                 .font(.serif(21, relativeTo: .title3))
                 .foregroundStyle(Night.text)
 
-            Group {
+            HStack(spacing: Theme.Space.s) {
                 if env.streakDays > 0 {
                     StreakBadge(days: env.streakDays)
                 }
+                friendsButton
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
@@ -78,6 +80,29 @@ struct DashboardHome: View {
         .foregroundStyle(Night.textMuted)
         .lineLimit(1)
         .minimumScaleFactor(0.8)
+    }
+
+    /// Friends sit in the header, beside the streak they are there to protect. The dot means a
+    /// friend nudged, cheered, added you, or missed their goal.
+    private var friendsButton: some View {
+        Button(action: onFriends) {
+            Image(systemName: "person.2.fill")
+                .font(.sans(14, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
+                .frame(width: Theme.minTouchTarget, height: Theme.minTouchTarget)
+                .overlay(alignment: .topTrailing) {
+                    if env.socialUnreadCount > 0 {
+                        Circle()
+                            .fill(Night.moss)
+                            .frame(width: 8, height: 8)
+                            .offset(x: -9, y: 10)
+                    }
+                }
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("friends.title"))
+        .accessibilityValue(env.socialUnreadCount > 0 ? Text("friends.unread \(env.socialUnreadCount)") : Text(verbatim: ""))
     }
 
     // MARK: - Balance

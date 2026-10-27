@@ -64,6 +64,11 @@ Filter or break down any PostHog insight by `environment` to exclude development
   `start_minute`, `duration_minutes`, `weekday_count`), `strict_mode_started` (`duration_hours`,
   `has_schedule`) and `strict_mode_refused_change` (`change` `apps`, `rule` or `schedule`), which shows
   how often strict mode actually stops someone.
+- **Friends**: `social_profile_created`/`social_profile_deleted`, `friend_added`, `friend_removed`,
+  `friend_invite_shared` (`kind` `friend` or `squad`), `friend_message_sent` (`kind` `nudge` or `cheer`,
+  plus `friend_missed_yesterday`), `squad_created`, `squad_joined` and `social_setting_changed`
+  (`share_misses`). Compare 30-day retention of people with at least one friend against everyone else;
+  that is the number this feature exists to move.
 - **Retention**: use `onboarding_completed` as the activation event and any later `screen_viewed` or
   `minutes_earned` event as the return event, filtered to `environment=release`.
 

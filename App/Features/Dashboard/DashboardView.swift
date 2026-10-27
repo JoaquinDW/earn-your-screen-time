@@ -19,6 +19,7 @@ struct DashboardView: View {
         case earnTime
         case pushups
         case study
+        case friends
     }
 
     @State private var path: [HomeDestination] = []
@@ -51,7 +52,8 @@ struct DashboardView: View {
                         isShowingSpend = true
                     },
                     onEarnMore: { path.append(.earnTime) },
-                    onPushups: { openPushups(source: "home") }
+                    onPushups: { openPushups(source: "home") },
+                    onFriends: { path.append(.friends) }
                 )
 
             }
@@ -79,6 +81,8 @@ struct DashboardView: View {
                     PushupsToEarnView(onUseMinutes: openSpendAfterReward)
                 case .study:
                     StudyToEarnView(onUseMinutes: openSpendAfterReward)
+                case .friends:
+                    FriendsView()
                 }
             }
         }
@@ -179,6 +183,12 @@ struct DashboardView: View {
 
     /// Pushups lives in this stack, so deep links are resolved here rather than in `RootView`.
     private func applyPendingRoute(_ route: AppRoute?) {
+        if route == .friends {
+            isShowingSpend = false
+            env.consumePendingRoute()
+            path = [.friends]
+            return
+        }
         guard route == .pushups else { return }
         isShowingSpend = false
         env.consumePendingRoute()

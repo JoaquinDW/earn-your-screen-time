@@ -1,8 +1,8 @@
 # Privacy Policy
 
-Last updated: September 14, 2026
+Last updated: October 27, 2026
 
-Earnit processes step counts on your device to calculate movement goals and screen-time credit. Raw HealthKit history is not sent to our servers or included in analytics.
+Earnit processes step counts on your device to calculate movement goals and screen-time credit. Raw HealthKit history is not sent to our servers or included in analytics. If you turn on Friends, a daily summary is shared as described below.
 
 App selections are represented by opaque Apple Family Controls tokens and remain in the app's local App Group storage. Earnit cannot derive or upload the identity of selected apps from those tokens.
 
@@ -13,6 +13,8 @@ Study to Earn uses the camera only when you choose to scan study material. The p
 While a Study to Earn session is active, Supabase temporarily stores the extracted text, a generated reference answer, and evaluation criteria. This content is deleted when the session succeeds, is abandoned, or expires. Supabase retains an anonymous account identifier, entitlement status, session status and timestamps, and reward transaction records to enforce subscription access, daily limits, and duplicate protection. Earnit links the same anonymous identifier to RevenueCat for entitlement verification.
 
 Pushups to Earn uses the rear camera only during a challenge. Apple Vision detects body-joint positions and counts repetitions entirely on the iPhone. Earnit does not record or save video, images, or body landmarks, and none of that camera data is uploaded. Supabase receives only the challenge target, completed repetition count, completion time, detector version, and anonymous session identifiers. It stores exercise session and reward transaction records to enforce Pro access, the UTC daily reward cap, expiry, and duplicate protection.
+
+Friends is optional and off until you set it up. When you do, Supabase stores the display name you choose, a random invite code, and, for today and yesterday, your movement goal, step total, minutes earned and streak. People you add as friends, and members of squads you join, see your display name and those daily numbers; if you leave "Tell friends when I miss my goal" on, your friends are told once when a finished day falls short of your goal. Nudges, cheers and these notices are stored for delivery. If you allow notifications, your device's push token is stored so they can reach you through Apple Push Notification service. Earnit never shares which apps you protect or how you spend your minutes. "Stop using Friends" deletes your profile, friendships, squad memberships, shared days and notices from our server.
 
 Product analytics must not contain raw HealthKit samples, Family Controls tokens, app names, bundle identifiers, health identifiers, study photos, extracted study text, learner answers, generated questions, answer keys, exercise camera frames, or body landmarks. Study and Pushups analytics use only operational events and coarse, non-identifying values such as challenge size or detector state.
 

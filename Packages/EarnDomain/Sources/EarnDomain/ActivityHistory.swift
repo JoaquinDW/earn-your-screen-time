@@ -20,6 +20,9 @@ public struct DaySummary: Codable, Equatable, Sendable {
     public let returnedSeconds: Int
     /// False for payloads written before usage history existed and for calendar gaps.
     public let hasUsageData: Bool
+    /// The movement goal that day, for telling friends whether it was reached. 0 for days filed
+    /// before the goal was kept.
+    public let dailyGoal: Int
 
     public init(day: DayKey, activityAmount: Int, earnedSeconds: Int) {
         self.init(
@@ -47,7 +50,8 @@ public struct DaySummary: Codable, Equatable, Sendable {
         consumedSeconds: Int = 0,
         sessionCount: Int = 0,
         returnedSeconds: Int = 0,
-        hasUsageData: Bool = true
+        hasUsageData: Bool = true,
+        dailyGoal: Int = 0
     ) {
         self.day = day
         self.activityAmount = max(0, activityAmount)
@@ -60,6 +64,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
         self.sessionCount = max(0, sessionCount)
         self.returnedSeconds = max(0, returnedSeconds)
         self.hasUsageData = hasUsageData
+        self.dailyGoal = max(0, dailyGoal)
         earnedSeconds = self.stepEarnedSeconds + self.studyEarnedSeconds + self.pushupEarnedSeconds
             + self.squatEarnedSeconds + self.workoutEarnedSeconds
     }
@@ -98,7 +103,8 @@ public struct DaySummary: Codable, Equatable, Sendable {
             workoutEarnedSeconds: workoutSeconds,
             consumedSeconds: ledger.wallet.consumedSeconds,
             sessionCount: ledger.sessionCount,
-            returnedSeconds: ledger.returnedSessionSeconds
+            returnedSeconds: ledger.returnedSessionSeconds,
+            dailyGoal: ledger.dailyGoal
         )
     }
 
@@ -113,7 +119,7 @@ public struct DaySummary: Codable, Equatable, Sendable {
         case day, activityAmount, earnedSeconds, stepEarnedSeconds, studyEarnedSeconds, pushupEarnedSeconds
         case squatEarnedSeconds, workoutEarnedSeconds
         case consumedSeconds, sessionCount, returnedSeconds
-        case hasUsageData
+        case hasUsageData, dailyGoal
     }
 
     public init(from decoder: Decoder) throws {
@@ -140,7 +146,8 @@ public struct DaySummary: Codable, Equatable, Sendable {
             consumedSeconds: try container.decodeIfPresent(Int.self, forKey: .consumedSeconds) ?? 0,
             sessionCount: try container.decodeIfPresent(Int.self, forKey: .sessionCount) ?? 0,
             returnedSeconds: try container.decodeIfPresent(Int.self, forKey: .returnedSeconds) ?? 0,
-            hasUsageData: try container.decodeIfPresent(Bool.self, forKey: .hasUsageData) ?? hasPersistedUsage
+            hasUsageData: try container.decodeIfPresent(Bool.self, forKey: .hasUsageData) ?? hasPersistedUsage,
+            dailyGoal: try container.decodeIfPresent(Int.self, forKey: .dailyGoal) ?? 0
         )
     }
 }

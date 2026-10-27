@@ -24,6 +24,7 @@ Send `Authorization: Bearer <user-access-token>` on all user endpoints.
 - `GET /functions/v1/pushups-config?app_version=1.0.0` returns the remote feature flag, minimum versions, pose thresholds, available 5/10/20-rep challenges, Pro status, and UTC-day availability.
 - `POST /functions/v1/pushups-start` accepts `{ "client_request_id": "<uuid>", "target_reps": 5, "app_version": "1.0.0", "detection_version": "1" }`, plus an optional `"exercise_type": "squat"` (omitted means push-ups, so older clients are unaffected).
 - `POST /functions/v1/pushups-claim` accepts `{ "session_id": "<uuid>", "completed_reps": 5, "duration_seconds": 4.2, "completed_at": "<ISO-8601>", "detection_version": "1" }`. A locally completed claim remains retryable after the session expires when `completed_at` falls inside the original session window.
+- `POST /functions/v1/social` takes `{ "action": ... }` for Friends: `overview` (`today`), `save_profile` (`display_name`, `share_misses`, `apns_token`, `apns_environment`), `delete_profile`, `add_friend` (`invite_code`, `today`), `remove_friend` (`friend_id`), `record_progress` (`days`: up to 7 of `day`, `daily_goal`, `activity_amount`, `earned_seconds`, `streak_days`, `is_final`), `send` (`friend_id`, `kind` `nudge` or `cheer`, `today`), `create_squad` (`name`), `join_squad` (`invite_code`), `leave_squad` (`squad_id`) and `mark_read`. Days are the phone's local calendar days as `YYYY-MM-DD`.
 - `POST /functions/v1/revenuecat-webhook` is reserved for RevenueCat.
 
 Pushups starts enabled with minimum app version `0.1.0` and can be disabled through `exercise_configuration.enabled`; keep its `entitlement_id` aligned with `REVENUECAT_ENTITLEMENT_ID`. Start is idempotent per user and `client_request_id`; it rejects another live session and snapshots the server-selected target, reward, app version, and detection version. The initial challenges are 5/10/20 repetitions for 5/10/20 minutes; enablement, rewards, cap, versions, TTL, and pose thresholds can be changed remotely. Claim accepts only aggregate repetitions, duration, completion time, and detection version; frames and landmarks are rejected and never stored. PostgreSQL serializes claims per session and per user/UTC completion day, rechecks the Pro entitlement, feature flag, target, detection version, completion window, and daily cap, and grants no partial reward. A repeated successful claim returns the original `reward_transactions` receipt, and a locally completed claim can be retried after connectivity returns without moving its reward into a later UTC cap bucket.
@@ -113,3 +114,11 @@ The pgTAP suite checks both features' RLS/grants, defaults, all-or-nothing cap e
 - RevenueCat webhooks are at-least-once. Event IDs are claimed in PostgreSQL; failed or stale claims can be retried safely.
 - Use Supabase logs carefully: error paths intentionally avoid learner answers and generated answer keys.
 - Monitor rows left in `failed` webhook status and active sessions that outlive their expiry, and alert on cleanup or RevenueCat refresh failures.
+
+## Friends and squads
+
+`20261027000000_friends_and_squads.sql` adds social profiles (display name, six-character invite code), mutual friendships (20 per person), squads (10 people, 3 per person) with a Monday-to-Sunday league, one daily summary per person and day, and an events table that is both the in-app inbox and the push dedupe: a missed goal is reported once per friend and day, and a friend can nudge or cheer someone once a day. Only the last three days can be written.
+
+Pushes are optional. Set `APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_PRIVATE_KEY` (the .p8 contents) and `APNS_BUNDLE_ID` as function secrets to turn them on; the app's push capability must be enabled for the App ID. Debug builds register sandbox tokens and TestFlight/App Store builds production ones, and a token APNs rejects as invalid is cleared.
+
+Deploy with `supabase db push` and `supabase functions deploy social`.

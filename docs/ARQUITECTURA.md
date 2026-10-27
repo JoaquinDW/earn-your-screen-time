@@ -196,3 +196,25 @@ horario no se puede registrar, reconcile ignora el horario y escuda siempre (fal
 solo puede endurecerse (`StrictMode.allowsRuleChange`), el horario solo puede volver a "siempre", y
 `ManagedSettingsStore.application.denyAppRemoval` impide borrar apps del iPhone, Earnit incluida. Se
 puede ampliar, nunca acortar.
+
+## Amigos y squads
+
+Amigos es opcional y no manda nada hasta que la persona crea su perfil (`SocialStore.hasProfile`).
+Desde entonces `AppEnvironment.syncSocialProgress` sube como mucho cada 15 minutos, al final de
+`refresh`, dos `AccountabilityDay`: hoy en curso y ayer como día final si hay historia de ayer. Un día
+sin historia (la app no corrió) no se manda: a los amigos se les avisa de un día sin meta, nunca de un
+silencio. `DaySummary.dailyGoal` guarda la meta de cada día; los días archivados antes de este cambio
+usan la meta actual.
+
+Todo pasa por la Edge Function `social`, con service role, como el resto del backend. Las tablas
+`social_profiles`, `friendships`, `squads`, `squad_members`, `daily_progress` y `social_events` no son
+legibles por `anon` ni `authenticated`. `social_events` es a la vez la bandeja de la app y el control de
+duplicados: un aviso de meta perdida por amigo y día, y un empujón o felicitación por amigo y día.
+
+Los push son opcionales: con los secretos `APNS_*` la función firma un JWT ES256 y llama a APNs; sin
+ellos no se envía nada y todo se ve en la bandeja. El texto se localiza en el teléfono del que recibe
+(`loc-key`/`loc-args`), porque el servidor no sabe su idioma. El token se registra solo con perfil y
+permiso de notificaciones, en cada vuelta al primer plano, y se sube una vez por token.
+
+La identidad es el usuario anónimo de Supabase que ya usan Study y ejercicios. Reinstalar la app crea
+otra identidad y con ella un perfil nuevo.
