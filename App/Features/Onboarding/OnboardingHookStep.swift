@@ -9,6 +9,11 @@ import SwiftUI
 struct OnboardingHookStep: View {
     let onContinue: () -> Void
 
+    /// The first impression builds itself in beats, as slowly as a first look deserves: the
+    /// scene lands, the line arrives, the earn rate slaps down like a sticker, and the button
+    /// comes last so the eye has somewhere to go once everything is read.
+    private static let entrance = "onboarding.hook"
+
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -17,6 +22,7 @@ struct OnboardingHookStep: View {
                         Text("app.name")
                             .eyebrowStyle(Night.textSoft)
                     }
+                    .staggeredAppear(0, in: Self.entrance, style: .settle)
 
                     VStack(alignment: .leading, spacing: 0) {
                         Text("onboarding.hook.headline")
@@ -24,11 +30,13 @@ struct OnboardingHookStep: View {
                             .foregroundStyle(Night.text)
                             .fixedSize(horizontal: false, vertical: true)
                             .accessibilityAddTraits(.isHeader)
+                            .staggeredAppear(2, in: Self.entrance)
 
                         Text("onboarding.hook.subtitle")
                             .font(.sans(16))
                             .foregroundStyle(Night.textSoft)
                             .fixedSize(horizontal: false, vertical: true)
+                            .staggeredAppear(4, in: Self.entrance)
                             .padding(.top, 14)
 
                         Label("5 min / 500 steps", systemImage: "figure.walk")
@@ -37,6 +45,7 @@ struct OnboardingHookStep: View {
                             .padding(.horizontal, Theme.Space.m)
                             .frame(minHeight: Theme.minTouchTarget)
                             .background(Night.cobaltWash, in: .capsule)
+                            .staggeredAppear(7, in: Self.entrance, style: .sticker)
                             .padding(.top, Theme.Space.l)
                     }
                     .padding(.horizontal, Theme.Space.gutter)
@@ -49,6 +58,7 @@ struct OnboardingHookStep: View {
 
             Button("onboarding.hook.action", action: onContinue)
                 .buttonStyle(.pill)
+                .staggeredAppear(9, in: Self.entrance)
                 .padding(.horizontal, Theme.Space.gutter)
                 .padding(.top, Theme.Space.s)
                 .padding(.bottom, Theme.Space.s)

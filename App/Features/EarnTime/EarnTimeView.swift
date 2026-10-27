@@ -229,7 +229,7 @@ struct EarnTimeView: View {
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 40)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: env.nextMilestone)
+        .animation(reduceMotion ? nil : EarnMotion.settle, value: env.nextMilestone)
     }
 }
 
@@ -320,7 +320,7 @@ private struct EarningRuleCard: View {
                             .frame(width: proxy.size.width * progress)
                     }
                 }
-                .animation(reduceMotion ? nil : .easeOut(duration: 0.4), value: progress)
+                .animation(reduceMotion ? nil : EarnMotion.settle, value: progress)
                 .accessibilityHidden(true)
         }
         .padding(.horizontal, Theme.Space.m)
