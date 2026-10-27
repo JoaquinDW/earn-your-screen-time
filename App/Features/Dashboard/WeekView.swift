@@ -12,6 +12,7 @@ struct WeekView: View {
     @State private var period = ProgressPeriod.week
     @State private var selectedDay: DayKey?
     @State private var plotIsVisible = false
+    @State private var isShowingImpact = false
 
     var showsDoneButton = true
 
@@ -69,6 +70,11 @@ struct WeekView: View {
         .scrollBounceBehavior(.basedOnSize)
         .foregroundStyle(Night.text)
         .background(Night.ground.ignoresSafeArea())
+        .sheet(isPresented: $isShowingImpact) {
+            ImpactReportView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
         .onAppear {
             selectedDay = summaries.last?.day
         }
@@ -421,6 +427,22 @@ struct WeekView: View {
                     .foregroundStyle(Night.textMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            // Today's report used to open from Home; it belongs with the rest of the history.
+            Button { isShowingImpact = true } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "sparkles")
+                        .accessibilityHidden(true)
+                    Text("home.impact.link")
+                    Image(systemName: "chevron.right")
+                        .font(.sans(10, weight: .semibold))
+                        .accessibilityHidden(true)
+                }
+                .font(.sans(13, weight: .semibold))
+                .foregroundStyle(Night.cobaltText)
+                .frame(minHeight: Theme.minTouchTarget)
+                .contentShape(.rect)
+            }
+            .buttonStyle(.plain)
             ProgressShareActions(impact: impact, period: period.impactPeriod, source: "progress")
         }
     }

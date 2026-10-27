@@ -3,6 +3,8 @@ import SwiftUI
 /// The streak earns visual weight gradually instead of turning into a second progress goal.
 struct StreakBadge: View {
     let days: Int
+    /// Flame and number only, for a header with no room for "racha de 12 días" without truncating.
+    var isCompact = false
 
     private var level: Level {
         switch days {
@@ -19,12 +21,18 @@ struct StreakBadge: View {
                 .font(.sans(11, weight: .semibold, relativeTo: .caption))
                 .accessibilityHidden(true)
 
-            Text("dashboard.streak \(days)")
-                .font(.sans(12.5, weight: level == .quiet ? .medium : .semibold, relativeTo: .caption))
-                .contentTransition(.numericText(value: Double(days)))
+            Group {
+                if isCompact {
+                    Text(days.formatted())
+                } else {
+                    Text("dashboard.streak \(days)")
+                }
+            }
+            .font(.sans(12.5, weight: level == .quiet ? .medium : .semibold, relativeTo: .caption))
+            .contentTransition(.numericText(value: Double(days)))
         }
         .foregroundStyle(level == .quiet ? Night.textMuted : Night.cobaltText)
-        .padding(.horizontal, level == .quiet ? 0 : Theme.Space.s)
+        .padding(.horizontal, level == .quiet && !isCompact ? 0 : Theme.Space.s)
         .frame(minHeight: Theme.minTouchTarget)
         .background(backgroundColor, in: .capsule)
         .overlay {
@@ -37,7 +45,8 @@ struct StreakBadge: View {
             radius: Theme.Space.s,
             y: Theme.Space.xs
         )
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("dashboard.streak \(days)"))
     }
 
     private var backgroundColor: Color {

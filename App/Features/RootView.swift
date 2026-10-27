@@ -1,7 +1,7 @@
 import StoreKit
 import SwiftUI
 
-/// Onboarding until it is done, then the app's three top-level sections.
+/// Onboarding until it is done, then the app's four top-level sections.
 struct RootView: View {
     @Environment(AppEnvironment.self) private var env
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -199,7 +199,12 @@ struct RootView: View {
             Group {
                 switch selectedSection {
                 case .home:
-                    DashboardView(onNavigationDepthChange: { isShowingDetail = $0 })
+                    DashboardView(
+                        onNavigationDepthChange: { isShowingDetail = $0 },
+                        onOpenFriends: { selectSection(.friends) }
+                    )
+                case .friends:
+                    FriendsView()
                 case .week:
                     WeekView(showsDoneButton: false)
                 case .settings:
@@ -216,7 +221,8 @@ struct RootView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if !isShowingDetail {
                 FloatingBottomNavigation(
-                    selection: Binding(get: { selectedSection }, set: selectSection)
+                    selection: Binding(get: { selectedSection }, set: selectSection),
+                    friendsUnreadCount: env.socialUnreadCount
                 )
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
@@ -234,6 +240,13 @@ struct RootView: View {
 
     private func applyPendingRoute(_ route: AppRoute?) {
         guard let route, env.hasCompletedOnboarding else { return }
+        // Friends is its own tab now, so a friend's push lands there rather than on Home.
+        if route == .friends {
+            selectSection(.friends)
+            isShowingDetail = false
+            env.consumePendingRoute()
+            return
+        }
         selectSection(.home)
         isShowingDetail = false
         // `.pushups` needs the Dashboard's navigation stack, so it consumes that one itself.
