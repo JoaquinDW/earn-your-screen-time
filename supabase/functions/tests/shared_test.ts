@@ -198,8 +198,40 @@ Deno.test("squat start accepts the squat challenges only", () => {
         detection_version: "pose-v1",
       }),
     Error,
-    "pushup or squat",
+    "pushup, squat, jumping_jack, or lunge",
   );
+});
+
+Deno.test("jumping jacks and lunges start with their own challenges", () => {
+  for (
+    const [exerciseType, reps, wrongReps] of [
+      ["jumping_jack", 80, 10],
+      ["lunge", 40, 5],
+    ] as const
+  ) {
+    assertEquals(
+      validateStartBody({
+        client_request_id: "10000000-0000-4000-8000-000000000001",
+        exercise_type: exerciseType,
+        target_reps: reps,
+        app_version: "2.1.0",
+        detection_version: "pose-v1",
+      }).exerciseType,
+      exerciseType,
+    );
+    assertThrows(
+      () =>
+        validateStartBody({
+          client_request_id: "10000000-0000-4000-8000-000000000001",
+          exercise_type: exerciseType,
+          target_reps: wrongReps,
+          app_version: "2.1.0",
+          detection_version: "pose-v1",
+        }),
+      Error,
+      "target_reps must be",
+    );
+  }
 });
 
 Deno.test("pushups claim accepts completion summary without camera data", () => {

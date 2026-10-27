@@ -10,6 +10,7 @@ private struct RestrictedAppSelectionGate: ViewModifier {
     @State private var pendingRemoval: FamilyActivitySelection?
     @State private var isRemovalPromptPresented = false
     @State private var isPaywallPresented = false
+    @State private var isStrictRefusalPresented = false
 
     func body(content: Content) -> some View {
         content
@@ -32,6 +33,11 @@ private struct RestrictedAppSelectionGate: ViewModifier {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
             }
+            .alert("strictMode.refusal.title", isPresented: $isStrictRefusalPresented) {
+                Button("common.close", role: .cancel) {}
+            } message: {
+                Text("strictMode.refusal.apps")
+            }
             .onChange(of: selection) { _, updated in
                 handle(updated)
             }
@@ -47,6 +53,16 @@ private struct RestrictedAppSelectionGate: ViewModifier {
         guard updated != savedSelection else { return }
 
         if removesItems(from: savedSelection, in: updated) {
+            // Strict mode: nothing comes off the list until it ends.
+            if env.isStrictModeActive {
+                selection = savedSelection
+                isPickerPresented = false
+                Task { @MainActor in
+                    await Task.yield()
+                    isStrictRefusalPresented = true
+                }
+                return
+            }
             pendingRemoval = updated
             selection = savedSelection
             presentRemovalPromptAfterPicker()

@@ -18,6 +18,13 @@ function rpcError(error: { code?: string; message?: string }): never {
       "Squats rewards are disabled",
     );
   }
+  if (message.includes("exercise rewards are disabled")) {
+    throw new HttpError(
+      403,
+      "exercise_disabled",
+      "Rewards for this exercise are disabled",
+    );
+  }
   if (message.includes("disabled")) {
     throw new HttpError(
       403,

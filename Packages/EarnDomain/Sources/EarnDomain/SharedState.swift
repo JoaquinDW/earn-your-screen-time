@@ -10,7 +10,9 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// v14 adds the latch for the first reward the user earned by doing something (push-ups or
     /// study), as opposed to steps that HealthKit credited in the background.
     /// v15 adds squats as an earning source and files their minutes separately in day history.
-    public static let currentSchemaVersion = 15
+    /// v16 adds jumping jacks and lunges (filed together in day history), the blocking schedule
+    /// and strict mode.
+    public static let currentSchemaVersion = 16
 
     public var schemaVersion: Int
     public var ledger: DailyLedger
@@ -57,6 +59,10 @@ public struct SharedState: Codable, Equatable, Sendable {
     public var firstActiveRewardTracked: Bool
     /// Successful reward receipts retained across rollover so a server replay cannot credit twice.
     public private(set) var appliedRewardIDs: [UUID]
+    /// When the protected apps are shielded. `nil` is around the clock, as before v16.
+    public var blockSchedule: BlockSchedule?
+    /// Until when blocking cannot be weakened. `nil`, or a past date, is off.
+    public var strictModeUntil: Date?
     public var appliedStudyReceiptIDs: [UUID] { appliedRewardIDs }
 
     public init(
@@ -83,7 +89,9 @@ public struct SharedState: Codable, Equatable, Sendable {
         freePushupsRewardClaimed: Bool = false,
         firstActiveRewardTracked: Bool = false,
         appliedRewardIDs: [UUID] = [],
-        appliedStudyReceiptIDs: [UUID] = []
+        appliedStudyReceiptIDs: [UUID] = [],
+        blockSchedule: BlockSchedule? = nil,
+        strictModeUntil: Date? = nil
     ) {
         self.schemaVersion = schemaVersion
         self.ledger = ledger
@@ -108,6 +116,8 @@ public struct SharedState: Codable, Equatable, Sendable {
         self.freePushupsRewardClaimed = freePushupsRewardClaimed
         self.firstActiveRewardTracked = firstActiveRewardTracked
         self.appliedRewardIDs = appliedRewardIDs + appliedStudyReceiptIDs.filter { !appliedRewardIDs.contains($0) }
+        self.blockSchedule = blockSchedule
+        self.strictModeUntil = strictModeUntil
     }
 
     public static func initial(day: DayKey = .today(), rule: EarningRule = .default) -> SharedState {
@@ -154,6 +164,7 @@ public struct SharedState: Codable, Equatable, Sendable {
         case successfulUnlockCount, reviewPromptRequested, freePushupsRewardClaimed
         case firstActiveRewardTracked
         case appliedRewardIDs
+        case blockSchedule, strictModeUntil
     }
 
     private enum LegacyCodingKeys: String, CodingKey {
@@ -201,6 +212,10 @@ public struct SharedState: Codable, Equatable, Sendable {
         // has one has already earned actively and must not report a "first" after upgrading.
         firstActiveRewardTracked = try container.decodeIfPresent(Bool.self, forKey: .firstActiveRewardTracked)
             ?? (freePushupsRewardClaimed || !appliedRewardIDs.isEmpty)
+        // Before v16 the apps were shielded around the clock with no strict mode. A schedule that
+        // no longer decodes falls back to that rather than losing the whole state.
+        blockSchedule = try? container.decodeIfPresent(BlockSchedule.self, forKey: .blockSchedule)
+        strictModeUntil = try container.decodeIfPresent(Date.self, forKey: .strictModeUntil)
 
         if decodedSchemaVersion < 6,
            let currentSession,

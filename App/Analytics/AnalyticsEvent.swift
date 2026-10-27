@@ -191,6 +191,12 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let impactReportViewed = AnalyticsEvent("impact_report_viewed")
     /// The share sheet for the progress card was opened; `kind` is `progress` or `challenge`.
     static let progressShareTapped = AnalyticsEvent("progress_share_tapped")
+    /// The blocking schedule was set or removed; `enabled` false means around the clock again.
+    static let blockScheduleChanged = AnalyticsEvent("block_schedule_changed")
+    /// Strict mode was turned on or extended; `duration_hours` is how long it now runs.
+    static let strictModeStarted = AnalyticsEvent("strict_mode_started")
+    /// Strict mode refused a change that would have weakened blocking; `change` says which.
+    static let strictModeRefusedChange = AnalyticsEvent("strict_mode_refused_change")
 
     static func planSelected(_ plan: AnalyticsPlan) -> AnalyticsEvent {
         AnalyticsEvent("plan_selected", properties: ["plan": .string(plan.rawValue)])

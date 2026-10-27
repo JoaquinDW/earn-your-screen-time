@@ -277,6 +277,7 @@ struct WeekView: View {
                 study: totals.studyEarnedSeconds,
                 pushups: totals.pushupEarnedSeconds,
                 squats: totals.squatEarnedSeconds,
+                workouts: totals.workoutEarnedSeconds,
                 isVisible: plotIsVisible
             )
             .padding(.top, Theme.Space.s)
@@ -288,6 +289,8 @@ struct WeekView: View {
             sourceRow("figure.strengthtraining.traditional", "progress.source.pushups", totals.pushupEarnedSeconds, Night.moss)
             NightHairline(inset: 34)
             sourceRow("figure.strengthtraining.functional", "progress.source.squats", totals.squatEarnedSeconds, Night.squatMoss)
+            NightHairline(inset: 34)
+            sourceRow("figure.mixed.cardio", "progress.source.workouts", totals.workoutEarnedSeconds, Night.workoutMoss)
         }
     }
 
@@ -823,9 +826,10 @@ private struct SourceRibbon: View {
     let study: Int
     let pushups: Int
     let squats: Int
+    let workouts: Int
     let isVisible: Bool
 
-    private var total: CGFloat { CGFloat(max(steps + study + pushups + squats, 1)) }
+    private var total: CGFloat { CGFloat(max(steps + study + pushups + squats + workouts, 1)) }
 
     var body: some View {
         GeometryReader { geometry in
@@ -834,6 +838,7 @@ private struct SourceRibbon: View {
                 segment(study, color: Night.textSoft, width: geometry.size.width)
                 segment(pushups, color: Night.moss, width: geometry.size.width)
                 segment(squats, color: Night.squatMoss, width: geometry.size.width)
+                segment(workouts, color: Night.workoutMoss, width: geometry.size.width)
             }
             .scaleEffect(x: isVisible ? 1 : 0.02, anchor: .leading)
         }
@@ -863,6 +868,8 @@ private extension Night {
     /// Squats are the second camera exercise: the same credited moss as push-ups, a step
     /// quieter so the two read as siblings rather than a new accent.
     static let squatMoss = Night.moss.opacity(0.55)
+    /// Jumping jacks and lunges, quieter still.
+    static let workoutMoss = Night.moss.opacity(0.32)
 }
 
 private func progressText(_ key: LocalizedStringKey) -> Text {

@@ -92,7 +92,9 @@ struct ExerciseDetectionSnapshot: Equatable, Sendable {
 /// exercise.
 enum ExerciseRepCounter: Sendable {
     case pushup(PushupRepCounter)
+    /// Squats, and lunges measured on the deeper leg.
     case squat(SquatRepCounter)
+    case jumpingJack(JumpingJackRepCounter)
 
     struct Reading: Sendable {
         let count: Int
@@ -112,6 +114,9 @@ enum ExerciseRepCounter: Sendable {
         case var .squat(counter):
             counter.reset()
             self = .squat(counter)
+        case var .jumpingJack(counter):
+            counter.reset()
+            self = .jumpingJack(counter)
         }
     }
 
@@ -131,6 +136,17 @@ enum ExerciseRepCounter: Sendable {
         case var .squat(counter):
             let output = counter.process(pose)
             self = .squat(counter)
+            return Reading(
+                count: output.repetitionCount,
+                didCountRep: output.didCountRep,
+                status: Self.status(output.status),
+                guidance: Self.guidance(output.guidance),
+                viewMode: nil,
+                trackedJoints: nil
+            )
+        case var .jumpingJack(counter):
+            let output = counter.process(pose)
+            self = .jumpingJack(counter)
             return Reading(
                 count: output.repetitionCount,
                 didCountRep: output.didCountRep,
@@ -175,6 +191,34 @@ enum ExerciseRepCounter: Sendable {
         case .lowering: .lowering
         case .bottom: .bottom
         case .rising: .rising
+        }
+    }
+
+    private static func status(_ status: JumpingJackRepCounter.Status) -> ExerciseDetectionSnapshot.Status {
+        switch status {
+        case .poseLost: .poseLost
+        case .lowConfidence: .lowConfidence
+        case .notInFrame: .notInFrame
+        case .notFacing: .postureInvalid
+        case .waitingForStart: .waitingForTop
+        case .ready: .ready
+        case .opening: .lowering
+        case .open: .bottom
+        case .closing: .rising
+        }
+    }
+
+    private static func guidance(_ guidance: JumpingJackRepCounter.Guidance) -> ExerciseDetectionSnapshot.Guidance {
+        switch guidance {
+        case .findBody: .findBody
+        case .improveLighting: .improveLighting
+        case .moveIntoFrame: .moveIntoFrame
+        case .faceCamera: .fixPosture
+        case .startClosed: .startAtTop
+        case .jumpOut: .goDown
+        case .jumpIn: .comeUp
+        case .slowDown: .slowDown
+        case .none: .none
         }
     }
 

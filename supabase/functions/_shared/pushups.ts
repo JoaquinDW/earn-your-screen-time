@@ -9,13 +9,19 @@ const ISO_TIMESTAMP =
 
 type UnknownBody = Record<string, unknown>;
 
-export type ExerciseType = "pushup" | "squat";
+export type ExerciseType = "pushup" | "squat" | "jumping_jack" | "lunge";
 
 /** Repetition targets each exercise offers; the database holds the matching rewards. */
 export const CHALLENGE_REPS: Record<ExerciseType, readonly number[]> = {
   pushup: [5, 10, 20],
   squat: [10, 20, 40],
+  jumping_jack: [20, 40, 80],
+  lunge: [10, 20, 40],
 };
+
+function isExerciseType(value: unknown): value is ExerciseType {
+  return typeof value === "string" && Object.hasOwn(CHALLENGE_REPS, value);
+}
 
 export type StartBody = {
   clientRequestId: string;
@@ -99,11 +105,11 @@ export function validateStartBody(value: unknown): StartBody {
   }
   // Clients from before squats send no exercise type and always mean push-ups.
   const exerciseType = body.exercise_type ?? "pushup";
-  if (exerciseType !== "pushup" && exerciseType !== "squat") {
+  if (!isExerciseType(exerciseType)) {
     throw new HttpError(
       400,
       "invalid_exercise",
-      "exercise_type must be pushup or squat",
+      "exercise_type must be pushup, squat, jumping_jack, or lunge",
     );
   }
   const allowedReps = CHALLENGE_REPS[exerciseType];

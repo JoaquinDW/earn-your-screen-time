@@ -160,3 +160,39 @@ para reintentar; `completed_at` permite reclamar tras recuperar conexión si el 
 la ventana original. El recibo se aplica con `ServerRewardEngine` dentro del lock de `SharedStore` y
 solo entonces se elimina el pendiente. Un cierre entre cualquiera de esos pasos no pierde ni duplica
 minutos.
+
+### Jumping jacks y zancadas
+
+`JumpingJackRepCounter` cuenta de frente: cerrado (brazos abajo, pies juntos) → abierto (muñecas por
+encima de los hombros, pies más separados que los hombros) → cerrado. Mide la altura de los brazos en
+alturas de torso y la separación de pies en anchos de hombros, así que no depende de la distancia al
+teléfono. Las zancadas reutilizan `SquatRepCounter` con `measure: .deepest`: cuenta la pierna más
+flexionada, porque en una zancada la pierna de atrás no se lee como en una sentadilla. Los dos
+ejercicios comparten con flexiones y sentadillas el cap de 30 minutos por día UTC y la recompensa
+gratis (`private.exercise_reward_sources()`), y en Progreso suman en un único bucket
+`workoutEarnedSeconds`.
+
+## Horario de bloqueo y modo estricto
+
+`SharedState.blockSchedule` es una franja diaria (mínimo una hora, puede cruzar medianoche) con los
+días de la semana en que empieza. Sin horario, los shields están puestos siempre. `RestrictionCoordinator`
+sigue siendo el único que decide: escuda cuando no hay sesión activa y `isWithinBlockingHours` es
+verdadero, mirando 60 segundos hacia delante para que un callback que llega un poco antes del borde no
+encuentre la franja cerrada. Fuera del horario no se pueden iniciar sesiones (no hay nada que
+desbloquear) y Home muestra cuándo vuelve el bloqueo.
+
+`MonitorScheduler.refreshPolicy` registra dos actividades que `stopAll` no toca:
+
+- `earnitBlockWindow`: repetitiva diaria de inicio a fin de la franja. Los días se filtran en
+  `BlockSchedule.isBlocking`, así un callback en un día libre no escuda nada.
+- `earnitStrictMode`: no repetitiva hasta el fin del modo estricto, para levantar
+  `denyAppRemoval` aunque nadie abra la app. Si quedan menos de 15 minutos no se registra; el siguiente
+  reconcile lo levanta.
+
+La extensión de monitoreo trata ambas como "reconciliar" y nunca como fin de sesión. Si la actividad del
+horario no se puede registrar, reconcile ignora el horario y escuda siempre (falla cerrada).
+
+`strictModeUntil` (máximo 6 días) impide debilitar el bloqueo: solo se pueden añadir apps, la regla
+solo puede endurecerse (`StrictMode.allowsRuleChange`), el horario solo puede volver a "siempre", y
+`ManagedSettingsStore.application.denyAppRemoval` impide borrar apps del iPhone, Earnit incluida. Se
+puede ampliar, nunca acortar.

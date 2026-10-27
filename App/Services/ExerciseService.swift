@@ -14,6 +14,9 @@ struct ExerciseConfiguration: Equatable, Sendable {
     let challenges: [ExerciseChallenge]
     /// `nil` when the server predates squats or has them switched off.
     let squats: SquatConfiguration?
+    /// `nil` when the server predates them or has them switched off.
+    let jumpingJacks: JumpingJackConfiguration?
+    let lunges: SquatConfiguration?
     let earnedSeconds: Int
     let rewardSecondsRemaining: Int
     let resetsAt: Date
@@ -21,13 +24,15 @@ struct ExerciseConfiguration: Equatable, Sendable {
 
 extension ExerciseConfiguration {
     var availableExercises: [ExerciseKind] {
-        squats.map { $0.challenges.isEmpty ? [.pushup] : [.pushup, .squat] } ?? [.pushup]
+        ExerciseKind.allCases.filter { $0 == .pushup || !challenges(for: $0).isEmpty }
     }
 
     func challenges(for exercise: ExerciseKind) -> [ExerciseChallenge] {
         switch exercise {
         case .pushup: challenges
         case .squat: squats?.challenges ?? []
+        case .jumpingJack: jumpingJacks?.challenges ?? []
+        case .lunge: lunges?.challenges ?? []
         }
     }
 }
@@ -42,6 +47,17 @@ struct SquatConfiguration: Codable, Equatable, Sendable {
     let challenges: [ExerciseChallenge]
 }
 
+struct JumpingJackConfiguration: Codable, Equatable, Sendable {
+    let poseThresholds: JumpingJackRemotePoseThresholds
+    let challenges: [ExerciseChallenge]
+}
+
+struct JumpingJackRemotePoseThresholds: Codable, Equatable, Sendable {
+    let minimumConfidence: Double
+    let minimumRepDurationSeconds: Double
+}
+
+/// Squats, and lunges, which are counted by the same depth measure.
 struct SquatRemotePoseThresholds: Codable, Equatable, Sendable {
     let minimumConfidence: Double
     let bottomDepthScore: Double
@@ -206,6 +222,16 @@ actor SupabaseExerciseService: ExerciseServing {
                     ? SquatConfiguration(poseThresholds: squats.poseThresholds, challenges: squats.challenges)
                     : nil
             },
+            jumpingJacks: response.configuration.jumpingJacks.flatMap { jacks in
+                jacks.enabled
+                    ? JumpingJackConfiguration(poseThresholds: jacks.poseThresholds, challenges: jacks.challenges)
+                    : nil
+            },
+            lunges: response.configuration.lunges.flatMap { lunges in
+                lunges.enabled
+                    ? SquatConfiguration(poseThresholds: lunges.poseThresholds, challenges: lunges.challenges)
+                    : nil
+            },
             earnedSeconds: response.availability.earnedSeconds,
             rewardSecondsRemaining: response.availability.rewardSecondsRemaining,
             resetsAt: resetsAt
@@ -361,11 +387,20 @@ private struct ConfigResponse: Decodable {
         let poseThresholds: ExercisePoseThresholds
         let challenges: [ExerciseChallenge]
         let squats: Squats?
+        let jumpingJacks: JumpingJacks?
+        let lunges: Squats?
     }
 
+    /// Also the shape of `lunges`.
     struct Squats: Decodable {
         let enabled: Bool
         let poseThresholds: SquatRemotePoseThresholds
+        let challenges: [ExerciseChallenge]
+    }
+
+    struct JumpingJacks: Decodable {
+        let enabled: Bool
+        let poseThresholds: JumpingJackRemotePoseThresholds
         let challenges: [ExerciseChallenge]
     }
 

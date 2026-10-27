@@ -34,4 +34,14 @@ struct ShieldController {
         store.shield.webDomains = nil
         store.shield.webDomainCategories = nil
     }
+
+    /// Strict mode: no app can be deleted from the Home Screen, Earnit included, so the block
+    /// cannot be escaped by deleting the app that holds it.
+    func setAppRemovalDenied(_ denied: Bool) {
+        let store = self.store
+        let value: Bool? = denied ? true : nil
+        if store.application.denyAppRemoval != value {
+            store.application.denyAppRemoval = value
+        }
+    }
 }

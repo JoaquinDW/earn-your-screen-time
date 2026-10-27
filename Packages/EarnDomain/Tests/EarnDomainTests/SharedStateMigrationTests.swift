@@ -422,6 +422,72 @@ struct SharedStateMigrationTests {
         #expect(decoded.earnedSeconds == 600)
     }
 
+    @Test("A v15 state decodes with no schedule, no strict mode and no workout minutes")
+    func migratesV15WithoutPolicy() throws {
+        let v15 = """
+        {
+          "schemaVersion": 15,
+          "ledger": {
+            "day": { "year": 2027, "month": 2, "day": 11 },
+            "wallet": { "earnedSeconds": 600 }
+          },
+          "history": {
+            "days": [
+              {
+                "day": { "year": 2027, "month": 2, "day": 10 },
+                "activityAmount": 4000,
+                "stepEarnedSeconds": 1200,
+                "squatEarnedSeconds": 300,
+                "consumedSeconds": 0
+              }
+            ]
+          }
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v15.utf8))
+        let day = try #require(state.history.days.first)
+
+        #expect(state.schemaVersion == SharedState.currentSchemaVersion)
+        #expect(state.blockSchedule == nil)
+        #expect(state.strictModeUntil == nil)
+        #expect(state.isWithinBlockingHours())
+        #expect(!state.isStrictModeActive())
+        #expect(day.workoutEarnedSeconds == 0)
+        #expect(day.earnedSeconds == 1_500)
+    }
+
+    @Test("Schedule, strict mode and workout minutes survive a round trip")
+    func policyRoundTrip() throws {
+        var state = SharedState.initial(day: DayKey(year: 2027, month: 2, day: 11))
+        state.blockSchedule = BlockSchedule(startMinute: 9 * 60, endMinute: 18 * 60, weekdays: BlockSchedule.workdays)
+        state.strictModeUntil = Date(timeIntervalSince1970: 1_800_000_000)
+        state.ledger.walletTransactions.append(WalletTransaction(
+            kind: .earned, amountSeconds: 300, source: .jumpingJacks, date: Date(timeIntervalSince1970: 1_700_000_000)
+        ))
+        _ = state.ledger.wallet.credit(seconds: 300)
+
+        let decoded = try SharedState.decoded(from: state.encoded())
+
+        #expect(decoded.blockSchedule == state.blockSchedule)
+        #expect(decoded.strictModeUntil == state.strictModeUntil)
+        #expect(DaySummary(ledger: decoded.ledger).workoutEarnedSeconds == 300)
+        #expect(DaySummary(ledger: decoded.ledger).stepEarnedSeconds == 0)
+    }
+
+    @Test("A schedule that no longer decodes falls back to blocking around the clock")
+    func invalidScheduleFallsBack() throws {
+        let corrupt = """
+        {
+          "schemaVersion": 16,
+          "ledger": { "day": { "year": 2027, "month": 2, "day": 11 } },
+          "blockSchedule": { "startMinute": 540, "endMinute": 560, "weekdays": [2] }
+        }
+        """
+        let state = try SharedState.decoded(from: Data(corrupt.utf8))
+        #expect(state.blockSchedule == nil)
+    }
+
     @Test("A pre-v11 install that never blocked an app can still report its first")
     func migratesV10WithoutFalseLatches() throws {
         let v10 = """

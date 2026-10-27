@@ -3,6 +3,7 @@ import SwiftUI
 
 private enum SettingsDestination: Hashable {
     case apps
+    case blocking
     #if DEBUG
     case spike
     #endif
@@ -30,6 +31,7 @@ struct SettingsView: View {
     @State private var isShowingPaywall = false
     @State private var isShowingCustomerCenter = false
     @State private var isShowingWidgetOffer = false
+    @State private var isShowingStrictRuleRefusal = false
     @State private var path: [SettingsDestination] = []
 
     private let stepOptions = [250, 500, 750, 1_000, 1_500, 2_000, 3_000]
@@ -121,6 +123,14 @@ struct SettingsView: View {
                     sectionHeader("settings.apps.section")
                 } footer: {
                     Text("settings.apps.footer")
+                }
+
+                Section {
+                    NavigationLink(value: SettingsDestination.blocking) {
+                        LabeledContent("settings.blocking", value: blockingSummary)
+                    }
+                } footer: {
+                    Text("settings.blocking.footer")
                 }
 
                 Section {
@@ -228,6 +238,8 @@ struct SettingsView: View {
                 switch destination {
                 case .apps:
                     AppSelectionView()
+                case .blocking:
+                    BlockingPolicyView()
                 #if DEBUG
                 case .spike:
                     SpikeView()
@@ -252,8 +264,11 @@ struct SettingsView: View {
                 titleVisibility: .visible
             ) {
                 Button("settings.rule.confirmApply") {
-                    track("rule_changed", ["steps": .int(stepsRequired), "minutes": .int(rewardMinutes)])
-                    env.updateRule(editedRule)
+                    if env.updateRule(editedRule) {
+                        track("rule_changed", ["steps": .int(stepsRequired), "minutes": .int(rewardMinutes)])
+                    } else {
+                        isShowingStrictRuleRefusal = true
+                    }
                 }
                 Button("common.cancel", role: .cancel) {}
             } message: {
@@ -269,6 +284,14 @@ struct SettingsView: View {
                 },
                 content: { ProPaywallView(source: .settings) }
             )
+            .alert("strictMode.refusal.title", isPresented: $isShowingStrictRuleRefusal) {
+                Button("common.close", role: .cancel) {
+                    stepsRequired = env.ledger.rule.amountRequired
+                    rewardMinutes = env.ledger.rule.rewardMinutes
+                }
+            } message: {
+                Text("strictMode.refusal.rule")
+            }
             .sheet(isPresented: $isShowingWidgetOffer) {
                 WidgetOfferView(source: "settings")
             }
@@ -321,6 +344,24 @@ struct SettingsView: View {
             return String(localized: "spike.auth.denied", locale: env.appLanguage.locale)
         }
         return String(localized: "spike.auth.notDetermined", locale: env.appLanguage.locale)
+    }
+
+    /// "Always", "09:00–18:00", plus "Strict" while strict mode runs.
+    private var blockingSummary: String {
+        let locale = env.appLanguage.locale
+        var summary: String
+        if let schedule = env.blockSchedule {
+            let style = Date.FormatStyle.dateTime.hour().minute().locale(locale)
+            let start = Calendar.current.date(bySettingHour: schedule.startMinute / 60, minute: schedule.startMinute % 60, second: 0, of: Date()) ?? Date()
+            let end = Calendar.current.date(bySettingHour: schedule.endMinute / 60, minute: schedule.endMinute % 60, second: 0, of: Date()) ?? Date()
+            summary = "\(start.formatted(style))–\(end.formatted(style))"
+        } else {
+            summary = String(localized: "settings.blocking.always", locale: locale)
+        }
+        if env.isStrictModeActive {
+            summary += " · " + String(localized: "settings.blocking.strict", locale: locale)
+        }
+        return summary
     }
 
     private var subscriptionStatusLabel: String {

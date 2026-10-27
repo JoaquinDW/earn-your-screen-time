@@ -670,20 +670,35 @@ final class PushupsToEarnModel {
         case .pushup:
             return .pushup(PushupRepCounter(thresholds: thresholds(from: configuration.poseThresholds)))
         case .squat:
-            var thresholds = SquatPoseThresholds()
-            if let remote = configuration.squats?.poseThresholds {
+            return .squat(SquatRepCounter(thresholds: squatThresholds(from: configuration.squats?.poseThresholds)))
+        case .lunge:
+            return .squat(SquatRepCounter(
+                thresholds: squatThresholds(from: configuration.lunges?.poseThresholds),
+                measure: .deepest
+            ))
+        case .jumpingJack:
+            var thresholds = JumpingJackPoseThresholds()
+            if let remote = configuration.jumpingJacks?.poseThresholds {
                 thresholds.minimumJointConfidence = remote.minimumConfidence
-                thresholds.bottomEnterScore = remote.bottomDepthScore
-                // Keep the hysteresis band the defaults have, so a deeper or shallower tuning
-                // never lets the exit cross back over the top threshold.
-                thresholds.bottomExitScore = max(
-                    thresholds.topEnterScore + 0.05,
-                    remote.bottomDepthScore - 0.15
-                )
                 thresholds.minimumRepDuration = remote.minimumRepDurationSeconds
             }
-            return .squat(SquatRepCounter(thresholds: thresholds))
+            return .jumpingJack(JumpingJackRepCounter(thresholds: thresholds))
         }
+    }
+
+    private static func squatThresholds(from remote: SquatRemotePoseThresholds?) -> SquatPoseThresholds {
+        var thresholds = SquatPoseThresholds()
+        guard let remote else { return thresholds }
+        thresholds.minimumJointConfidence = remote.minimumConfidence
+        thresholds.bottomEnterScore = remote.bottomDepthScore
+        // Keep the hysteresis band the defaults have, so a deeper or shallower tuning
+        // never lets the exit cross back over the top threshold.
+        thresholds.bottomExitScore = max(
+            thresholds.topEnterScore + 0.05,
+            remote.bottomDepthScore - 0.15
+        )
+        thresholds.minimumRepDuration = remote.minimumRepDurationSeconds
+        return thresholds
     }
 
     private static func thresholds(from remote: ExercisePoseThresholds) -> PushupPoseThresholds {
@@ -719,7 +734,7 @@ final class PushupsToEarnModel {
             "challenge_incomplete", "invalid_duration", "detection_version_mismatch",
             "invalid_completion_time",
             "session_not_found", "session_inactive", "session_expired", "entitlement_required",
-            "update_required", "pushups_disabled", "squats_disabled"
+            "update_required", "pushups_disabled", "squats_disabled", "exercise_disabled"
         ].contains(code)
     }
 }

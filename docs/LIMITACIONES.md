@@ -125,3 +125,17 @@ localmente y se reintenta de forma idempotente. Para el MVP el servidor confía 
 reporta el cliente y se limita a imponer entitlement, configuración, caducidad, cap UTC y no duplicación.
 La cámara, la orientación landscape, consumo de batería y falsos positivos deben calibrarse en iPhones
 reales; el Simulador solo valida compilación y estados de UI.
+
+## 17. El modo estricto no es inviolable
+
+`denyAppRemoval` impide borrar apps, pero la persona puede quitarle a Earnit el acceso a Tiempo de uso
+desde Ajustes de iOS, y eso retira los shields. El modo estricto sube el coste de saltarse el bloqueo;
+no lo hace imposible. El fin del modo estricto llega por una actividad de Device Activity (máximo una
+semana, mínimo 15 minutos), así que si iOS no la entrega el bloqueo de borrado se levanta en el siguiente
+reconcile, al abrir la app.
+
+## 18. Los bordes del horario dependen de Device Activity
+
+El horario de bloqueo se aplica con callbacks de una actividad diaria repetitiva, que como el resto
+pueden llegar con retraso (sección 5). Con la app cerrada, los shields pueden subir o bajar unos
+segundos o minutos tarde respecto a la hora elegida.

@@ -268,6 +268,7 @@ final class AppEnvironment {
             studyEarnedSeconds: summary.studyEarnedSeconds,
             pushupEarnedSeconds: summary.pushupEarnedSeconds,
             squatEarnedSeconds: summary.squatEarnedSeconds,
+            workoutEarnedSeconds: summary.workoutEarnedSeconds,
             consumedSeconds: currentConsumedSeconds(),
             sessionCount: summary.sessionCount,
             returnedSeconds: summary.returnedSeconds,
@@ -890,6 +891,8 @@ final class AppEnvironment {
             ), haptic: .warning)
         } catch RestrictionCoordinatorError.noSelection {
             setError(String(localized: "session.error.noSelection", locale: appLanguage.locale), haptic: .warning)
+        } catch RestrictionCoordinatorError.outsideBlockingHours {
+            setError(String(localized: "session.error.outsideBlockingHours", locale: appLanguage.locale), haptic: .warning)
         } catch {
             setError(error.localizedDescription)
         }
@@ -911,7 +914,13 @@ final class AppEnvironment {
         reportPendingSessionSettlement()
     }
 
-    func updateRestrictedSelection(_ selection: FamilyActivitySelection) {
+    /// `false` when strict mode refuses the change: while it lasts apps can only be added.
+    @discardableResult
+    func updateRestrictedSelection(_ selection: FamilyActivitySelection) -> Bool {
+        if isStrictModeActive, !selection.contains(screenTime.selection) {
+            trackStrictModeRefusal("apps")
+            return false
+        }
         let previousCount = state.restrictedItemCount
         screenTime.selection = selection
         state = screenTime.reconcile()
@@ -926,14 +935,69 @@ final class AppEnvironment {
         reportPendingSessionSettlement()
         trackFirstAppBlockedIfNeeded()
         synchronizeLiveActivity()
+        return true
     }
 
-    /// Changing the rule only affects future milestones (PRD §16).
-    func updateRule(_ rule: EarningRule) {
+    /// Changing the rule only affects future milestones (PRD §16). `false` when strict mode
+    /// refuses an easier rule.
+    @discardableResult
+    func updateRule(_ rule: EarningRule) -> Bool {
+        if isStrictModeActive, !StrictMode.allowsRuleChange(from: state.ledger.rule, to: rule) {
+            trackStrictModeRefusal("rule")
+            return false
+        }
         SharedStore.shared.mutate { state in
             state.ledger = CreditEngine.changeRule(to: rule, in: state.ledger)
         }
         reload()
+        return true
+    }
+
+    // MARK: - Blocking schedule and strict mode
+
+    var blockSchedule: BlockSchedule? { state.blockSchedule }
+    var isStrictModeActive: Bool { state.isStrictModeActive() }
+    /// When strict mode ends, while it is on.
+    var strictModeEndsAt: Date? { isStrictModeActive ? state.strictModeUntil : nil }
+
+    /// `nil` blocks around the clock. `false` when strict mode refuses the change.
+    @discardableResult
+    func setBlockSchedule(_ schedule: BlockSchedule?) -> Bool {
+        if isStrictModeActive, !StrictMode.allowsScheduleChange(from: state.blockSchedule, to: schedule) {
+            trackStrictModeRefusal("schedule")
+            return false
+        }
+        guard schedule != state.blockSchedule else { return true }
+        SharedStore.shared.mutate { $0.blockSchedule = schedule }
+        reload()
+        var properties: AnalyticsProperties = ["enabled": .bool(schedule != nil)]
+        if let schedule {
+            properties["start_minute"] = .int(schedule.startMinute)
+            properties["duration_minutes"] = .int(schedule.durationMinutes)
+            properties["weekday_count"] = .int(schedule.weekdays.count)
+        }
+        analytics.track(.blockScheduleChanged.withProperties(properties))
+        return true
+    }
+
+    /// Locks blocking in until `end`, capped at `StrictMode.maximumDuration`. Strict mode can be
+    /// extended while it runs, never shortened.
+    func startStrictMode(until end: Date, now: Date = Date()) {
+        let requested = StrictMode.endDate(startingAt: now, duration: end.timeIntervalSince(now))
+        guard requested > now else { return }
+        SharedStore.shared.mutate { state in
+            let current = state.isStrictModeActive(at: now) ? state.strictModeUntil ?? now : now
+            state.strictModeUntil = max(current, requested)
+        }
+        reload()
+        analytics.track(.strictModeStarted.withProperties([
+            "duration_hours": .int(Int((requested.timeIntervalSince(now) / 3_600).rounded())),
+            "has_schedule": .bool(state.blockSchedule != nil)
+        ]))
+    }
+
+    private func trackStrictModeRefusal(_ change: String) {
+        analytics.track(.strictModeRefusedChange.withProperties(["change": .string(change)]))
     }
 
     func updateDailyGoal(_ goal: Int) {

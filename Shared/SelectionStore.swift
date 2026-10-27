@@ -42,4 +42,11 @@ extension FamilyActivitySelection {
     }
 
     var isEmpty: Bool { itemCount == 0 }
+
+    /// Whether everything in `other` is still picked here; strict mode only allows additions.
+    func contains(_ other: FamilyActivitySelection) -> Bool {
+        other.applicationTokens.isSubset(of: applicationTokens)
+            && other.categoryTokens.isSubset(of: categoryTokens)
+            && other.webDomainTokens.isSubset(of: webDomainTokens)
+    }
 }

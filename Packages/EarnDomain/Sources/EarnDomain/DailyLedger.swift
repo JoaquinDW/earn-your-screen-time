@@ -101,6 +101,8 @@ public struct WalletTransaction: Codable, Equatable, Sendable {
         case study
         case pushups
         case squats
+        case jumpingJacks = "jumping_jacks"
+        case lunges
         case dailyGoalBonus
         case session
         case dayRollover
