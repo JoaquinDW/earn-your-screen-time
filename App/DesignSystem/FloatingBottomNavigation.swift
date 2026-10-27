@@ -2,12 +2,14 @@ import SwiftUI
 
 enum AppSection: String, CaseIterable, Hashable {
     case home
+    case friends
     case week
     case settings
 
     var label: LocalizedStringKey {
         switch self {
         case .home: "nav.home"
+        case .friends: "nav.friends"
         case .week: "nav.week"
         case .settings: "nav.settings"
         }
@@ -16,11 +18,14 @@ enum AppSection: String, CaseIterable, Hashable {
     var index: Int { Self.allCases.firstIndex(of: self) ?? 0 }
 }
 
-/// A row of three that becomes the nocturnal ground it stands on, with a 26pt cobalt tick over
+/// A row of four that becomes the nocturnal ground it stands on, with a 26pt cobalt tick over
 /// whichever item is active. A short fade protects it from scrolling content without drawing a
 /// hard-edged plate over the screen.
 struct FloatingBottomNavigation: View {
     @Binding var selection: AppSection
+    /// Friends' unread nudges, cheers and misses: a dot on the Friends item, as the Home header
+    /// used to carry.
+    var friendsUnreadCount = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -34,11 +39,17 @@ struct FloatingBottomNavigation: View {
                     } label: {
                         NavigationItem(
                             section: section,
-                            isSelected: isSelected
+                            isSelected: isSelected,
+                            showsDot: section == .friends && friendsUnreadCount > 0
                         )
                     }
                     .buttonStyle(NavigationButtonStyle(reduceMotion: reduceMotion))
                     .accessibilityLabel(Text(section.label))
+                    .accessibilityValue(
+                        section == .friends && friendsUnreadCount > 0
+                            ? Text("friends.unread \(friendsUnreadCount)")
+                            : Text(verbatim: "")
+                    )
                     .accessibilityAddTraits(isSelected ? .isSelected : [])
                 }
             }
@@ -60,6 +71,7 @@ struct FloatingBottomNavigation: View {
 private struct NavigationItem: View {
     let section: AppSection
     let isSelected: Bool
+    var showsDot = false
 
     private var tint: Color {
         isSelected ? Night.text : Night.textFaint
@@ -69,6 +81,15 @@ private struct NavigationItem: View {
         VStack(spacing: 6) {
             icon
                 .frame(width: 23, height: 16)
+                .overlay(alignment: .topTrailing) {
+                    if showsDot {
+                        Circle()
+                            .fill(Night.moss)
+                            .frame(width: 7, height: 7)
+                            .overlay(Circle().stroke(Night.ground, lineWidth: 1.5))
+                            .offset(x: 3, y: -3)
+                    }
+                }
             Text(section.label)
                 .font(.sans(10.5, weight: isSelected ? .semibold : .medium))
                 .lineLimit(1)
@@ -94,6 +115,8 @@ private struct NavigationItem: View {
         switch section {
         case .home:
             HomeGlyph().stroke(tint, style: StrokeStyle(lineWidth: 1.4, lineCap: .round, lineJoin: .round))
+        case .friends:
+            FriendsGlyph().stroke(tint, style: StrokeStyle(lineWidth: 1.4, lineCap: .round, lineJoin: .round))
         case .week:
             TrendGlyph().stroke(tint, style: StrokeStyle(lineWidth: 1.4, lineCap: .round))
         case .settings:
@@ -104,7 +127,7 @@ private struct NavigationItem: View {
 
 // MARK: - Glyphs
 //
-// All authored in the design's own 23×16 box, so the three read as one set.
+// All authored in the design's own 23×16 box, so the four read as one set.
 
 /// Today. The design's own roofline — a place you come back to, not a creature.
 private struct HomeGlyph: Shape {
@@ -125,6 +148,25 @@ private struct HomeGlyph: Shape {
         path.addLine(to: at(8.4, 15))
         path.addLine(to: at(2, 15))
         path.closeSubpath()
+        return path
+    }
+}
+
+/// Two people, the nearer one a step ahead: the same line weight as the roofline.
+private struct FriendsGlyph: Shape {
+    func path(in rect: CGRect) -> Path {
+        let sx = rect.width / 23
+        let sy = rect.height / 16
+        func at(_ x: CGFloat, _ y: CGFloat) -> CGPoint {
+            CGPoint(x: rect.minX + x * sx, y: rect.minY + y * sy)
+        }
+        var path = Path()
+        path.addEllipse(in: CGRect(origin: at(5.6, 1), size: CGSize(width: 5.8 * sx, height: 5.8 * sy)))
+        path.move(to: at(2, 15))
+        path.addCurve(to: at(15, 15), control1: at(2, 10.2), control2: at(15, 10.2))
+        path.addEllipse(in: CGRect(origin: at(13.6, 2.4), size: CGSize(width: 4.6 * sx, height: 4.6 * sy)))
+        path.move(to: at(16.4, 9.6))
+        path.addCurve(to: at(21, 15), control1: at(19, 9.6), control2: at(21, 11.6))
         return path
     }
 }

@@ -16,6 +16,10 @@ import SwiftUI
 /// and demotes the step distance to a line under the button. The reward loop is still one tap
 /// away, on `EarnTimeView`.
 ///
+/// Under the button there are only two blocks: what the balance unlocks, and one *Earn more* card
+/// that holds the day's totals, the next reward and the ways to earn. Friends moved to the tab
+/// bar; Home only mentions them when there is news.
+///
 /// Nothing about earning, spending, shielding or persistence moved: this file only re-draws what
 /// `AppEnvironment` already publishes.
 struct DashboardHome: View {
@@ -30,8 +34,6 @@ struct DashboardHome: View {
     let onPushups: () -> Void
     let onFriends: () -> Void
 
-    @State private var isShowingImpact = false
-
     private static let scene = IllustratedScene.homeEvening
 
     var body: some View {
@@ -39,8 +41,11 @@ struct DashboardHome: View {
             VStack(spacing: 0) {
                 header
                 balance.padding(.top, Theme.Space.xxl)
-                if env.activeSession == nil && !selection.isEmpty {
-                    spendSection.padding(.top, Theme.Space.xl)
+                if env.activeSession == nil {
+                    earnCard.padding(.top, Theme.Space.l)
+                    if env.socialUnreadCount > 0 {
+                        friendsNews.padding(.top, Theme.Space.s)
+                    }
                 }
             }
             .padding(.horizontal, Theme.Space.gutter)
@@ -50,11 +55,7 @@ struct DashboardHome: View {
         // The initial viewport stops where the man begins; larger text can scroll within it.
         .clearOfFigure(in: Self.scene)
         .frame(maxHeight: .infinity, alignment: .top)
-        .sheet(isPresented: $isShowingImpact) {
-            ImpactReportView()
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.socialUnreadCount > 0)
     }
 
     // MARK: - Header
@@ -68,11 +69,10 @@ struct DashboardHome: View {
                 .font(.serif(21, relativeTo: .title3))
                 .foregroundStyle(Night.text)
 
-            HStack(spacing: Theme.Space.s) {
+            Group {
                 if env.streakDays > 0 {
-                    StreakBadge(days: env.streakDays)
+                    StreakBadge(days: env.streakDays, isCompact: true)
                 }
-                friendsButton
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
@@ -80,29 +80,6 @@ struct DashboardHome: View {
         .foregroundStyle(Night.textMuted)
         .lineLimit(1)
         .minimumScaleFactor(0.8)
-    }
-
-    /// Friends sit in the header, beside the streak they are there to protect. The dot means a
-    /// friend nudged, cheered, added you, or missed their goal.
-    private var friendsButton: some View {
-        Button(action: onFriends) {
-            Image(systemName: "person.2.fill")
-                .font(.sans(14, weight: .semibold))
-                .foregroundStyle(Night.textSoft)
-                .frame(width: Theme.minTouchTarget, height: Theme.minTouchTarget)
-                .overlay(alignment: .topTrailing) {
-                    if env.socialUnreadCount > 0 {
-                        Circle()
-                            .fill(Night.moss)
-                            .frame(width: 8, height: 8)
-                            .offset(x: -9, y: 10)
-                    }
-                }
-                .contentShape(.rect)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("friends.title"))
-        .accessibilityValue(env.socialUnreadCount > 0 ? Text("friends.unread \(env.socialUnreadCount)") : Text(verbatim: ""))
     }
 
     // MARK: - Balance
@@ -140,36 +117,13 @@ struct DashboardHome: View {
 
                 action.padding(.top, 28)
 
-                if env.activeSession == nil && available == 0 {
-                    quickPushupsAction.padding(.top, Theme.Space.xs)
-                }
-
-                todayTotals(consumed: consumed).padding(.top, Theme.Space.m)
-
-                if env.activeSession == nil, env.impact(for: [env.progressToday]).hasContent {
-                    impactLink
-                }
-
                 if env.activeSession == nil {
-                    Button(action: onEarnMore) {
-                        VStack(spacing: 8) {
-                            HStack {
-                                Text("earn.nextReward \(env.nextMilestone.remainingAmount) \(env.nextMilestone.rewardMinutes)")
-                                    .font(.sans(12.5, weight: .medium))
-                                    .foregroundStyle(Night.textSoft)
-                                Spacer(minLength: Theme.Space.s)
-                                Image(systemName: "chevron.right")
-                                    .font(.sans(10, weight: .semibold))
-                                    .foregroundStyle(Night.cobaltText)
-                            }
-                            TickMeter(progress: env.milestoneProgress, height: 11, tickCount: 38)
-                        }
-                        .frame(minHeight: Theme.minTouchTarget)
-                        .contentShape(.rect)
+                    if !selection.isEmpty {
+                        unlocksRow.padding(.top, Theme.Space.s)
                     }
-                    .buttonStyle(.plain)
-                    .padding(.top, Theme.Space.s)
-                    .accessibilityHint(Text("home.earnMoreTime"))
+                } else {
+                    // While a session runs the card is away, so the totals stay under the band.
+                    todayTotals(consumed: consumed).padding(.top, Theme.Space.m)
                 }
 
                 if let error = env.lastError {
@@ -251,25 +205,6 @@ struct DashboardHome: View {
             : date.formatted(time.weekday(.abbreviated))
     }
 
-    private var quickPushupsAction: some View {
-        Button(action: onPushups) {
-            HStack(spacing: Theme.Space.s) {
-                Image(systemName: "figure.strengthtraining.traditional")
-                    .accessibilityHidden(true)
-                PushupsText("pushups.entry.quick")
-                Image(systemName: "chevron.right")
-                    .font(.sans(10, weight: .semibold))
-                    .accessibilityHidden(true)
-            }
-            .font(.sans(13.5, weight: .semibold))
-            .foregroundStyle(Night.cobaltText)
-            .frame(minHeight: Theme.minTouchTarget)
-            .contentShape(.rect)
-        }
-        .buttonStyle(.plain)
-        .accessibilityHint(Text("pushups.entry.hint", tableName: PushupsLocalization.tableName))
-    }
-
     /// The day's totals, and the only place on Home that pulls fresh steps — this screen has no
     /// scroll to refresh, exactly as in v5.
     private func todayTotals(consumed: Int) -> some View {
@@ -314,93 +249,149 @@ struct DashboardHome: View {
         .accessibilityHint(Text("dashboard.refreshSteps"))
     }
 
-    /// The way into today's report. It names the skipped opens when there are some, because
-    /// that is the number nothing else on Home shows.
-    private var impactLink: some View {
-        Button { isShowingImpact = true } label: {
-            HStack(spacing: 6) {
-                Image(systemName: env.skippedOpensToday > 0 ? "hand.raised" : "sparkles")
-                    .accessibilityHidden(true)
-                Group {
-                    if env.skippedOpensToday > 0 {
-                        Text("home.impact.skipped \(env.skippedOpensToday)")
+    // MARK: - Ready to spend
+    //
+    // Not a status readout: this is what the balance *buys*, one line under the button that
+    // spends it, so it never lands on the figure as a heading with nothing under it.
+
+    private var unlocksRow: some View {
+        HStack(spacing: 10) {
+            Button(action: onSpend) {
+                HStack(spacing: 8) {
+                    Text("home.unlocks")
+                        .font(.sans(12.5, weight: .medium))
+                        .foregroundStyle(Night.textDim)
+                    if spendableTokens.isEmpty {
+                        // A category-only selection has no app token row to draw.
+                        Text("appSelection.count \(selection.itemCount)")
+                            .font(.sans(12.5, weight: .medium))
+                            .foregroundStyle(Night.textSoft)
                     } else {
-                        Text("home.impact.link")
+                        ForEach(spendableTokens, id: \.self) { token in
+                            Label(token)
+                                .labelStyle(SpendIconLabelStyle())
+                        }
                     }
                 }
+                .frame(minHeight: Theme.minTouchTarget)
+                .contentShape(.rect)
+            }
+            .buttonStyle(SpendListRowButtonStyle())
+            .disabled(env.wallet.availableMinutes <= 0)
+            .accessibilityHint(Text("home.spend.a11y"))
+
+            Button("home.edit", action: onChooseApps)
+                .font(.sans(12.5, weight: .semibold))
+                .foregroundStyle(Night.cobaltText)
+                .buttonStyle(.plain)
+                .frame(minHeight: Theme.minTouchTarget)
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
+    }
+
+    // MARK: - Earn more
+    //
+    // The day's totals, the next reward and the ways to earn were three loose lines in three
+    // styles; they are one question ("how do I get more?"), so they are one card.
+
+    private var earnCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
+                Text("home.earnMore.title")
+                    .font(.sans(14, weight: .semibold))
+                    .foregroundStyle(Night.text)
+                    .accessibilityAddTraits(.isHeader)
+                Spacer(minLength: 0)
+                todayTotals(consumed: 0)
+            }
+
+            Button(action: onEarnMore) {
+                VStack(spacing: 8) {
+                    HStack {
+                        Text("earn.nextReward \(env.nextMilestone.remainingAmount) \(env.nextMilestone.rewardMinutes)")
+                            .font(.sans(12.5, weight: .medium))
+                            .foregroundStyle(Night.textSoft)
+                            .multilineTextAlignment(.leading)
+                        Spacer(minLength: Theme.Space.s)
+                        Image(systemName: "chevron.right")
+                            .font(.sans(10, weight: .semibold))
+                            .foregroundStyle(Night.cobaltText)
+                            .accessibilityHidden(true)
+                    }
+                    TickMeter(progress: env.milestoneProgress, height: 11, tickCount: 38)
+                }
+                .contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("home.earnMoreTime"))
+
+            HStack(spacing: Theme.Space.s) {
+                earnWay("home.earnMore.walk", systemImage: "figure.walk", action: onEarnMore)
+                earnWay("home.earnMore.exercise", systemImage: "figure.strengthtraining.traditional", action: onPushups)
+            }
+        }
+        .padding(14)
+        .background(Night.panel.opacity(0.78), in: .rect(cornerRadius: Night.cardRadius))
+        .overlay {
+            RoundedRectangle(cornerRadius: Night.cardRadius).stroke(Night.edge, lineWidth: 1)
+        }
+    }
+
+    private func earnWay(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 7) {
+                Image(systemName: systemImage)
+                    .font(.sans(13, weight: .semibold))
+                    .foregroundStyle(Night.cobaltText)
+                    .accessibilityHidden(true)
+                Text(title)
+                    .font(.sans(13, weight: .semibold))
+                    .foregroundStyle(Night.textSoft)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 12)
+            .frame(maxWidth: .infinity, minHeight: Theme.minTouchTarget)
+            .background(Night.forestLift.opacity(0.85), in: .rect(cornerRadius: 12))
+            .contentShape(.rect)
+        }
+        .buttonStyle(SpendListRowButtonStyle())
+    }
+
+    // MARK: - Friends
+
+    /// Only when a friend nudged, cheered, added you or missed their goal: the tab's dot says the
+    /// same thing, this line says it where you already are.
+    private var friendsNews: some View {
+        Button(action: onFriends) {
+            HStack(spacing: 10) {
+                Image(systemName: "person.2.fill")
+                    .font(.sans(12, weight: .semibold))
+                    .foregroundStyle(Night.moss)
+                    .accessibilityHidden(true)
+                Text("home.friendsNews \(env.socialUnreadCount)")
+                    .font(.sans(13, weight: .medium))
+                    .foregroundStyle(Night.textSoft)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
                     .font(.sans(10, weight: .semibold))
+                    .foregroundStyle(Night.textGhost)
                     .accessibilityHidden(true)
             }
-            .font(.sans(12.5, weight: .semibold))
-            .foregroundStyle(Night.cobaltText)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
+            .padding(.horizontal, 14)
             .frame(minHeight: Theme.minTouchTarget)
+            .background(Night.moss.opacity(0.08), in: .rect(cornerRadius: 14))
+            .overlay {
+                RoundedRectangle(cornerRadius: 14).stroke(Night.moss.opacity(0.2), lineWidth: 1)
+            }
             .contentShape(.rect)
         }
         .buttonStyle(.plain)
-    }
-
-    // MARK: - Ready to spend
-    //
-    // Not a status readout: this is what the balance *buys*. The rows stay directly on the scene
-    // so the app icons do not turn into one large block over the illustration.
-
-    private var spendSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline) {
-                NightEyebrow(text: "home.protectedApps")
-                Spacer(minLength: Theme.Space.s)
-                Button("home.edit", action: onChooseApps)
-                    .font(.sans(13, weight: .medium))
-                    .foregroundStyle(Night.cobaltText)
-                    .buttonStyle(.plain)
-            }
-            .padding(.horizontal, 4)
-
-            if spendableTokens.isEmpty {
-                VStack(spacing: 0) {
-                    NightHairline()
-                    Button(action: onSpend) {
-                        HStack(spacing: 12) {
-                            Image(systemName: "square.grid.2x2")
-                                .font(.sans(13, weight: .semibold))
-                                .foregroundStyle(Night.textMuted)
-                                .frame(width: 34, height: 34)
-                                .background(Night.forestLift.opacity(0.62), in: .rect(cornerRadius: 10))
-                                .accessibilityHidden(true)
-                            // A category-only selection has no app token row to draw.
-                            Text("appSelection.count \(selection.itemCount)")
-                            .font(.sans(14, weight: .medium))
-                            .foregroundStyle(Night.textSoft)
-                            .lineLimit(2)
-                            Spacer(minLength: 0)
-                            Image(systemName: "chevron.right")
-                                .font(.sans(11, weight: .semibold))
-                                .foregroundStyle(Night.textGhost)
-                                .accessibilityHidden(true)
-                        }
-                        .padding(.horizontal, 4)
-                        .frame(minHeight: 54)
-                        .contentShape(.rect)
-                    }
-                    .buttonStyle(SpendListRowButtonStyle())
-                    .disabled(env.wallet.availableMinutes <= 0)
-                    NightHairline()
-                }
-            } else {
-                VStack(spacing: 0) {
-                    NightHairline()
-                    SpendIconStrip(
-                        tokens: spendableTokens,
-                        availableMinutes: env.wallet.availableMinutes,
-                        action: onSpend
-                    )
-                    NightHairline()
-                }
-            }
-        }
+        .transition(.opacity)
     }
 
     /// Screen Time hands us opaque tokens; three of them is what the compact list has room for above
@@ -412,41 +403,12 @@ struct DashboardHome: View {
 
 // MARK: - Pieces
 
-/// The selected apps are one destination: every icon spends from the same wallet in one session.
-private struct SpendIconStrip: View {
-    let tokens: [ApplicationToken]
-    let availableMinutes: Int
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                ForEach(tokens, id: \.self) { token in
-                    Label(token)
-                        .labelStyle(SpendIconLabelStyle())
-                }
-                Spacer(minLength: Theme.Space.s)
-                Image(systemName: "chevron.right")
-                    .font(.sans(11, weight: .semibold))
-                    .foregroundStyle(Night.textGhost)
-                    .accessibilityHidden(true)
-            }
-            .padding(.horizontal, 4)
-            .frame(minHeight: 60)
-            .contentShape(.rect)
-        }
-        .buttonStyle(SpendListRowButtonStyle())
-        .disabled(availableMinutes <= 0)
-        .accessibilityHint(Text("home.spend.a11y"))
-    }
-}
-
 /// Keep the system-rendered title available to accessibility while showing only the real app icon.
 private struct SpendIconLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.icon
-            .frame(width: 42, height: 42)
-            .clipShape(.rect(cornerRadius: 12))
+            .frame(width: 26, height: 26)
+            .clipShape(.rect(cornerRadius: 7))
             .accessibilityRepresentation {
                 configuration.title
             }

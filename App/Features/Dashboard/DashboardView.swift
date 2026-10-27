@@ -14,12 +14,13 @@ struct DashboardView: View {
     /// Lets `RootView` pull the tab bar away while a destination is pushed, the same way
     /// `SettingsView` already does.
     var onNavigationDepthChange: ((Bool) -> Void)? = nil
+    /// Friends lives in the tab bar; Home only points at it when there is news.
+    var onOpenFriends: () -> Void = {}
 
     private enum HomeDestination: Hashable {
         case earnTime
         case pushups
         case study
-        case friends
     }
 
     @State private var path: [HomeDestination] = []
@@ -53,7 +54,7 @@ struct DashboardView: View {
                     },
                     onEarnMore: { path.append(.earnTime) },
                     onPushups: { openPushups(source: "home") },
-                    onFriends: { path.append(.friends) }
+                    onFriends: onOpenFriends
                 )
 
             }
@@ -81,8 +82,6 @@ struct DashboardView: View {
                     PushupsToEarnView(onUseMinutes: openSpendAfterReward)
                 case .study:
                     StudyToEarnView(onUseMinutes: openSpendAfterReward)
-                case .friends:
-                    FriendsView()
                 }
             }
         }
@@ -183,12 +182,6 @@ struct DashboardView: View {
 
     /// Pushups lives in this stack, so deep links are resolved here rather than in `RootView`.
     private func applyPendingRoute(_ route: AppRoute?) {
-        if route == .friends {
-            isShowingSpend = false
-            env.consumePendingRoute()
-            path = [.friends]
-            return
-        }
         guard route == .pushups else { return }
         isShowingSpend = false
         env.consumePendingRoute()
