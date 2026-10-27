@@ -9,6 +9,8 @@ enum AppRoute: Equatable {
     case home
     /// Home, with the push-up camera pushed on top of it.
     case pushups
+    /// Home, with Friends pushed on top of it: a friend's push was tapped.
+    case friends
 }
 
 /// Wires the services together and owns the state the UI observes.
@@ -23,6 +25,7 @@ final class AppEnvironment {
     let studyOCR: any StudyOCRServing
     let exercise: any ExerciseServing
     let pendingExerciseClaims: PendingExerciseClaimStore
+    let social: any SocialServing
     private let sessionNotifications = SessionNotificationService()
     private let reengagementNotifications = ReengagementNotificationService()
     private let notificationOpenTracker = NotificationOpenTracker()
@@ -38,6 +41,9 @@ final class AppEnvironment {
     /// Opens skipped at a shield, by day. The shield action extension writes it while the app is
     /// closed, so every reconcile reads it again.
     private(set) var skippedOpens = SkippedOpenStore.load()
+    /// Unread friend events, for the dot on Home. Kept from the last time Friends loaded.
+    private(set) var socialUnreadCount = SocialStore.unreadCount
+    @ObservationIgnored private var lastSocialSync: Date?
     private static let reportedSkippedOpensKey = "analytics.skippedOpens.reported.v1"
     /// Transient feedback for transitions that already completed in the domain layer. Feedback is
     /// queued so a secondary state such as a full wallet never replaces the reward that caused it.
@@ -74,7 +80,8 @@ final class AppEnvironment {
         study: (any StudyServing)? = nil,
         studyOCR: (any StudyOCRServing)? = nil,
         exercise: (any ExerciseServing)? = nil,
-        pendingExerciseClaims: PendingExerciseClaimStore? = nil
+        pendingExerciseClaims: PendingExerciseClaimStore? = nil,
+        social: (any SocialServing)? = nil
     ) {
         let analytics = analytics ?? AppAnalytics.make()
         self.screenTime = screenTime ?? AppEnvironment.makeScreenTimeService()
@@ -85,6 +92,7 @@ final class AppEnvironment {
         self.studyOCR = studyOCR ?? VisionStudyOCRService()
         self.exercise = exercise ?? AppEnvironment.makeExerciseService()
         self.pendingExerciseClaims = pendingExerciseClaims ?? PendingExerciseClaimStore()
+        self.social = social ?? AppEnvironment.makeSocialService()
         self.appLanguage = appLanguage ?? .saved
         var shouldTrackWalletCreation = false
         let loaded = SharedStore.shared.mutate { state in
@@ -107,8 +115,14 @@ final class AppEnvironment {
         // Set this early in launch so a tap that cold-starts the app is still reported.
         notificationOpenTracker.onOpen = { [weak self] kind in
             self?.analytics.track(.notificationOpened.withProperties(["kind": .string(kind)]))
+            if Self.socialNotificationKinds.contains(kind) {
+                self?.pendingRoute = .friends
+            }
         }
         UNUserNotificationCenter.current().delegate = notificationOpenTracker
+        NotificationCenter.default.addObserver(forName: .pushTokenDidChange, object: nil, queue: .main) { [weak self] _ in
+            Task { @MainActor in await self?.uploadPushTokenIfNeeded() }
+        }
         startObservingSteps()
     }
 
@@ -230,6 +244,10 @@ final class AppEnvironment {
         SupabaseExerciseService() ?? UnconfiguredExerciseService()
     }
 
+    private static func makeSocialService() -> any SocialServing {
+        SupabaseSocialService() ?? UnconfiguredSocialService()
+    }
+
     // MARK: - Derived state
 
     var ledger: DailyLedger { state.ledger }
@@ -272,7 +290,8 @@ final class AppEnvironment {
             consumedSeconds: currentConsumedSeconds(),
             sessionCount: summary.sessionCount,
             returnedSeconds: summary.returnedSeconds,
-            hasUsageData: true
+            hasUsageData: true,
+            dailyGoal: summary.dailyGoal
         )
     }
     var week: [DaySummary] {
@@ -576,6 +595,7 @@ final class AppEnvironment {
         }
 
         applyReconciledState(screenTime.reconcile(), livePresentation: livePresentation)
+        await syncSocialProgress()
     }
 
     /// Refreshes immediately on foreground, then re-reads shared state once more because
@@ -587,6 +607,7 @@ final class AppEnvironment {
         await refresh()
         await refreshWidgetInstallation()
         await rescheduleReengagementNotifications()
+        await registerForFriendPushes()
         presentShieldDetailIfRequested()
         try? await Task.sleep(for: .milliseconds(800))
         guard !Task.isCancelled else { return }
@@ -631,6 +652,65 @@ final class AppEnvironment {
         analytics.track((granted ? AnalyticsEvent.notificationsPermissionGranted : .notificationsPermissionDenied)
             .withProperties(context.merging(["already_determined": .bool(status != .notDetermined)]) { $1 }))
         return granted
+    }
+
+    // MARK: - Friends
+
+    private static let socialNotificationKinds: Set<String> = ["missed_goal", "nudge", "cheer", "friend_added"]
+
+    var hasSocialProfile: Bool { SocialStore.hasProfile }
+
+    /// Friends were set up or left. Setting up is also when push is worth asking for: a nudge
+    /// nobody sees does nothing.
+    func socialProfileDidChange(hasProfile: Bool) async {
+        SocialStore.hasProfile = hasProfile
+        guard hasProfile else {
+            PushToken.uploaded = nil
+            setSocialUnreadCount(0)
+            return
+        }
+        if await requestNotificationPermission(source: "friends") {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
+        await syncSocialProgress(force: true)
+    }
+
+    /// Sends today so far and yesterday as a finished day. At most every 15 minutes: the
+    /// background step updates that call `refresh` arrive about hourly anyway.
+    func syncSocialProgress(force: Bool = false) async {
+        guard SocialStore.hasProfile else { return }
+        if !force, let lastSocialSync, Date().timeIntervalSince(lastSocialSync) < 15 * 60 { return }
+        lastSocialSync = Date()
+        do {
+            try await social.recordProgress(AccountabilityDay.recent(in: state))
+        } catch let error as SocialServiceError where error.code == "profile_required" {
+            SocialStore.hasProfile = false
+        } catch {
+            lastSocialSync = nil
+        }
+    }
+
+    func setSocialUnreadCount(_ count: Int) {
+        socialUnreadCount = count
+        SocialStore.unreadCount = count
+    }
+
+    /// Tokens can change between launches; iOS hands back the current one on every registration.
+    private func registerForFriendPushes() async {
+        guard SocialStore.hasProfile else { return }
+        let status = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+        guard status == .authorized || status == .provisional else { return }
+        UIApplication.shared.registerForRemoteNotifications()
+    }
+
+    private func uploadPushTokenIfNeeded() async {
+        guard SocialStore.hasProfile, let token = PushToken.current, token != PushToken.uploaded else { return }
+        do {
+            try await social.registerPushToken(token, environment: PushToken.environment)
+            PushToken.uploaded = token
+        } catch {
+            // Retried on the next launch's registration.
+        }
     }
 
     func consumeReviewRequest() {

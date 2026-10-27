@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct EarnYourScreenTimeApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var environment = AppEnvironment()
     @Environment(\.scenePhase) private var scenePhase
 

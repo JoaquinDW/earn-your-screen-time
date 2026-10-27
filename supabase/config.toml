@@ -45,3 +45,6 @@ verify_jwt = true
 
 [functions.revenuecat-webhook]
 verify_jwt = false
+
+[functions.social]
+verify_jwt = true
