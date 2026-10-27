@@ -37,6 +37,14 @@ struct DashboardHome: View {
     private static let scene = IllustratedScene.homeEvening
     private static let entrance = "home"
 
+    /// Bumped to make the balance numeral swell and glow once: the minutes you just earned
+    /// landing in it.
+    @State private var balancePulse = 0
+    /// Minutes are usually earned on a pushed screen or under the reward overlay, where a pulse
+    /// would play unseen; it is held until Home is actually in front of the reader.
+    @State private var owesBalancePulse = false
+    @State private var isOnScreen = false
+
     var body: some View {
         ScrollView {
             // The first time Home appears it builds itself top to bottom, the balance first and
@@ -66,6 +74,29 @@ struct DashboardHome: View {
         .clearOfFigure(in: Self.scene)
         .frame(maxHeight: .infinity, alignment: .top)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.socialUnreadCount > 0)
+        .onAppear {
+            isOnScreen = true
+            payOwedBalancePulse()
+        }
+        .onDisappear { isOnScreen = false }
+        .onChange(of: env.earnedMinutesToday) { old, new in
+            guard new > old, !reduceMotion else { return }
+            owesBalancePulse = true
+            payOwedBalancePulse()
+        }
+        .onChange(of: env.presentationFeedback == nil) { _, isClear in
+            if isClear { payOwedBalancePulse() }
+        }
+    }
+
+    private func payOwedBalancePulse() {
+        guard owesBalancePulse, isOnScreen, env.presentationFeedback == nil else { return }
+        owesBalancePulse = false
+        // A beat after Home settles, so the eye is already on the number when it moves.
+        Task {
+            try? await Task.sleep(for: .seconds(0.35))
+            balancePulse += 1
+        }
     }
 
     // MARK: - Header
@@ -118,6 +149,14 @@ struct DashboardHome: View {
                         .font(.sans(19))
                         .foregroundStyle(Night.textMuted)
                 }
+                .keyframeAnimator(initialValue: 1.0, trigger: balancePulse) { content, scale in
+                    content
+                        .scaleEffect(scale)
+                        .shadow(color: Night.cobalt.opacity(min(0.6, max(0, (scale - 1) * 5))), radius: 28)
+                } keyframes: { _ in
+                    SpringKeyframe(1.1, duration: 0.22, spring: .snappy)
+                    SpringKeyframe(1.0, duration: 0.6, spring: .bouncy)
+                }
                 .padding(.top, 10)
 
                 Text("home.toSpendOnYourApps")
@@ -163,7 +202,7 @@ struct DashboardHome: View {
     private var action: some View {
         if let session = env.activeSession {
             ActiveSessionBand(session: session)
-                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
+                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.9)))
         } else if !selection.isEmpty, let schedule = env.blockSchedule, !schedule.isBlocking(at: .now) {
             // Outside blocking hours the apps are open; spending minutes would only waste them.
             freeHoursBand(resumesAt: schedule.nextChange(after: .now))
@@ -176,14 +215,14 @@ struct DashboardHome: View {
                 )
             }
             .buttonStyle(.nightPill)
-            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
+            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.9)))
         } else {
             Button(action: onEarnMore) {
                 Label("home.earnMoreTime", systemImage: "plus")
                     .labelStyle(.titleAndIcon)
             }
             .buttonStyle(.nightPill)
-            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.98)))
+            .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.9)))
         }
     }
 
@@ -445,7 +484,10 @@ private struct SpendListRowButtonStyle: ButtonStyle {
 /// The running session, in the slot the *Earn more time* button occupies at rest.
 private struct ActiveSessionBand: View {
     @Environment(AppEnvironment.self) private var env
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let session: ScreenTimeSession
+    /// Bumped once as the band arrives, so the open lock jumps as the apps unlock.
+    @State private var unlockBounce = 0
 
     var body: some View {
         VStack(spacing: 8) {
@@ -453,6 +495,7 @@ private struct ActiveSessionBand: View {
                 Image(systemName: "lock.open.fill")
                     .font(.sans(11, weight: .semibold))
                     .contentTransition(.symbolEffect(.replace))
+                    .symbolEffect(.bounce, value: unlockBounce)
                 Text("session.active")
                     .font(.sans(11, weight: .semibold))
                     .textCase(.uppercase)
@@ -499,6 +542,12 @@ private struct ActiveSessionBand: View {
         .overlay {
             RoundedRectangle(cornerRadius: Night.panelRadius)
                 .stroke(Night.cobalt.opacity(0.35), lineWidth: 1)
+        }
+        .task {
+            guard !reduceMotion else { return }
+            // After the band's own entrance, so the lock moves once it is already in view.
+            try? await Task.sleep(for: .seconds(0.3))
+            unlockBounce += 1
         }
     }
 

@@ -16,7 +16,18 @@ struct RootView: View {
         ZStack {
             Group {
                 if !env.hasCompletedOnboarding {
+                    // Finishing onboarding reads as walking through it into the app: the flow
+                    // swells and fades past the reader while what follows comes up from just
+                    // behind, instead of the two crossfading in place.
                     OnboardingView()
+                        .transition(
+                            reduceMotion
+                                ? .opacity
+                                : .asymmetric(
+                                    insertion: .opacity,
+                                    removal: .opacity.combined(with: .scale(scale: 1.06))
+                                )
+                        )
                 } else if env.subscriptionManager.status == .unknown {
                     subscriptionLoading
                 } else if env.requiresSubscription && !env.isUnlockPaywallDismissed {
@@ -28,8 +39,10 @@ struct RootView: View {
                         freePlanNote: "Your free unlock comes back tomorrow. With Pro, unlock whenever you've earned it.",
                         onClose: env.dismissUnlockPaywall
                     )
+                    .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.94)))
                 } else {
                     mainContent
+                        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.94)))
                 }
             }
 
@@ -53,7 +66,7 @@ struct RootView: View {
         // illustrations are painted at dusk and there is no light variant of them to switch to.
         .preferredColorScheme(.dark)
         .tint(Night.cobalt)
-        .animation(reduceMotion ? nil : .snappy(duration: 0.35), value: env.hasCompletedOnboarding)
+        .animation(reduceMotion ? nil : EarnMotion.settle, value: env.hasCompletedOnboarding)
         .onAppear {
             applyPendingRoute(env.pendingRoute)
             if isAdaptiveIntroPending {
