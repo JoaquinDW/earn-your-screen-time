@@ -44,6 +44,9 @@ struct DashboardHome: View {
     /// would play unseen; it is held until Home is actually in front of the reader.
     @State private var owesBalancePulse = false
     @State private var isOnScreen = false
+    /// True when the column runs past the figure line (small phones, large text): its bottom edge
+    /// then fades into the scene instead of being sliced off mid-button.
+    @State private var overflowsViewport = false
 
     var body: some View {
         ScrollView {
@@ -54,11 +57,11 @@ struct DashboardHome: View {
                     .staggeredAppear(0, in: Self.entrance)
                 balance
                     .staggeredAppear(1, in: Self.entrance)
-                    .padding(.top, Theme.Space.xxl)
+                    .padding(.top, Theme.Space.l)
                 if env.activeSession == nil {
                     earnCard
                         .staggeredAppear(3, in: Self.entrance)
-                        .padding(.top, Theme.Space.l)
+                        .padding(.top, Theme.Space.m)
                     if env.socialUnreadCount > 0 {
                         friendsNews
                             .staggeredAppear(4, in: Self.entrance)
@@ -67,11 +70,23 @@ struct DashboardHome: View {
                 }
             }
             .padding(.horizontal, Theme.Space.gutter)
-            .padding(.bottom, Theme.Space.l)
+            .padding(.bottom, Theme.Space.m)
         }
         .scrollBounceBehavior(.basedOnSize)
+        .onScrollGeometryChange(for: Bool.self) { geometry in
+            geometry.contentSize.height - geometry.contentOffset.y - geometry.containerSize.height > Theme.Space.m
+        } action: { _, overflows in
+            overflowsViewport = overflows
+        }
         // The initial viewport stops where the man begins; larger text can scroll within it.
         .clearOfFigure(in: Self.scene)
+        .mask {
+            VStack(spacing: 0) {
+                Color.black
+                LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom)
+                    .frame(height: overflowsViewport ? 40 : 0)
+            }
+        }
         .frame(maxHeight: .infinity, alignment: .top)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: env.socialUnreadCount > 0)
         .onAppear {
@@ -138,7 +153,7 @@ struct DashboardHome: View {
 
                 HStack(alignment: .lastTextBaseline, spacing: 8) {
                     Text(available.formatted(.number.locale(locale)))
-                        .font(.serif(112))
+                        .font(.serif(100))
                         .foregroundStyle(Night.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
@@ -166,7 +181,7 @@ struct DashboardHome: View {
 
                 action
                     .staggeredAppear(2, in: Self.entrance)
-                    .padding(.top, 28)
+                    .padding(.top, 22)
 
                 if env.activeSession == nil {
                     if !selection.isEmpty {
@@ -347,7 +362,7 @@ struct DashboardHome: View {
     // styles; they are one question ("how do I get more?"), so they are one card.
 
     private var earnCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .firstTextBaseline, spacing: Theme.Space.s) {
                 Text("home.earnMore.title")
                     .font(.sans(14, weight: .semibold))
@@ -382,7 +397,7 @@ struct DashboardHome: View {
                 earnWay("home.earnMore.exercise", systemImage: "figure.strengthtraining.traditional", action: onPushups)
             }
         }
-        .padding(14)
+        .padding(12)
         .background(Night.panel.opacity(0.78), in: .rect(cornerRadius: Night.cardRadius))
         .overlay {
             RoundedRectangle(cornerRadius: Night.cardRadius).stroke(Night.edge, lineWidth: 1)
