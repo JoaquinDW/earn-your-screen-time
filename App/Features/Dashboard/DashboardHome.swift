@@ -35,16 +35,26 @@ struct DashboardHome: View {
     let onFriends: () -> Void
 
     private static let scene = IllustratedScene.homeEvening
+    private static let entrance = "home"
 
     var body: some View {
         ScrollView {
+            // The first time Home appears it builds itself top to bottom, the balance first and
+            // the ways to earn last, instead of arriving as one finished frame.
             VStack(spacing: 0) {
                 header
-                balance.padding(.top, Theme.Space.xxl)
+                    .staggeredAppear(0, in: Self.entrance)
+                balance
+                    .staggeredAppear(1, in: Self.entrance)
+                    .padding(.top, Theme.Space.xxl)
                 if env.activeSession == nil {
-                    earnCard.padding(.top, Theme.Space.l)
+                    earnCard
+                        .staggeredAppear(3, in: Self.entrance)
+                        .padding(.top, Theme.Space.l)
                     if env.socialUnreadCount > 0 {
-                        friendsNews.padding(.top, Theme.Space.s)
+                        friendsNews
+                            .staggeredAppear(4, in: Self.entrance)
+                            .padding(.top, Theme.Space.s)
                     }
                 }
             }
@@ -115,7 +125,9 @@ struct DashboardHome: View {
                     .foregroundStyle(Night.textMuted)
                     .padding(.top, 6)
 
-                action.padding(.top, 28)
+                action
+                    .staggeredAppear(2, in: Self.entrance)
+                    .padding(.top, 28)
 
                 if env.activeSession == nil {
                     if !selection.isEmpty {
@@ -426,7 +438,7 @@ private struct SpendListRowButtonStyle: ButtonStyle {
                 in: .rect(cornerRadius: 10)
             )
             .opacity(configuration.isPressed ? 0.78 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .pressFeedback(configuration.isPressed, scale: 0.98)
     }
 }
 

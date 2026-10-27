@@ -545,7 +545,7 @@ struct WeekView: View {
     private func select(_ day: DayKey) {
         guard selectedDay != day else { return }
         selectedDay = day
-        HapticManager.trigger(.light)
+        HapticManager.trigger(.selection)
     }
 
     private func dateLabel(_ day: DayKey) -> String {
@@ -880,9 +880,8 @@ private struct ProgressPlotButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.97 : 1)
             .opacity(configuration.isPressed ? 0.72 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .pressFeedback(configuration.isPressed, scale: 0.97, haptic: nil)
     }
 }
 
