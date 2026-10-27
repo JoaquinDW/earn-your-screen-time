@@ -282,7 +282,7 @@ struct SpendSheet: View {
                             Button {
                                 guard selectedMinutes != minutes else { return }
                                 selectedMinutes = minutes
-                                HapticManager.trigger(.light)
+                                HapticManager.trigger(.selection)
                             } label: {
                                 Text("common.minutesValue \(minutes)")
                                     .font(.sans(15, weight: .semibold))
@@ -385,9 +385,8 @@ private struct DurationChoiceButtonStyle: ButtonStyle {
         configuration.label
             .foregroundStyle(isSelected ? Color.white : Night.textSoft)
             .background(isSelected ? Night.cobalt : Night.forestLift, in: .capsule)
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
             .opacity(configuration.isPressed ? 0.82 : 1)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: configuration.isPressed)
+            .pressFeedback(configuration.isPressed, scale: 0.95, haptic: nil)
     }
 }
 

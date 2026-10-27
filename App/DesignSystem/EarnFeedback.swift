@@ -1,13 +1,35 @@
 import Foundation
+import SwiftUI
 import UIKit
 
 enum EarnMotion {
     static let quick = 0.20
     static let standard = 0.32
     static let reward = 0.72
+
+    /// The gap between consecutive pieces of a screen that builds itself in.
+    static let stagger = 0.05
+
+    /// Something arriving: a chip, a badge, the primary action. Overshoots a little and settles.
+    static let pop = Animation.spring(duration: 0.45, bounce: 0.3)
+    /// Layout and blocks of content moving into place: springy, but without a visible wobble.
+    static let settle = Animation.spring(duration: 0.5, bounce: 0.15)
+    /// Leaving is always quicker than arriving.
+    static let exit = Animation.easeIn(duration: 0.2)
+    /// Minutes earned, an unlock: the one moment allowed a real bounce.
+    static let celebrate = Animation.bouncy(duration: 0.7)
+
+    /// A finger landing on a control: fast and flat, so the press reads as immediate.
+    static let press = Animation.spring(duration: 0.16, bounce: 0)
+    /// The finger lifting: the control springs back slightly past its size before settling.
+    static let release = Animation.spring(duration: 0.42, bounce: 0.45)
 }
 
 enum EarnHaptic: Equatable {
+    /// A finger landing on a button. The quietest impact the app makes.
+    case tap
+    /// Moving between options: tabs, duration chips, days on a chart.
+    case selection
     case light
     case earned
     case unlocked
@@ -24,6 +46,7 @@ enum HapticManager {
     static let preferenceKey = "haptic.feedback.enabled.v1"
     private static var lastTrigger: (haptic: EarnHaptic, date: Date)?
     private static let lightImpact = UIImpactFeedbackGenerator(style: .light)
+    private static let selectionFeedback = UISelectionFeedbackGenerator()
     private static let earnedImpact = UIImpactFeedbackGenerator(style: .soft)
     private static let unlockedImpact = UIImpactFeedbackGenerator(style: .medium)
     private static let expiredImpact = UIImpactFeedbackGenerator(style: .medium)
@@ -47,6 +70,10 @@ enum HapticManager {
         self.lastTrigger = (haptic, Date())
 
         switch haptic {
+        case .tap:
+            lightImpact.impactOccurred(intensity: 0.45)
+        case .selection:
+            selectionFeedback.selectionChanged()
         case .light:
             lightImpact.impactOccurred(intensity: 0.7)
         case .earned:
@@ -69,7 +96,8 @@ enum HapticManager {
     static func prepare(_ haptic: EarnHaptic) {
         guard isEnabled else { return }
         switch haptic {
-        case .light: lightImpact.prepare()
+        case .tap, .light: lightImpact.prepare()
+        case .selection: selectionFeedback.prepare()
         case .earned: earnedImpact.prepare()
         case .unlocked: unlockedImpact.prepare()
         case .balanceExpired: expiredImpact.prepare()

@@ -35,7 +35,7 @@ struct FloatingBottomNavigation: View {
                     let isSelected = selection == section
                     Button {
                         selection = section
-                        HapticManager.trigger(.light)
+                        HapticManager.trigger(.selection)
                     } label: {
                         NavigationItem(
                             section: section,
@@ -227,7 +227,6 @@ private struct NavigationButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .opacity(configuration.isPressed ? 0.62 : 1)
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.96 : 1)
-            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+            .pressFeedback(configuration.isPressed, scale: 0.9, haptic: nil)
     }
 }

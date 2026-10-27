@@ -77,8 +77,7 @@ struct NightPillButtonStyle: ButtonStyle {
             .background(configuration.isPressed ? Night.cobaltLift : Night.cobalt, in: .capsule)
             .shadow(color: Night.cobalt.opacity(isEnabled ? 0.42 : 0), radius: 18, y: 8)
             .opacity(isEnabled ? 1 : 0.4)
-            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
-            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+            .pressFeedback(configuration.isPressed, scale: 0.96)
     }
 }
 
