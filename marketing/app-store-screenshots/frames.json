@@ -1,0 +1,132 @@
+[
+  {
+    "name": "01-hook",
+    "headline": [
+      "Stop doomscrolling.",
+      "Earn your screen time."
+    ],
+    "subline": "Blocked apps stay locked until you move.",
+    "headline_es": [
+      "Basta de scrollear.",
+      "Gana tu tiempo de pantalla."
+    ],
+    "subline_es": "Tus apps siguen bloqueadas hasta que te mueves."
+  },
+  {
+    "name": "02-pushups",
+    "headline": [
+      "Screen time?",
+      "Do 10 push-ups."
+    ],
+    "subline": "Your camera counts the reps.",
+    "headline_es": [
+      "¿Más pantalla?",
+      "Haz 10 flexiones."
+    ],
+    "subline_es": "Tu cámara cuenta cada flexión."
+  },
+  {
+    "name": "03-walk",
+    "headline": [
+      "Every walk",
+      "earns you time."
+    ],
+    "subline": "Your steps turn into minutes.",
+    "headline_es": [
+      "Cada paso",
+      "suma minutos."
+    ],
+    "subline_es": "Caminar te da tiempo de pantalla."
+  },
+  {
+    "name": "04-exercises",
+    "headline": [
+      "No time to walk?",
+      "Squat it out."
+    ],
+    "subline": "Push-ups, squats, lunges or jumping jacks.",
+    "headline_es": [
+      "¿Sin tiempo para caminar?",
+      "Haz sentadillas."
+    ],
+    "subline_es": "Flexiones, sentadillas, zancadas o jumping jacks."
+  },
+  {
+    "name": "05-lock",
+    "headline": [
+      "Out of time?",
+      "Apps lock again."
+    ],
+    "subline": "No snooze. No \"15 more minutes.\"",
+    "headline_es": [
+      "¿Sin tiempo?",
+      "Todo se bloquea."
+    ],
+    "subline_es": "Sin posponer. Sin \"15 minutos más\"."
+  },
+  {
+    "name": "06-sessions",
+    "headline": [
+      "Spend it",
+      "on your terms."
+    ],
+    "subline": "5, 10 or 15 minutes. Then it locks.",
+    "headline_es": [
+      "Úsalo",
+      "a tu manera."
+    ],
+    "subline_es": "5, 10 o 15 minutos. Después se bloquea."
+  },
+  {
+    "name": "07-schedule",
+    "headline": [
+      "Block when",
+      "it matters."
+    ],
+    "subline": "Set the hours. Turn on strict mode.",
+    "headline_es": [
+      "Bloquea cuando",
+      "importa."
+    ],
+    "subline_es": "Elige las horas. Activa el modo estricto."
+  },
+  {
+    "name": "08-outcome",
+    "headline": [
+      "Win back",
+      "your evenings."
+    ],
+    "subline": "Every minute you took back, counted.",
+    "headline_es": [
+      "Recupera",
+      "tus noches."
+    ],
+    "subline_es": "Cada minuto que recuperas, contado."
+  },
+  {
+    "name": "09-friends",
+    "headline": [
+      "Keep each other",
+      "honest."
+    ],
+    "subline": "Share streaks. Challenge a friend.",
+    "headline_es": [
+      "Motívense",
+      "entre amigos."
+    ],
+    "subline_es": "Comparte rachas. Reta a un amigo."
+  },
+  {
+    "name": "10-privacy",
+    "headline": [
+      "Private",
+      "by design."
+    ],
+    "subline": "Counted on your iPhone. Never uploaded.",
+    "headline_es": [
+      "Privada",
+      "por diseño."
+    ],
+    "subline_es": "Se cuenta en tu iPhone. Nunca se sube."
+  }
+]

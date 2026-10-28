@@ -3,9 +3,6 @@
 html, body { background: var(--ivory); }
 .bg { background: radial-gradient(1100px 900px at 85% 1700px, rgba(46,92,230,.13), transparent 70%), var(--ivory); }
 .tilt-r .bg { background: radial-gradient(1100px 900px at 15% 1700px, rgba(46,92,230,.13), transparent 70%), var(--ivory); }
-.brand { top: 120px; left: 96px; gap: 28px; }
-.brand img { width: 120px; height: 120px; border-radius: 28px; box-shadow: 0 10px 24px rgba(11,31,69,.25); }
-.brand span { font-family: "Instrument Serif"; font-weight: 400; font-size: 92px; color: var(--navy); letter-spacing: -1px; }
 .headline { top: 290px; left: 88px; color: var(--navy); font-size: 200px; line-height: .92; letter-spacing: -4px; }
 .headline em { font-style: italic; color: var(--cobalt); }
 .sub { top: 700px; left: 96px; color: var(--navy-soft); font-size: 58px; font-weight: 600; }

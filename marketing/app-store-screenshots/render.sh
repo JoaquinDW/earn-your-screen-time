@@ -1,8 +1,9 @@
 #!/bin/sh
-# Rebuilds every App Store screenshot. Needs Node with Playwright and Chromium, and Python 3 with Pillow.
-set -e
+# Needs Python 3 with Pillow and Node with Playwright and Chromium.
+set -eu
 cd "$(dirname "$0")"
+# Generated translations are temporary, even when rendering fails.
+trap 'rm -f src/*.es.html' EXIT
 python3 make_es.py
 node render.js
-rm -f src/*.es.html
 python3 resize.py
