@@ -290,8 +290,11 @@ struct WeekView: View {
 
             sourceRow("figure.walk", "progress.source.movement", totals.stepEarnedSeconds, Night.cobaltText)
             NightHairline(inset: 34)
-            sourceRow("book.closed.fill", "progress.source.study", totals.studyEarnedSeconds, Night.textSoft)
-            NightHairline(inset: 34)
+            // Minutes studied before the feature was hidden still count, so the row stays for them.
+            if AppConfiguration.isStudyToEarnEnabled || totals.studyEarnedSeconds > 0 {
+                sourceRow("book.closed.fill", "progress.source.study", totals.studyEarnedSeconds, Night.textSoft)
+                NightHairline(inset: 34)
+            }
             sourceRow("figure.strengthtraining.traditional", "progress.source.pushups", totals.pushupEarnedSeconds, Night.moss)
             NightHairline(inset: 34)
             sourceRow("figure.strengthtraining.functional", "progress.source.squats", totals.squatEarnedSeconds, Night.squatMoss)

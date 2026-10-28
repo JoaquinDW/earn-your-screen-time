@@ -207,6 +207,7 @@ struct DashboardView: View {
     }
 
     private func openStudy() {
+        guard AppConfiguration.isStudyToEarnEnabled else { return }
         guard env.featureAccess.canUseFocusEarning else {
             isShowingStudyPaywall = true
             return

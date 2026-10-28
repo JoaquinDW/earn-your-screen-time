@@ -7,6 +7,9 @@ enum AppConfiguration {
     static let supabasePublishableKey = configuredString(for: "SupabasePublishableKey")
     /// The App Store page shared with friends. Apple redirects it to the viewer's own storefront.
     static let appStoreURL = URL(string: "https://apps.apple.com/app/id6804905841")!
+    /// Study to Earn is hidden: every question and answer check is a paid AI call, which a
+    /// lifetime purchase cannot keep paying for. The code stays so it can come back.
+    static let isStudyToEarnEnabled = false
 
     private static func configuredURL(for key: String, bundle: Bundle = .main) -> URL? {
         guard let value = bundle.object(forInfoDictionaryKey: key) as? String,

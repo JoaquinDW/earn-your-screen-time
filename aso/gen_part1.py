@@ -7,15 +7,15 @@ M = {}
 M["en-US"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,study,pushups,timer,brainrot,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pushups,workout,brainrot,addiction,phone",
  promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
-Earnit locks the apps that eat your day and keeps them locked until you do something worth doing. Walk. Study. Do push-ups. Every effort turns into minutes you can actually spend.
+Earnit locks the apps that eat your day and keeps them locked until you do something worth doing. Walk. Do push-ups. Do squats. Every effort turns into minutes you can actually spend.
 
 HOW IT WORKS
 1. Pick the apps you want blocked. They stay shielded by default.
-2. Earn minutes — steps from Apple Health, a focused study session, or push-ups counted on device.
+2. Earn minutes — steps from Apple Health, or push-ups and squats counted on device.
 3. Spend them in a deliberate 5, 10 or 15 minute session. When it ends, the shield comes back on its own.
 
 WHY IT WORKS WHEN TIMERS DON'T
@@ -24,11 +24,8 @@ A timer asks you to stop. Earnit asks you to trade. There's no "15 more minutes"
 WALK TO UNLOCK
 Steps come straight from Apple Health. Set a rate that suits you and every walk quietly refills your balance.
 
-STUDY TO UNLOCK
-Run a focused study session and bank the time you put in. Built for students who need the phone out of reach until the work is done.
-
 PUSH-UPS TO UNLOCK
-Counted on device, no wearable needed. A set of reps when you want minutes back.
+Push-ups, squats, lunges or jumping jacks, counted on device by the camera. No wearable needed, no video saved. A set of reps when you want minutes back.
 
 SEE WHAT CHANGES
 A 30-day journey, a daily ledger and monthly totals show screen time going down and effort going up — without guilt, streak-shaming or red warning screens.
@@ -41,22 +38,22 @@ Move first. Scroll later.""")
 M["en-GB"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,study,pressups,timer,brainrot,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pressups,workout,brainrot,addiction,phone",
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
- desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("PUSH-UPS","PRESS-UPS"))
+ desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("Push-ups","Press-ups").replace("PUSH-UPS","PRESS-UPS"))
 
 M["es-ES"] = dict(
  name="Ganar tiempo pantalla: Earnit",
  subtitle="Bloquear apps y detox digital",
- keywords="adiccion al movil,autocontrol,concentracion,estudiar,limite,bloqueo,habitos,dejar de scrollear",
+ keywords="adiccion al movil,autocontrol,flexiones,ejercicio,limite,bloqueo,habitos,dejar de scrollear",
  promo="Nuevo: prueba una serie real de flexiones en el propio onboarding y descubre cómo Earnit desbloquea tus apps. La cámara cuenta, el vídeo nunca se guarda.",
  desc="""Tu móvil no debería ser gratis. Gánatelo.
 
-Earnit bloquea las apps que te comen el día y las mantiene bloqueadas hasta que hagas algo que merezca la pena. Camina. Estudia. Haz flexiones. Cada esfuerzo se convierte en minutos que puedes gastar de verdad.
+Earnit bloquea las apps que te comen el día y las mantiene bloqueadas hasta que hagas algo que merezca la pena. Camina. Haz flexiones. Haz sentadillas. Cada esfuerzo se convierte en minutos que puedes gastar de verdad.
 
 CÓMO FUNCIONA
 1. Elige las apps que quieres bloquear. Quedan bloqueadas por defecto.
-2. Gana minutos: pasos desde Apple Health, una sesión de estudio concentrada o flexiones contadas en el propio móvil.
+2. Gana minutos: pasos desde Apple Health, o flexiones y sentadillas contadas en el propio móvil.
 3. Gástalos en una sesión deliberada de 5, 10 o 15 minutos. Al terminar, el bloqueo vuelve solo.
 
 POR QUÉ FUNCIONA CUANDO LOS TEMPORIZADORES NO
@@ -65,11 +62,8 @@ Un temporizador te pide que pares. Earnit te pide que cambies algo por algo. No 
 CAMINA PARA DESBLOQUEAR
 Los pasos llegan directamente desde Apple Health. Ajusta el ritmo que te venga bien y cada paseo rellena tu saldo sin que tengas que pensarlo.
 
-ESTUDIA PARA DESBLOQUEAR
-Haz una sesión de estudio concentrada y guarda el tiempo que has invertido. Pensado para estudiantes que necesitan el móvil lejos hasta terminar.
-
 FLEXIONES PARA DESBLOQUEAR
-Se cuentan en el propio móvil, sin pulsera ni reloj. Una serie cuando quieras recuperar minutos.
+Flexiones, sentadillas, zancadas o jumping jacks, contados por la cámara en el propio móvil. Sin pulsera ni reloj, sin guardar vídeo. Una serie cuando quieras recuperar minutos.
 
 MIRA LO QUE CAMBIA
 Un recorrido de 30 días, un registro diario y totales mensuales enseñan cómo baja el tiempo de pantalla y sube el esfuerzo, sin culpa, sin rachas que avergüencen y sin pantallas rojas de advertencia.
@@ -82,9 +76,9 @@ Muévete primero. Scrollea después.""")
 M["es-MX"] = dict(
  name="Ganar tiempo pantalla: Earnit",
  subtitle="Bloqueador de apps y detox",
- keywords="adiccion al celular,autocontrol,concentracion,estudiar,limite,bloqueo,habitos,dejar de scrollear",
+ keywords="adiccion al celular,autocontrol,lagartijas,ejercicio,limite,bloqueo,habitos,dejar de scrollear",
  promo="Nuevo: prueba una serie real de lagartijas en el propio onboarding y descubre cómo Earnit desbloquea tus apps. La cámara cuenta, el video nunca se guarda.",
- desc=M["es-ES"]["desc"].replace("móvil","celular").replace("flexiones","lagartijas").replace("FLEXIONES","LAGARTIJAS").replace("paseo","caminata").replace("pulsera ni reloj","banda ni reloj"))
+ desc=M["es-ES"]["desc"].replace("móvil","celular").replace("flexiones","lagartijas").replace("FLEXIONES","LAGARTIJAS").replace("paseo","caminata").replace("pulsera ni reloj","banda ni reloj").replace("vídeo","video").replace("Flexiones","Lagartijas").replace("zancadas","desplantes"))
 
 M["de-DE"] = dict(
  name="Bildschirmzeit: Earnit",
