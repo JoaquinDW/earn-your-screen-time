@@ -1,28 +1,17 @@
 # -*- coding: utf-8 -*-
-import json, os, subprocess, sys
+import json, sys
 sys.path.insert(0, "aso")
-import build as B, whatsnew
+import build as B
 
-ASC = "/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-VERSION_ID = "1ff3dd9c-547b-473d-800f-2cf226e9c0a2"
-APPINFO_ID = "b5370e75-460e-4bb7-b721-2ed575e04da0"
+from asc_targets import asc, editable_app_info, editable_version, locale_map
 
-def asc(method, path, body=None):
-    cmd = ["ruby", ASC, method, path] + ([json.dumps(body, ensure_ascii=False)] if body else [])
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    out = r.stdout
-    code = out.split("\n", 1)[0].replace("HTTP ", "").strip()
-    rest = out.split("\n", 1)[1] if "\n" in out else ""
-    try: payload = json.loads(rest)
-    except Exception: payload = {"raw": rest[:400]}
-    return code, payload
+VERSION_ID, VERSION = editable_version()
+APPINFO_ID = editable_app_info()
+print("writing to version %s (%s), appInfo %s" % (VERSION, VERSION_ID, APPINFO_ID))
 
-def existing(path, key="locale"):
-    code, p = asc("GET", path)
-    return {d["attributes"][key]: d["id"] for d in p.get("data", [])}
-
-info_map = existing("/v1/appInfos/%s/appInfoLocalizations?limit=200" % APPINFO_ID)
-ver_map  = existing("/v1/appStoreVersions/%s/appStoreVersionLocalizations?limit=200" % VERSION_ID)
+# A failed read must stop the run: an empty map would turn every PATCH into a POST.
+info_map = {loc: d["id"] for loc, d in locale_map("/v1/appInfos/%s/appInfoLocalizations?limit=200" % APPINFO_ID).items()}
+ver_map  = {loc: d["id"] for loc, d in locale_map("/v1/appStoreVersions/%s/appStoreVersionLocalizations?limit=200" % VERSION_ID).items()}
 
 for loc in B.LOCALES:
     f = B.data[loc]
@@ -40,9 +29,11 @@ for loc in B.LOCALES:
         act = "POST  info"
     err1 = "" if c in ("200", "201") else json.dumps(p, ensure_ascii=False)[:220]
 
-    # ---- keywords / description / promo / release notes ----
+    # ---- keywords / description / promo ----
+    # Release notes belong to one version, so they stay with push_whatsnew.py: written from
+    # here, 1.3.1's notes would land on whatever version is open now.
     vattrs = {"description": f["description"], "keywords": f["keywords"],
-              "promotionalText": f["promotional_text"], "whatsNew": whatsnew.W[loc]}
+              "promotionalText": f["promotional_text"]}
     if loc in ver_map:
         c2, p2 = asc("PATCH", "/v1/appStoreVersionLocalizations/%s" % ver_map[loc],
                      {"data": {"type": "appStoreVersionLocalizations", "id": ver_map[loc], "attributes": vattrs}})
