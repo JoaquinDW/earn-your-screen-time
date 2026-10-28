@@ -12,7 +12,9 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// v15 adds squats as an earning source and files their minutes separately in day history.
     /// v16 adds jumping jacks and lunges (filed together in day history), the blocking schedule
     /// and strict mode.
-    public static let currentSchemaVersion = 16
+    /// v17 replaces the one-shot review-prompt latch with a request count and the last request
+    /// date, so the app can ask a second time.
+    public static let currentSchemaVersion = 17
 
     public var schemaVersion: Int
     public var ledger: DailyLedger
@@ -48,8 +50,10 @@ public struct SharedState: Codable, Equatable, Sendable {
     /// Successful screen-time sessions started, kept across day rollover. Feeds the review-prompt
     /// eligibility check: unlike `firstRealUnlockTracked` this keeps counting past the first one.
     public var successfulUnlockCount: Int
-    /// One-shot latch: the native review prompt is requested at most once per install.
-    public var reviewPromptRequested: Bool
+    /// How many times the native review prompt has been requested, and when last. iOS decides
+    /// whether a request actually shows, so `ReviewPromptPolicy` allows a second one later.
+    public var reviewPromptRequestCount: Int
+    public var lastReviewPromptRequestedAt: Date?
     /// Someone who has not paid gets one camera exercise reward (push-ups or squats; the persisted
     /// name predates squats). The server enforces it per account;
     /// this local copy only decides whether the app offers the challenge or the paywall.
@@ -85,7 +89,8 @@ public struct SharedState: Codable, Equatable, Sendable {
         firstAppBlockedTracked: Bool = false,
         firstRealUnlockTracked: Bool = false,
         successfulUnlockCount: Int = 0,
-        reviewPromptRequested: Bool = false,
+        reviewPromptRequestCount: Int = 0,
+        lastReviewPromptRequestedAt: Date? = nil,
         freePushupsRewardClaimed: Bool = false,
         firstActiveRewardTracked: Bool = false,
         appliedRewardIDs: [UUID] = [],
@@ -112,7 +117,8 @@ public struct SharedState: Codable, Equatable, Sendable {
         self.firstAppBlockedTracked = firstAppBlockedTracked
         self.firstRealUnlockTracked = firstRealUnlockTracked
         self.successfulUnlockCount = successfulUnlockCount
-        self.reviewPromptRequested = reviewPromptRequested
+        self.reviewPromptRequestCount = reviewPromptRequestCount
+        self.lastReviewPromptRequestedAt = lastReviewPromptRequestedAt
         self.freePushupsRewardClaimed = freePushupsRewardClaimed
         self.firstActiveRewardTracked = firstActiveRewardTracked
         self.appliedRewardIDs = appliedRewardIDs + appliedStudyReceiptIDs.filter { !appliedRewardIDs.contains($0) }
@@ -161,7 +167,8 @@ public struct SharedState: Codable, Equatable, Sendable {
         case hasEarnedFirstReward, goalProgressionCooldownUntil, adaptiveIntroSeen, pushupsIntroSeen
         case onboardingPushupDemo
         case walletCreatedTracked, firstAppBlockedTracked, firstRealUnlockTracked
-        case successfulUnlockCount, reviewPromptRequested, freePushupsRewardClaimed
+        case successfulUnlockCount, reviewPromptRequestCount, lastReviewPromptRequestedAt
+        case freePushupsRewardClaimed
         case firstActiveRewardTracked
         case appliedRewardIDs
         case blockSchedule, strictModeUntil
@@ -169,6 +176,7 @@ public struct SharedState: Codable, Equatable, Sendable {
 
     private enum LegacyCodingKeys: String, CodingKey {
         case appliedStudyReceiptIDs
+        case reviewPromptRequested
     }
 
     public init(from decoder: Decoder) throws {
@@ -201,7 +209,14 @@ public struct SharedState: Codable, Equatable, Sendable {
         // No attempt to backfill this from history: an under-count only delays the review prompt
         // a little for existing installs, while an over-count could fire it too early.
         successfulUnlockCount = try container.decodeIfPresent(Int.self, forKey: .successfulUnlockCount) ?? 0
-        reviewPromptRequested = try container.decodeIfPresent(Bool.self, forKey: .reviewPromptRequested) ?? false
+        // Before v17 a single latch recorded the one request; its date was not kept.
+        let legacyReviewPromptRequested = try legacyContainer.decodeIfPresent(
+            Bool.self,
+            forKey: .reviewPromptRequested
+        ) ?? false
+        reviewPromptRequestCount = try container.decodeIfPresent(Int.self, forKey: .reviewPromptRequestCount)
+            ?? (legacyReviewPromptRequested ? 1 : 0)
+        lastReviewPromptRequestedAt = try container.decodeIfPresent(Date.self, forKey: .lastReviewPromptRequestedAt)
         // Not backfilled from history: before this field existed push-ups were Pro-only, and the
         // server refuses a second free reward regardless of what this says.
         freePushupsRewardClaimed = try container.decodeIfPresent(Bool.self, forKey: .freePushupsRewardClaimed) ?? false
