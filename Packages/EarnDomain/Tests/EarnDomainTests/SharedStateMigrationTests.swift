@@ -283,17 +283,40 @@ struct SharedStateMigrationTests {
         #expect(state.firstRealUnlockTracked)
     }
 
-    @Test("The successful-unlock count and review-prompt latch survive a round trip")
+    @Test("The successful-unlock count and review-prompt history survive a round trip")
     func roundTripsReviewPromptState() throws {
         var state = SharedState.initial(day: DayKey(year: 2026, month: 9, day: 17))
         state.successfulUnlockCount = 3
-        state.reviewPromptRequested = true
+        state.reviewPromptRequestCount = 1
+        state.lastReviewPromptRequestedAt = Date(timeIntervalSince1970: 1_790_000_000)
 
         let decoded = try SharedState.decoded(from: state.encoded())
 
         #expect(decoded.successfulUnlockCount == 3)
-        #expect(decoded.reviewPromptRequested)
+        #expect(decoded.reviewPromptRequestCount == 1)
+        #expect(decoded.lastReviewPromptRequestedAt == state.lastReviewPromptRequestedAt)
         #expect(decoded == state)
+    }
+
+    @Test("A v16 review-prompt latch becomes one request with no date")
+    func migratesReviewPromptLatch() throws {
+        let v16 = """
+        {
+          "schemaVersion": 16,
+          "ledger": {
+            "day": { "year": 2026, "month": 10, "day": 20 },
+            "wallet": { "earnedSeconds": 0 }
+          },
+          "successfulUnlockCount": 4,
+          "reviewPromptRequested": true
+        }
+        """
+
+        let state = try SharedState.decoded(from: Data(v16.utf8))
+
+        #expect(state.successfulUnlockCount == 4)
+        #expect(state.reviewPromptRequestCount == 1)
+        #expect(state.lastReviewPromptRequestedAt == nil)
     }
 
     @Test("The free push-up reward latch survives a round trip and defaults to unused")
@@ -370,7 +393,8 @@ struct SharedStateMigrationTests {
         let state = try SharedState.decoded(from: Data(v11.utf8))
 
         #expect(state.successfulUnlockCount == 0)
-        #expect(!state.reviewPromptRequested)
+        #expect(state.reviewPromptRequestCount == 0)
+        #expect(state.lastReviewPromptRequestedAt == nil)
         #expect(state.ledger.sessionCount == 0)
         #expect(state.ledger.returnedSessionSeconds == 0)
     }

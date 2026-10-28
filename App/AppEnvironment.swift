@@ -60,6 +60,9 @@ final class AppEnvironment {
     /// Set once the review-prompt eligibility check passes; `RootView` consumes it to call
     /// StoreKit's `requestReview` action, which only a view can invoke.
     private(set) var shouldRequestReview = false
+    /// A moment that would have earned the review prompt while the camera was up. It is
+    /// asked for once the camera closes, so the prompt never covers a set in progress.
+    private var deferredReviewMoment: ReviewPromptPolicy.Moment?
     private var identifiedBackendUserID: UUID?
     /// The post-unlock paywall can be closed, and closing it lasts for the rest of the day. It used
     /// to come back on every return from the background: in 1.3.2 one person met it eight times in
@@ -453,6 +456,7 @@ final class AppEnvironment {
             trackFirstActiveRewardIfNeeded(method: method, seconds: reward.amountSeconds)
             HapticManager.trigger(.earned)
             synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
+            evaluateReviewPrompt(at: .activeRewardEarned)
             return true
         case .duplicate:
             return true
@@ -494,6 +498,7 @@ final class AppEnvironment {
             trackFirstActiveRewardIfNeeded(method: .study, seconds: reward.amountSeconds)
             HapticManager.trigger(.earned)
             synchronizeLiveActivity(presentation: .earned(minutes: reward.amountSeconds / 60))
+            evaluateReviewPrompt(at: .activeRewardEarned)
             return true
         case .duplicate:
             return true
@@ -564,6 +569,7 @@ final class AppEnvironment {
                     analytics.track(.dailyGoalCompleted.withProperties([
                         "bonus_minutes": .int(outcome.awardedGoalBonusSeconds / 60)
                     ]))
+                    evaluateReviewPrompt(at: .dailyGoalCompleted)
                 }
                 if !reachedGoal, currentStreak > previousStreak {
                     // Earning feedback is more important than a routine streak tick.
@@ -612,15 +618,16 @@ final class AppEnvironment {
         try? await Task.sleep(for: .milliseconds(800))
         guard !Task.isCancelled else { return }
         reload()
-        // The unlock count alone may already qualify; foreground is what catches the moment
-        // the two-day wait finishes on its own, with no new unlock to trigger the check.
-        evaluateReviewPromptEligibility()
     }
 
     /// Marks whether the push-up camera flow is on screen, so the review prompt never fires
     /// over it.
     func setExercising(_ isExercising: Bool) {
         self.isExercising = isExercising
+        if !isExercising, let moment = deferredReviewMoment {
+            deferredReviewMoment = nil
+            evaluateReviewPrompt(at: moment)
+        }
     }
 
     /// Leaving the app is the moment the inactivity nudges should count from.
@@ -944,7 +951,7 @@ final class AppEnvironment {
             ]))
             trackFirstRealUnlockIfNeeded(durationMinutes: durationMinutes)
             state = SharedStore.shared.mutate { $0.successfulUnlockCount += 1 }
-            evaluateReviewPromptEligibility()
+            evaluateReviewPrompt(at: .unlockStarted)
         } catch ScreenTimeSessionError.insufficientBalance {
             analytics.track(.unlockAttemptWithoutBalance.withProperties([
                 "requested_minutes": .int(durationMinutes),
@@ -1255,18 +1262,23 @@ final class AppEnvironment {
         ]))
     }
 
-    /// Apple's guidance is to ask for a review only once real usage exists, never mid-task.
-    /// Here that means: three unlocks actually completed, at least two days into using the app,
-    /// and not in the middle of the push-up camera flow. Requested at most once per install.
-    private func evaluateReviewPromptEligibility() {
-        guard !state.reviewPromptRequested,
-              !isExercising,
-              state.successfulUnlockCount >= 3,
-              let onboardingCompletedAt = state.onboarding.onboardingCompletedAt,
-              Date().timeIntervalSince(onboardingCompletedAt) >= 2 * 24 * 60 * 60
-        else { return }
-        state = SharedStore.shared.mutate { $0.reviewPromptRequested = true }
-        analytics.track(.reviewPromptRequested)
+    /// Asks for a rating right after a small win; `ReviewPromptPolicy` decides which ones count.
+    /// A win inside the push-up camera waits for the camera to close.
+    private func evaluateReviewPrompt(at moment: ReviewPromptPolicy.Moment) {
+        guard ReviewPromptPolicy.shouldRequest(at: moment, in: state) else { return }
+        guard !isExercising else {
+            deferredReviewMoment = moment
+            return
+        }
+        let now = Date()
+        state = SharedStore.shared.mutate {
+            $0.reviewPromptRequestCount += 1
+            $0.lastReviewPromptRequestedAt = now
+        }
+        analytics.track(.reviewPromptRequested.withProperties([
+            "moment": .string(moment.rawValue),
+            "request_number": .int(state.reviewPromptRequestCount)
+        ]))
         shouldRequestReview = true
     }
 
