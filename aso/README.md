@@ -34,6 +34,16 @@ screen time rewards 42/28 (rank 39), stop doomscrolling 36/11 (rank 123), screen
 or subtitle (`aso/gen_part1.py`). `build.py` only requires "Earnit" in non-English names now.
 Push onto the 1.3.1 draft with `python3 aso/push.py`, then check with `aso/verify.py`.
 
+## Uploading screenshots
+
+`python3 aso/push_screenshots.py` uploads the 6.9" PNGs in
+`marketing/app-store-screenshots/6.9-inch/<folder>/` to the editable version found by
+`asc_targets.py`. Without `--write` it only prints what it would change. With `--write` it
+deletes every iPhone screenshot set on each locale (a leftover 6.5" set would keep showing the
+old images on those devices), creates one `APP_IPHONE_67` set, uploads the files in name order,
+waits for processing and prints a table. en-GB uses `en-US/`, es-ES and es-MX use `es/`. Locales
+without a folder are skipped. `--locales en-US,es-MX` limits the run. iPad sets are left alone.
+
 ## Phase 3 — screenshots on version 1.2
 
 Screenshots attach to an editable `appStoreVersion`, and all four existing versions
