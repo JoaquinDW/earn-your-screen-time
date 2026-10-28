@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "Sonsuz kaydırmaya son.<br><em>Ekran süreni kazan.</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "Hareket edene kadar uygulamalar kilitli kalır."
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>Süre kazanana kadar uygulamalar kilitli</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>Seçtiğin uygulamalar süre kazanana kadar duraklatılır.</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>Yürü</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Şınav</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squat</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "Ekran süresi mi?<br><em>10 şınav çek.</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "Kameran tekrarları sayar."
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>iPhone’da</b><span>tekrar sayımı</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>Hiçbir video</b><span>asla kaydedilmez</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 10 şınav"
+      ],
+      [
+        "Lower a little more",
+        "Biraz daha alçal"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>Uygulamaların kilidi açıldı</b><span>+10 dk kazanıldı</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "Her yürüyüş<br><em>sana zaman katar.</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "Adımların dakikalara dönüşür."
+      ],
+      [
+        ">Saturday<",
+        ">Cumartesi<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12 günlük seri"
+      ],
+      [
+        ">Available time<",
+        ">Kullanılabilir süre<"
+      ],
+      [
+        "to spend on your apps",
+        "uygulamalarında kullanmak için"
+      ],
+      [
+        "Use my minutes",
+        "Dakikalarımı kullan"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "Bugün 6.240 adım · <em>Bugün +40 dk kazanıldı</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ Bugün açılmayanlar: 14 · Gününü gör ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "Sonraki 5 dakika için 760 adım"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6.240 adım</b><span>+40 dk kazanıldı</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>dk</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "Yürüyüşe vaktin yok mu?<br><em>Squat yap.</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "Şınav, squat, lunge veya jumping jack."
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">Süre kazan</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">Nasıl kazanacağını seç</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>Adımlar</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>Bugün 6.240 adım</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>Egzersizle süre kazan</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Şınav</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squat</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>Lunge</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>Jumping jack</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 10 squat</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>Kalçanı geriye ver ve alçal</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "Süren bitti mi?<br><em>Uygulamalar kilitlenir.</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "Erteleme yok. “15 dakika daha” yok."
+      ],
+      [
+        ">Almost there<",
+        ">Az kaldı<"
+      ],
+      [
+        "Just 320 steps left.",
+        "Sadece 320 adım kaldı."
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "Yürüyüşü bitir, 5 dk kazan. Uygulamaların bekleyebilir."
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1.000 adım"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "320 adım kaldı · ~3 dk yürüyüş"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "Şınav veya squat ile zaman kazan"
+      ],
+      [
+        "Update my steps",
+        "Adımlarımı güncelle"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>Uygulamalar kilitli</b><span>zaman kazanana kadar</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5 dk"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "Senin zamanın.<br><em>Senin kararın.</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5, 10 ya da 15 dakika. Sonra yeniden kilit."
+      ],
+      [
+        ">Choose a session<",
+        ">Oturum seç<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>Dakikalarımı kullan</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>Kullanılabilir</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>Oturum sonrası</span>"
+      ],
+      [
+        "Custom amount",
+        "Özel süre"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 3 seçili"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "Süre şimdi başlar ve uygulama değiştirsen de devam eder. Oturumu bitirip kalan süreyi saklamak için Earnit’e dön."
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "Engelli uygulamaları 10 dk kullan"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>10 dk oturum</b><span>sonra yeniden kilitlenir</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25 dk</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15 dk</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5 dk</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10 dk</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15 dk</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10 dk</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "Tam gerektiğinde<br><em>engelle.</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "Saatleri seç. Katı modu aç."
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">Ne zaman engellensin</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">Engelleme saatleri</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>Yalnızca belirli saatlerde engelle</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>Başlangıç</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>Bitiş</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">P P S Ç P C C</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">Bu saatlerin dışında uygulamaların açıktır ve kazandığın dakikalar bakiyende kalır. Bitiş saati başlangıçtan önceyse engelleme gece boyunca sürer.</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">Katı mod</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>Bitiş zamanı</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">Pazar 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>Katı modu uzat</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">Açıkken korunan uygulamaları listeden çıkaramaz, kuralı veya programı gevşetemez, iPhone’undan uygulama silemezsin. Süresi dolmadan kapatılamaz.</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "Akşamlarını<br><em>geri kazan.</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "Geri kazandığın her dakikayı gör."
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">Bugün</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>Günün</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1 sa 20 dk</b><span>eskisine göre daha az kaydırma"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "engelli uygulamayı açmadığın an"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40 dk</b><span>hareket ederek kazanılan ekran süresi"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6.240</b><span>adım"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "Tahmini değer: başlangıçta belirttiğin günlük kaydırma süresinin alt sınırından Earnit’te açtığın süre çıkarılır."
+      ],
+      [
+        "Share my progress",
+        "İlerlememi paylaş"
+      ],
+      [
+        "Challenge a friend",
+        "Bir arkadaşına meydan oku"
+      ],
+      [
+        ">Done<",
+        ">Bitti<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12 günlük seri</b><span>Böyle devam et</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "Birbirinizi<br><em>motive edin.</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "Serilerini paylaş. Bir arkadaşına meydan oku."
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">Birlikte</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>Arkadaşlar</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">Arkadaşların</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">Bugün henüz güncelleme yok</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">Bugün henüz güncelleme yok</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">Bugün henüz güncelleme yok</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>Arkadaşını davet et</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">Gruplar</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>Birlikte hareket</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">Bu hafta</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7 gün</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7 gün</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7 gün</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">Kodla katıl</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "Gizlilik<br><em>en başından.</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "iPhone’unda sayılır. Asla yüklenmez."
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>Tekrarlar cihazda sayılır, video kaydedilmez</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>Sağlık verilerin iPhone’unda kalır</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>Hangi uygulamaları engellediğini asla görmeyiz (iOS gizli tutar)</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "Sonsuz kaydırmaya son.",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "Ekran süreni kazan.",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "Hareket edene kadar uygulamalar kilitli kalır.",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "Süre kazanana kadar uygulamalar kilitli",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "Seçtiğin uygulamalar süre kazanana kadar duraklatılır.",
+      "source": "screenshot copy"
+    },
+    "Walk": {
+      "translation": "Yürü",
+      "source": "screenshot copy"
+    },
+    "Push-ups": {
+      "translation": "Şınav",
+      "source": "screenshot copy"
+    },
+    "Squats": {
+      "translation": "Squat",
+      "source": "screenshot copy"
+    },
+    "Screen time?": {
+      "translation": "Ekran süresi mi?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "10 şınav çek.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "Kameran tekrarları sayar.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "iPhone’da",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "tekrar sayımı",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "Hiçbir video",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "asla kaydedilmez",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 10 şınav",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Lower a little more": {
+      "translation": "Biraz daha alçal",
+      "source": "screenshot copy"
+    },
+    "Apps unlocked": {
+      "translation": "Uygulamaların kilidi açıldı",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+10 min earned": {
+      "translation": "+10 dk kazanıldı",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "Her yürüyüş",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "sana zaman katar.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "Adımların dakikalara dönüşür.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Saturday": {
+      "translation": "Cumartesi",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12 günlük seri",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available time": {
+      "translation": "Kullanılabilir süre",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "to spend on your apps": {
+      "translation": "uygulamalarında kullanmak için",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use my minutes": {
+      "translation": "Dakikalarımı kullan",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps today ·": {
+      "translation": "Bugün 6.240 adım ·",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40 min earned": {
+      "translation": "Bugün +40 dk kazanıldı",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ Bugün açılmayanlar: 14 · Gününü gör ›",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "Sonraki 5 dakika için 760 adım",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps": {
+      "translation": "6.240 adım",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40 dk kazanıldı",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "dk",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "Yürüyüşe vaktin yok mu?",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "Squat yap.",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "Şınav, squat, lunge veya jumping jack.",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "Süre kazan",
+      "source": "screenshot copy"
+    },
+    "Choose how to earn": {
+      "translation": "Nasıl kazanacağını seç",
+      "source": "screenshot copy"
+    },
+    "Steps": {
+      "translation": "Adımlar",
+      "source": "screenshot copy"
+    },
+    "6,240 steps today": {
+      "translation": "Bugün 6.240 adım",
+      "source": "screenshot copy, adapted"
+    },
+    "Exercise to Earn": {
+      "translation": "Egzersizle süre kazan",
+      "source": "screenshot copy"
+    },
+    "Lunges": {
+      "translation": "Lunge",
+      "source": "screenshot copy"
+    },
+    "Jumping jacks": {
+      "translation": "Jumping jack",
+      "source": "screenshot copy"
+    },
+    "/ 10 squats": {
+      "translation": "/ 10 squat",
+      "source": "screenshot copy, compact counter"
+    },
+    "Sit back and lower your hips": {
+      "translation": "Kalçanı geriye ver ve alçal",
+      "source": "screenshot copy"
+    },
+    "Out of time?": {
+      "translation": "Süren bitti mi?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "Uygulamalar kilitlenir.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "Erteleme yok. “15 dakika daha” yok.",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "Az kaldı",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Just 320 steps left.": {
+      "translation": "Sadece 320 adım kaldı.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "Yürüyüşü bitir, 5 dk kazan. Uygulamaların bekleyebilir.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1.000 adım",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "320 adım kaldı · ~3 dk yürüyüş",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "Şınav veya squat ile zaman kazan",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Update my steps": {
+      "translation": "Adımlarımı güncelle",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps locked": {
+      "translation": "Uygulamalar kilitli",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "until you earn time": {
+      "translation": "zaman kazanana kadar",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5 dk",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Spend it": {
+      "translation": "Senin zamanın.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "Senin kararın.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5, 10 ya da 15 dakika. Sonra yeniden kilit.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "Oturum seç",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available": {
+      "translation": "Kullanılabilir",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "After session": {
+      "translation": "Oturum sonrası",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Custom amount": {
+      "translation": "Özel süre",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 3 seçili",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "Süre şimdi başlar ve uygulama değiştirsen de devam eder. Oturumu bitirip kalan süreyi saklamak için Earnit’e dön.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "Engelli uygulamaları 10 dk kullan",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "10 min session": {
+      "translation": "10 dk oturum",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "sonra yeniden kilitlenir",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25 dk",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15 dk",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5 dk",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10 dk",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "Tam gerektiğinde",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "engelle.",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "Saatleri seç. Katı modu aç.",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "Ne zaman engellensin",
+      "source": "screenshot copy"
+    },
+    "Blocking hours": {
+      "translation": "Engelleme saatleri",
+      "source": "screenshot copy"
+    },
+    "Block only at certain hours": {
+      "translation": "Yalnızca belirli saatlerde engelle",
+      "source": "screenshot copy"
+    },
+    "From": {
+      "translation": "Başlangıç",
+      "source": "screenshot copy"
+    },
+    "Until": {
+      "translation": "Bitiş",
+      "source": "screenshot copy"
+    },
+    "S M T W T F S": {
+      "translation": "P P S Ç P C C",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "Bu saatlerin dışında uygulamaların açıktır ve kazandığın dakikalar bakiyende kalır. Bitiş saati başlangıçtan önceyse engelleme gece boyunca sürer.",
+      "source": "screenshot copy"
+    },
+    "Strict mode": {
+      "translation": "Katı mod",
+      "source": "screenshot copy"
+    },
+    "On until": {
+      "translation": "Bitiş zamanı",
+      "source": "screenshot copy"
+    },
+    "Sunday 07:00": {
+      "translation": "Pazar 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "Katı modu uzat",
+      "source": "screenshot copy"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "Açıkken korunan uygulamaları listeden çıkaramaz, kuralı veya programı gevşetemez, iPhone’undan uygulama silemezsin. Süresi dolmadan kapatılamaz.",
+      "source": "screenshot copy"
+    },
+    "Win back": {
+      "translation": "Akşamlarını",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "geri kazan.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "Geri kazandığın her dakikayı gör.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "Bugün",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your day": {
+      "translation": "Günün",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "1h 20m": {
+      "translation": "1 sa 20 dk",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "eskisine göre daha az kaydırma",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "engelli uygulamayı açmadığın an",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40m": {
+      "translation": "40 dk",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "hareket ederek kazanılan ekran süresi",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240": {
+      "translation": "6.240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "adım",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "Tahmini değer: başlangıçta belirttiğin günlük kaydırma süresinin alt sınırından Earnit’te açtığın süre çıkarılır.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Share my progress": {
+      "translation": "İlerlememi paylaş",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Challenge a friend": {
+      "translation": "Bir arkadaşına meydan oku",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Done": {
+      "translation": "Bitti",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "12-day streak": {
+      "translation": "12 günlük seri",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep it going": {
+      "translation": "Böyle devam et",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "Birbirinizi",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "motive edin.",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "Serilerini paylaş. Bir arkadaşına meydan oku.",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "Birlikte",
+      "source": "screenshot copy"
+    },
+    "Friends": {
+      "translation": "Arkadaşlar",
+      "source": "screenshot copy"
+    },
+    "Your friends": {
+      "translation": "Arkadaşların",
+      "source": "screenshot copy"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "Bugün henüz güncelleme yok",
+      "source": "screenshot copy"
+    },
+    "Invite a friend": {
+      "translation": "Arkadaşını davet et",
+      "source": "screenshot copy"
+    },
+    "Squads": {
+      "translation": "Gruplar",
+      "source": "screenshot copy"
+    },
+    "Move together": {
+      "translation": "Birlikte hareket",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "Bu hafta",
+      "source": "screenshot copy"
+    },
+    "4/7 days": {
+      "translation": "4/7 gün",
+      "source": "screenshot copy, fixture format"
+    },
+    "3/7 days": {
+      "translation": "3/7 gün",
+      "source": "screenshot copy, fixture format"
+    },
+    "2/7 days": {
+      "translation": "2/7 gün",
+      "source": "screenshot copy, fixture format"
+    },
+    "Join with a code": {
+      "translation": "Kodla katıl",
+      "source": "screenshot copy"
+    },
+    "Private": {
+      "translation": "Gizlilik",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "en başından.",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "iPhone’unda sayılır. Asla yüklenmez.",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "Tekrarlar cihazda sayılır, video kaydedilmez",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "Sağlık verilerin iPhone’unda kalır",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "Hangi uygulamaları engellediğini asla görmeyiz (iOS gizli tutar)",
+      "source": "screenshot copy"
+    }
+  }
+}

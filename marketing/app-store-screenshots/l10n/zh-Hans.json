@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "别再刷个不停。<br><em>运动赚屏幕时间。</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "先运动，再解锁应用。"
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>赚到时间，才能解锁应用</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>选中的应用会保持暂停，直到你赚到时间。</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>走路</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>俯卧撑</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>深蹲</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "想多玩一会儿？<br><em>先做10个俯卧撑。</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "摄像头帮你数次数。"
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>本机处理</b><span>自动计数</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>任何视频</b><span>都不会保存</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 10个俯卧撑"
+      ],
+      [
+        "Lower a little more",
+        "再降低一点"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>应用已解锁</b><span>+10分钟已赚取</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "每次散步，<br><em>都能换来时间。</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "把步数换成屏幕使用时间。"
+      ],
+      [
+        ">Saturday<",
+        ">星期六<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 已连续12天"
+      ],
+      [
+        ">Available time<",
+        ">可用时间<"
+      ],
+      [
+        "to spend on your apps",
+        "可用于你的应用"
+      ],
+      [
+        "Use my minutes",
+        "使用我的分钟数"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "今天6,240步 · <em>今天赚取+40分钟</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ 今天跳过14次 · 查看今天 ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "再走760步，赚取下一个5分钟"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6,240步</b><span>+40分钟已赚取</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>分钟</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "没空散步？<br><em>做组深蹲吧。</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "俯卧撑、深蹲、弓步蹲或开合跳。"
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">赚取时间</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">选择赚取方式</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>步数</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>今天6,240步</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>运动赚时间</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>俯卧撑</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>深蹲</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>弓步蹲</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>开合跳</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 10 次深蹲</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>臀部向后坐，再下蹲</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "时间用完？<br><em>应用自动锁回。</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "不能推迟，也没有“再来15分钟”。"
+      ],
+      [
+        ">Almost there<",
+        ">快到了<"
+      ],
+      [
+        "Just 320 steps left.",
+        "只差320步。"
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "走完这段路，赚取5分钟。应用可以等等。"
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1,000步"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "还差320步 · 约走3分钟"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "做俯卧撑或深蹲赚取时间"
+      ],
+      [
+        "Update my steps",
+        "更新步数"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>应用已锁定</b><span>直到你赚到时间</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5分钟"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "攒下的时间，<br><em>由你做主。</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5、10或15分钟。结束后自动上锁。"
+      ],
+      [
+        ">Choose a session<",
+        ">选择使用时段<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>使用我的分钟数</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>可用</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>结束后</span>"
+      ],
+      [
+        "Custom amount",
+        "自定时长"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 已选3项"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "计时立即开始，切换应用后仍会继续。回到 Earnit 结束本次使用，即可保留剩余时间。"
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "使用被锁应用10分钟"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>10分钟使用时段</b><span>结束后应用重新上锁</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25 分钟</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15 分钟</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5 分钟</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10 分钟</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15 分钟</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10 分钟</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "重要时刻，<br><em>锁住干扰。</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "设定时段，开启严格模式。"
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">设置屏蔽时段</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">屏蔽时段</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>仅在指定时段屏蔽</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>开始</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>结束</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">日 一 二 三 四 五 六</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">其他时段可自由使用应用，赚到的分钟数会保留在余额中。如果结束时间早于开始时间，屏蔽会持续到第二天。</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">严格模式</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>持续至</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">星期日 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>延长严格模式</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">开启后，不能移除受保护的应用、放宽规则或时段，也不能从 iPhone 删除应用。无法提前关闭。</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "把夜晚，<br><em>还给自己。</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "找回的每一分钟，都看得见。"
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">今天</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>你的一天</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1小时20分钟</b><span>比以前少刷的时间"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "没有打开被锁应用的次数"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40分钟</b><span>通过运动赚取的屏幕时间"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6,240</b><span>步"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "估算值：以你开始时填写的每日刷屏时长下限，减去在 Earnit 中解锁的时间。"
+      ],
+      [
+        "Share my progress",
+        "分享我的进步"
+      ],
+      [
+        "Challenge a friend",
+        "挑战好友"
+      ],
+      [
+        ">Done<",
+        ">完成<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>已连续12天</b><span>继续保持</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "互相鼓励，<br><em>一起坚持。</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "分享连续记录，向好友发起挑战。"
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">一起</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>好友</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">你的好友</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">今天还没有更新</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">今天还没有更新</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">今天还没有更新</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>邀请好友</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">小队</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>一起动起来</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">本周</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7天</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7天</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7天</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">输入邀请码加入</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "隐私保护，<br><em>从设计开始。</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "在 iPhone 上计数，从不上传。"
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>次数在设备上计算，不保存视频</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>健康数据留在你的 iPhone 上</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>我们看不到你屏蔽了哪些应用（由 iOS 保护隐私）</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "别再刷个不停。",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "运动赚屏幕时间。",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "先运动，再解锁应用。",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "赚到时间，才能解锁应用",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "选中的应用会保持暂停，直到你赚到时间。",
+      "source": "screenshot copy"
+    },
+    "Walk": {
+      "translation": "走路",
+      "source": "screenshot copy"
+    },
+    "Push-ups": {
+      "translation": "俯卧撑",
+      "source": "screenshot copy"
+    },
+    "Squats": {
+      "translation": "深蹲",
+      "source": "screenshot copy"
+    },
+    "Screen time?": {
+      "translation": "想多玩一会儿？",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "先做10个俯卧撑。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "摄像头帮你数次数。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "本机处理",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "自动计数",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "任何视频",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "都不会保存",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 10个俯卧撑",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Lower a little more": {
+      "translation": "再降低一点",
+      "source": "screenshot copy"
+    },
+    "Apps unlocked": {
+      "translation": "应用已解锁",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+10 min earned": {
+      "translation": "+10分钟已赚取",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "每次散步，",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "都能换来时间。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "把步数换成屏幕使用时间。",
+      "source": "screenshot copy"
+    },
+    "Saturday": {
+      "translation": "星期六",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 已连续12天",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available time": {
+      "translation": "可用时间",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "to spend on your apps": {
+      "translation": "可用于你的应用",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use my minutes": {
+      "translation": "使用我的分钟数",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps today ·": {
+      "translation": "今天6,240步 ·",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40 min earned": {
+      "translation": "今天赚取+40分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ 今天跳过14次 · 查看今天 ›",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "再走760步，赚取下一个5分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps": {
+      "translation": "6,240步",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40分钟已赚取",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "分钟",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "没空散步？",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "做组深蹲吧。",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "俯卧撑、深蹲、弓步蹲或开合跳。",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "赚取时间",
+      "source": "screenshot copy"
+    },
+    "Choose how to earn": {
+      "translation": "选择赚取方式",
+      "source": "screenshot copy"
+    },
+    "Steps": {
+      "translation": "步数",
+      "source": "screenshot copy"
+    },
+    "6,240 steps today": {
+      "translation": "今天6,240步",
+      "source": "screenshot copy, adapted"
+    },
+    "Exercise to Earn": {
+      "translation": "运动赚时间",
+      "source": "screenshot copy"
+    },
+    "Lunges": {
+      "translation": "弓步蹲",
+      "source": "screenshot copy"
+    },
+    "Jumping jacks": {
+      "translation": "开合跳",
+      "source": "screenshot copy"
+    },
+    "/ 10 squats": {
+      "translation": "/ 10 次深蹲",
+      "source": "screenshot copy, compact counter"
+    },
+    "Sit back and lower your hips": {
+      "translation": "臀部向后坐，再下蹲",
+      "source": "screenshot copy"
+    },
+    "Out of time?": {
+      "translation": "时间用完？",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "应用自动锁回。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "不能推迟，也没有“再来15分钟”。",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "快到了",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Just 320 steps left.": {
+      "translation": "只差320步。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "走完这段路，赚取5分钟。应用可以等等。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1,000步",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "还差320步 · 约走3分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "做俯卧撑或深蹲赚取时间",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Update my steps": {
+      "translation": "更新步数",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps locked": {
+      "translation": "应用已锁定",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "until you earn time": {
+      "translation": "直到你赚到时间",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Spend it": {
+      "translation": "攒下的时间，",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "由你做主。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5、10或15分钟。结束后自动上锁。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "选择使用时段",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available": {
+      "translation": "可用",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "After session": {
+      "translation": "结束后",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Custom amount": {
+      "translation": "自定时长",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 已选3项",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "计时立即开始，切换应用后仍会继续。回到 Earnit 结束本次使用，即可保留剩余时间。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "使用被锁应用10分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "10 min session": {
+      "translation": "10分钟使用时段",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "结束后应用重新上锁",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25 分钟",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15 分钟",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5 分钟",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10 分钟",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "重要时刻，",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "锁住干扰。",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "设定时段，开启严格模式。",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "设置屏蔽时段",
+      "source": "screenshot copy"
+    },
+    "Blocking hours": {
+      "translation": "屏蔽时段",
+      "source": "screenshot copy"
+    },
+    "Block only at certain hours": {
+      "translation": "仅在指定时段屏蔽",
+      "source": "screenshot copy"
+    },
+    "From": {
+      "translation": "开始",
+      "source": "screenshot copy"
+    },
+    "Until": {
+      "translation": "结束",
+      "source": "screenshot copy"
+    },
+    "S M T W T F S": {
+      "translation": "日 一 二 三 四 五 六",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "其他时段可自由使用应用，赚到的分钟数会保留在余额中。如果结束时间早于开始时间，屏蔽会持续到第二天。",
+      "source": "screenshot copy"
+    },
+    "Strict mode": {
+      "translation": "严格模式",
+      "source": "screenshot copy"
+    },
+    "On until": {
+      "translation": "持续至",
+      "source": "screenshot copy"
+    },
+    "Sunday 07:00": {
+      "translation": "星期日 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "延长严格模式",
+      "source": "screenshot copy"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "开启后，不能移除受保护的应用、放宽规则或时段，也不能从 iPhone 删除应用。无法提前关闭。",
+      "source": "screenshot copy"
+    },
+    "Win back": {
+      "translation": "把夜晚，",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "还给自己。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "找回的每一分钟，都看得见。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "今天",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your day": {
+      "translation": "你的一天",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "1h 20m": {
+      "translation": "1小时20分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "比以前少刷的时间",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "没有打开被锁应用的次数",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40m": {
+      "translation": "40分钟",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "通过运动赚取的屏幕时间",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240": {
+      "translation": "6,240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "步",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "估算值：以你开始时填写的每日刷屏时长下限，减去在 Earnit 中解锁的时间。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Share my progress": {
+      "translation": "分享我的进步",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Challenge a friend": {
+      "translation": "挑战好友",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Done": {
+      "translation": "完成",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "12-day streak": {
+      "translation": "已连续12天",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep it going": {
+      "translation": "继续保持",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "互相鼓励，",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "一起坚持。",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "分享连续记录，向好友发起挑战。",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "一起",
+      "source": "screenshot copy"
+    },
+    "Friends": {
+      "translation": "好友",
+      "source": "screenshot copy"
+    },
+    "Your friends": {
+      "translation": "你的好友",
+      "source": "screenshot copy"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "今天还没有更新",
+      "source": "screenshot copy"
+    },
+    "Invite a friend": {
+      "translation": "邀请好友",
+      "source": "screenshot copy"
+    },
+    "Squads": {
+      "translation": "小队",
+      "source": "screenshot copy"
+    },
+    "Move together": {
+      "translation": "一起动起来",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "本周",
+      "source": "screenshot copy"
+    },
+    "4/7 days": {
+      "translation": "4/7天",
+      "source": "screenshot copy, fixture format"
+    },
+    "3/7 days": {
+      "translation": "3/7天",
+      "source": "screenshot copy, fixture format"
+    },
+    "2/7 days": {
+      "translation": "2/7天",
+      "source": "screenshot copy, fixture format"
+    },
+    "Join with a code": {
+      "translation": "输入邀请码加入",
+      "source": "screenshot copy"
+    },
+    "Private": {
+      "translation": "隐私保护，",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "从设计开始。",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "在 iPhone 上计数，从不上传。",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "次数在设备上计算，不保存视频",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "健康数据留在你的 iPhone 上",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "我们看不到你屏蔽了哪些应用（由 iOS 保护隐私）",
+      "source": "screenshot copy"
+    }
+  }
+}

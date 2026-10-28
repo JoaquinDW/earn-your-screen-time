@@ -4,13 +4,13 @@ window.layoutReady = document.fonts.ready.then(() => {
   const headline = document.querySelector('.headline');
   const parts = headline.innerHTML.split('<br>');
   headline.innerHTML = parts.map(part => `<span class="headline-line" style="display:block;white-space:nowrap">${part}</span>`).join('');
-  const fit = (element, max, min) => {
+  const fit = (element, max, min, maxHeight = Infinity) => {
     for (let size = max; size >= min; size--) {
       element.style.fontSize = `${size}px`;
-      if (element.scrollWidth <= element.clientWidth) return;
+      if (element.scrollWidth <= element.clientWidth && element.offsetHeight <= maxHeight) return;
     }
     throw new Error(`Copy does not fit: ${element.textContent}`);
   };
-  fit(headline, 240, 100);
+  fit(headline, 240, 100, document.querySelector('.sub').offsetTop - headline.offsetTop - 24);
   fit(document.querySelector('.sub'), 48, 30);
 });

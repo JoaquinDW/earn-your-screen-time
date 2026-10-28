@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "Basta scroll infinito.<br><em>Guadagna tempo di utilizzo.</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "Le app restano bloccate finché non ti muovi."
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>App bloccate finché non guadagni tempo</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>Le app che hai scelto restano in pausa finché non guadagni tempo.</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>Cammina</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Flessioni</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squat</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "Vuoi più schermo?<br><em>Fai 10 flessioni.</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "La fotocamera conta le ripetizioni."
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>Sul tuo iPhone</b><span>conteggio ripetizioni</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>Nessun video</b><span>viene mai salvato</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 10 flessioni"
+      ],
+      [
+        "Lower a little more",
+        "Scendi ancora un po'"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>App sbloccate</b><span>+10 min guadagnati</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "Ogni passeggiata<br><em>ti regala tempo.</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "I tuoi passi diventano minuti."
+      ],
+      [
+        ">Saturday<",
+        ">Sabato<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12 giorni di fila"
+      ],
+      [
+        ">Available time<",
+        ">Tempo disponibile<"
+      ],
+      [
+        "to spend on your apps",
+        "da spendere nelle tue app"
+      ],
+      [
+        "Use my minutes",
+        "Usa i miei minuti"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "6.240 passi oggi · <em>40 min guadagnati</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ App evitate oggi: 14 · La tua giornata ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "760 passi ai tuoi prossimi 5 minuti"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6.240 passi</b><span>+40 min guadagnati</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>min</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "Non puoi camminare?<br><em>Fai qualche squat.</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "Flessioni, squat, affondi o jumping jack."
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">Guadagna tempo</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">Scegli come guadagnare</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>Passi</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>6.240 passi oggi</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>Allenati per guadagnare</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Flessioni</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squat</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>Affondi</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>Jumping jack</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 10 squat</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>Porta indietro i fianchi e scendi</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "Tempo finito?<br><em>Le app si ribloccano.</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "Niente rinvii. Niente «altri 15 minuti»."
+      ],
+      [
+        ">Almost there<",
+        ">CI SEI QUASI<"
+      ],
+      [
+        "Just 320 steps left.",
+        "Mancano solo 320 passi."
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "Finisci la camminata e guadagna 5 min. Le tue app possono aspettare."
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1.000 passi"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "Mancano 320 passi · ~3 min di cammino"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "Guadagna tempo con flessioni o squat"
+      ],
+      [
+        "Update my steps",
+        "Aggiorna i miei passi"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>App bloccate</b><span>finché non guadagni tempo</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5 MIN"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "Il tuo tempo.<br><em>Come vuoi tu.</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5, 10 o 15 minuti. Poi le app si bloccano."
+      ],
+      [
+        ">Choose a session<",
+        ">Scegli una sessione<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>Usa i miei minuti</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>Disponibili</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>Dopo la sessione</span>"
+      ],
+      [
+        "Custom amount",
+        "Quantità personalizzata"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 3 selezionate"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "Il tempo parte ora e continua a scorrere quando cambi app. Torna su Earnit per terminare la sessione e conservare il resto."
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "Usa le app bloccate per 10 min"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>Sessione di 10 min</b><span>poi le app si ribloccano</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25 min</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15 min</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5 min</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10 min</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15 min</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10 min</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "Blocca quando<br><em>conta davvero.</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "Scegli gli orari. Attiva la modalità rigida."
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">Quando bloccare</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">Orario di blocco</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>Blocca solo in certe ore</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>Dalle</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>Alle</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">D L M M G V S</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">Fuori da questo orario le app sono aperte e i minuti guadagnati restano nel saldo. Se finisce prima di iniziare, copre la notte.</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">Modalità rigida</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>Attiva fino a</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">Domenica 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>Estendi la modalità rigida</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">Finché è attiva non puoi togliere app protette, rendere la regola più facile, allentare l’orario o eliminare app dall’iPhone. Non si può disattivare prima.</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "Riprenditi<br><em>le tue serate.</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "Ogni minuto ritrovato conta."
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">Oggi</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>La tua giornata</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1 h 20 min</b><span>in meno di quanto scorrevi prima"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "volte che non hai aperto un'app bloccata"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40 min</b><span>di schermo guadagnati muovendoti"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6.240</b><span>passi"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "È una stima: il minimo dello scroll quotidiano che ci hai indicato all'inizio, meno il tempo sbloccato in Earnit."
+      ],
+      [
+        "Share my progress",
+        "Condividi i miei progressi"
+      ],
+      [
+        "Challenge a friend",
+        "Sfida un amico"
+      ],
+      [
+        ">Done<",
+        ">Fatto<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12 giorni di fila</b><span>Continua così</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "Aiutatevi a<br><em>non mollare.</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "Condividi le serie. Sfida un amico."
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">Insieme</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>Amici</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">I tuoi amici</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">Nessun aggiornamento oggi</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">Nessun aggiornamento oggi</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">Nessun aggiornamento oggi</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>Invita un amico</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">Squad</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>Muoviamoci insieme</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">Questa settimana</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7 giorni</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7 giorni</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7 giorni</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">Unisciti con codice</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "Privacy,<br><em>fin dall’inizio.</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "Conteggiato sul tuo iPhone. Mai caricato online."
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>Ripetizioni contate sul dispositivo, nessun video salvato</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>I dati sanitari restano sul tuo iPhone</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>Non vediamo mai quali app blocchi (iOS le mantiene private)</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "Basta scroll infinito.",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "Guadagna tempo di utilizzo.",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "Le app restano bloccate finché non ti muovi.",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "App bloccate finché non guadagni tempo",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "Le app che hai scelto restano in pausa finché non guadagni tempo.",
+      "source": "xcstrings: home.appsPaused"
+    },
+    "Walk": {
+      "translation": "Cammina",
+      "source": "xcstrings: home.earnMore.walk"
+    },
+    "Push-ups": {
+      "translation": "Flessioni",
+      "source": "xcstrings: pushups.name"
+    },
+    "Squats": {
+      "translation": "Squat",
+      "source": "xcstrings: squats.name"
+    },
+    "Screen time?": {
+      "translation": "Vuoi più schermo?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "Fai 10 flessioni.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "La fotocamera conta le ripetizioni.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "Sul tuo iPhone",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "conteggio ripetizioni",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "Nessun video",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "viene mai salvato",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 10 flessioni",
+      "source": "xcstrings (formatted): pushups.challenge.reps %lld"
+    },
+    "Lower a little more": {
+      "translation": "Scendi ancora un po'",
+      "source": "xcstrings: pushups.guidance.lower_body"
+    },
+    "Apps unlocked": {
+      "translation": "App sbloccate",
+      "source": "xcstrings: feedback.appsUnlocked"
+    },
+    "+10 min earned": {
+      "translation": "+10 min guadagnati",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "Ogni passeggiata",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "ti regala tempo.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "I tuoi passi diventano minuti.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Saturday": {
+      "translation": "Sabato",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12 giorni di fila",
+      "source": "xcstrings (formatted): dashboard.streak %lld"
+    },
+    "Available time": {
+      "translation": "Tempo disponibile",
+      "source": "xcstrings: home.availableTime"
+    },
+    "to spend on your apps": {
+      "translation": "da spendere nelle tue app",
+      "source": "xcstrings: home.toSpendOnYourApps"
+    },
+    "Use my minutes": {
+      "translation": "Usa i miei minuti",
+      "source": "xcstrings: home.useMinutes"
+    },
+    "6,240 steps today ·": {
+      "translation": "6.240 passi oggi ·",
+      "source": "xcstrings (formatted): earn.stepsToday %@"
+    },
+    "40 min earned": {
+      "translation": "40 min guadagnati",
+      "source": "xcstrings (formatted): home.minutesEarnedCount %lld"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ App evitate oggi: 14 · La tua giornata ›",
+      "source": "xcstrings (formatted): home.impact.skipped %lld"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "760 passi ai tuoi prossimi 5 minuti",
+      "source": "xcstrings (formatted): earn.nextReward %lld %lld"
+    },
+    "6,240 steps": {
+      "translation": "6.240 passi",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40 min guadagnati",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "min",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "Non puoi camminare?",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "Fai qualche squat.",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "Flessioni, squat, affondi o jumping jack.",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "Guadagna tempo",
+      "source": "xcstrings: earn.title"
+    },
+    "Choose how to earn": {
+      "translation": "Scegli come guadagnare",
+      "source": "xcstrings: earn.chooseHowToEarn"
+    },
+    "Steps": {
+      "translation": "Passi",
+      "source": "xcstrings: earn.source.steps"
+    },
+    "6,240 steps today": {
+      "translation": "6.240 passi oggi",
+      "source": "xcstrings (formatted): earn.stepsToday %@"
+    },
+    "Exercise to Earn": {
+      "translation": "Allenati per guadagnare",
+      "source": "xcstrings: exercise.entry.title"
+    },
+    "Lunges": {
+      "translation": "Affondi",
+      "source": "xcstrings: lunges.name"
+    },
+    "Jumping jacks": {
+      "translation": "Jumping jack",
+      "source": "xcstrings: jumping_jacks.name"
+    },
+    "/ 10 squats": {
+      "translation": "/ 10 squat",
+      "source": "xcstrings (formatted): squats.challenge.reps %lld"
+    },
+    "Sit back and lower your hips": {
+      "translation": "Porta indietro i fianchi e scendi",
+      "source": "xcstrings: squats.guidance.lower_hips"
+    },
+    "Out of time?": {
+      "translation": "Tempo finito?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "Le app si ribloccano.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "Niente rinvii. Niente «altri 15 minuti».",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "CI SEI QUASI",
+      "source": "xcstrings: shield.detail.eyebrow.almost"
+    },
+    "Just 320 steps left.": {
+      "translation": "Mancano solo 320 passi.",
+      "source": "xcstrings (formatted): shield.detail.headline.almost %lld"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "Finisci la camminata e guadagna 5 min. Le tue app possono aspettare.",
+      "source": "xcstrings (formatted): shield.detail.support.almost %lld"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1.000 passi",
+      "source": "xcstrings (formatted): shield.detail.progress %@ %@"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "Mancano 320 passi · ~3 min di cammino",
+      "source": "xcstrings (formatted): shield.detail.remaining %lld %lld"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "Guadagna tempo con flessioni o squat",
+      "source": "xcstrings: shield.detail.action.pushups"
+    },
+    "Update my steps": {
+      "translation": "Aggiorna i miei passi",
+      "source": "xcstrings: dashboard.refreshSteps"
+    },
+    "Apps locked": {
+      "translation": "App bloccate",
+      "source": "xcstrings: feedback.appsLocked"
+    },
+    "until you earn time": {
+      "translation": "finché non guadagni tempo",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5 MIN",
+      "source": "xcstrings (formatted): shield.detail.reward %lld"
+    },
+    "Spend it": {
+      "translation": "Il tuo tempo.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "Come vuoi tu.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5, 10 o 15 minuti. Poi le app si bloccano.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "Scegli una sessione",
+      "source": "xcstrings: session.chooseDuration"
+    },
+    "Available": {
+      "translation": "Disponibili",
+      "source": "xcstrings: session.available"
+    },
+    "After session": {
+      "translation": "Dopo la sessione",
+      "source": "xcstrings: session.after"
+    },
+    "Custom amount": {
+      "translation": "Quantità personalizzata",
+      "source": "xcstrings: session.customDuration"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 3 selezionate",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "Il tempo parte ora e continua a scorrere quando cambi app. Torna su Earnit per terminare la sessione e conservare il resto.",
+      "source": "xcstrings: session.clockDisclaimer"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "Usa le app bloccate per 10 min",
+      "source": "xcstrings (formatted): session.start %lld"
+    },
+    "10 min session": {
+      "translation": "Sessione di 10 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "poi le app si ribloccano",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25 min",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15 min",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5 min",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10 min",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "Blocca quando",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "conta davvero.",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "Scegli gli orari. Attiva la modalità rigida.",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "Quando bloccare",
+      "source": "xcstrings: settings.blocking"
+    },
+    "Blocking hours": {
+      "translation": "Orario di blocco",
+      "source": "xcstrings: blocking.schedule.section"
+    },
+    "Block only at certain hours": {
+      "translation": "Blocca solo in certe ore",
+      "source": "xcstrings: blocking.schedule.toggle"
+    },
+    "From": {
+      "translation": "Dalle",
+      "source": "xcstrings: blocking.schedule.start"
+    },
+    "Until": {
+      "translation": "Alle",
+      "source": "xcstrings: blocking.schedule.end"
+    },
+    "S M T W T F S": {
+      "translation": "D L M M G V S",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "Fuori da questo orario le app sono aperte e i minuti guadagnati restano nel saldo. Se finisce prima di iniziare, copre la notte.",
+      "source": "xcstrings: blocking.schedule.footer"
+    },
+    "Strict mode": {
+      "translation": "Modalità rigida",
+      "source": "xcstrings: strictMode.section"
+    },
+    "On until": {
+      "translation": "Attiva fino a",
+      "source": "xcstrings: strictMode.activeUntil"
+    },
+    "Sunday 07:00": {
+      "translation": "Domenica 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "Estendi la modalità rigida",
+      "source": "xcstrings: strictMode.extend"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "Finché è attiva non puoi togliere app protette, rendere la regola più facile, allentare l’orario o eliminare app dall’iPhone. Non si può disattivare prima.",
+      "source": "xcstrings: strictMode.footer"
+    },
+    "Win back": {
+      "translation": "Riprenditi",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "le tue serate.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "Ogni minuto ritrovato conta.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "Oggi",
+      "source": "xcstrings: impact.period.today"
+    },
+    "Your day": {
+      "translation": "La tua giornata",
+      "source": "xcstrings: impact.title"
+    },
+    "1h 20m": {
+      "translation": "1 h 20 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "in meno di quanto scorrevi prima",
+      "source": "xcstrings: impact.metric.reclaimed"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "volte che non hai aperto un'app bloccata",
+      "source": "xcstrings: impact.metric.skipped"
+    },
+    "40m": {
+      "translation": "40 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "di schermo guadagnati muovendoti",
+      "source": "xcstrings: impact.metric.earned"
+    },
+    "6,240": {
+      "translation": "6.240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "passi",
+      "source": "xcstrings: impact.metric.steps"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "È una stima: il minimo dello scroll quotidiano che ci hai indicato all'inizio, meno il tempo sbloccato in Earnit.",
+      "source": "xcstrings: impact.reclaimed.footnote"
+    },
+    "Share my progress": {
+      "translation": "Condividi i miei progressi",
+      "source": "xcstrings: share.progress"
+    },
+    "Challenge a friend": {
+      "translation": "Sfida un amico",
+      "source": "xcstrings: share.challenge"
+    },
+    "Done": {
+      "translation": "Fatto",
+      "source": "xcstrings: common.done"
+    },
+    "12-day streak": {
+      "translation": "12 giorni di fila",
+      "source": "xcstrings (formatted): dashboard.streak %lld"
+    },
+    "Keep it going": {
+      "translation": "Continua così",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "Aiutatevi a",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "non mollare.",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "Condividi le serie. Sfida un amico.",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "Insieme",
+      "source": "xcstrings: friends.eyebrow"
+    },
+    "Friends": {
+      "translation": "Amici",
+      "source": "xcstrings: friends.title"
+    },
+    "Your friends": {
+      "translation": "I tuoi amici",
+      "source": "xcstrings: friends.list"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "Nessun aggiornamento oggi",
+      "source": "xcstrings: friends.status.noUpdate"
+    },
+    "Invite a friend": {
+      "translation": "Invita un amico",
+      "source": "xcstrings: friends.invite"
+    },
+    "Squads": {
+      "translation": "Squad",
+      "source": "xcstrings: friends.squads"
+    },
+    "Move together": {
+      "translation": "Muoviamoci insieme",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "Questa settimana",
+      "source": "xcstrings: friends.squad.week"
+    },
+    "4/7 days": {
+      "translation": "4/7 giorni",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "3/7 days": {
+      "translation": "3/7 giorni",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "2/7 days": {
+      "translation": "2/7 giorni",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "Join with a code": {
+      "translation": "Unisciti con codice",
+      "source": "xcstrings: friends.squad.join"
+    },
+    "Private": {
+      "translation": "Privacy,",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "fin dall’inizio.",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "Conteggiato sul tuo iPhone. Mai caricato online.",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "Ripetizioni contate sul dispositivo, nessun video salvato",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "I dati sanitari restano sul tuo iPhone",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "Non vediamo mai quali app blocchi (iOS le mantiene private)",
+      "source": "screenshot copy"
+    }
+  }
+}

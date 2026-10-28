@@ -1,6 +1,6 @@
 # Screenshot copy provenance
 
-The headlines, sublines and three privacy facts are the exact supplied brief, recorded in `frames.json` and `make_es.py`. Spanish inside the phones uses the app's `es` catalog values. The app says **Saltos de tijera** inside the exercise screen; the supplied marketing subline deliberately retains **jumping jacks**.
+The approved English/Spanish headlines, sublines and three privacy facts retain the supplied brief, recorded in `frames.json` and `l10n/es.json`. The twelve additional locales use `l10n/<language>.json`; [TRANSLATION_REVIEW.md](TRANSLATION_REVIEW.md) lists their screenshot-only translations and compositions, and the tables identify catalog provenance. Spanish inside the phones uses the app's `es` catalog values. The app says **Saltos de tijera** inside the exercise screen; the supplied marketing subline deliberately retains **jumping jacks**.
 
 | Surface | Catalog keys / source |
 | --- | --- |

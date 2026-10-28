@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "Stop eindeloos scrollen.<br><em>Verdien je schermtijd.</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "Je apps blijven op slot tot je beweegt."
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>Apps op slot tot je tijd verdient</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>Je gekozen apps blijven gepauzeerd tot je tijd verdient.</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>Wandelen</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Push-ups</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squats</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "Meer schermtijd?<br><em>Doe 10 push-ups.</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "Je camera telt de herhalingen."
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>Op je iPhone</b><span>herhalingen tellen</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>Nooit video</b><span>opgeslagen</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 10 push-ups"
+      ],
+      [
+        "Lower a little more",
+        "Zak nog iets verder"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>Apps ontgrendeld</b><span>+10 min verdiend</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "Elke wandeling<br><em>levert tijd op.</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "Je stappen worden minuten."
+      ],
+      [
+        ">Saturday<",
+        ">Zaterdag<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12 dagen op rij"
+      ],
+      [
+        ">Available time<",
+        ">Beschikbare tijd<"
+      ],
+      [
+        "to spend on your apps",
+        "om in je apps te besteden"
+      ],
+      [
+        "Use my minutes",
+        "Mijn minuten gebruiken"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "6.240 stappen vandaag · <em>Vandaag +40 min verdiend</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ Apps vandaag overgeslagen: 14 · Bekijk je dag ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "Nog 760 stappen tot je volgende 5 minuten"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6.240 stappen</b><span>+40 min verdiend</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>min</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "Geen tijd om te lopen?<br><em>Doe squats.</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "Push-ups, squats, lunges of jumping jacks."
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">Tijd verdienen</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">Kies hoe je tijd verdient</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>Stappen</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>6.240 stappen vandaag</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>Beweeg voor tijd</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Push-ups</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Squats</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>Lunges</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>Jumping jacks</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 10 squats</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>Duw je heupen naar achteren en zak omlaag</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "Tijd voorbij?<br><em>Apps weer op slot.</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "Niet uitstellen. Geen ‘nog 15 minuten’."
+      ],
+      [
+        ">Almost there<",
+        ">Bijna zover<"
+      ],
+      [
+        "Just 320 steps left.",
+        "Nog maar 320 stappen."
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "Maak je wandeling af en verdien 5 min. Je apps kunnen wachten."
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1.000 stappen"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "Nog 320 stappen · ~3 min lopen"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "Verdien tijd met push-ups of squats"
+      ],
+      [
+        "Update my steps",
+        "Mijn stappen bijwerken"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>Apps vergrendeld</b><span>tot je tijd verdient</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5 min"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "Jouw tijd.<br><em>Jouw keuze.</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5, 10 of 15 minuten. Dan gaan de apps op slot."
+      ],
+      [
+        ">Choose a session<",
+        ">Kies een sessie<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>Mijn minuten gebruiken</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>Beschikbaar</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>Na de sessie</span>"
+      ],
+      [
+        "Custom amount",
+        "Zelf instellen"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 3 geselecteerd"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "De tijd gaat nu in en loopt door als je van app wisselt. Ga terug naar Earnit om de sessie te stoppen en de rest te bewaren."
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "Geblokkeerde apps 10 min gebruiken"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>Sessie van 10 min</b><span>dan weer op slot</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25 min</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15 min</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5 min</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10 min</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15 min</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10 min</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "Blokkeer als<br><em>het ertoe doet.</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "Kies je tijden. Zet de strenge modus aan."
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">Wanneer blokkeren</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">Blokkeertijden</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>Alleen op bepaalde tijden blokkeren</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>Van</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>Tot</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">Z M D W D V Z</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">Buiten deze tijden zijn je apps open en blijven je verdiende minuten in je saldo. Eindigt een tijdvak vóór het begint, dan loopt het door tot de volgende dag.</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">Strenge modus</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>Actief tot</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">Zondag 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>Strenge modus verlengen</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">Zolang dit aanstaat, kun je geen beschermde apps verwijderen, de regel versoepelen, je schema verruimen of apps van je iPhone wissen. Je kunt dit niet eerder uitzetten.</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "Pak je<br><em>avonden terug.</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "Elke teruggewonnen minuut in beeld."
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">Vandaag</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>Jouw dag</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1 u 20 min</b><span>minder scrollen dan voorheen"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "keer dat je een geblokkeerde app niet opende"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40 min</b><span>schermtijd verdiend door te bewegen"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6.240</b><span>stappen"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "Een schatting: de ondergrens van je dagelijkse scrolltijd die je bij de start opgaf, min de tijd die je in Earnit vrijspeelde."
+      ],
+      [
+        "Share my progress",
+        "Mijn voortgang delen"
+      ],
+      [
+        "Challenge a friend",
+        "Daag een vriend uit"
+      ],
+      [
+        ">Done<",
+        ">Klaar<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12 dagen op rij</b><span>Ga zo door</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "Houd elkaar<br><em>bij de les.</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "Deel je reeksen. Daag een vriend uit."
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">Samen</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>Vrienden</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">Je vrienden</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">Vandaag nog geen update</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">Vandaag nog geen update</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">Vandaag nog geen update</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>Vriend uitnodigen</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">Groepen</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>Samen bewegen</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">Deze week</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7 dagen</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7 dagen</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7 dagen</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">Deelnemen met een code</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "Privacy<br><em>vanaf het begin.</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "Geteld op je iPhone. Nooit geüpload."
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>Herhalingen op je toestel geteld, geen video opgeslagen</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>Je gezondheidsgegevens blijven op je iPhone</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>We zien nooit welke apps je blokkeert (iOS houdt dat privé)</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "Stop eindeloos scrollen.",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "Verdien je schermtijd.",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "Je apps blijven op slot tot je beweegt.",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "Apps op slot tot je tijd verdient",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "Je gekozen apps blijven gepauzeerd tot je tijd verdient.",
+      "source": "screenshot copy"
+    },
+    "Walk": {
+      "translation": "Wandelen",
+      "source": "screenshot copy"
+    },
+    "Push-ups": {
+      "translation": "Push-ups",
+      "source": "screenshot copy"
+    },
+    "Squats": {
+      "translation": "Squats",
+      "source": "screenshot copy"
+    },
+    "Screen time?": {
+      "translation": "Meer schermtijd?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "Doe 10 push-ups.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "Je camera telt de herhalingen.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "Op je iPhone",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "herhalingen tellen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "Nooit video",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "opgeslagen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 10 push-ups",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Lower a little more": {
+      "translation": "Zak nog iets verder",
+      "source": "screenshot copy"
+    },
+    "Apps unlocked": {
+      "translation": "Apps ontgrendeld",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+10 min earned": {
+      "translation": "+10 min verdiend",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "Elke wandeling",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "levert tijd op.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "Je stappen worden minuten.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Saturday": {
+      "translation": "Zaterdag",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12 dagen op rij",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available time": {
+      "translation": "Beschikbare tijd",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "to spend on your apps": {
+      "translation": "om in je apps te besteden",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use my minutes": {
+      "translation": "Mijn minuten gebruiken",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps today ·": {
+      "translation": "6.240 stappen vandaag ·",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40 min earned": {
+      "translation": "Vandaag +40 min verdiend",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ Apps vandaag overgeslagen: 14 · Bekijk je dag ›",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "Nog 760 stappen tot je volgende 5 minuten",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps": {
+      "translation": "6.240 stappen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40 min verdiend",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "min",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "Geen tijd om te lopen?",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "Doe squats.",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "Push-ups, squats, lunges of jumping jacks.",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "Tijd verdienen",
+      "source": "screenshot copy"
+    },
+    "Choose how to earn": {
+      "translation": "Kies hoe je tijd verdient",
+      "source": "screenshot copy"
+    },
+    "Steps": {
+      "translation": "Stappen",
+      "source": "screenshot copy"
+    },
+    "6,240 steps today": {
+      "translation": "6.240 stappen vandaag",
+      "source": "screenshot copy, adapted"
+    },
+    "Exercise to Earn": {
+      "translation": "Beweeg voor tijd",
+      "source": "screenshot copy"
+    },
+    "Lunges": {
+      "translation": "Lunges",
+      "source": "screenshot copy"
+    },
+    "Jumping jacks": {
+      "translation": "Jumping jacks",
+      "source": "screenshot copy"
+    },
+    "/ 10 squats": {
+      "translation": "/ 10 squats",
+      "source": "screenshot copy, compact counter"
+    },
+    "Sit back and lower your hips": {
+      "translation": "Duw je heupen naar achteren en zak omlaag",
+      "source": "screenshot copy"
+    },
+    "Out of time?": {
+      "translation": "Tijd voorbij?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "Apps weer op slot.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "Niet uitstellen. Geen ‘nog 15 minuten’.",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "Bijna zover",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Just 320 steps left.": {
+      "translation": "Nog maar 320 stappen.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "Maak je wandeling af en verdien 5 min. Je apps kunnen wachten.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1.000 stappen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "Nog 320 stappen · ~3 min lopen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "Verdien tijd met push-ups of squats",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Update my steps": {
+      "translation": "Mijn stappen bijwerken",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps locked": {
+      "translation": "Apps vergrendeld",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "until you earn time": {
+      "translation": "tot je tijd verdient",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Spend it": {
+      "translation": "Jouw tijd.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "Jouw keuze.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5, 10 of 15 minuten. Dan gaan de apps op slot.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "Kies een sessie",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available": {
+      "translation": "Beschikbaar",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "After session": {
+      "translation": "Na de sessie",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Custom amount": {
+      "translation": "Zelf instellen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 3 geselecteerd",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "De tijd gaat nu in en loopt door als je van app wisselt. Ga terug naar Earnit om de sessie te stoppen en de rest te bewaren.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "Geblokkeerde apps 10 min gebruiken",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "10 min session": {
+      "translation": "Sessie van 10 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "dan weer op slot",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25 min",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15 min",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5 min",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10 min",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "Blokkeer als",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "het ertoe doet.",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "Kies je tijden. Zet de strenge modus aan.",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "Wanneer blokkeren",
+      "source": "screenshot copy"
+    },
+    "Blocking hours": {
+      "translation": "Blokkeertijden",
+      "source": "screenshot copy"
+    },
+    "Block only at certain hours": {
+      "translation": "Alleen op bepaalde tijden blokkeren",
+      "source": "screenshot copy"
+    },
+    "From": {
+      "translation": "Van",
+      "source": "screenshot copy"
+    },
+    "Until": {
+      "translation": "Tot",
+      "source": "screenshot copy"
+    },
+    "S M T W T F S": {
+      "translation": "Z M D W D V Z",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "Buiten deze tijden zijn je apps open en blijven je verdiende minuten in je saldo. Eindigt een tijdvak vóór het begint, dan loopt het door tot de volgende dag.",
+      "source": "screenshot copy"
+    },
+    "Strict mode": {
+      "translation": "Strenge modus",
+      "source": "screenshot copy"
+    },
+    "On until": {
+      "translation": "Actief tot",
+      "source": "screenshot copy"
+    },
+    "Sunday 07:00": {
+      "translation": "Zondag 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "Strenge modus verlengen",
+      "source": "screenshot copy"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "Zolang dit aanstaat, kun je geen beschermde apps verwijderen, de regel versoepelen, je schema verruimen of apps van je iPhone wissen. Je kunt dit niet eerder uitzetten.",
+      "source": "screenshot copy"
+    },
+    "Win back": {
+      "translation": "Pak je",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "avonden terug.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "Elke teruggewonnen minuut in beeld.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "Vandaag",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your day": {
+      "translation": "Jouw dag",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "1h 20m": {
+      "translation": "1 u 20 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "minder scrollen dan voorheen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "keer dat je een geblokkeerde app niet opende",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40m": {
+      "translation": "40 min",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "schermtijd verdiend door te bewegen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240": {
+      "translation": "6.240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "stappen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "Een schatting: de ondergrens van je dagelijkse scrolltijd die je bij de start opgaf, min de tijd die je in Earnit vrijspeelde.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Share my progress": {
+      "translation": "Mijn voortgang delen",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Challenge a friend": {
+      "translation": "Daag een vriend uit",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Done": {
+      "translation": "Klaar",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "12-day streak": {
+      "translation": "12 dagen op rij",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep it going": {
+      "translation": "Ga zo door",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "Houd elkaar",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "bij de les.",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "Deel je reeksen. Daag een vriend uit.",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "Samen",
+      "source": "screenshot copy"
+    },
+    "Friends": {
+      "translation": "Vrienden",
+      "source": "screenshot copy"
+    },
+    "Your friends": {
+      "translation": "Je vrienden",
+      "source": "screenshot copy"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "Vandaag nog geen update",
+      "source": "screenshot copy"
+    },
+    "Invite a friend": {
+      "translation": "Vriend uitnodigen",
+      "source": "screenshot copy"
+    },
+    "Squads": {
+      "translation": "Groepen",
+      "source": "screenshot copy"
+    },
+    "Move together": {
+      "translation": "Samen bewegen",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "Deze week",
+      "source": "screenshot copy"
+    },
+    "4/7 days": {
+      "translation": "4/7 dagen",
+      "source": "screenshot copy, fixture format"
+    },
+    "3/7 days": {
+      "translation": "3/7 dagen",
+      "source": "screenshot copy, fixture format"
+    },
+    "2/7 days": {
+      "translation": "2/7 dagen",
+      "source": "screenshot copy, fixture format"
+    },
+    "Join with a code": {
+      "translation": "Deelnemen met een code",
+      "source": "screenshot copy"
+    },
+    "Private": {
+      "translation": "Privacy",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "vanaf het begin.",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "Geteld op je iPhone. Nooit geüpload.",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "Herhalingen op je toestel geteld, geen video opgeslagen",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "Je gezondheidsgegevens blijven op je iPhone",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "We zien nooit welke apps je blokkeert (iOS houdt dat privé)",
+      "source": "screenshot copy"
+    }
+  }
+}
