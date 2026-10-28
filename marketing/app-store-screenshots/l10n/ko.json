@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "스크롤은 그만.<br><em>움직여서 시간 벌기.</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "움직일 때까지 앱은 잠겨 있어요."
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>시간을 벌 때까지 앱은 잠겨요</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>선택한 앱은 시간을 벌 때까지 일시 정지돼요.</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>걷기</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>팔굽혀펴기</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>스쿼트</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "스크린타임이 필요해요?<br><em>팔굽혀펴기 10번.</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "카메라가 횟수를 세어 줘요."
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>기기 안에서</b><span>운동 횟수 계산</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>동영상은</b><span>절대 저장 안 함</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 팔굽혀펴기 10번"
+      ],
+      [
+        "Lower a little more",
+        "조금 더 내려가세요"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>앱 잠금 해제</b><span>+10분 획득</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "걸을 때마다<br><em>화면 시간이 쌓여요.</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "걸음이 화면 시간으로 바뀌어요."
+      ],
+      [
+        ">Saturday<",
+        ">토요일<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12일 연속"
+      ],
+      [
+        ">Available time<",
+        ">사용 가능한 시간<"
+      ],
+      [
+        "to spend on your apps",
+        "앱에서 사용할 수 있어요"
+      ],
+      [
+        "Use my minutes",
+        "내 시간 사용"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "오늘 6,240걸음 · <em>오늘 +40분 획득</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ 오늘 열지 않은 앱: 14회 · 나의 하루 보기 ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "다음 5분까지 760걸음"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6,240걸음</b><span>+40분 획득</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>분</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "걸을 시간이 없나요?<br><em>스쿼트로 벌어요.</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "팔굽혀펴기, 스쿼트, 런지, 점핑잭."
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">시간 벌기</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">시간 버는 방법 선택</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>걸음</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>오늘 6,240걸음</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>운동으로 시간 벌기</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>팔굽혀펴기</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>스쿼트</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>런지</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>점핑잭</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 스쿼트 10회</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>엉덩이를 뒤로 빼고 내려가세요</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "시간이 끝나면?<br><em>앱은 다시 잠겨요.</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "미루기도, “15분만 더”도 없어요."
+      ],
+      [
+        ">Almost there<",
+        ">거의 다 왔어요<"
+      ],
+      [
+        "Just 320 steps left.",
+        "이제 320걸음만 더."
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "산책을 마치고 5분을 얻으세요. 앱은 기다려 줄 거예요."
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1,000걸음"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "320걸음 남음 · 도보 약 3분"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "팔굽혀펴기나 스쿼트로 시간 얻기"
+      ],
+      [
+        "Update my steps",
+        "걸음 수 새로고침"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>앱 잠김</b><span>시간을 얻을 때까지</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5분"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "모은 시간은<br><em>내 방식대로.</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5분, 10분, 15분. 끝나면 다시 잠겨요."
+      ],
+      [
+        ">Choose a session<",
+        ">세션 선택<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>내 시간 사용</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>사용 가능</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>세션 후</span>"
+      ],
+      [
+        "Custom amount",
+        "직접 설정"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 3개 선택"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "시간은 지금부터 시작되며 앱을 바꿔도 계속 흘러요. Earnit으로 돌아와 세션을 끝내면 남은 시간을 아낄 수 있어요."
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "차단된 앱 10분 사용"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>10분 세션</b><span>끝나면 앱이 다시 잠겨요</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25분</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15분</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5분</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10분</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15분</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10분</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "중요한 시간엔<br><em>앱을 차단해요.</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "시간을 정하고 엄격 모드를 켜세요."
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">차단 시간 설정</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">차단 시간</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>정해진 시간에만 차단</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>시작</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>종료</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">일 월 화 수 목 금 토</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">이 시간 외에는 앱을 사용할 수 있고, 번 시간은 잔액에 남아요. 종료 시간이 시작 시간보다 이르면 밤을 넘어 이어져요.</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">엄격 모드</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>유지 기한</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">일요일 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>엄격 모드 연장</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">켜져 있는 동안 보호할 앱을 목록에서 빼거나 규칙과 일정을 완화하거나 iPhone에서 앱을 삭제할 수 없어요. 미리 끌 수 없어요.</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "저녁 시간을<br><em>되찾으세요.</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "되찾은 시간을 한눈에 확인해요."
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">오늘</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>나의 하루</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1시간 20분</b><span>예전보다 줄어든 스크롤 시간"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "차단된 앱을 열지 않은 횟수"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40분</b><span>움직여서 얻은 화면 시간"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6,240</b><span>걸음"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "추정치예요. 시작할 때 알려 준 하루 스크롤 시간의 최솟값에서 Earnit으로 해제한 시간을 뺐어요."
+      ],
+      [
+        "Share my progress",
+        "내 성과 공유"
+      ],
+      [
+        "Challenge a friend",
+        "친구에게 도전하기"
+      ],
+      [
+        ">Done<",
+        ">완료<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12일 연속</b><span>계속해 보세요</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "서로 응원하며<br><em>함께 지켜요.</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "연속 기록을 나누고 친구에게 도전하세요."
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">함께</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>친구</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">내 친구</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">오늘 아직 소식이 없어요</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">오늘 아직 소식이 없어요</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">오늘 아직 소식이 없어요</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>친구 초대</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">그룹</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>함께 움직여요</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">이번 주</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7일</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7일</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7일</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">코드로 참여</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "처음부터<br><em>개인정보 보호.</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "iPhone에서 계산해요. 업로드하지 않아요."
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>횟수는 기기에서 계산하고 영상은 저장하지 않아요</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>건강 데이터는 내 iPhone에만 보관해요</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>어떤 앱을 차단했는지 저희도 몰라요 (iOS가 보호해요)</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "스크롤은 그만.",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "움직여서 시간 벌기.",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "움직일 때까지 앱은 잠겨 있어요.",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "시간을 벌 때까지 앱은 잠겨요",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "선택한 앱은 시간을 벌 때까지 일시 정지돼요.",
+      "source": "screenshot copy"
+    },
+    "Walk": {
+      "translation": "걷기",
+      "source": "screenshot copy"
+    },
+    "Push-ups": {
+      "translation": "팔굽혀펴기",
+      "source": "screenshot copy"
+    },
+    "Squats": {
+      "translation": "스쿼트",
+      "source": "screenshot copy"
+    },
+    "Screen time?": {
+      "translation": "스크린타임이 필요해요?",
+      "source": "screenshot copy"
+    },
+    "Do 10 push-ups.": {
+      "translation": "팔굽혀펴기 10번.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "카메라가 횟수를 세어 줘요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "기기 안에서",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "운동 횟수 계산",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "동영상은",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "절대 저장 안 함",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 팔굽혀펴기 10번",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Lower a little more": {
+      "translation": "조금 더 내려가세요",
+      "source": "screenshot copy"
+    },
+    "Apps unlocked": {
+      "translation": "앱 잠금 해제",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+10 min earned": {
+      "translation": "+10분 획득",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "걸을 때마다",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "화면 시간이 쌓여요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "걸음이 화면 시간으로 바뀌어요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Saturday": {
+      "translation": "토요일",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12일 연속",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available time": {
+      "translation": "사용 가능한 시간",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "to spend on your apps": {
+      "translation": "앱에서 사용할 수 있어요",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use my minutes": {
+      "translation": "내 시간 사용",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps today ·": {
+      "translation": "오늘 6,240걸음 ·",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40 min earned": {
+      "translation": "오늘 +40분 획득",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ 오늘 열지 않은 앱: 14회 · 나의 하루 보기 ›",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "다음 5분까지 760걸음",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps": {
+      "translation": "6,240걸음",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40분 획득",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "분",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "걸을 시간이 없나요?",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "스쿼트로 벌어요.",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "팔굽혀펴기, 스쿼트, 런지, 점핑잭.",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "시간 벌기",
+      "source": "screenshot copy"
+    },
+    "Choose how to earn": {
+      "translation": "시간 버는 방법 선택",
+      "source": "screenshot copy"
+    },
+    "Steps": {
+      "translation": "걸음",
+      "source": "screenshot copy"
+    },
+    "6,240 steps today": {
+      "translation": "오늘 6,240걸음",
+      "source": "screenshot copy, adapted"
+    },
+    "Exercise to Earn": {
+      "translation": "운동으로 시간 벌기",
+      "source": "screenshot copy"
+    },
+    "Lunges": {
+      "translation": "런지",
+      "source": "screenshot copy"
+    },
+    "Jumping jacks": {
+      "translation": "점핑잭",
+      "source": "screenshot copy"
+    },
+    "/ 10 squats": {
+      "translation": "/ 스쿼트 10회",
+      "source": "screenshot copy, compact counter"
+    },
+    "Sit back and lower your hips": {
+      "translation": "엉덩이를 뒤로 빼고 내려가세요",
+      "source": "screenshot copy"
+    },
+    "Out of time?": {
+      "translation": "시간이 끝나면?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "앱은 다시 잠겨요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "미루기도, “15분만 더”도 없어요.",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "거의 다 왔어요",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Just 320 steps left.": {
+      "translation": "이제 320걸음만 더.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "산책을 마치고 5분을 얻으세요. 앱은 기다려 줄 거예요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1,000걸음",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "320걸음 남음 · 도보 약 3분",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "팔굽혀펴기나 스쿼트로 시간 얻기",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Update my steps": {
+      "translation": "걸음 수 새로고침",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps locked": {
+      "translation": "앱 잠김",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "until you earn time": {
+      "translation": "시간을 얻을 때까지",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5분",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Spend it": {
+      "translation": "모은 시간은",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "내 방식대로.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5분, 10분, 15분. 끝나면 다시 잠겨요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "세션 선택",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available": {
+      "translation": "사용 가능",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "After session": {
+      "translation": "세션 후",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Custom amount": {
+      "translation": "직접 설정",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 3개 선택",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "시간은 지금부터 시작되며 앱을 바꿔도 계속 흘러요. Earnit으로 돌아와 세션을 끝내면 남은 시간을 아낄 수 있어요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "차단된 앱 10분 사용",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "10 min session": {
+      "translation": "10분 세션",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "끝나면 앱이 다시 잠겨요",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25분",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15분",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5분",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10분",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "중요한 시간엔",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "앱을 차단해요.",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "시간을 정하고 엄격 모드를 켜세요.",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "차단 시간 설정",
+      "source": "screenshot copy"
+    },
+    "Blocking hours": {
+      "translation": "차단 시간",
+      "source": "screenshot copy"
+    },
+    "Block only at certain hours": {
+      "translation": "정해진 시간에만 차단",
+      "source": "screenshot copy"
+    },
+    "From": {
+      "translation": "시작",
+      "source": "screenshot copy"
+    },
+    "Until": {
+      "translation": "종료",
+      "source": "screenshot copy"
+    },
+    "S M T W T F S": {
+      "translation": "일 월 화 수 목 금 토",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "이 시간 외에는 앱을 사용할 수 있고, 번 시간은 잔액에 남아요. 종료 시간이 시작 시간보다 이르면 밤을 넘어 이어져요.",
+      "source": "screenshot copy"
+    },
+    "Strict mode": {
+      "translation": "엄격 모드",
+      "source": "screenshot copy"
+    },
+    "On until": {
+      "translation": "유지 기한",
+      "source": "screenshot copy"
+    },
+    "Sunday 07:00": {
+      "translation": "일요일 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "엄격 모드 연장",
+      "source": "screenshot copy"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "켜져 있는 동안 보호할 앱을 목록에서 빼거나 규칙과 일정을 완화하거나 iPhone에서 앱을 삭제할 수 없어요. 미리 끌 수 없어요.",
+      "source": "screenshot copy"
+    },
+    "Win back": {
+      "translation": "저녁 시간을",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "되찾으세요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "되찾은 시간을 한눈에 확인해요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "오늘",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your day": {
+      "translation": "나의 하루",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "1h 20m": {
+      "translation": "1시간 20분",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "예전보다 줄어든 스크롤 시간",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "차단된 앱을 열지 않은 횟수",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40m": {
+      "translation": "40분",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "움직여서 얻은 화면 시간",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240": {
+      "translation": "6,240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "걸음",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "추정치예요. 시작할 때 알려 준 하루 스크롤 시간의 최솟값에서 Earnit으로 해제한 시간을 뺐어요.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Share my progress": {
+      "translation": "내 성과 공유",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Challenge a friend": {
+      "translation": "친구에게 도전하기",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Done": {
+      "translation": "완료",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "12-day streak": {
+      "translation": "12일 연속",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep it going": {
+      "translation": "계속해 보세요",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "서로 응원하며",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "함께 지켜요.",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "연속 기록을 나누고 친구에게 도전하세요.",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "함께",
+      "source": "screenshot copy"
+    },
+    "Friends": {
+      "translation": "친구",
+      "source": "screenshot copy"
+    },
+    "Your friends": {
+      "translation": "내 친구",
+      "source": "screenshot copy"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "오늘 아직 소식이 없어요",
+      "source": "screenshot copy"
+    },
+    "Invite a friend": {
+      "translation": "친구 초대",
+      "source": "screenshot copy"
+    },
+    "Squads": {
+      "translation": "그룹",
+      "source": "screenshot copy"
+    },
+    "Move together": {
+      "translation": "함께 움직여요",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "이번 주",
+      "source": "screenshot copy"
+    },
+    "4/7 days": {
+      "translation": "4/7일",
+      "source": "screenshot copy, fixture format"
+    },
+    "3/7 days": {
+      "translation": "3/7일",
+      "source": "screenshot copy, fixture format"
+    },
+    "2/7 days": {
+      "translation": "2/7일",
+      "source": "screenshot copy, fixture format"
+    },
+    "Join with a code": {
+      "translation": "코드로 참여",
+      "source": "screenshot copy"
+    },
+    "Private": {
+      "translation": "처음부터",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "개인정보 보호.",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "iPhone에서 계산해요. 업로드하지 않아요.",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "횟수는 기기에서 계산하고 영상은 저장하지 않아요",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "건강 데이터는 내 iPhone에만 보관해요",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "어떤 앱을 차단했는지 저희도 몰라요 (iOS가 보호해요)",
+      "source": "screenshot copy"
+    }
+  }
+}

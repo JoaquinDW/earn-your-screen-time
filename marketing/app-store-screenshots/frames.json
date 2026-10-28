@@ -10,7 +10,67 @@
       "Basta de scrollear.",
       "Gana tu tiempo de pantalla."
     ],
-    "subline_es": "Tus apps siguen bloqueadas hasta que te mueves."
+    "subline_es": "Tus apps siguen bloqueadas hasta que te mueves.",
+    "headline_de": [
+      "Schluss mit Scrollen.",
+      "Verdien dir Bildschirmzeit."
+    ],
+    "subline_de": "Gesperrte Apps warten, bis du dich bewegst.",
+    "headline_fr": [
+      "Arrête de scroller.",
+      "Gagne du temps d’écran."
+    ],
+    "subline_fr": "Tes apps restent bloquées jusqu’à ce que tu bouges.",
+    "headline_it": [
+      "Basta scroll infinito.",
+      "Guadagna tempo di utilizzo."
+    ],
+    "subline_it": "Le app restano bloccate finché non ti muovi.",
+    "headline_pt-BR": [
+      "Chega de rolar a tela.",
+      "Ganhe tempo de tela."
+    ],
+    "subline_pt-BR": "Seus apps ficam bloqueados até você se mexer.",
+    "headline_nl": [
+      "Stop eindeloos scrollen.",
+      "Verdien je schermtijd."
+    ],
+    "subline_nl": "Je apps blijven op slot tot je beweegt.",
+    "headline_pl": [
+      "Dość przewijania.",
+      "Zarabiaj czas przed ekranem."
+    ],
+    "subline_pl": "Aplikacje czekają, aż zaczniesz się ruszać.",
+    "headline_tr": [
+      "Sonsuz kaydırmaya son.",
+      "Ekran süreni kazan."
+    ],
+    "subline_tr": "Hareket edene kadar uygulamalar kilitli kalır.",
+    "headline_ru": [
+      "Хватит листать.",
+      "Заработай время."
+    ],
+    "subline_ru": "Приложения подождут, пока ты двигаешься.",
+    "headline_ja": [
+      "だらだら見ない。",
+      "動いて時間を獲得。"
+    ],
+    "subline_ja": "体を動かすまで、アプリはロック。",
+    "headline_ko": [
+      "스크롤은 그만.",
+      "움직여서 시간 벌기."
+    ],
+    "subline_ko": "움직일 때까지 앱은 잠겨 있어요.",
+    "headline_zh-Hans": [
+      "别再刷个不停。",
+      "运动赚屏幕时间。"
+    ],
+    "subline_zh-Hans": "先运动，再解锁应用。",
+    "headline_ar": [
+      "كفى تمريرًا بلا نهاية.",
+      "اكسب وقت الشاشة."
+    ],
+    "subline_ar": "تظل التطبيقات مقفلة حتى تتحرك."
   },
   {
     "name": "02-pushups",
@@ -23,7 +83,67 @@
       "¿Más pantalla?",
       "Haz 10 flexiones."
     ],
-    "subline_es": "Tu cámara cuenta cada flexión."
+    "subline_es": "Tu cámara cuenta cada flexión.",
+    "headline_de": [
+      "Mehr Bildschirmzeit?",
+      "10 Liegestütze."
+    ],
+    "subline_de": "Deine Kamera zählt mit.",
+    "headline_fr": [
+      "Du temps d’écran ?",
+      "Fais 10 pompes."
+    ],
+    "subline_fr": "Ta caméra compte les répétitions.",
+    "headline_it": [
+      "Vuoi più schermo?",
+      "Fai 10 flessioni."
+    ],
+    "subline_it": "La fotocamera conta le ripetizioni.",
+    "headline_pt-BR": [
+      "Mais tempo de tela?",
+      "Faça 10 flexões."
+    ],
+    "subline_pt-BR": "A câmera conta as repetições.",
+    "headline_nl": [
+      "Meer schermtijd?",
+      "Doe 10 push-ups."
+    ],
+    "subline_nl": "Je camera telt de herhalingen.",
+    "headline_pl": [
+      "Więcej ekranu?",
+      "Zrób 10 pompek."
+    ],
+    "subline_pl": "Kamera liczy powtórzenia.",
+    "headline_tr": [
+      "Ekran süresi mi?",
+      "10 şınav çek."
+    ],
+    "subline_tr": "Kameran tekrarları sayar.",
+    "headline_ru": [
+      "Больше времени?",
+      "10 отжиманий."
+    ],
+    "subline_ru": "Камера считает повторения.",
+    "headline_ja": [
+      "もっとスマホ時間？",
+      "腕立てを10回。"
+    ],
+    "subline_ja": "カメラが回数をカウント。",
+    "headline_ko": [
+      "스크린타임이 필요해요?",
+      "팔굽혀펴기 10번."
+    ],
+    "subline_ko": "카메라가 횟수를 세어 줘요.",
+    "headline_zh-Hans": [
+      "想多玩一会儿？",
+      "先做10个俯卧撑。"
+    ],
+    "subline_zh-Hans": "摄像头帮你数次数。",
+    "headline_ar": [
+      "وقت أكثر للشاشة؟",
+      "ابدأ بـ١٠ ضغطات."
+    ],
+    "subline_ar": "الكاميرا تعدّ التكرارات."
   },
   {
     "name": "03-walk",
@@ -36,7 +156,67 @@
       "Cada paso",
       "suma minutos."
     ],
-    "subline_es": "Caminar te da tiempo de pantalla."
+    "subline_es": "Caminar te da tiempo de pantalla.",
+    "headline_de": [
+      "Jeder Spaziergang",
+      "bringt dir Zeit."
+    ],
+    "subline_de": "Aus Schritten werden Minuten.",
+    "headline_fr": [
+      "Chaque balade",
+      "te fait gagner du temps."
+    ],
+    "subline_fr": "Tes pas deviennent des minutes.",
+    "headline_it": [
+      "Ogni passeggiata",
+      "ti regala tempo."
+    ],
+    "subline_it": "I tuoi passi diventano minuti.",
+    "headline_pt-BR": [
+      "Cada caminhada",
+      "vira tempo de tela."
+    ],
+    "subline_pt-BR": "Seus passos viram minutos.",
+    "headline_nl": [
+      "Elke wandeling",
+      "levert tijd op."
+    ],
+    "subline_nl": "Je stappen worden minuten.",
+    "headline_pl": [
+      "Każdy spacer",
+      "daje ci czas."
+    ],
+    "subline_pl": "Twoje kroki zamieniają się w minuty.",
+    "headline_tr": [
+      "Her yürüyüş",
+      "sana zaman katar."
+    ],
+    "subline_tr": "Adımların dakikalara dönüşür.",
+    "headline_ru": [
+      "Каждая прогулка",
+      "дарит время."
+    ],
+    "subline_ru": "Шаги превращаются в минуты.",
+    "headline_ja": [
+      "歩くたびに、",
+      "使える時間が増える。"
+    ],
+    "subline_ja": "歩数がスクリーンタイムに。",
+    "headline_ko": [
+      "걸을 때마다",
+      "화면 시간이 쌓여요."
+    ],
+    "subline_ko": "걸음이 화면 시간으로 바뀌어요.",
+    "headline_zh-Hans": [
+      "每次散步，",
+      "都能换来时间。"
+    ],
+    "subline_zh-Hans": "把步数换成屏幕使用时间。",
+    "headline_ar": [
+      "كل مشوار",
+      "يكسبك وقتًا."
+    ],
+    "subline_ar": "خطواتك تتحول إلى دقائق."
   },
   {
     "name": "04-exercises",
@@ -49,7 +229,67 @@
       "¿Sin tiempo para caminar?",
       "Haz sentadillas."
     ],
-    "subline_es": "Flexiones, sentadillas, zancadas o jumping jacks."
+    "subline_es": "Flexiones, sentadillas, zancadas o jumping jacks.",
+    "headline_de": [
+      "Keine Zeit zum Gehen?",
+      "Mach Kniebeugen."
+    ],
+    "subline_de": "Liegestütze, Kniebeugen, Ausfallschritte oder Hampelmänner.",
+    "headline_fr": [
+      "Pas le temps de marcher ?",
+      "Fais des squats."
+    ],
+    "subline_fr": "Pompes, squats, fentes ou jumping jacks.",
+    "headline_it": [
+      "Non puoi camminare?",
+      "Fai qualche squat."
+    ],
+    "subline_it": "Flessioni, squat, affondi o jumping jack.",
+    "headline_pt-BR": [
+      "Sem tempo pra caminhar?",
+      "Faça agachamentos."
+    ],
+    "subline_pt-BR": "Flexões, agachamentos, avanços ou polichinelos.",
+    "headline_nl": [
+      "Geen tijd om te lopen?",
+      "Doe squats."
+    ],
+    "subline_nl": "Push-ups, squats, lunges of jumping jacks.",
+    "headline_pl": [
+      "Nie masz czasu na spacer?",
+      "Zrób przysiady."
+    ],
+    "subline_pl": "Pompki, przysiady, wykroki lub pajacyki.",
+    "headline_tr": [
+      "Yürüyüşe vaktin yok mu?",
+      "Squat yap."
+    ],
+    "subline_tr": "Şınav, squat, lunge veya jumping jack.",
+    "headline_ru": [
+      "Некогда гулять?",
+      "Делай приседания."
+    ],
+    "subline_ru": "Отжимания, приседания, выпады или прыжки «звёздочка».",
+    "headline_ja": [
+      "歩く時間がない？",
+      "スクワットで稼ごう。"
+    ],
+    "subline_ja": "腕立て伏せ・スクワット・ランジ・ジャンピングジャック。",
+    "headline_ko": [
+      "걸을 시간이 없나요?",
+      "스쿼트로 벌어요."
+    ],
+    "subline_ko": "팔굽혀펴기, 스쿼트, 런지, 점핑잭.",
+    "headline_zh-Hans": [
+      "没空散步？",
+      "做组深蹲吧。"
+    ],
+    "subline_zh-Hans": "俯卧撑、深蹲、弓步蹲或开合跳。",
+    "headline_ar": [
+      "لا وقت للمشي؟",
+      "جرّب القرفصاء."
+    ],
+    "subline_ar": "ضغط، قرفصاء، اندفاع أو قفز متباعد."
   },
   {
     "name": "05-lock",
@@ -62,7 +302,67 @@
       "¿Sin tiempo?",
       "Todo se bloquea."
     ],
-    "subline_es": "Sin posponer. Sin \"15 minutos más\"."
+    "subline_es": "Sin posponer. Sin \"15 minutos más\".",
+    "headline_de": [
+      "Zeit ist um?",
+      "Apps wieder zu."
+    ],
+    "subline_de": "Kein Aufschub. Keine „15 Minuten mehr“.",
+    "headline_fr": [
+      "Plus de temps ?",
+      "Les apps se rebloquent."
+    ],
+    "subline_fr": "Pas de report. Pas de « 15 minutes de plus ».",
+    "headline_it": [
+      "Tempo finito?",
+      "Le app si ribloccano."
+    ],
+    "subline_it": "Niente rinvii. Niente «altri 15 minuti».",
+    "headline_pt-BR": [
+      "Acabou o tempo?",
+      "Os apps bloqueiam."
+    ],
+    "subline_pt-BR": "Sem adiar. Sem “só mais 15 minutos”.",
+    "headline_nl": [
+      "Tijd voorbij?",
+      "Apps weer op slot."
+    ],
+    "subline_nl": "Niet uitstellen. Geen ‘nog 15 minuten’.",
+    "headline_pl": [
+      "Czas minął?",
+      "Wraca blokada."
+    ],
+    "subline_pl": "Bez odkładania. Bez „jeszcze 15 minut”.",
+    "headline_tr": [
+      "Süren bitti mi?",
+      "Uygulamalar kilitlenir."
+    ],
+    "subline_tr": "Erteleme yok. “15 dakika daha” yok.",
+    "headline_ru": [
+      "Время вышло?",
+      "Снова под замком."
+    ],
+    "subline_ru": "Без отсрочек. Без «ещё 15 минут».",
+    "headline_ja": [
+      "時間が来たら、",
+      "アプリはまたロック。"
+    ],
+    "subline_ja": "先延ばしも、「あと15分」もなし。",
+    "headline_ko": [
+      "시간이 끝나면?",
+      "앱은 다시 잠겨요."
+    ],
+    "subline_ko": "미루기도, “15분만 더”도 없어요.",
+    "headline_zh-Hans": [
+      "时间用完？",
+      "应用自动锁回。"
+    ],
+    "subline_zh-Hans": "不能推迟，也没有“再来15分钟”。",
+    "headline_ar": [
+      "انتهى الوقت؟",
+      "تُقفل التطبيقات."
+    ],
+    "subline_ar": "لا تأجيل. ولا «١٥ دقيقة إضافية»."
   },
   {
     "name": "06-sessions",
@@ -75,7 +375,67 @@
       "Úsalo",
       "a tu manera."
     ],
-    "subline_es": "5, 10 o 15 minutos. Después se bloquea."
+    "subline_es": "5, 10 o 15 minutos. Después se bloquea.",
+    "headline_de": [
+      "Deine Zeit.",
+      "Deine Entscheidung."
+    ],
+    "subline_de": "5, 10 oder 15 Minuten. Dann ist Schluss.",
+    "headline_fr": [
+      "Tes minutes.",
+      "À ta façon."
+    ],
+    "subline_fr": "5, 10 ou 15 minutes. Puis les apps se bloquent.",
+    "headline_it": [
+      "Il tuo tempo.",
+      "Come vuoi tu."
+    ],
+    "subline_it": "5, 10 o 15 minuti. Poi le app si bloccano.",
+    "headline_pt-BR": [
+      "Seu tempo.",
+      "Do seu jeito."
+    ],
+    "subline_pt-BR": "5, 10 ou 15 minutos. Depois, bloqueia.",
+    "headline_nl": [
+      "Jouw tijd.",
+      "Jouw keuze."
+    ],
+    "subline_nl": "5, 10 of 15 minuten. Dan gaan de apps op slot.",
+    "headline_pl": [
+      "Twój czas.",
+      "Na twoich zasadach."
+    ],
+    "subline_pl": "5, 10 lub 15 minut. Potem wraca blokada.",
+    "headline_tr": [
+      "Senin zamanın.",
+      "Senin kararın."
+    ],
+    "subline_tr": "5, 10 ya da 15 dakika. Sonra yeniden kilit.",
+    "headline_ru": [
+      "Твоё время.",
+      "Твои правила."
+    ],
+    "subline_ru": "5, 10 или 15 минут. Потом снова блокировка.",
+    "headline_ja": [
+      "ためた時間を、",
+      "自分のペースで。"
+    ],
+    "subline_ja": "5分・10分・15分。終わればまたロック。",
+    "headline_ko": [
+      "모은 시간은",
+      "내 방식대로."
+    ],
+    "subline_ko": "5분, 10분, 15분. 끝나면 다시 잠겨요.",
+    "headline_zh-Hans": [
+      "攒下的时间，",
+      "由你做主。"
+    ],
+    "subline_zh-Hans": "5、10或15分钟。结束后自动上锁。",
+    "headline_ar": [
+      "وقتك لك.",
+      "استخدمه بطريقتك."
+    ],
+    "subline_ar": "٥ أو ١٠ أو ١٥ دقيقة. ثم يعود القفل."
   },
   {
     "name": "07-schedule",
@@ -88,7 +448,67 @@
       "Bloquea cuando",
       "importa."
     ],
-    "subline_es": "Elige las horas. Activa el modo estricto."
+    "subline_es": "Elige las horas. Activa el modo estricto.",
+    "headline_de": [
+      "Sperren, wenn es",
+      "darauf ankommt."
+    ],
+    "subline_de": "Lege Zeiten fest. Aktiviere den strikten Modus.",
+    "headline_fr": [
+      "Bloque au",
+      "bon moment."
+    ],
+    "subline_fr": "Choisis tes horaires. Active le mode strict.",
+    "headline_it": [
+      "Blocca quando",
+      "conta davvero."
+    ],
+    "subline_it": "Scegli gli orari. Attiva la modalità rigida.",
+    "headline_pt-BR": [
+      "Bloqueie na hora",
+      "que importa."
+    ],
+    "subline_pt-BR": "Defina os horários. Ative o modo estrito.",
+    "headline_nl": [
+      "Blokkeer als",
+      "het ertoe doet."
+    ],
+    "subline_nl": "Kies je tijden. Zet de strenge modus aan.",
+    "headline_pl": [
+      "Blokuj, kiedy",
+      "to ważne."
+    ],
+    "subline_pl": "Ustaw godziny. Włącz tryb ścisły.",
+    "headline_tr": [
+      "Tam gerektiğinde",
+      "engelle."
+    ],
+    "subline_tr": "Saatleri seç. Katı modu aç.",
+    "headline_ru": [
+      "Блокируй, когда",
+      "это важно."
+    ],
+    "subline_ru": "Задай расписание. Включи строгий режим.",
+    "headline_ja": [
+      "大事な時間は",
+      "アプリをブロック。"
+    ],
+    "subline_ja": "時間を決めて、厳格モードをオンに。",
+    "headline_ko": [
+      "중요한 시간엔",
+      "앱을 차단해요."
+    ],
+    "subline_ko": "시간을 정하고 엄격 모드를 켜세요.",
+    "headline_zh-Hans": [
+      "重要时刻，",
+      "锁住干扰。"
+    ],
+    "subline_zh-Hans": "设定时段，开启严格模式。",
+    "headline_ar": [
+      "احظر التطبيقات",
+      "في الوقت المهم."
+    ],
+    "subline_ar": "حدّد الأوقات. فعّل الوضع الصارم."
   },
   {
     "name": "08-outcome",
@@ -101,7 +521,67 @@
       "Recupera",
       "tus noches."
     ],
-    "subline_es": "Cada minuto que recuperas, contado."
+    "subline_es": "Cada minuto que recuperas, contado.",
+    "headline_de": [
+      "Hol dir",
+      "den Abend zurück."
+    ],
+    "subline_de": "Sieh, wie viel Zeit du zurückgewinnst.",
+    "headline_fr": [
+      "Retrouve",
+      "tes soirées."
+    ],
+    "subline_fr": "Chaque minute retrouvée compte.",
+    "headline_it": [
+      "Riprenditi",
+      "le tue serate."
+    ],
+    "subline_it": "Ogni minuto ritrovato conta.",
+    "headline_pt-BR": [
+      "Recupere",
+      "suas noites."
+    ],
+    "subline_pt-BR": "Veja cada minuto que você recuperou.",
+    "headline_nl": [
+      "Pak je",
+      "avonden terug."
+    ],
+    "subline_nl": "Elke teruggewonnen minuut in beeld.",
+    "headline_pl": [
+      "Odzyskaj",
+      "swoje wieczory."
+    ],
+    "subline_pl": "Zobacz każdą odzyskaną minutę.",
+    "headline_tr": [
+      "Akşamlarını",
+      "geri kazan."
+    ],
+    "subline_tr": "Geri kazandığın her dakikayı gör.",
+    "headline_ru": [
+      "Верни себе",
+      "свои вечера."
+    ],
+    "subline_ru": "Каждая минута снова твоя.",
+    "headline_ja": [
+      "取り戻そう、",
+      "自分の夜を。"
+    ],
+    "subline_ja": "取り戻した時間を、ひと目で。",
+    "headline_ko": [
+      "저녁 시간을",
+      "되찾으세요."
+    ],
+    "subline_ko": "되찾은 시간을 한눈에 확인해요.",
+    "headline_zh-Hans": [
+      "把夜晚，",
+      "还给自己。"
+    ],
+    "subline_zh-Hans": "找回的每一分钟，都看得见。",
+    "headline_ar": [
+      "استعد",
+      "أمسياتك."
+    ],
+    "subline_ar": "كل دقيقة تستعيدها، تراها أمامك."
   },
   {
     "name": "09-friends",
@@ -114,7 +594,67 @@
       "Motívense",
       "entre amigos."
     ],
-    "subline_es": "Comparte rachas. Reta a un amigo."
+    "subline_es": "Comparte rachas. Reta a un amigo.",
+    "headline_de": [
+      "Bleibt gemeinsam",
+      "dran."
+    ],
+    "subline_de": "Teilt eure Serien. Fordert Freunde heraus.",
+    "headline_fr": [
+      "Motivez-vous",
+      "entre amis."
+    ],
+    "subline_fr": "Partage tes séries. Défie un ami.",
+    "headline_it": [
+      "Aiutatevi a",
+      "non mollare."
+    ],
+    "subline_it": "Condividi le serie. Sfida un amico.",
+    "headline_pt-BR": [
+      "Um ajuda o outro",
+      "a não desistir."
+    ],
+    "subline_pt-BR": "Compartilhe sequências. Desafie um amigo.",
+    "headline_nl": [
+      "Houd elkaar",
+      "bij de les."
+    ],
+    "subline_nl": "Deel je reeksen. Daag een vriend uit.",
+    "headline_pl": [
+      "Wspierajcie się",
+      "w wytrwałości."
+    ],
+    "subline_pl": "Dziel się seriami. Rzuć wyzwanie znajomemu.",
+    "headline_tr": [
+      "Birbirinizi",
+      "motive edin."
+    ],
+    "subline_tr": "Serilerini paylaş. Bir arkadaşına meydan oku.",
+    "headline_ru": [
+      "Помогайте друг другу",
+      "не сдаваться."
+    ],
+    "subline_ru": "Делись сериями. Брось вызов другу.",
+    "headline_ja": [
+      "友だちと一緒に",
+      "続けよう。"
+    ],
+    "subline_ja": "連続記録をシェア。友だちにチャレンジ。",
+    "headline_ko": [
+      "서로 응원하며",
+      "함께 지켜요."
+    ],
+    "subline_ko": "연속 기록을 나누고 친구에게 도전하세요.",
+    "headline_zh-Hans": [
+      "互相鼓励，",
+      "一起坚持。"
+    ],
+    "subline_zh-Hans": "分享连续记录，向好友发起挑战。",
+    "headline_ar": [
+      "شجّعوا بعضكم",
+      "على الالتزام."
+    ],
+    "subline_ar": "شارك أيام التزامك. تحدَّ صديقًا."
   },
   {
     "name": "10-privacy",
@@ -127,6 +667,66 @@
       "Privada",
       "por diseño."
     ],
-    "subline_es": "Se cuenta en tu iPhone. Nunca se sube."
+    "subline_es": "Se cuenta en tu iPhone. Nunca se sube.",
+    "headline_de": [
+      "Privatsphäre",
+      "von Anfang an."
+    ],
+    "subline_de": "Auf deinem iPhone gezählt. Nie hochgeladen.",
+    "headline_fr": [
+      "La vie privée,",
+      "dès la conception."
+    ],
+    "subline_fr": "Compté sur ton iPhone. Jamais envoyé.",
+    "headline_it": [
+      "Privacy,",
+      "fin dall’inizio."
+    ],
+    "subline_it": "Conteggiato sul tuo iPhone. Mai caricato online.",
+    "headline_pt-BR": [
+      "Privacidade",
+      "desde o início."
+    ],
+    "subline_pt-BR": "Contado no seu iPhone. Nunca enviado.",
+    "headline_nl": [
+      "Privacy",
+      "vanaf het begin."
+    ],
+    "subline_nl": "Geteld op je iPhone. Nooit geüpload.",
+    "headline_pl": [
+      "Prywatność",
+      "od podstaw."
+    ],
+    "subline_pl": "Liczone na iPhonie. Nigdy nie wysyłane.",
+    "headline_tr": [
+      "Gizlilik",
+      "en başından."
+    ],
+    "subline_tr": "iPhone’unda sayılır. Asla yüklenmez.",
+    "headline_ru": [
+      "Приватность",
+      "с самого начала."
+    ],
+    "subline_ru": "Считается на iPhone. Никуда не отправляется.",
+    "headline_ja": [
+      "プライバシーを",
+      "はじめから。"
+    ],
+    "subline_ja": "iPhone内でカウント。アップロードなし。",
+    "headline_ko": [
+      "처음부터",
+      "개인정보 보호."
+    ],
+    "subline_ko": "iPhone에서 계산해요. 업로드하지 않아요.",
+    "headline_zh-Hans": [
+      "隐私保护，",
+      "从设计开始。"
+    ],
+    "subline_zh-Hans": "在 iPhone 上计数，从不上传。",
+    "headline_ar": [
+      "الخصوصية",
+      "من البداية."
+    ],
+    "subline_ar": "العدّ على iPhone. لا يُرفع أي شيء."
   }
 ]

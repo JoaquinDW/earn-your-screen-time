@@ -1,0 +1,54 @@
+/* Localized pages only; EN and ES retain their original typography and geometry. */
+@font-face{font-family:ScreenshotSansJP;src:url('fonts/NotoSansJP.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSerifJP;src:url('fonts/NotoSerifJP.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSansKR;src:url('fonts/NotoSansKR.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSerifKR;src:url('fonts/NotoSerifKR.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSansSC;src:url('fonts/NotoSansSC.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSerifSC;src:url('fonts/NotoSerifSC.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSans;src:url('fonts/NotoSans.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSerif;src:url('fonts/NotoSerif.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotSansArabic;src:url('fonts/NotoSansArabic.woff2');font-weight:100 900}
+@font-face{font-family:ScreenshotNaskhArabic;src:url('fonts/NotoNaskhArabic.woff2');font-weight:400 700}
+html{--l10n-sans:Figtree;--l10n-serif:'Instrument Serif'}
+html:lang(ja){--l10n-sans:ScreenshotSansJP;--l10n-serif:ScreenshotSerifJP}
+html:lang(ko){--l10n-sans:ScreenshotSansKR;--l10n-serif:ScreenshotSerifKR}
+html:lang(zh-Hans){--l10n-sans:ScreenshotSansSC;--l10n-serif:ScreenshotSerifSC}
+html:lang(ru){--l10n-sans:ScreenshotSans;--l10n-serif:ScreenshotSerif}
+html:lang(ar){--l10n-sans:ScreenshotSansArabic;--l10n-serif:ScreenshotNaskhArabic}
+body,body *{font-family:var(--l10n-sans),sans-serif!important}
+body .headline,body .headline *,body h1,body h2,body .num b,body .count b,body .camera-count b,body .bal b,body .hrow .w,body .laurel b,body .m b{font-family:var(--l10n-serif),serif!important}
+html:lang(ja) .headline,html:lang(ko) .headline,html:lang(zh-Hans) .headline,html:lang(ar) .headline{letter-spacing:0;line-height:1.15}
+html:lang(ar) .headline{line-height:1.25}
+html:lang(ar) .headline,html:lang(ar) .sub{text-align:right}
+/* The phone's position, tilt, images and internal layout stay in their original orientation. */
+html:lang(ar) .phone,html:lang(ar) .camera-inset{direction:ltr}
+html:lang(ar) .phone :is(h1,h2,p,.eyebrow,.to,.guide,.rem,.disc,.apps,.quiet,.npill),html:lang(ar) .camera-inset p{direction:rtl;text-align:right}
+html:lang(ar) .npill{justify-content:center;text-align:center}
+html:lang(ar) .laurels,html:lang(ar) .card,html:lang(ar) .privacy-facts{direction:rtl}
+html:lang(ar) .eyebrow{letter-spacing:0}
+/* Space for longer native UI labels, retaining the phone's point scale. */
+.npill{padding:6px 12px;min-height:50px;height:auto;text-align:center}
+.card{max-width:1178px}
+.card .ic{flex-shrink:0}
+.card b,.card span{overflow-wrap:normal}
+.privacy-fact p{font-size:70px;letter-spacing:0}
+.laurels{gap:36px;padding:0 45px}
+.laurel{min-width:0}
+.laurel .lf{flex-shrink:0}
+.laurel b{font-size:64px}
+.laurel span{font-size:30px}
+html:lang(ru) .new-ui h1{font-size:28px}
+html:lang(ru) .exercise-row{font-size:16px}
+html:lang(ja) .new-ui h1,html:lang(ko) .new-ui h1,html:lang(zh-Hans) .new-ui h1,html:lang(ar) .new-ui h1{font-size:32px}
+html:lang(ar) .pt{line-height:1.25}
+.card{line-height:1.15}
+
+html:lang(ru) .m b{font-size:26px}
+html:lang(ja) .m b,html:lang(ko) .m b{font-size:22px}
+html:lang(zh-Hans) .m b{font-size:21px}
+html:lang(ar) .m b{font-size:26px;white-space:nowrap}
+html:lang(ar) .m,html:lang(ar) .bal b,html:lang(ar) .until,html:lang(ar) .standing span:last-child{direction:rtl;unicode-bidi:isolate;text-align:right}
+html:lang(ar) .time{direction:ltr;unicode-bidi:isolate}
+/* Keep translated report footnotes clear of the floating streak callout. */
+body.outcome-frame .card{top:2200px}
+body.outcome-frame .actions{top:670px}

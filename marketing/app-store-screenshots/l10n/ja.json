@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "だらだら見ない。<br><em>動いて時間を獲得。</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "体を動かすまで、アプリはロック。"
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>時間を獲得するまでアプリはロック</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>選んだアプリは、時間を獲得するまで休止したままです。</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>歩く</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>腕立て伏せ</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>スクワット</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "もっとスマホ時間？<br><em>腕立てを10回。</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "カメラが回数をカウント。"
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>iPhone内で</b><span>回数をカウント</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>動画は一切</b><span>保存しません</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 腕立て伏せ 10回"
+      ],
+      [
+        "Lower a little more",
+        "もう少し下げてください"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>アプリのロックを解除しました</b><span>+10分 獲得</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "歩くたびに、<br><em>使える時間が増える。</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "歩数がスクリーンタイムに。"
+      ],
+      [
+        ">Saturday<",
+        ">土曜日<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12日連続"
+      ],
+      [
+        ">Available time<",
+        ">使える時間<"
+      ],
+      [
+        "to spend on your apps",
+        "アプリで使えます"
+      ],
+      [
+        "Use my minutes",
+        "時間を使う"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "今日 6,240歩 · <em>40分 獲得</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ 今日開かなかった回数：14 · 今日のまとめ ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "次の 5分まであと 760歩"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6,240歩</b><span>+40分 獲得</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>分</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "歩く時間がない？<br><em>スクワットで稼ごう。</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "腕立て伏せ・スクワット・ランジ・ジャンピングジャック。"
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">時間を獲得</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">獲得方法を選ぶ</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>歩数</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>今日 6,240歩</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>運動で獲得</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>腕立て伏せ</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>スクワット</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>ランジ</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>ジャンピングジャック</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ スクワット 10回</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>お尻を後ろに引いて腰を落としてください</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "時間が来たら、<br><em>アプリはまたロック。</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "先延ばしも、「あと15分」もなし。"
+      ],
+      [
+        ">Almost there<",
+        ">あと少し<"
+      ],
+      [
+        "Just 320 steps left.",
+        "あと 320歩です。"
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "散歩を終えれば 5分を獲得できます。アプリは待てます。"
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1,000歩"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "あと 320歩 · 徒歩 約3分"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "腕立て伏せかスクワットで時間を獲得"
+      ],
+      [
+        "Update my steps",
+        "歩数を更新"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>アプリをロックしました</b><span>時間を獲得するまで</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5分"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "ためた時間を、<br><em>自分のペースで。</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5分・10分・15分。終わればまたロック。"
+      ],
+      [
+        ">Choose a session<",
+        ">セッションを選ぶ<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>時間を使う</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>利用可能</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>セッション後</span>"
+      ],
+      [
+        "Custom amount",
+        "時間を指定"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ 3件を選択中"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "時間は今から進み、アプリを切り替えても止まりません。Earnit に戻るとセッションを終了して、残りを保存できます。"
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "ブロック中のアプリを 10分使う"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>10分のセッション</b><span>終わったらまたロック</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25分</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15分</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5分</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10分</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15分</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10分</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "大事な時間は<br><em>アプリをブロック。</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "時間を決めて、厳格モードをオンに。"
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">ブロックする時間</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">ブロック時間</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>特定の時間だけブロック</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>開始</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>終了</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">日 月 火 水 木 金 土</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">この時間外はアプリが開き、獲得した分数は残高に残ります。終了が開始より前なら夜をまたぎます。</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">厳格モード</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>終了日時</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">日曜日 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>厳格モードを延長</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">オンの間は、保護アプリの削除、ルールの緩和、スケジュールの緩和、iPhoneからのアプリ削除ができません。途中で解除できません。</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "取り戻そう、<br><em>自分の夜を。</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "取り戻した時間を、ひと目で。"
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">今日</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>今日のあなた</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1時間20分</b><span>以前のスクロール時間より短縮"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "ブロック中のアプリを開かなかった回数"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40分</b><span>体を動かして獲得した時間"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6,240</b><span>歩"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "推定値です。最初に教えてもらった1日のスクロール時間の下限から、Earnitで解除した時間を引いています。"
+      ],
+      [
+        "Share my progress",
+        "成果をシェア"
+      ],
+      [
+        "Challenge a friend",
+        "友だちに挑戦状"
+      ],
+      [
+        ">Done<",
+        ">完了<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12日連続</b><span>その調子で</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "友だちと一緒に<br><em>続けよう。</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "連続記録をシェア。友だちにチャレンジ。"
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">いっしょに</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>フレンド</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">フレンド</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">今日はまだ更新なし</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">今日はまだ更新なし</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">今日はまだ更新なし</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>フレンドを招待</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">スクワッド</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>一緒に動こう</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">今週</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7日</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7日</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7日</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">コードで参加</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "プライバシーを<br><em>はじめから。</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "iPhone内でカウント。アップロードなし。"
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>回数は端末内でカウント。動画は保存しません</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>健康データはあなたのiPhone内に保存</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>ブロックしたアプリは私たちにも見えません（iOSが保護）</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "だらだら見ない。",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "動いて時間を獲得。",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "体を動かすまで、アプリはロック。",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "時間を獲得するまでアプリはロック",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "選んだアプリは、時間を獲得するまで休止したままです。",
+      "source": "xcstrings: home.appsPaused"
+    },
+    "Walk": {
+      "translation": "歩く",
+      "source": "xcstrings: home.earnMore.walk"
+    },
+    "Push-ups": {
+      "translation": "腕立て伏せ",
+      "source": "xcstrings: pushups.name"
+    },
+    "Squats": {
+      "translation": "スクワット",
+      "source": "xcstrings: squats.name"
+    },
+    "Screen time?": {
+      "translation": "もっとスマホ時間？",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "腕立てを10回。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "カメラが回数をカウント。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "iPhone内で",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "回数をカウント",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "動画は一切",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "保存しません",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 腕立て伏せ 10回",
+      "source": "xcstrings (formatted): pushups.challenge.reps %lld"
+    },
+    "Lower a little more": {
+      "translation": "もう少し下げてください",
+      "source": "xcstrings: pushups.guidance.lower_body"
+    },
+    "Apps unlocked": {
+      "translation": "アプリのロックを解除しました",
+      "source": "xcstrings: feedback.appsUnlocked"
+    },
+    "+10 min earned": {
+      "translation": "+10分 獲得",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "歩くたびに、",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "使える時間が増える。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "歩数がスクリーンタイムに。",
+      "source": "screenshot copy"
+    },
+    "Saturday": {
+      "translation": "土曜日",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12日連続",
+      "source": "xcstrings (formatted): dashboard.streak %lld"
+    },
+    "Available time": {
+      "translation": "使える時間",
+      "source": "xcstrings: home.availableTime"
+    },
+    "to spend on your apps": {
+      "translation": "アプリで使えます",
+      "source": "xcstrings: home.toSpendOnYourApps"
+    },
+    "Use my minutes": {
+      "translation": "時間を使う",
+      "source": "xcstrings: home.useMinutes"
+    },
+    "6,240 steps today ·": {
+      "translation": "今日 6,240歩 ·",
+      "source": "xcstrings (formatted): earn.stepsToday %@"
+    },
+    "40 min earned": {
+      "translation": "40分 獲得",
+      "source": "xcstrings (formatted): home.minutesEarnedCount %lld"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ 今日開かなかった回数：14 · 今日のまとめ ›",
+      "source": "xcstrings (formatted): home.impact.skipped %lld"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "次の 5分まであと 760歩",
+      "source": "xcstrings (formatted): earn.nextReward %lld %lld"
+    },
+    "6,240 steps": {
+      "translation": "6,240歩",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40分 獲得",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "分",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "歩く時間がない？",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "スクワットで稼ごう。",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "腕立て伏せ・スクワット・ランジ・ジャンピングジャック。",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "時間を獲得",
+      "source": "xcstrings: earn.title"
+    },
+    "Choose how to earn": {
+      "translation": "獲得方法を選ぶ",
+      "source": "xcstrings: earn.chooseHowToEarn"
+    },
+    "Steps": {
+      "translation": "歩数",
+      "source": "xcstrings: earn.source.steps"
+    },
+    "6,240 steps today": {
+      "translation": "今日 6,240歩",
+      "source": "xcstrings (formatted): earn.stepsToday %@"
+    },
+    "Exercise to Earn": {
+      "translation": "運動で獲得",
+      "source": "xcstrings: exercise.entry.title"
+    },
+    "Lunges": {
+      "translation": "ランジ",
+      "source": "xcstrings: lunges.name"
+    },
+    "Jumping jacks": {
+      "translation": "ジャンピングジャック",
+      "source": "xcstrings: jumping_jacks.name"
+    },
+    "/ 10 squats": {
+      "translation": "/ スクワット 10回",
+      "source": "xcstrings (formatted): squats.challenge.reps %lld"
+    },
+    "Sit back and lower your hips": {
+      "translation": "お尻を後ろに引いて腰を落としてください",
+      "source": "xcstrings: squats.guidance.lower_hips"
+    },
+    "Out of time?": {
+      "translation": "時間が来たら、",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "アプリはまたロック。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "先延ばしも、「あと15分」もなし。",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "あと少し",
+      "source": "xcstrings: shield.detail.eyebrow.almost"
+    },
+    "Just 320 steps left.": {
+      "translation": "あと 320歩です。",
+      "source": "xcstrings (formatted): shield.detail.headline.almost %lld"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "散歩を終えれば 5分を獲得できます。アプリは待てます。",
+      "source": "xcstrings (formatted): shield.detail.support.almost %lld"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1,000歩",
+      "source": "xcstrings (formatted): shield.detail.progress %@ %@"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "あと 320歩 · 徒歩 約3分",
+      "source": "xcstrings (formatted): shield.detail.remaining %lld %lld"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "腕立て伏せかスクワットで時間を獲得",
+      "source": "xcstrings: shield.detail.action.pushups"
+    },
+    "Update my steps": {
+      "translation": "歩数を更新",
+      "source": "xcstrings: dashboard.refreshSteps"
+    },
+    "Apps locked": {
+      "translation": "アプリをロックしました",
+      "source": "xcstrings: feedback.appsLocked"
+    },
+    "until you earn time": {
+      "translation": "時間を獲得するまで",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5分",
+      "source": "xcstrings (formatted): shield.detail.reward %lld"
+    },
+    "Spend it": {
+      "translation": "ためた時間を、",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "自分のペースで。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5分・10分・15分。終わればまたロック。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "セッションを選ぶ",
+      "source": "xcstrings: session.chooseDuration"
+    },
+    "Available": {
+      "translation": "利用可能",
+      "source": "xcstrings: session.available"
+    },
+    "After session": {
+      "translation": "セッション後",
+      "source": "xcstrings: session.after"
+    },
+    "Custom amount": {
+      "translation": "時間を指定",
+      "source": "xcstrings: session.customDuration"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ 3件を選択中",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "時間は今から進み、アプリを切り替えても止まりません。Earnit に戻るとセッションを終了して、残りを保存できます。",
+      "source": "xcstrings: session.clockDisclaimer"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "ブロック中のアプリを 10分使う",
+      "source": "xcstrings (formatted): session.start %lld"
+    },
+    "10 min session": {
+      "translation": "10分のセッション",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "終わったらまたロック",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25分",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15分",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5分",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10分",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "大事な時間は",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "アプリをブロック。",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "時間を決めて、厳格モードをオンに。",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "ブロックする時間",
+      "source": "xcstrings: settings.blocking"
+    },
+    "Blocking hours": {
+      "translation": "ブロック時間",
+      "source": "xcstrings: blocking.schedule.section"
+    },
+    "Block only at certain hours": {
+      "translation": "特定の時間だけブロック",
+      "source": "xcstrings: blocking.schedule.toggle"
+    },
+    "From": {
+      "translation": "開始",
+      "source": "xcstrings: blocking.schedule.start"
+    },
+    "Until": {
+      "translation": "終了",
+      "source": "xcstrings: blocking.schedule.end"
+    },
+    "S M T W T F S": {
+      "translation": "日 月 火 水 木 金 土",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "この時間外はアプリが開き、獲得した分数は残高に残ります。終了が開始より前なら夜をまたぎます。",
+      "source": "xcstrings: blocking.schedule.footer"
+    },
+    "Strict mode": {
+      "translation": "厳格モード",
+      "source": "xcstrings: strictMode.section"
+    },
+    "On until": {
+      "translation": "終了日時",
+      "source": "xcstrings: strictMode.activeUntil"
+    },
+    "Sunday 07:00": {
+      "translation": "日曜日 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "厳格モードを延長",
+      "source": "xcstrings: strictMode.extend"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "オンの間は、保護アプリの削除、ルールの緩和、スケジュールの緩和、iPhoneからのアプリ削除ができません。途中で解除できません。",
+      "source": "xcstrings: strictMode.footer"
+    },
+    "Win back": {
+      "translation": "取り戻そう、",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "自分の夜を。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "取り戻した時間を、ひと目で。",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "今日",
+      "source": "xcstrings: impact.period.today"
+    },
+    "Your day": {
+      "translation": "今日のあなた",
+      "source": "xcstrings: impact.title"
+    },
+    "1h 20m": {
+      "translation": "1時間20分",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "以前のスクロール時間より短縮",
+      "source": "xcstrings: impact.metric.reclaimed"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "ブロック中のアプリを開かなかった回数",
+      "source": "xcstrings: impact.metric.skipped"
+    },
+    "40m": {
+      "translation": "40分",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "体を動かして獲得した時間",
+      "source": "xcstrings: impact.metric.earned"
+    },
+    "6,240": {
+      "translation": "6,240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "歩",
+      "source": "xcstrings: impact.metric.steps"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "推定値です。最初に教えてもらった1日のスクロール時間の下限から、Earnitで解除した時間を引いています。",
+      "source": "xcstrings: impact.reclaimed.footnote"
+    },
+    "Share my progress": {
+      "translation": "成果をシェア",
+      "source": "xcstrings: share.progress"
+    },
+    "Challenge a friend": {
+      "translation": "友だちに挑戦状",
+      "source": "xcstrings: share.challenge"
+    },
+    "Done": {
+      "translation": "完了",
+      "source": "xcstrings: common.done"
+    },
+    "12-day streak": {
+      "translation": "12日連続",
+      "source": "xcstrings (formatted): dashboard.streak %lld"
+    },
+    "Keep it going": {
+      "translation": "その調子で",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "友だちと一緒に",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "続けよう。",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "連続記録をシェア。友だちにチャレンジ。",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "いっしょに",
+      "source": "xcstrings: friends.eyebrow"
+    },
+    "Friends": {
+      "translation": "フレンド",
+      "source": "xcstrings: friends.title"
+    },
+    "Your friends": {
+      "translation": "フレンド",
+      "source": "xcstrings: friends.list"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "今日はまだ更新なし",
+      "source": "xcstrings: friends.status.noUpdate"
+    },
+    "Invite a friend": {
+      "translation": "フレンドを招待",
+      "source": "xcstrings: friends.invite"
+    },
+    "Squads": {
+      "translation": "スクワッド",
+      "source": "xcstrings: friends.squads"
+    },
+    "Move together": {
+      "translation": "一緒に動こう",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "今週",
+      "source": "xcstrings: friends.squad.week"
+    },
+    "4/7 days": {
+      "translation": "4/7日",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "3/7 days": {
+      "translation": "3/7日",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "2/7 days": {
+      "translation": "2/7日",
+      "source": "xcstrings (formatted): friends.squad.goalDays %lld"
+    },
+    "Join with a code": {
+      "translation": "コードで参加",
+      "source": "xcstrings: friends.squad.join"
+    },
+    "Private": {
+      "translation": "プライバシーを",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "はじめから。",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "iPhone内でカウント。アップロードなし。",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "回数は端末内でカウント。動画は保存しません",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "健康データはあなたのiPhone内に保存",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "ブロックしたアプリは私たちにも見えません（iOSが保護）",
+      "source": "screenshot copy"
+    }
+  }
+}

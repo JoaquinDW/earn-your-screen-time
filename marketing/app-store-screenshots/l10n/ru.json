@@ -1,0 +1,1030 @@
+{
+  "swaps": {
+    "01-hook": [
+      [
+        "Stop doomscrolling.<br><em>Earn your screen time.</em>",
+        "Хватит листать.<br><em>Заработай время.</em>"
+      ],
+      [
+        "Blocked apps stay locked until you move.",
+        "Приложения подождут, пока ты двигаешься."
+      ],
+      [
+        "<h1>Apps locked until you earn time</h1>",
+        "<h1>Приложения закрыты, пока не заработаешь время</h1>"
+      ],
+      [
+        "<p>Your selected apps stay paused until you earn time.</p>",
+        "<p>Выбранные приложения на паузе, пока ты не заработаешь время.</p>"
+      ],
+      [
+        "<span>Walk</span>",
+        "<span>Прогулка</span>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Отжимания</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Приседания</span>"
+      ]
+    ],
+    "02-pushups": [
+      [
+        "Screen time?<br><em>Do 10 push-ups.</em>",
+        "Больше времени?<br><em>10 отжиманий.</em>"
+      ],
+      [
+        "Your camera counts the reps.",
+        "Камера считает повторения."
+      ],
+      [
+        "<b>On-device</b><span>rep counting</span>",
+        "<b>На iPhone</b><span>подсчёт повторений</span>"
+      ],
+      [
+        "<b>No video</b><span>ever saved</span>",
+        "<b>Видео никогда</b><span>не сохраняется</span>"
+      ],
+      [
+        "/ 10 push-ups",
+        "/ 10 отжиманий"
+      ],
+      [
+        "Lower a little more",
+        "Опустись чуть ниже"
+      ],
+      [
+        "<b>Apps unlocked</b><span>+10 min earned</span>",
+        "<b>Приложения разблокированы</b><span>+10 мин заработано</span>"
+      ]
+    ],
+    "03-walk": [
+      [
+        "Every walk<br><em>earns you time.</em>",
+        "Каждая прогулка<br><em>дарит время.</em>"
+      ],
+      [
+        "Your steps turn into minutes.",
+        "Шаги превращаются в минуты."
+      ],
+      [
+        ">Saturday<",
+        ">Суббота<"
+      ],
+      [
+        "🔥 12-day streak",
+        "🔥 12 дней подряд"
+      ],
+      [
+        ">Available time<",
+        ">Доступное время<"
+      ],
+      [
+        "to spend on your apps",
+        "для твоих приложений"
+      ],
+      [
+        "Use my minutes",
+        "Использовать минуты"
+      ],
+      [
+        "6,240 steps today · <em>40 min earned</em>",
+        "Сегодня 6 240 шагов · <em>Сегодня заработано +40 мин</em>"
+      ],
+      [
+        "✋ Apps skipped today: 14 · See your day ›",
+        "✋ Пропущено открытий: 14 · Твой день ›"
+      ],
+      [
+        "760 steps until your next 5 minutes",
+        "Ещё 760 шагов до следующих 5 минут"
+      ],
+      [
+        "<b>6,240 steps</b><span>+40 min earned</span>",
+        "<b>6 240 шагов</b><span>+40 мин заработано</span>"
+      ],
+      [
+        "<span>min</span>",
+        "<span>мин</span>"
+      ]
+    ],
+    "04-exercises": [
+      [
+        "No time to walk?<br><em>Squat it out.</em>",
+        "Некогда гулять?<br><em>Делай приседания.</em>"
+      ],
+      [
+        "Push-ups, squats, lunges or jumping jacks.",
+        "Отжимания, приседания, выпады или прыжки «звёздочка»."
+      ],
+      [
+        "<div class=\"nav-title\">Earn time</div>",
+        "<div class=\"nav-title\">Заработать время</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Choose how to earn</div>",
+        "<div class=\"eyebrow\">Выбери способ</div>"
+      ],
+      [
+        "<b>Steps</b>",
+        "<b>Шаги</b>"
+      ],
+      [
+        "<p>6,240 steps today</p>",
+        "<p>Сегодня 6 240 шагов</p>"
+      ],
+      [
+        "<h1>Exercise to Earn</h1>",
+        "<h1>Упражнения за время</h1>"
+      ],
+      [
+        "<span>Push-ups</span>",
+        "<span>Отжимания</span>"
+      ],
+      [
+        "<span>Squats</span>",
+        "<span>Приседания</span>"
+      ],
+      [
+        "<span>Lunges</span>",
+        "<span>Выпады</span>"
+      ],
+      [
+        "<span>Jumping jacks</span>",
+        "<span>Прыжки «звёздочка»</span>"
+      ],
+      [
+        "<span>/ 10 squats</span>",
+        "<span>/ 10 приседаний</span>"
+      ],
+      [
+        "<p>Sit back and lower your hips</p>",
+        "<p>Отведи таз назад и опустись</p>"
+      ]
+    ],
+    "05-lock": [
+      [
+        "Out of time?<br><em>Apps lock again.</em>",
+        "Время вышло?<br><em>Снова под замком.</em>"
+      ],
+      [
+        "No snooze. No \"15 more minutes.\"",
+        "Без отсрочек. Без «ещё 15 минут»."
+      ],
+      [
+        ">Almost there<",
+        ">Почти у цели<"
+      ],
+      [
+        "Just 320 steps left.",
+        "Осталось всего 320 шагов."
+      ],
+      [
+        "Finish the walk and earn 5 min. Your apps can wait.",
+        "Заверши прогулку и заработай 5 мин. Приложения подождут."
+      ],
+      [
+        "680 / 1,000 steps",
+        "680 / 1 000 шагов"
+      ],
+      [
+        "320 steps left · ~3 min walk",
+        "Ещё 320 шагов · ~3 мин пешком"
+      ],
+      [
+        "Earn time with push-ups or squats",
+        "Заработай время отжиманиями или приседаниями"
+      ],
+      [
+        "Update my steps",
+        "Обновить шаги"
+      ],
+      [
+        "<b>Apps locked</b><span>until you earn time</span>",
+        "<b>Приложения заблокированы</b><span>пока не заработаешь время</span>"
+      ],
+      [
+        "+5 MIN",
+        "+5 мин"
+      ]
+    ],
+    "06-sessions": [
+      [
+        "Spend it<br><em>on your terms.</em>",
+        "Твоё время.<br><em>Твои правила.</em>"
+      ],
+      [
+        "5, 10 or 15 minutes. Then it locks.",
+        "5, 10 или 15 минут. Потом снова блокировка."
+      ],
+      [
+        ">Choose a session<",
+        ">Выбери сеанс<"
+      ],
+      [
+        "<h1>Use my minutes</h1>",
+        "<h1>Использовать минуты</h1>"
+      ],
+      [
+        "<span>Available</span>",
+        "<span>Доступно</span>"
+      ],
+      [
+        "<span>After session</span>",
+        "<span>После сеанса</span>"
+      ],
+      [
+        "Custom amount",
+        "Своё время"
+      ],
+      [
+        "▦ 3 apps",
+        "▦ Выбрано: 3"
+      ],
+      [
+        "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.",
+        "Отсчёт начинается сейчас и продолжается при смене приложений. Вернись в Earnit, чтобы завершить сеанс и сохранить остаток."
+      ],
+      [
+        "Use blocked apps for 10 min",
+        "Открыть приложения на 10 мин"
+      ],
+      [
+        "<b>10 min session</b><span>then apps lock again</span>",
+        "<b>Сеанс на 10 мин</b><span>затем снова блокировка</span>"
+      ],
+      [
+        "<b>25 min</b>",
+        "<b>25 мин</b>"
+      ],
+      [
+        "<b>15 min</b>",
+        "<b>15 мин</b>"
+      ],
+      [
+        "<div>5 min</div>",
+        "<div>5 мин</div>"
+      ],
+      [
+        "<div class=\"sel\">10 min</div>",
+        "<div class=\"sel\">10 мин</div>"
+      ],
+      [
+        "<div>15 min</div>",
+        "<div>15 мин</div>"
+      ],
+      [
+        "<b>10 min</b>",
+        "<b>10 мин</b>"
+      ]
+    ],
+    "07-schedule": [
+      [
+        "Block when<br><em>it matters.</em>",
+        "Блокируй, когда<br><em>это важно.</em>"
+      ],
+      [
+        "Set the hours. Turn on strict mode.",
+        "Задай расписание. Включи строгий режим."
+      ],
+      [
+        "<div class=\"nav-title\">When to block</div>",
+        "<div class=\"nav-title\">Когда блокировать</div>"
+      ],
+      [
+        "<div class=\"eyebrow\">Blocking hours</div>",
+        "<div class=\"eyebrow\">Часы блокировки</div>"
+      ],
+      [
+        "<span>Block only at certain hours</span>",
+        "<span>Блокировать только в заданные часы</span>"
+      ],
+      [
+        "<span>From</span>",
+        "<span>С</span>"
+      ],
+      [
+        "<span>Until</span>",
+        "<span>До</span>"
+      ],
+      [
+        "<div class=\"weekdays\">S M T W T F S</div>",
+        "<div class=\"weekdays\">В П В С Ч П С</div>"
+      ],
+      [
+        "<p class=\"footnote\">Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.</p>",
+        "<p class=\"footnote\">Вне этих часов приложения открыты, а заработанные минуты остаются на балансе. Если время окончания раньше начала, блокировка продолжается через полночь.</p>"
+      ],
+      [
+        "<div class=\"eyebrow\">Strict mode</div>",
+        "<div class=\"eyebrow\">Строгий режим</div>"
+      ],
+      [
+        "<span>On until</span>",
+        "<span>Включён до</span>"
+      ],
+      [
+        "<b class=\"until\">Sunday 07:00</b>",
+        "<b class=\"until\">Воскресенье 07:00</b>"
+      ],
+      [
+        "<span>Extend strict mode</span>",
+        "<span>Продлить строгий режим</span>"
+      ],
+      [
+        "<p class=\"footnote\">While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.</p>",
+        "<p class=\"footnote\">Пока режим включён, нельзя убирать приложения из защищённых, смягчать правило или расписание и удалять приложения с iPhone. Отключить его раньше срока нельзя.</p>"
+      ]
+    ],
+    "08-outcome": [
+      [
+        "Win back<br><em>your evenings.</em>",
+        "Верни себе<br><em>свои вечера.</em>"
+      ],
+      [
+        "Every minute you took back, counted.",
+        "Каждая минута снова твоя."
+      ],
+      [
+        "<div class=\"eyebrow\">Today</div>",
+        "<div class=\"eyebrow\">Сегодня</div>"
+      ],
+      [
+        "<h1>Your day</h1>",
+        "<h1>Твой день</h1>"
+      ],
+      [
+        "1h 20m</b><span>less than you used to scroll",
+        "1 ч 20 мин</b><span>меньше прокрутки, чем раньше"
+      ],
+      [
+        "times you stayed out of a blocked app",
+        "раз без открытия заблокированного приложения"
+      ],
+      [
+        "<b>40m</b><span>screen time earned by moving",
+        "<b>40 мин</b><span>экранного времени за движение"
+      ],
+      [
+        "<b>6,240</b><span>steps",
+        "<b>6 240</b><span>шаги"
+      ],
+      [
+        "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.",
+        "Оценка: нижняя граница времени прокрутки за день, указанного при старте, минус время, разблокированное в Earnit."
+      ],
+      [
+        "Share my progress",
+        "Поделиться прогрессом"
+      ],
+      [
+        "Challenge a friend",
+        "Бросить вызов другу"
+      ],
+      [
+        ">Done<",
+        ">Готово<"
+      ],
+      [
+        "<b>12-day streak</b><span>Keep it going</span>",
+        "<b>12 дней подряд</b><span>Так держать</span>"
+      ]
+    ],
+    "09-friends": [
+      [
+        "Keep each other<br><em>honest.</em>",
+        "Помогайте друг другу<br><em>не сдаваться.</em>"
+      ],
+      [
+        "Share streaks. Challenge a friend.",
+        "Делись сериями. Брось вызов другу."
+      ],
+      [
+        "<div class=\"eyebrow\">Together</div>",
+        "<div class=\"eyebrow\">Вместе</div>"
+      ],
+      [
+        "<h1>Friends</h1>",
+        "<h1>Друзья</h1>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Your friends</div>",
+        "<div class=\"eyebrow friend-label\">Твои друзья</div>"
+      ],
+      [
+        "<b>Sam</b>",
+        "<b>Sam</b>"
+      ],
+      [
+        "<b>Alex</b>",
+        "<b>Alex</b>"
+      ],
+      [
+        "<b>Maya</b>",
+        "<b>Maya</b>"
+      ],
+      [
+        "<p class=\"status-0\">No update today yet</p>",
+        "<p class=\"status-0\">Сегодня ещё нет обновлений</p>"
+      ],
+      [
+        "<p class=\"status-1\">No update today yet</p>",
+        "<p class=\"status-1\">Сегодня ещё нет обновлений</p>"
+      ],
+      [
+        "<p class=\"status-2\">No update today yet</p>",
+        "<p class=\"status-2\">Сегодня ещё нет обновлений</p>"
+      ],
+      [
+        "<span>Invite a friend</span>",
+        "<span>Пригласить друга</span>"
+      ],
+      [
+        "<div class=\"eyebrow friend-label\">Squads</div>",
+        "<div class=\"eyebrow friend-label\">Команды</div>"
+      ],
+      [
+        "<h2>Move together</h2>",
+        "<h2>Двигаемся вместе</h2>"
+      ],
+      [
+        "<div class=\"eyebrow\">This week</div>",
+        "<div class=\"eyebrow\">Эта неделя</div>"
+      ],
+      [
+        "<span>4/7 days</span>",
+        "<span>4/7 дн.</span>"
+      ],
+      [
+        "<span class=\"squad-name\">Alex</span>",
+        "<span class=\"squad-name\">Alex</span>"
+      ],
+      [
+        "<span>3/7 days</span>",
+        "<span>3/7 дн.</span>"
+      ],
+      [
+        "<span>2/7 days</span>",
+        "<span>2/7 дн.</span>"
+      ],
+      [
+        "<div class=\"quiet\">Join with a code</div>",
+        "<div class=\"quiet\">Вступить по коду</div>"
+      ]
+    ],
+    "10-privacy": [
+      [
+        "Private<br><em>by design.</em>",
+        "Приватность<br><em>с самого начала.</em>"
+      ],
+      [
+        "Counted on your iPhone. Never uploaded.",
+        "Считается на iPhone. Никуда не отправляется."
+      ],
+      [
+        "<p>Reps counted on device, no video saved</p>",
+        "<p>Повторы считаются на устройстве, видео не сохраняется</p>"
+      ],
+      [
+        "<p>Health data stays on your iPhone</p>",
+        "<p>Данные о здоровье остаются на твоём iPhone</p>"
+      ],
+      [
+        "<p>We never see which apps you block (iOS keeps it private)</p>",
+        "<p>Мы не видим, какие приложения ты блокируешь (iOS хранит это в тайне)</p>"
+      ]
+    ]
+  },
+  "provenance": {
+    "Stop doomscrolling.": {
+      "translation": "Хватит листать.",
+      "source": "screenshot copy"
+    },
+    "Earn your screen time.": {
+      "translation": "Заработай время.",
+      "source": "screenshot copy"
+    },
+    "Blocked apps stay locked until you move.": {
+      "translation": "Приложения подождут, пока ты двигаешься.",
+      "source": "screenshot copy"
+    },
+    "Apps locked until you earn time": {
+      "translation": "Приложения закрыты, пока не заработаешь время",
+      "source": "screenshot copy"
+    },
+    "Your selected apps stay paused until you earn time.": {
+      "translation": "Выбранные приложения на паузе, пока ты не заработаешь время.",
+      "source": "screenshot copy"
+    },
+    "Walk": {
+      "translation": "Прогулка",
+      "source": "screenshot copy"
+    },
+    "Push-ups": {
+      "translation": "Отжимания",
+      "source": "screenshot copy"
+    },
+    "Squats": {
+      "translation": "Приседания",
+      "source": "screenshot copy"
+    },
+    "Screen time?": {
+      "translation": "Больше времени?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Do 10 push-ups.": {
+      "translation": "10 отжиманий.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your camera counts the reps.": {
+      "translation": "Камера считает повторения.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "On-device": {
+      "translation": "На iPhone",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "rep counting": {
+      "translation": "подсчёт повторений",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No video": {
+      "translation": "Видео никогда",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "ever saved": {
+      "translation": "не сохраняется",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "/ 10 push-ups": {
+      "translation": "/ 10 отжиманий",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Lower a little more": {
+      "translation": "Опустись чуть ниже",
+      "source": "screenshot copy"
+    },
+    "Apps unlocked": {
+      "translation": "Приложения разблокированы",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+10 min earned": {
+      "translation": "+10 мин заработано",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every walk": {
+      "translation": "Каждая прогулка",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "earns you time.": {
+      "translation": "дарит время.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your steps turn into minutes.": {
+      "translation": "Шаги превращаются в минуты.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Saturday": {
+      "translation": "Суббота",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "🔥 12-day streak": {
+      "translation": "🔥 12 дней подряд",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available time": {
+      "translation": "Доступное время",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "to spend on your apps": {
+      "translation": "для твоих приложений",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use my minutes": {
+      "translation": "Использовать минуты",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps today ·": {
+      "translation": "Сегодня 6 240 шагов ·",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40 min earned": {
+      "translation": "Сегодня заработано +40 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "✋ Apps skipped today: 14 · See your day ›": {
+      "translation": "✋ Пропущено открытий: 14 · Твой день ›",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "760 steps until your next 5 minutes": {
+      "translation": "Ещё 760 шагов до следующих 5 минут",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240 steps": {
+      "translation": "6 240 шагов",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+40 min earned": {
+      "translation": "+40 мин заработано",
+      "source": "screenshot callout, adapted number"
+    },
+    "min": {
+      "translation": "мин",
+      "source": "locale formatting"
+    },
+    "No time to walk?": {
+      "translation": "Некогда гулять?",
+      "source": "screenshot copy"
+    },
+    "Squat it out.": {
+      "translation": "Делай приседания.",
+      "source": "screenshot copy"
+    },
+    "Push-ups, squats, lunges or jumping jacks.": {
+      "translation": "Отжимания, приседания, выпады или прыжки «звёздочка».",
+      "source": "screenshot copy"
+    },
+    "Earn time": {
+      "translation": "Заработать время",
+      "source": "screenshot copy"
+    },
+    "Choose how to earn": {
+      "translation": "Выбери способ",
+      "source": "screenshot copy"
+    },
+    "Steps": {
+      "translation": "Шаги",
+      "source": "screenshot copy"
+    },
+    "6,240 steps today": {
+      "translation": "Сегодня 6 240 шагов",
+      "source": "screenshot copy, adapted"
+    },
+    "Exercise to Earn": {
+      "translation": "Упражнения за время",
+      "source": "screenshot copy"
+    },
+    "Lunges": {
+      "translation": "Выпады",
+      "source": "screenshot copy"
+    },
+    "Jumping jacks": {
+      "translation": "Прыжки «звёздочка»",
+      "source": "screenshot copy"
+    },
+    "/ 10 squats": {
+      "translation": "/ 10 приседаний",
+      "source": "screenshot copy, compact counter"
+    },
+    "Sit back and lower your hips": {
+      "translation": "Отведи таз назад и опустись",
+      "source": "screenshot copy"
+    },
+    "Out of time?": {
+      "translation": "Время вышло?",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps lock again.": {
+      "translation": "Снова под замком.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "No snooze. No \"15 more minutes.\"": {
+      "translation": "Без отсрочек. Без «ещё 15 минут».",
+      "source": "screenshot copy"
+    },
+    "Almost there": {
+      "translation": "Почти у цели",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Just 320 steps left.": {
+      "translation": "Осталось всего 320 шагов.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Finish the walk and earn 5 min. Your apps can wait.": {
+      "translation": "Заверши прогулку и заработай 5 мин. Приложения подождут.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "680 / 1,000 steps": {
+      "translation": "680 / 1 000 шагов",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "320 steps left · ~3 min walk": {
+      "translation": "Ещё 320 шагов · ~3 мин пешком",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Earn time with push-ups or squats": {
+      "translation": "Заработай время отжиманиями или приседаниями",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Update my steps": {
+      "translation": "Обновить шаги",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Apps locked": {
+      "translation": "Приложения заблокированы",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "until you earn time": {
+      "translation": "пока не заработаешь время",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "+5 MIN": {
+      "translation": "+5 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Spend it": {
+      "translation": "Твоё время.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "on your terms.": {
+      "translation": "Твои правила.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "5, 10 or 15 minutes. Then it locks.": {
+      "translation": "5, 10 или 15 минут. Потом снова блокировка.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Choose a session": {
+      "translation": "Выбери сеанс",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Available": {
+      "translation": "Доступно",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "After session": {
+      "translation": "После сеанса",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Custom amount": {
+      "translation": "Своё время",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "▦ 3 apps": {
+      "translation": "▦ Выбрано: 3",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Time starts now and keeps running when you switch apps. Return to Earnit to end the session and save the rest.": {
+      "translation": "Отсчёт начинается сейчас и продолжается при смене приложений. Вернись в Earnit, чтобы завершить сеанс и сохранить остаток.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Use blocked apps for 10 min": {
+      "translation": "Открыть приложения на 10 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "10 min session": {
+      "translation": "Сеанс на 10 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "then apps lock again": {
+      "translation": "затем снова блокировка",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "25 min": {
+      "translation": "25 мин",
+      "source": "locale formatting"
+    },
+    "15 min": {
+      "translation": "15 мин",
+      "source": "locale formatting"
+    },
+    "5 min": {
+      "translation": "5 мин",
+      "source": "locale formatting"
+    },
+    "10 min": {
+      "translation": "10 мин",
+      "source": "locale formatting"
+    },
+    "Block when": {
+      "translation": "Блокируй, когда",
+      "source": "screenshot copy"
+    },
+    "it matters.": {
+      "translation": "это важно.",
+      "source": "screenshot copy"
+    },
+    "Set the hours. Turn on strict mode.": {
+      "translation": "Задай расписание. Включи строгий режим.",
+      "source": "screenshot copy"
+    },
+    "When to block": {
+      "translation": "Когда блокировать",
+      "source": "screenshot copy"
+    },
+    "Blocking hours": {
+      "translation": "Часы блокировки",
+      "source": "screenshot copy"
+    },
+    "Block only at certain hours": {
+      "translation": "Блокировать только в заданные часы",
+      "source": "screenshot copy"
+    },
+    "From": {
+      "translation": "С",
+      "source": "screenshot copy"
+    },
+    "Until": {
+      "translation": "До",
+      "source": "screenshot copy"
+    },
+    "S M T W T F S": {
+      "translation": "В П В С Ч П С",
+      "source": "screenshot copy"
+    },
+    "Outside these hours your apps are open and the minutes you earn stay in your balance. A window that ends before it starts runs overnight.": {
+      "translation": "Вне этих часов приложения открыты, а заработанные минуты остаются на балансе. Если время окончания раньше начала, блокировка продолжается через полночь.",
+      "source": "screenshot copy"
+    },
+    "Strict mode": {
+      "translation": "Строгий режим",
+      "source": "screenshot copy"
+    },
+    "On until": {
+      "translation": "Включён до",
+      "source": "screenshot copy"
+    },
+    "Sunday 07:00": {
+      "translation": "Воскресенье 07:00",
+      "source": "screenshot copy"
+    },
+    "Extend strict mode": {
+      "translation": "Продлить строгий режим",
+      "source": "screenshot copy"
+    },
+    "While it's on you can't remove protected apps, make the rule easier, loosen your schedule, or delete apps from your iPhone. It can't be turned off early.": {
+      "translation": "Пока режим включён, нельзя убирать приложения из защищённых, смягчать правило или расписание и удалять приложения с iPhone. Отключить его раньше срока нельзя.",
+      "source": "screenshot copy"
+    },
+    "Win back": {
+      "translation": "Верни себе",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "your evenings.": {
+      "translation": "свои вечера.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Every minute you took back, counted.": {
+      "translation": "Каждая минута снова твоя.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Today": {
+      "translation": "Сегодня",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Your day": {
+      "translation": "Твой день",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "1h 20m": {
+      "translation": "1 ч 20 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "less than you used to scroll": {
+      "translation": "меньше прокрутки, чем раньше",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "times you stayed out of a blocked app": {
+      "translation": "раз без открытия заблокированного приложения",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "40m": {
+      "translation": "40 мин",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "screen time earned by moving": {
+      "translation": "экранного времени за движение",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "6,240": {
+      "translation": "6 240",
+      "source": "locale formatting"
+    },
+    "steps": {
+      "translation": "шаги",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "An estimate: the low end of the daily scrolling you told us about when you started, minus the time you unlocked in Earnit.": {
+      "translation": "Оценка: нижняя граница времени прокрутки за день, указанного при старте, минус время, разблокированное в Earnit.",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Share my progress": {
+      "translation": "Поделиться прогрессом",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Challenge a friend": {
+      "translation": "Бросить вызов другу",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Done": {
+      "translation": "Готово",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "12-day streak": {
+      "translation": "12 дней подряд",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep it going": {
+      "translation": "Так держать",
+      "source": "screenshot copy (adapted from earlier draft)"
+    },
+    "Keep each other": {
+      "translation": "Помогайте друг другу",
+      "source": "screenshot copy"
+    },
+    "honest.": {
+      "translation": "не сдаваться.",
+      "source": "screenshot copy"
+    },
+    "Share streaks. Challenge a friend.": {
+      "translation": "Делись сериями. Брось вызов другу.",
+      "source": "screenshot copy"
+    },
+    "Together": {
+      "translation": "Вместе",
+      "source": "screenshot copy"
+    },
+    "Friends": {
+      "translation": "Друзья",
+      "source": "screenshot copy"
+    },
+    "Your friends": {
+      "translation": "Твои друзья",
+      "source": "screenshot copy"
+    },
+    "Sam": {
+      "translation": "Sam",
+      "source": "fixture name"
+    },
+    "Alex": {
+      "translation": "Alex",
+      "source": "fixture name"
+    },
+    "Maya": {
+      "translation": "Maya",
+      "source": "fixture name"
+    },
+    "No update today yet": {
+      "translation": "Сегодня ещё нет обновлений",
+      "source": "screenshot copy"
+    },
+    "Invite a friend": {
+      "translation": "Пригласить друга",
+      "source": "screenshot copy"
+    },
+    "Squads": {
+      "translation": "Команды",
+      "source": "screenshot copy"
+    },
+    "Move together": {
+      "translation": "Двигаемся вместе",
+      "source": "screenshot copy"
+    },
+    "This week": {
+      "translation": "Эта неделя",
+      "source": "screenshot copy"
+    },
+    "4/7 days": {
+      "translation": "4/7 дн.",
+      "source": "screenshot copy, fixture format"
+    },
+    "3/7 days": {
+      "translation": "3/7 дн.",
+      "source": "screenshot copy, fixture format"
+    },
+    "2/7 days": {
+      "translation": "2/7 дн.",
+      "source": "screenshot copy, fixture format"
+    },
+    "Join with a code": {
+      "translation": "Вступить по коду",
+      "source": "screenshot copy"
+    },
+    "Private": {
+      "translation": "Приватность",
+      "source": "screenshot copy"
+    },
+    "by design.": {
+      "translation": "с самого начала.",
+      "source": "screenshot copy"
+    },
+    "Counted on your iPhone. Never uploaded.": {
+      "translation": "Считается на iPhone. Никуда не отправляется.",
+      "source": "screenshot copy"
+    },
+    "Reps counted on device, no video saved": {
+      "translation": "Повторы считаются на устройстве, видео не сохраняется",
+      "source": "screenshot copy"
+    },
+    "Health data stays on your iPhone": {
+      "translation": "Данные о здоровье остаются на твоём iPhone",
+      "source": "screenshot copy"
+    },
+    "We never see which apps you block (iOS keeps it private)": {
+      "translation": "Мы не видим, какие приложения ты блокируешь (iOS хранит это в тайне)",
+      "source": "screenshot copy"
+    }
+  }
+}
