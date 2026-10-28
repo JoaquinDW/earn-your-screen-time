@@ -199,17 +199,19 @@ struct EarnTimeView: View {
             .buttonStyle(.plain)
             .accessibilityHint(Text("pushups.entry.hint", tableName: PushupsLocalization.tableName))
 
-            Button(action: onStudy) {
-                EarningRuleCard(
-                    title: "study.title",
-                    titleTableName: "StudyLocalizable",
-                    detail: Text("study.entry.detail", tableName: "StudyLocalizable"),
-                    glyph: "book.closed",
-                    state: .available
-                )
+            if AppConfiguration.isStudyToEarnEnabled {
+                Button(action: onStudy) {
+                    EarningRuleCard(
+                        title: "study.title",
+                        titleTableName: "StudyLocalizable",
+                        detail: Text("study.entry.detail", tableName: "StudyLocalizable"),
+                        glyph: "book.closed",
+                        state: .available
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint(Text("study.entry.hint", tableName: "StudyLocalizable"))
             }
-            .buttonStyle(.plain)
-            .accessibilityHint(Text("study.entry.hint", tableName: "StudyLocalizable"))
         }
         .padding(.horizontal, Theme.Space.l)
     }
