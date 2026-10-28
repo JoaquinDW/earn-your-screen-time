@@ -13,7 +13,7 @@ Ten frames in English (`en-US`) and neutral *tú* Spanish (`es`, shared by es-ES
 | 01 / `01-hook.html` | Stop doomscrolling. *Earn your screen time.* | Basta de scrollear. *Gana tu tiempo de pantalla.* | Shield with Walk, Push-ups and Squats routes |
 | 02 / `02-pushups.html` | Screen time? *Do 10 push-ups.* | ¿Más pantalla? *Haz 10 flexiones.* | Push-up camera at 7 / 10, on-device and no-video facts |
 | 03 / `03-walk.html` | Every walk *earns you time.* | Cada paso *suma minutos.* | Home balance, steps, earnings and skipped opens |
-| 04 / `04-exercises.html` | No time to walk? *Squat it out.* | ¿Sin tiempo para caminar? *Haz sentadillas.* | Earn exercise list and illustrated squat camera inset |
+| 04 / `04-exercises.html` | No time to walk? *Squat it out.* | ¿Sin tiempo para caminar? *Haz sentadillas.* | Earn exercise list and photorealistic squat camera inset |
 | 05 / `05-lock.html` | Out of time? *Apps lock again.* | ¿Sin tiempo? *Todo se bloquea.* | Shield, 320 steps from the next reward |
 | 06 / `06-sessions.html` | Spend it *on your terms.* | Úsalo *a tu manera.* | 5 / 10 / 15 minute session picker |
 | 07 / `07-schedule.html` | Block when *it matters.* | Bloquea cuando *importa.* | 21:00–07:00 blocking hours with strict mode active |
@@ -27,7 +27,7 @@ Ten frames in English (`en-US`) and neutral *tú* Spanish (`es`, shared by es-ES
 
 **Phone redraws:** sourced from `BlockedAppDetailView`, `EarnTimeView`, `PushupsToEarnView`, `BlockingPolicyView`, `FriendsView`, the dashboard, spending sheet and impact report. Phone copy comes from `Localizable.xcstrings` and `PushupsLocalizable.xcstrings`; see [copy notes](COPY_NOTES.md) for composed text. The hook and exercise list combine existing app elements to follow the brief. Friends shows a weekly squad in progress: the app has squads and a share challenge action, but no separate pending-challenge inbox. Strict mode uses the real active-until and extend rows, not a switch that suggests it can be turned off early.
 
-**Artwork:** the app's illustrated scenes remain in use. `src/pushup.png` is the existing AI-generated push-up photo. The squat inset is an SVG illustration of a camera pose with joint tracking, not an actual camera capture. Badges state only the two requested product facts: on-device counting and no saved video. No hidden earning feature appears.
+**Artwork:** the app's illustrated scenes remain in use. `src/pushup.png` is the existing AI-generated push-up photo. The squat inset uses `src/squat.png`, an AI-generated photorealistic image matched to the push-up photo. Both images depict people; neither is a capture from the live app. Generation details are in [IMAGE_PROMPTS.md](IMAGE_PROMPTS.md). Badges state only the two requested product facts: on-device counting and no saved video. No hidden earning feature appears.
 
 ## Editing and rendering
 

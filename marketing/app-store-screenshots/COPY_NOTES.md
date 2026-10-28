@@ -41,7 +41,7 @@ The walking callout now uses **+40 min earned / +40 min ganados**, correcting th
 ## Presentation choices
 
 - The hook combines the blocked-bench scene with the requested three earning routes. It is an editorial composition of existing features, not a pixel-for-pixel native screen.
-- The exercise frame expands the earning entry into the four available exercise names and shows an illustrated squat camera inset. It uses no additional photo or claimed camera capture.
+- The exercise frame expands the earning entry into the four available exercise names and shows a photorealistic squat camera inset using `src/squat.png`. This AI-generated photograph matches the existing push-up image; it is not a claimed live camera capture.
 - The ongoing friend challenge is the real weekly squad model. There is no invented accept/decline workflow or pending-challenge state.
 - The old camera encouragement was replaced with the real `pushups.guidance.lower_body` string, **Lower a little more / Baja un poco más**.
 - The supplied privacy claims are preserved verbatim. Friends does share opted-in progress summaries (including steps and earned minutes), as described by `friends.setup.shares`; review that scope when interpreting the broad privacy marketing copy.
