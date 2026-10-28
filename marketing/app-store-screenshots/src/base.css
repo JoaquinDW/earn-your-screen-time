@@ -16,10 +16,6 @@ body { font-family: Figtree, sans-serif; color: var(--text); position: relative;
 .bg { position: absolute; inset: 0; background-size: cover; background-position: center bottom; }
 .shade { position: absolute; inset: 0; }
 
-/* Brand row: the store icon and the store name, so the shot matches the listing above it. */
-.brand { position: absolute; top: 150px; left: 104px; display: flex; align-items: center; gap: 26px; }
-.brand img { width: 92px; height: 92px; border-radius: 22px; }
-.brand span { font-weight: 600; font-size: 46px; letter-spacing: -0.5px; color: var(--soft); }
 
 .headline { position: absolute; top: 300px; left: 100px; right: 80px;
   font-family: "Instrument Serif", serif; font-size: 196px; line-height: 0.94; letter-spacing: -3px; }

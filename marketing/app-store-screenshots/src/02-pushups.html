@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css">
+<style>
+  /* Light variant: the icon's ivory and navy, cobalt as the one accent. */
+  :root { --ivory: #F5F0E3; --navy: #0B1F45; --navy-soft: #3B4A68; }
+  html, body { background: var(--ivory); }
+  .bg { background: radial-gradient(1100px 900px at 85% 1700px, rgba(46,92,230,.13), transparent 70%), var(--ivory); }
+  .headline { top: 290px; left: 88px; color: var(--navy); font-size: 200px; line-height: .92; letter-spacing: -4px; }
+  .headline em { font-style: italic; color: var(--cobalt); }
+  .sub { top: 700px; left: 96px; color: var(--navy-soft); font-size: 58px; font-weight: 600; }
+  .laurels { position: absolute; top: 830px; left: 0; right: 0; display: flex; justify-content: center; gap: 70px; }
+  .lf.r { transform: scaleX(-1); }
+  .laurel { display: flex; align-items: center; gap: 8px; color: var(--navy); }
+  .laurel .t { text-align: center; line-height: 1.05; }
+  .laurel b { display: block; font-family: "Instrument Serif"; font-weight: 400; font-size: 78px; }
+  .laurel span { display: block; font-size: 34px; font-weight: 600; color: var(--navy-soft); margin-top: 6px; }
+  .phone { top: 1140px; transform: rotate(-5deg); background: #11161c; }
+  .photo { position: absolute; inset: 0; background: #ECE8E1 url("pushup.png") center bottom / 100% auto no-repeat; }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(rgba(7,14,13,.55), rgba(7,14,13,0) 32%); }
+  .hdr { position: absolute; left: 20px; right: 20px; top: 64px; padding: 16px; border-radius: 18px; background: rgba(7,14,13,.88); }
+  .count { display: flex; align-items: baseline; gap: 10px; }
+  .count b { font-family: "Instrument Serif"; font-weight: 400; font-size: 84px; line-height: 1; }
+  .count span { font-size: 22px; font-weight: 600; color: var(--soft); }
+  .ticks { display: flex; height: 22px; margin: 10px 0; }
+  .ticks i { flex: 1; display: flex; justify-content: center; }
+  .ticks i::after { content: ""; width: 1.5px; background: rgba(236,243,238,.16); }
+  .ticks i.on::after { background: var(--cobalt); }
+  .guide { font-size: 20px; font-weight: 700; color: var(--cobalt-text); }
+  .card { position: absolute; right: 56px; top: 2555px; transform: rotate(4deg); background: #fff; border-radius: 48px; padding: 40px 48px;
+    display: flex; align-items: center; gap: 32px; box-shadow: 0 30px 70px rgba(11,31,69,.28); color: var(--navy); }
+  .card .ic { width: 110px; height: 110px; border-radius: 30px; background: var(--cobalt); display: flex; align-items: center; justify-content: center; }
+  .card b { display: block; font-size: 50px; font-weight: 700; }
+  .card span { display: block; font-size: 40px; font-weight: 600; color: var(--cobalt); margin-top: 4px; }
+</style><link rel="stylesheet" href="set.css"></head>
+<body class="pushups-frame">
+  <div class="bg"></div>
+  <div class="headline">Screen time?<br><em>Do 10 push-ups.</em></div>
+  <div class="sub">Your camera counts the reps.</div>
+
+  <div class="laurels"><div class="laurel"><svg class="lf" width="80" height="190" viewBox="0 0 35 85"><g fill="#0B1F45"><path d="M28 82C10 72 4 50 9 22" stroke="#0B1F45" stroke-width="2.4" fill="none"/><ellipse cx="7" cy="25" rx="3.5" ry="8" transform="rotate(-20 7 25)"/><ellipse cx="4" cy="40" rx="3.5" ry="8" transform="rotate(-35 4 40)"/><ellipse cx="5" cy="55" rx="3.5" ry="8" transform="rotate(-55 5 55)"/><ellipse cx="11" cy="68" rx="3.5" ry="8" transform="rotate(-70 11 68)"/><ellipse cx="16" cy="32" rx="3" ry="7" transform="rotate(25 16 32)"/><ellipse cx="17" cy="47" rx="3" ry="7" transform="rotate(10 17 47)"/><ellipse cx="21" cy="62" rx="3" ry="7" transform="rotate(-5 21 62)"/></g></svg><div class="t"><b>On-device</b><span>rep counting</span></div><svg class="lf r" width="80" height="190" viewBox="0 0 35 85"><g fill="#0B1F45"><path d="M28 82C10 72 4 50 9 22" stroke="#0B1F45" stroke-width="2.4" fill="none"/><ellipse cx="7" cy="25" rx="3.5" ry="8" transform="rotate(-20 7 25)"/><ellipse cx="4" cy="40" rx="3.5" ry="8" transform="rotate(-35 4 40)"/><ellipse cx="5" cy="55" rx="3.5" ry="8" transform="rotate(-55 5 55)"/><ellipse cx="11" cy="68" rx="3.5" ry="8" transform="rotate(-70 11 68)"/><ellipse cx="16" cy="32" rx="3" ry="7" transform="rotate(25 16 32)"/><ellipse cx="17" cy="47" rx="3" ry="7" transform="rotate(10 17 47)"/><ellipse cx="21" cy="62" rx="3" ry="7" transform="rotate(-5 21 62)"/></g></svg></div><div class="laurel"><svg class="lf" width="80" height="190" viewBox="0 0 35 85"><g fill="#0B1F45"><path d="M28 82C10 72 4 50 9 22" stroke="#0B1F45" stroke-width="2.4" fill="none"/><ellipse cx="7" cy="25" rx="3.5" ry="8" transform="rotate(-20 7 25)"/><ellipse cx="4" cy="40" rx="3.5" ry="8" transform="rotate(-35 4 40)"/><ellipse cx="5" cy="55" rx="3.5" ry="8" transform="rotate(-55 5 55)"/><ellipse cx="11" cy="68" rx="3.5" ry="8" transform="rotate(-70 11 68)"/><ellipse cx="16" cy="32" rx="3" ry="7" transform="rotate(25 16 32)"/><ellipse cx="17" cy="47" rx="3" ry="7" transform="rotate(10 17 47)"/><ellipse cx="21" cy="62" rx="3" ry="7" transform="rotate(-5 21 62)"/></g></svg><div class="t"><b>No video</b><span>ever saved</span></div><svg class="lf r" width="80" height="190" viewBox="0 0 35 85"><g fill="#0B1F45"><path d="M28 82C10 72 4 50 9 22" stroke="#0B1F45" stroke-width="2.4" fill="none"/><ellipse cx="7" cy="25" rx="3.5" ry="8" transform="rotate(-20 7 25)"/><ellipse cx="4" cy="40" rx="3.5" ry="8" transform="rotate(-35 4 40)"/><ellipse cx="5" cy="55" rx="3.5" ry="8" transform="rotate(-55 5 55)"/><ellipse cx="11" cy="68" rx="3.5" ry="8" transform="rotate(-70 11 68)"/><ellipse cx="16" cy="32" rx="3" ry="7" transform="rotate(25 16 32)"/><ellipse cx="17" cy="47" rx="3" ry="7" transform="rotate(10 17 47)"/><ellipse cx="21" cy="62" rx="3" ry="7" transform="rotate(-5 21 62)"/></g></svg></div></div>
+
+  <div class="phone"><div class="screen"><div class="pt">
+    <div class="photo"></div><div class="scrim"></div>
+    <div class="island"></div>
+    <div class="status"><span>9:41</span><span class="icons">
+      <svg width="18" height="12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>
+      <svg width="27" height="13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="#fff" fill="none" opacity=".5"/><rect x="2" y="2" width="17" height="9" rx="2" fill="#fff"/><rect x="25" y="4.5" width="1.5" height="4" rx=".7" fill="#fff" opacity=".5"/></svg>
+    </span></div>
+    <div class="hdr">
+      <div class="count"><b>7</b><span>/ 10 push-ups</span></div>
+      <div class="ticks" id="ticks"></div>
+      <div class="guide">Lower a little more</div>
+    </div>
+  </div></div></div>
+
+  <div class="card"><div class="ic"><svg width="56" height="64" viewBox="0 0 24 28"><path d="M7 12V8a5 5 0 0 1 9.6-2" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="3" y="12" width="18" height="14" rx="4" fill="#fff"/></svg></div>
+    <div><b>Apps unlocked</b><span>+10 min earned</span></div></div>
+  <script>
+    const t = document.getElementById('ticks');
+    for (let i = 0; i < 46; i++) { const e = document.createElement('i'); if (i / 46 < 0.7) e.className = 'on'; t.appendChild(e); }
+  </script>
+<script src="fit.js"></script></body></html>
