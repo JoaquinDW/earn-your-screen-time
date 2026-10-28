@@ -7,7 +7,7 @@ M = {}
 M["en-US"] = dict(
  name="Earn Screen Time: Earnit",
  subtitle="App Blocker & Digital Detox",
- keywords="phone addiction,doomscrolling,self control,study focus timer,block distraction,limit,brainrot",
+ keywords="doomscrolling,study,timer,focus,pushups,walk,steps,addiction,phone,limit,unlock,brainrot,selfcontrol",
  promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
@@ -41,7 +41,7 @@ Move first. Scroll later.""")
 M["en-GB"] = dict(
  name="Earn Screen Time: Earnit",
  subtitle="App Blocker & Digital Detox",
- keywords="phone addiction,doomscrolling,self control,study focus timer,block distraction,limit,brainrot",
+ keywords="doomscrolling,study,timer,focus,pressups,walk,steps,addiction,phone,unlock,brainrot,selfcontrol",
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("PUSH-UPS","PRESS-UPS"))
 

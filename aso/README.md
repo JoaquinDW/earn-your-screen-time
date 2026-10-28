@@ -23,8 +23,13 @@ explain that HealthKit background delivery needs a physical iPhone and has not b
 in the simulator. The version has not been submitted for review.
 
 The live en-US name/subtitle/keywords and the empty promotional text differ from the local ASO
-sources, so `verify.py` reports those existing mismatches. Do not run `reconcile.py`/`push.py`
-without first deciding which side is right. Version 1.3.0 is `READY_FOR_SALE`.
+sources, so `verify.py` reports those existing mismatches. Version 1.3.0 is `READY_FOR_SALE`.
+
+**Decided 2026-10-28: the local sources win.** The live title "Earn Screen Time — Unlock" left the
+brand out, and an Appeak audit found it at #72 for "earn screen time". The en-US and en-GB keyword
+fields were rewritten as single words with no spaces and nothing repeated from the name or
+subtitle (`aso/gen_part1.py`). Push them onto the 1.3.1 draft with `python3 aso/push.py`, then
+check with `aso/verify.py`.
 
 ## Phase 3 — screenshots on version 1.2
 
