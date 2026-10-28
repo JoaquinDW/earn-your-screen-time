@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """Upload the App Store screenshots to the editable version in App Store Connect.
 
-Uploads the 6.9" PNGs from marketing/app-store-screenshots/6.9-inch/<folder>/ into each
-locale's APP_IPHONE_67 set, in file-name order. Apple scales that set down for every smaller
-iPhone, so no other size is needed. Any other iPhone set on the locale (6.5", 6.1", 5.5"…)
-is deleted, because a leftover set would keep showing old screenshots on those devices.
+Uploads the 6.3" PNGs (1206x2622) from marketing/app-store-screenshots/6.3-inch/<folder>/
+into each locale's APP_IPHONE_61 set, in file-name order. That is the "iPhone with Dynamic
+Island (medium)" slot App Store Connect asks this app for; it rejects 6.9" files. Any other
+iPhone set on the locale (6.9", 6.5", 5.5"…) is deleted, because a leftover set would keep
+showing old screenshots on those devices.
 iPad sets are left alone.
 
     python3 aso/push_screenshots.py            # dry run: shows what would change
@@ -17,9 +18,9 @@ import hashlib, json, os, sys, time, urllib.request
 sys.path.insert(0, "aso")
 from asc_targets import asc, editable_version, get, locale_map
 
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "marketing", "app-store-screenshots", "6.9-inch")
-DISPLAY_TYPE = "APP_IPHONE_67"
-SIZE = (1290, 2796)
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "marketing", "app-store-screenshots", "6.3-inch")
+DISPLAY_TYPE = "APP_IPHONE_61"
+SIZE = (1206, 2622)
 # Store locale -> screenshot folder. Locales without a folder of their own are skipped, so they
 # keep falling back to the primary language until their set is rendered.
 FOLDERS = {"en-US": "en-US", "en-GB": "en-US", "es-ES": "es", "es-MX": "es",
