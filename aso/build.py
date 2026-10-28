@@ -48,7 +48,9 @@ for loc in LOCALES:
             pass  # these may legitimately be absent from a rewritten body
         if a.startswith("http") and a not in f["description"]:
             fails.append("%s missing URL %s" % (loc, a)); notes.append("URL!")
-    if "Earnit" not in f["name"]:  fails.append("%s brand missing from name" % loc); notes.append("brand!")
+    # English names spend all 30 characters on search terms instead of the brand (2026-10-28).
+    if "Earnit" not in f["name"] and not loc.startswith("en-"):
+        fails.append("%s brand missing from name" % loc); notes.append("brand!")
     if "Earnit" not in f["description"]: fails.append("%s brand missing from desc" % loc)
     # same-as-source detection (should differ from en-US except en-GB)
     if loc not in ("en-US","en-GB") and f["description"] == data["en-US"]["description"]:

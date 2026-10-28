@@ -25,11 +25,12 @@ in the simulator. The version has not been submitted for review.
 The live en-US name/subtitle/keywords and the empty promotional text differ from the local ASO
 sources, so `verify.py` reports those existing mismatches. Version 1.3.0 is `READY_FOR_SALE`.
 
-**Decided 2026-10-28: the local sources win.** The live title "Earn Screen Time — Unlock" left the
-brand out, and an Appeak audit found it at #72 for "earn screen time". The en-US and en-GB keyword
-fields were rewritten as single words with no spaces and nothing repeated from the name or
-subtitle (`aso/gen_part1.py`). Push them onto the 1.3.1 draft with `python3 aso/push.py`, then
-check with `aso/verify.py`.
+**Decided 2026-10-28: the local sources win over the live listing.** An Appeak audit found the
+live en-US listing at #72 for "earn screen time". English names now spend all 30 characters on
+search terms instead of the brand: "Earn Screen Time: App Blocker" / "Stop Doomscrolling &
+Brainrot". The keyword fields are single words with no spaces and nothing repeated from the name
+or subtitle (`aso/gen_part1.py`). `build.py` only requires "Earnit" in non-English names now.
+Push onto the 1.3.1 draft with `python3 aso/push.py`, then check with `aso/verify.py`.
 
 ## Phase 3 — screenshots on version 1.2
 
