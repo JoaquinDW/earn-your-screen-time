@@ -5,9 +5,9 @@ PRIV = "https://www.earnitscreen.com/privacy.html"
 M = {}
 
 M["en-US"] = dict(
- name="Earn Screen Time: App Blocker",
- subtitle="Stop Doomscrolling & Brainrot",
- keywords="study,timer,focus,pushups,walk,steps,addiction,phone,limit,unlock,selfcontrol,detox,digital,habit",
+ name="Earn Screen Time Rewards",
+ subtitle="Stop Doomscrolling: Limit Apps",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,study,pushups,timer,brainrot,addiction,phone",
  promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
@@ -39,9 +39,9 @@ Health and motion data stay on your iPhone. Which apps you blocked is never visi
 Move first. Scroll later.""")
 
 M["en-GB"] = dict(
- name="Earn Screen Time: App Blocker",
- subtitle="Stop Doomscrolling & Brainrot",
- keywords="study,timer,focus,pressups,walk,steps,addiction,phone,limit,unlock,selfcontrol,detox,digital,habit",
+ name="Earn Screen Time Rewards",
+ subtitle="Stop Doomscrolling: Limit Apps",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,study,pressups,timer,brainrot,addiction,phone",
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("PUSH-UPS","PRESS-UPS"))
 

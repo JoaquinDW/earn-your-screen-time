@@ -27,8 +27,10 @@ sources, so `verify.py` reports those existing mismatches. Version 1.3.0 is `REA
 
 **Decided 2026-10-28: the local sources win over the live listing.** An Appeak audit found the
 live en-US listing at #72 for "earn screen time". English names now spend all 30 characters on
-search terms instead of the brand: "Earn Screen Time: App Blocker" / "Stop Doomscrolling &
-Brainrot". The keyword fields are single words with no spaces and nothing repeated from the name
+search terms instead of the brand: "Earn Screen Time Rewards" / "Stop Doomscrolling: Limit Apps",
+chosen from Wow Keywords (US, 2026-10-28) for low difficulty: earn screen time 46/28 (rank 24),
+screen time rewards 42/28 (rank 39), stop doomscrolling 36/11 (rank 123), screen time limit
+41/27. "app blocker" (57/85) and "screen time control" (59/87) were dropped as unwinnable. The keyword fields are single words with no spaces and nothing repeated from the name
 or subtitle (`aso/gen_part1.py`). `build.py` only requires "Earnit" in non-English names now.
 Push onto the 1.3.1 draft with `python3 aso/push.py`, then check with `aso/verify.py`.
 
