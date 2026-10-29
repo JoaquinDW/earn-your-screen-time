@@ -1,0 +1,74 @@
+{
+  "id": "f3-02-later",
+  "format": "f3-limits-dont-work",
+  "language": "en",
+  "status": "ready",
+  "topic": "stop deciding later",
+  "caption": "a different boundary to try: earn the time before the feed, then choose a short session.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "your limit says stop. your thumb says later."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "ignore",
+      "copy": {
+        "title": "ignore limit is still a choice",
+        "body": "a reminder arrives. you can decide to keep going."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "temptation",
+      "copy": {
+        "title": "you are deciding mid-scroll",
+        "body": "that is when another video feels especially easy to justify."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "beforehand",
+      "copy": {
+        "title": "move the decision earlier",
+        "body": "walk or do a set before your selected apps become available."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "bank minutes in earnit. start a short session to use them."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "find Earnit on the App Store"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

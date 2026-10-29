@@ -1,0 +1,84 @@
+{
+  "id": "f5-04-noche-es",
+  "format": "f5-evening-before-after",
+  "language": "es",
+  "status": "ready",
+  "topic": "opciones para una noche distinta",
+  "caption": "imagina otra noche. son opciones para probar, no resultados prometidos. tu informe cuenta tu propia experiencia.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "before-1",
+      "copy": {
+        "title": "son las 11: ¿sigues en el feed?"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-1",
+      "copy": {
+        "title": "instagram bloqueado. tú eliges qué sigue.",
+        "body": "deja el móvil boca abajo mientras preparas algo de beber."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-2",
+      "copy": {
+        "title": "antes: otro video más",
+        "body": "miras la hora y terminas abriendo el feed."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-2",
+      "copy": {
+        "title": "después: una vuelta por tu barrio",
+        "body": "tus pasos de Apple Health pueden convertirse en minutos."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-3",
+      "copy": {
+        "title": "antes: una pausa sin final",
+        "body": "entras sin decidir cuándo vas a salir."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-3",
+      "copy": {
+        "title": "después: elige 5, 10 o 15 minutos en earnit"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory",
+      "screen": "sessions"
+    },
+    {
+      "id": "report",
+      "copy": {
+        "title": "abre tu día en earnit. consulta tus propios minutos."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy",
+      "screen": "report"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "id": "f6-04-alternativas-es",
+  "format": "f6-app-list",
+  "language": "es",
+  "status": "draft",
+  "topic": "alternativas-es",
+  "caption": "un idioma, un rompecabezas, una carrera o moverte antes del feed. elige qué quieres hacer en tu pausa.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    },
+    {
+      "claim": "Duolingo has short language lessons.",
+      "url": "https://en.duolingo.com/nojs/splash"
+    },
+    {
+      "claim": "NYT Games includes Wordle and other daily word puzzles.",
+      "url": "https://thenewyorktimeshelpcenter.helpjuice.com/360011158491-New-York-Times-Games/360052272251-New-York-Times-Games-Subscription"
+    },
+    {
+      "claim": "Nike Run Club offers audio-guided runs and run tracking.",
+      "url": "https://www.nike.com/nrc-app"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "apps para abrir en vez de seguir scrolleando"
+      },
+      "image": null,
+      "fallback": "navy",
+      "fromApps": [
+        "tiktok",
+        "instagram",
+        "x"
+      ],
+      "toApps": [
+        "duolingo",
+        "nyt-games",
+        "nike-run-club",
+        "earnit"
+      ]
+    },
+    {
+      "id": "language",
+      "copy": {
+        "title": "Duolingo",
+        "body": "practica un idioma con una lección corta."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "duolingo"
+    },
+    {
+      "id": "puzzle",
+      "copy": {
+        "title": "NYT Games",
+        "body": "prueba un rompecabezas de palabras en tu próxima pausa."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nyt-games"
+    },
+    {
+      "id": "run",
+      "copy": {
+        "title": "Nike Run Club",
+        "body": "sal a correr con una carrera guiada por audio."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nike-run-club"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "Earnit",
+        "body": "gana minutos moviéndote. elige una sesión corta. después, las apps vuelven a bloquearse."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "earnit"
+    },
+    {
+      "id": "save",
+      "copy": {
+        "title": "guarda la lista. busca Earnit en el App Store."
+      },
+      "image": null,
+      "fallback": "navy"
+    }
+  ]
+}

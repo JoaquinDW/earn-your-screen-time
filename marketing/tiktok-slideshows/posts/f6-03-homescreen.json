@@ -1,0 +1,101 @@
+{
+  "id": "f6-03-homescreen",
+  "format": "f6-app-list",
+  "language": "en",
+  "status": "draft",
+  "topic": "homescreen",
+  "caption": "try giving your thumb another destination. these apps do different things; pick what you actually want to do.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    },
+    {
+      "claim": "Duolingo has short language lessons.",
+      "url": "https://en.duolingo.com/nojs/splash"
+    },
+    {
+      "claim": "NYT Games includes Wordle and other daily word puzzles.",
+      "url": "https://thenewyorktimeshelpcenter.helpjuice.com/360011158491-New-York-Times-Games/360052272251-New-York-Times-Games-Subscription"
+    },
+    {
+      "claim": "Nike Run Club offers audio-guided runs and run tracking.",
+      "url": "https://www.nike.com/nrc-app"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "give your home screen somewhere else to go"
+      },
+      "image": null,
+      "fallback": "navy",
+      "fromApps": [
+        "tiktok",
+        "instagram",
+        "x"
+      ],
+      "toApps": [
+        "duolingo",
+        "nyt-games",
+        "nike-run-club",
+        "earnit"
+      ]
+    },
+    {
+      "id": "language",
+      "copy": {
+        "title": "Duolingo",
+        "body": "practice a language in a short lesson."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "duolingo"
+    },
+    {
+      "id": "puzzle",
+      "copy": {
+        "title": "NYT Games",
+        "body": "open a daily puzzle when you want something to solve."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nyt-games"
+    },
+    {
+      "id": "run",
+      "copy": {
+        "title": "Nike Run Club",
+        "body": "track a run instead of refreshing your feed."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nike-run-club"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "Earnit",
+        "body": "keep selected apps locked. earn minutes, then start a 5-, 10- or 15-minute session."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "earnit"
+    },
+    {
+      "id": "save",
+      "copy": {
+        "title": "save this. search Earnit on the App Store."
+      },
+      "image": null,
+      "fallback": "navy"
+    }
+  ]
+}

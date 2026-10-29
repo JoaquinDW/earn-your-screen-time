@@ -1,0 +1,107 @@
+{
+  "id": "f5-evening-before-after",
+  "version": 1,
+  "family": "native",
+  "requiresEvidence": false,
+  "description": "Hypothetical evening choices, alternating before/after, ending on Your day.",
+  "slides": [
+    {
+      "id": "before-1",
+      "role": "hook",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-1",
+      "role": "after",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "before-2",
+      "role": "before",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-2",
+      "role": "after",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "before-3",
+      "role": "before",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-3",
+      "role": "after",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "report",
+      "role": "product",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy",
+      "screen": "report"
+    }
+  ]
+}

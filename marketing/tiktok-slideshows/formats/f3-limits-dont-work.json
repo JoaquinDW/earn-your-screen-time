@@ -1,0 +1,91 @@
+{
+  "id": "f3-limits-dont-work",
+  "version": 1,
+  "family": "native",
+  "requiresEvidence": false,
+  "description": "The override loop → move the decision earlier → earned access.",
+  "slides": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "layout": "text-hook",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "ignore",
+      "role": "problem",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "temptation",
+      "role": "insight",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "beforehand",
+      "role": "value",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "earnit",
+      "role": "product",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "find",
+      "role": "cta",
+      "layout": "cta",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

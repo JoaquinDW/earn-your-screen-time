@@ -1,0 +1,84 @@
+{
+  "id": "f5-03-unwind",
+  "format": "f5-evening-before-after",
+  "language": "en",
+  "status": "ready",
+  "topic": "hypothetical unwinding",
+  "caption": "an evening scenario to try, not a promised outcome. move first; choose your scroll later.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "before-1",
+      "copy": {
+        "title": "unwinding or just still scrolling at 11pm?"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-1",
+      "copy": {
+        "title": "instagram locked. space to choose.",
+        "body": "leave the phone face-down while you make some tea."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-2",
+      "copy": {
+        "title": "before: checking everything again",
+        "body": "you have seen the feed. your thumb opens it anyway."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-2",
+      "copy": {
+        "title": "after: step outside for a bit",
+        "body": "walking earns minutes from your Apple Health steps."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-3",
+      "copy": {
+        "title": "before: when did your break end?",
+        "body": "you never picked an ending."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-3",
+      "copy": {
+        "title": "after: choose 10 minutes in earnit. then apps lock again."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory",
+      "screen": "sessions"
+    },
+    {
+      "id": "report",
+      "copy": {
+        "title": "open your day. see your own earned and used minutes."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy",
+      "screen": "report"
+    }
+  ]
+}

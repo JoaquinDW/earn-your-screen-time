@@ -1,0 +1,84 @@
+{
+  "id": "f5-02-sofa",
+  "format": "f5-evening-before-after",
+  "language": "en",
+  "status": "ready",
+  "topic": "hypothetical sofa evening",
+  "caption": "a possible evening with clearer boundaries. your own report tells your own story.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "before-1",
+      "copy": {
+        "title": "your sofa evening: feed or a pause?"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-1",
+      "copy": {
+        "title": "with instagram locked: take a breath",
+        "body": "leave the phone on the table while you decide what to do."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-2",
+      "copy": {
+        "title": "before: dinner ends, scrolling starts",
+        "body": "your thumb opens the app before you have made a plan."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-2",
+      "copy": {
+        "title": "after: take the long way home",
+        "body": "your Apple Health steps can become earnit minutes."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-3",
+      "copy": {
+        "title": "before: no stopping point",
+        "body": "another video turns into another decision."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-3",
+      "copy": {
+        "title": "after: choose a short earnit session before opening the feed"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory",
+      "screen": "sessions"
+    },
+    {
+      "id": "report",
+      "copy": {
+        "title": "check your own evening in the your day report"
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy",
+      "screen": "report"
+    }
+  ]
+}

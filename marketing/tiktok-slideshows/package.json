@@ -1,0 +1,14 @@
+{
+  "name": "earnit-tiktok-slideshows",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Offline photo-mode slideshow renderer; never publishes",
+  "scripts": {
+    "render": "node render.js",
+    "new-post": "node new-post.js",
+    "validate": "node render.js --all --validate",
+    "test": "node --test lib/*.test.js"
+  },
+  "devDependencies": { "playwright": "1.62.1" },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "f5-01-11pm",
+  "format": "f5-evening-before-after",
+  "language": "en",
+  "status": "ready",
+  "topic": "hypothetical 11pm choices",
+  "caption": "imagine a different 11pm. these are choices to try, not a before-and-after result.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "before-1",
+      "copy": {
+        "title": "11pm: still scrolling?"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-1",
+      "copy": {
+        "title": "same time. instagram locked.",
+        "body": "put the phone face-down. give yourself something else to reach for."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-2",
+      "copy": {
+        "title": "before: one more video",
+        "body": "you pick up the phone to check the time. the feed opens."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-2",
+      "copy": {
+        "title": "after: one lap outside",
+        "body": "walking can earn minutes through Apple Health steps."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "before-3",
+      "copy": {
+        "title": "before: a break with no finish",
+        "body": "you open an app without deciding when to leave."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "after-3",
+      "copy": {
+        "title": "after: pick 5, 10 or 15 minutes in earnit"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory",
+      "screen": "sessions"
+    },
+    {
+      "id": "report",
+      "copy": {
+        "title": "your day in earnit. check your own report."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy",
+      "screen": "report"
+    }
+  ]
+}
