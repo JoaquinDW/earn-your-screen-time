@@ -45,6 +45,12 @@
             "state" : "translated",
             "value" : "Verificar minha resposta"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 답 확인"
+          }
         }
       }
     },
@@ -91,6 +97,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Digite sua resposta"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "답을 입력해 주세요"
           }
         }
       }
@@ -139,6 +151,12 @@
             "state" : "translated",
             "value" : "Tirar foto"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사진 촬영"
+          }
         }
       }
     },
@@ -185,6 +203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Use uma página de livro, um artigo, anotações impressas ou anotações à mão bem legíveis."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "교과서, 글, 인쇄한 필기나 또렷한 손글씨 필기를 사용해 주세요."
           }
         }
       }
@@ -233,6 +257,12 @@
             "state" : "translated",
             "value" : "Mantenha o texto dentro deste quadro"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "글자가 이 틀 안에 오도록 맞춰 주세요"
+          }
         }
       }
     },
@@ -279,6 +309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escaneie o que você está estudando"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공부 중인 내용을 스캔해요"
           }
         }
       }
@@ -327,6 +363,12 @@
             "state" : "translated",
             "value" : "Verificamos a ideia principal, não a ortografia nem o estilo de escrita."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "맞춤법이나 문체 대신 핵심 내용을 이해했는지 확인해요."
+          }
         }
       }
     },
@@ -374,6 +416,12 @@
             "state" : "translated",
             "value" : "Verificando sua resposta"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "답변 확인 중"
+          }
         }
       }
     },
@@ -420,6 +468,12 @@
             "state" : "translated",
             "value" : "Leia algo. Mostre que entendeu. Ganhe 15 minutos."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "읽고 이해한 내용을 보여 주세요. 15분을 벌어요."
+          }
         }
       }
     },
@@ -465,6 +519,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abre o scanner de páginas"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "페이지 스캐너를 열어요"
           }
         }
       }
@@ -513,6 +573,12 @@
             "state" : "translated",
             "value" : "Tente de novo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도해요"
+          }
         }
       }
     },
@@ -559,6 +625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tentar de novo"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
           }
         }
       }
@@ -607,6 +679,12 @@
             "state" : "translated",
             "value" : "Não foi possível concluir essa etapa"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 단계를 마치지 못했어요"
+          }
         }
       }
     },
@@ -653,6 +731,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escaneie uma página ou suas anotações. Responda a uma pergunta para ganhar %lld minutos."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "페이지나 필기를 스캔해요. 질문 하나에 답하면 %lld분을 벌어요."
           }
         }
       }
@@ -701,6 +785,12 @@
             "state" : "translated",
             "value" : "Livros, artigos, anotações impressas e letra legível funcionam melhor."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "교과서, 글, 인쇄한 필기, 또렷한 손글씨가 가장 좋아요."
+          }
         }
       }
     },
@@ -747,6 +837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Leia. Entenda. Ganhe."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "읽고. 이해하고. 시간을 벌어요."
           }
         }
       }
@@ -795,6 +891,12 @@
             "state" : "translated",
             "value" : "Sua próxima recompensa de estudo fica disponível às %@."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@부터 다음 공부 보상을 받을 수 있어요."
+          }
         }
       }
     },
@@ -841,6 +943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Volte amanhã para ganhar outra recompensa de estudo."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내일 다시 공부 보상을 받으러 와 주세요."
           }
         }
       }
@@ -889,6 +997,12 @@
             "state" : "translated",
             "value" : "Recompensas de estudo de hoje"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 공부 보상"
+          }
         }
       }
     },
@@ -935,6 +1049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Você atingiu o limite de hoje"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 한도에 도달했어요"
           }
         }
       }
@@ -983,6 +1103,12 @@
             "state" : "translated",
             "value" : "Estude para ganhar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공부로 시간 벌기"
+          }
         }
       }
     },
@@ -1029,6 +1155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verificando a recompensa de hoje e o acesso seguro."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 보상과 안전한 접근을 확인하고 있어요."
           }
         }
       }
@@ -1077,6 +1209,12 @@
             "state" : "translated",
             "value" : "Preparando sua missão"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "미션 준비 중"
+          }
         }
       }
     },
@@ -1123,6 +1261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seu escaneamento é usado só para criar uma pergunta de estudo. O Earnit não guarda sua página nem a usa para treinamento."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스캔한 내용은 공부 질문 하나를 만드는 데만 사용해요. Earnit은 페이지를 저장하거나 모델 훈련에 쓰지 않아요."
           }
         }
       }
@@ -1171,6 +1315,12 @@
             "state" : "translated",
             "value" : "Sua página continua privada"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 페이지는 비공개예요"
+          }
         }
       }
     },
@@ -1217,6 +1367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lendo sua página e criando uma pergunta a partir dela."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "페이지를 읽고 질문 하나를 만들고 있어요."
           }
         }
       }
@@ -1265,6 +1421,12 @@
             "state" : "translated",
             "value" : "Buscando a ideia principal"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "핵심 내용 찾는 중"
+          }
         }
       }
     },
@@ -1311,6 +1473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pedir outra pergunta"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 질문 받기"
           }
         }
       }
@@ -1359,6 +1527,12 @@
             "state" : "translated",
             "value" : "Uma checagem rápida"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "간단하게 한 번 확인해요"
+          }
         }
       }
     },
@@ -1405,6 +1579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Responda com suas palavras"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 말로 답해 주세요"
           }
         }
       }
@@ -1453,6 +1633,12 @@
             "state" : "translated",
             "value" : "Tentar de novo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
+          }
         }
       }
     },
@@ -1499,6 +1685,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Revise e tente de novo"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 읽고 도전해요"
           }
         }
       }
@@ -1547,6 +1739,12 @@
             "state" : "translated",
             "value" : "Quase lá"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "거의 다 왔어요"
+          }
         }
       }
     },
@@ -1593,6 +1791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escanear outra página"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 페이지 스캔"
           }
         }
       }
@@ -1641,6 +1845,12 @@
             "state" : "translated",
             "value" : "Escanear uma página"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "페이지 스캔"
+          }
         }
       }
     },
@@ -1687,6 +1897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estudar de novo"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 공부하기"
           }
         }
       }
@@ -1735,6 +1951,12 @@
             "state" : "translated",
             "value" : "Você entendeu o material. Seu saldo de tempo de tela foi atualizado."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내용을 이해했어요. 모은 스크린타임이 업데이트됐어요."
+          }
         }
       }
     },
@@ -1781,6 +2003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compreensão confirmada"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이해 확인 완료"
           }
         }
       }
@@ -1829,6 +2057,12 @@
             "state" : "translated",
             "value" : "Você ganhou %lld minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분을 벌었어요"
+          }
         }
       }
     },
@@ -1876,6 +2110,12 @@
             "state" : "translated",
             "value" : "Usar meus minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 시간 사용"
+          }
         }
       }
     },
@@ -1922,6 +2162,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estude para ganhar"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공부로 시간 벌기"
           }
         }
       }

@@ -36,7 +36,7 @@ python3 - "$STEPS" "$CONSUMED" "$ONBOARDED" "$LANG_CODE" $PLISTS <<'PY'
 import json, plistlib, sys, datetime, random
 steps, consumed = int(sys.argv[1]), int(sys.argv[2])
 onboarded = sys.argv[3] != "0"
-language = {"en": "english", "es": "spanish"}.get(sys.argv[4], "system")
+language = {"en": "english", "es": "spanish", "ko": "korean"}.get(sys.argv[4], "system")
 paths = sys.argv[5:]
 rule = {"source": "steps", "amountRequired": 500, "rewardSeconds": 300}
 milestones = steps // rule["amountRequired"]

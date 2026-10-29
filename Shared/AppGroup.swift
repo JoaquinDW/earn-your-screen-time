@@ -12,6 +12,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case italian
     case portugueseBrazil
     case japanese
+    case korean
 
     static let defaultsKey = "app.language.preference.v1"
 
@@ -28,6 +29,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         case .italian: "it"
         case .portugueseBrazil: "pt-BR"
         case .japanese: "ja"
+        case .korean: "ko"
         }
     }
 

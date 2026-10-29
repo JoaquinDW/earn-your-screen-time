@@ -74,7 +74,10 @@ struct SettingsView: View {
                     Stepper(value: $dailyStepGoal, in: 2_000...20_000, step: 500) {
                         LabeledContent(
                             "Daily movement goal",
-                            value: "\(dailyStepGoal.formatted(.number.locale(env.appLanguage.locale))) steps"
+                            value: String(
+                                localized: "\(dailyStepGoal.formatted(.number.locale(env.appLanguage.locale))) steps",
+                                locale: env.appLanguage.locale
+                            )
                         )
                     }
                     if dailyStepGoal != env.dailyStepGoal {
@@ -380,7 +383,9 @@ struct SettingsView: View {
     /// for their own language recognises "Deutsch" without already reading the current one.
     @ViewBuilder
     private func languageLabel(_ language: AppLanguage) -> some View {
-        if let identifier = language.localeIdentifier {
+        if language == .korean {
+            Text(verbatim: "한국어")
+        } else if let identifier = language.localeIdentifier {
             let locale = Locale(identifier: identifier)
             Text(locale.localizedString(forIdentifier: identifier)?.capitalized(with: locale) ?? identifier)
         } else {

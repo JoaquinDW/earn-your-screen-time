@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "Earnit";
+"NSHealthShareUsageDescription" = "Earnit은 걷기로 스크린타임을 벌 수 있도록 하루 걸음 수를 읽어요. 건강 데이터는 이 기기 밖으로 나가지 않아요.";
+"NSHealthUpdateUsageDescription" = "Earnit은 활동 기록과 번 스크린타임을 맞추기 위해 건강 데이터를 업데이트할 수 있어요.";
+"NSCameraUsageDescription" = "Earnit은 운동 횟수를 세기 위해 카메라를 사용해요. 기기 안에서 처리하며 이미지나 동영상을 저장하지 않아요.";
+"NSUserTrackingUsageDescription" = "허용하면 앱 사용과 광고 데이터를 연결해 광고 성과를 측정하고 앞으로의 광고를 개선할 수 있어요.";
