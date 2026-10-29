@@ -27,6 +27,10 @@ for loc in B.LOCALES:
                    {"data": {"type": "appInfoLocalizations", "attributes": a,
                              "relationships": {"appInfo": {"data": {"type": "appInfos", "id": APPINFO_ID}}}}})
         act = "POST  info"
+        if c == "201" and loc not in ver_map:
+            # Apple creates the matching version localization along with the appInfo one, so a
+            # POST here would 409 as a duplicate. Look it up again and PATCH it instead.
+            ver_map = {l: d["id"] for l, d in locale_map("/v1/appStoreVersions/%s/appStoreVersionLocalizations?limit=200" % VERSION_ID).items()}
     err1 = "" if c in ("200", "201") else json.dumps(p, ensure_ascii=False)[:220]
 
     # ---- keywords / description / promo ----
