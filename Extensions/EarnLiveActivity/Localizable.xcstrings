@@ -34,6 +34,12 @@
             "state" : "translated",
             "value" : "+%lld min"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld분"
+          }
         }
       }
     },
@@ -79,6 +85,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min disponíveis"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분 사용 가능"
           }
         }
       }
@@ -127,6 +139,12 @@
             "state" : "translated",
             "value" : "Disponível"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 가능"
+          }
         }
       }
     },
@@ -174,6 +192,12 @@
             "state" : "translated",
             "value" : "disponíveis"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용 가능"
+          }
         }
       }
     },
@@ -219,6 +243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "+%lld min ganhos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld분 획득"
           }
         }
       }
@@ -267,6 +297,12 @@
             "state" : "translated",
             "value" : "%lld min ganhos hoje"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘 %lld분 획득"
+          }
         }
       }
     },
@@ -312,6 +348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meta do dia concluída"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일일 목표 달성"
           }
         }
       }
@@ -360,6 +402,12 @@
             "state" : "translated",
             "value" : "Meta concluída"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "목표 달성"
+          }
         }
       }
     },
@@ -405,6 +453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld passos · %lld min hoje"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘 %lld걸음 · %lld분 획득"
           }
         }
       }
@@ -453,6 +507,12 @@
             "state" : "translated",
             "value" : "%lld min"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분"
+          }
         }
       }
     },
@@ -499,6 +559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Próxima recompensa"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 보상"
           }
         }
       }
@@ -547,6 +613,12 @@
             "state" : "translated",
             "value" : "Progresso até a próxima recompensa"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음 보상까지"
+          }
         }
       }
     },
@@ -593,6 +665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld passos até +%lld min"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld걸음 더 걸으면 +%lld분"
           }
         }
       }
@@ -641,6 +719,12 @@
             "state" : "translated",
             "value" : "+%lld MIN"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld분"
+          }
         }
       }
     },
@@ -686,6 +770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min guardados"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분 아꼈어요"
           }
         }
       }
@@ -734,6 +824,12 @@
             "state" : "translated",
             "value" : "sessão"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "세션"
+          }
         }
       }
     },
@@ -779,6 +875,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A sessão termina às %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@에 세션 종료"
           }
         }
       }
@@ -827,6 +929,12 @@
             "state" : "translated",
             "value" : "Tempo de sessão"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "남은 시간"
+          }
         }
       }
     },
@@ -872,6 +980,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "de sessão restantes"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "세션 남은 시간"
           }
         }
       }
@@ -920,6 +1034,12 @@
             "state" : "translated",
             "value" : "%lld / %lld passos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld걸음"
+          }
         }
       }
     },
@@ -966,6 +1086,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld passos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld걸음"
           }
         }
       }
@@ -1014,6 +1140,12 @@
             "state" : "translated",
             "value" : "Faltam %lld passos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld걸음 남음"
+          }
         }
       }
     },
@@ -1061,6 +1193,12 @@
             "state" : "translated",
             "value" : "%lld passos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld걸음"
+          }
         }
       }
     },
@@ -1107,6 +1245,12 @@
             "state" : "translated",
             "value" : "Acabou o tempo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간 종료"
+          }
         }
       }
     },
@@ -1149,6 +1293,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earnit"
+          }
+        },
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Earnit"
@@ -1199,6 +1349,12 @@
             "state" : "translated",
             "value" : "Apps desbloqueados"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 잠금 해제"
+          }
         }
       }
     },
@@ -1246,6 +1402,12 @@
             "state" : "translated",
             "value" : "Caminhados"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "걸음 수"
+          }
         }
       }
     },
@@ -1291,6 +1453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caminhe para ganhar mais"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "걸어서 더 벌어요"
           }
         }
       }
@@ -1338,6 +1506,12 @@
             "state" : "translated",
             "value" : "Os minutos prontos para usar e os passos até os próximos."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "쓸 수 있는 시간과 다음 보상까지 남은 걸음."
+          }
         }
       }
     },
@@ -1383,6 +1557,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minutos do Earnit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earnit 시간"
           }
         }
       }
@@ -1431,6 +1611,12 @@
             "state" : "translated",
             "value" : "+%lld min hoje"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘 +%lld분"
+          }
         }
       }
     },
@@ -1476,6 +1662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min prontos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분 준비 완료"
           }
         }
       }
@@ -1523,6 +1715,12 @@
             "state" : "translated",
             "value" : "para seus apps"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱에서 사용할 시간"
+          }
         }
       }
     },
@@ -1568,6 +1766,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Termine de configurar o Earnit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earnit 설정을 완료해 주세요"
           }
         }
       }
@@ -1615,6 +1819,12 @@
             "state" : "translated",
             "value" : "%1$@ / %2$@ passos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ / %2$@걸음"
+          }
         }
       }
     },
@@ -1660,6 +1870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ passos → +%2$lld min"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@걸음 → +%2$lld분"
           }
         }
       }
@@ -1707,6 +1923,12 @@
             "state" : "translated",
             "value" : "Sequência de %lld dias"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld일 연속"
+          }
         }
       }
     },
@@ -1752,6 +1974,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desbloqueado"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "잠금 해제됨"
           }
         }
       }
@@ -1799,6 +2027,12 @@
             "state" : "translated",
             "value" : "restantes do seu desbloqueio"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "잠금 해제 남은 시간"
+          }
         }
       }
     },
@@ -1844,6 +2078,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "caminhe para ganhar"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "걸어서 더 벌어요"
           }
         }
       }

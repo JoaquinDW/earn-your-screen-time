@@ -45,6 +45,12 @@
             "state" : "translated",
             "value" : "/ %lld ジャンピングジャック"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ 점핑잭 %lld회"
+          }
         }
       }
     },
@@ -91,6 +97,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャック %1$lld / %2$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 %1$lld / %2$lld회"
           }
         }
       }
@@ -139,6 +151,12 @@
             "state" : "translated",
             "value" : "ジャンピングジャック %1$lld / %2$lld"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 %2$lld회 중 %1$lld회"
+          }
         }
       }
     },
@@ -185,6 +203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャックを開始"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 시작"
           }
         }
       }
@@ -233,6 +257,12 @@
             "state" : "translated",
             "value" : "ジャンピングジャック %1$lld回で%2$lld分獲得"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 %1$lld회로 %2$lld분 획득"
+          }
         }
       }
     },
@@ -279,6 +309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャック %lld回"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 %lld회"
           }
         }
       }
@@ -327,6 +363,12 @@
             "state" : "translated",
             "value" : "スマホの方を向いて"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 바라봐요"
+          }
         }
       }
     },
@@ -373,6 +415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スマホの正面に立ち、両腕と両足が映るようにしてください"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 팔과 두 발이 보이도록 휴대폰을 마주 보고 서 주세요"
           }
         }
       }
@@ -421,6 +469,12 @@
             "state" : "translated",
             "value" : "スマホを立てて、頭から足まで映るようにしてください"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "머리부터 발끝까지 보이도록 휴대폰을 세워 주세요"
+          }
         }
       }
     },
@@ -467,6 +521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "足をそろえて"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 발을 모아요"
           }
         }
       }
@@ -515,6 +575,12 @@
             "state" : "translated",
             "value" : "足をそろえて腕を下ろすと、自動でスタートします"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 발을 모으고 팔을 내린 채 서 있으면 자동으로 시작해요"
+          }
         }
       }
     },
@@ -561,6 +627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "遠すぎて、カメラが脚を読み取れません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 멀어서 카메라가 다리를 인식할 수 없어요"
           }
         }
       }
@@ -609,6 +681,12 @@
             "state" : "translated",
             "value" : "跳んで開き、腕を上へ"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛰면서 발을 벌리고 팔을 올려요"
+          }
         }
       }
     },
@@ -655,6 +733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "跳んで閉じ、腕を下へ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뛰면서 발을 모으고 팔을 내려요"
           }
         }
       }
@@ -703,6 +787,12 @@
             "state" : "translated",
             "value" : "スマホの正面を向いて"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 바라봐요"
+          }
         }
       }
     },
@@ -749,6 +839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "足をそろえ、腕を下ろして始めましょう"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 발을 모으고 팔을 내린 자세에서 시작해요"
           }
         }
       }
@@ -797,6 +893,12 @@
             "state" : "translated",
             "value" : "%@にまたエクササイズで獲得できます。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@부터 운동으로 다시 시간을 벌 수 있어요."
+          }
         }
       }
     },
@@ -843,6 +945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日のエクササイズ報酬"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 운동 보상"
           }
         }
       }
@@ -891,6 +999,12 @@
             "state" : "translated",
             "value" : "ジャンピングジャックのチャレンジを読み込み中"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 챌린지 불러오는 중"
+          }
         }
       }
     },
@@ -937,6 +1051,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭"
           }
         }
       }
@@ -985,6 +1105,12 @@
             "state" : "translated",
             "value" : "回数の決まったチャレンジを選んでください。すべてのエクササイズの報酬は合わせて1日(UTC)30分までです。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정해진 횟수의 챌린지를 선택해요. 모든 운동 보상을 합쳐 UTC 기준 하루 최대 30분까지 벌 수 있어요."
+          }
         }
       }
     },
@@ -1031,6 +1157,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャックはこのiPhone上でリアルタイムに数えます。動画・画像・体のポイントは記録、保存、アップロードされません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 iPhone에서 점핑잭 횟수를 실시간으로 세어요. 동영상, 이미지, 신체 관절 위치 정보는 기록하거나 저장하거나 업로드하지 않아요."
           }
         }
       }
@@ -1079,6 +1211,12 @@
             "state" : "translated",
             "value" : "ボタン不要。足をそろえて画面に入ると自動で始まります"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼 없이 시작해요. 화면 안에서 두 발을 모으고 서면 자동으로 시작돼요"
+          }
         }
       }
     },
@@ -1125,6 +1263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ジャンピングジャックを%lld回達成しました。スクリーンタイムの残高を使えます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭 %lld회를 완료했어요. 모은 스크린타임을 사용할 수 있어요."
           }
         }
       }
@@ -1173,6 +1317,12 @@
             "state" : "translated",
             "value" : "ジャンピングジャックで獲得"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점핑잭으로 시간 벌기"
+          }
         }
       }
     },
@@ -1219,6 +1369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スマホを立てて、足が映るまで下がり、足をそろえて正面に立ってください。見えたら自動で始めます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 세우고 발까지 보이도록 뒤로 가 주세요. 두 발을 모으고 휴대폰을 바라봐요. 자세가 보이면 자동으로 시작할게요."
           }
         }
       }
@@ -1267,6 +1423,12 @@
             "state" : "translated",
             "value" : "両腕が映るように、スマホの正面に立ってください。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 팔이 보이도록 휴대폰을 바라봐 주세요."
+          }
         }
       }
     },
@@ -1313,6 +1475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "まだ見えません。頭から足までカメラに映る位置に移動してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 모습이 보이지 않아요. 머리부터 발끝까지 카메라에 보이도록 움직여 주세요."
           }
         }
       }
@@ -1361,6 +1529,12 @@
             "state" : "translated",
             "value" : "足をそろえて腕を下ろし、そのまま止まってください。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "발을 모으고 팔을 내린 채 잠시 멈춰 주세요."
+          }
         }
       }
     },
@@ -1407,6 +1581,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/ %lld ランジ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ 런지 %lld회"
           }
         }
       }
@@ -1455,6 +1635,12 @@
             "state" : "translated",
             "value" : "ランジ %1$lld / %2$lld"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 %1$lld / %2$lld회"
+          }
         }
       }
     },
@@ -1501,6 +1687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ランジ %1$lld / %2$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 %2$lld회 중 %1$lld회"
           }
         }
       }
@@ -1549,6 +1741,12 @@
             "state" : "translated",
             "value" : "ランジを開始"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 시작"
+          }
         }
       }
     },
@@ -1595,6 +1793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ランジ %1$lld回で%2$lld分獲得"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 %1$lld회로 %2$lld분 획득"
           }
         }
       }
@@ -1643,6 +1847,12 @@
             "state" : "translated",
             "value" : "ランジ %lld回"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 %lld회"
+          }
         }
       }
     },
@@ -1689,6 +1899,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "立ってください"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "똑바로 서요"
           }
         }
       }
@@ -1737,6 +1953,12 @@
             "state" : "translated",
             "value" : "両脚が映るように、スマホに対して横向きに立ってください"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "두 다리가 보이도록 휴대폰을 옆에 두고 서 주세요"
+          }
         }
       }
     },
@@ -1783,6 +2005,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スマホを立てて、頭から足まで映るようにしてください"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "머리부터 발끝까지 보이도록 휴대폰을 세워 주세요"
           }
         }
       }
@@ -1831,6 +2059,12 @@
             "state" : "translated",
             "value" : "脚をまっすぐ"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴요"
+          }
         }
       }
     },
@@ -1877,6 +2111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "まっすぐ立って止まると、自動でスタートします"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "똑바로 서서 가만히 있으면 자동으로 시작해요"
           }
         }
       }
@@ -1925,6 +2165,12 @@
             "state" : "translated",
             "value" : "遠すぎて、カメラが脚を読み取れません"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 멀어서 카메라가 다리를 인식할 수 없어요"
+          }
         }
       }
     },
@@ -1971,6 +2217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一歩踏み出し、後ろの膝を下ろして"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "한 발 앞으로 내딛고 뒤쪽 무릎을 내려요"
           }
         }
       }
@@ -2019,6 +2271,12 @@
             "state" : "translated",
             "value" : "押し戻して立ち上がって"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "밀어 올려 다시 서요"
+          }
         }
       }
     },
@@ -2065,6 +2323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スマホに横向きで立ってください"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰에 옆모습이 보이도록 서요"
           }
         }
       }
@@ -2113,6 +2377,12 @@
             "state" : "translated",
             "value" : "脚をまっすぐにして立った状態から始めましょう"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴고 선 자세에서 시작해요"
+          }
         }
       }
     },
@@ -2159,6 +2429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@にまたエクササイズで獲得できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@부터 운동으로 다시 시간을 벌 수 있어요."
           }
         }
       }
@@ -2207,6 +2483,12 @@
             "state" : "translated",
             "value" : "今日のエクササイズ報酬"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 운동 보상"
+          }
         }
       }
     },
@@ -2253,6 +2535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ランジのチャレンジを読み込み中"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 챌린지 불러오는 중"
           }
         }
       }
@@ -2301,6 +2589,12 @@
             "state" : "translated",
             "value" : "ランジ"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지"
+          }
         }
       }
     },
@@ -2347,6 +2641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "回数の決まったチャレンジを選んでください。すべてのエクササイズの報酬は合わせて1日(UTC)30分までです。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정해진 횟수의 챌린지를 선택해요. 모든 운동 보상을 합쳐 UTC 기준 하루 최대 30분까지 벌 수 있어요."
           }
         }
       }
@@ -2395,6 +2695,12 @@
             "state" : "translated",
             "value" : "ランジはこのiPhone上でリアルタイムに数えます。動画・画像・体のポイントは記録、保存、アップロードされません。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 iPhone에서 런지 횟수를 실시간으로 세어요. 동영상, 이미지, 신체 관절 위치 정보는 기록하거나 저장하거나 업로드하지 않아요."
+          }
         }
       }
     },
@@ -2441,6 +2747,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ボタン不要。まっすぐ立って画面に入ると自動で始まります"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼 없이 시작해요. 화면 안에 똑바로 서면 자동으로 시작돼요"
           }
         }
       }
@@ -2489,6 +2801,12 @@
             "state" : "translated",
             "value" : "ランジを%lld回達成しました。スクリーンタイムの残高を使えます。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지 %lld회를 완료했어요. 모은 스크린타임을 사용할 수 있어요."
+          }
         }
       }
     },
@@ -2535,6 +2853,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ランジで獲得"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "런지로 시간 벌기"
           }
         }
       }
@@ -2583,6 +2907,12 @@
             "state" : "translated",
             "value" : "スマホを立てて、足が映るまで下がり、横向きに立ってください。脚は交互に、1回ごとにカウントします。見えたら自動で始めます。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 세우고 발까지 보이도록 뒤로 가서 옆으로 서 주세요. 양쪽 다리를 번갈아 해요. 한 번씩 모두 세어요. 자세가 보이면 자동으로 시작할게요."
+          }
         }
       }
     },
@@ -2629,6 +2959,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "スマホに横向きで立ってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰에 옆모습이 보이도록 서 주세요."
           }
         }
       }
@@ -2677,6 +3013,12 @@
             "state" : "translated",
             "value" : "まだ見えません。頭から足までカメラに映る位置に移動してください。"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 모습이 보이지 않아요. 머리부터 발끝까지 카메라에 보이도록 움직여 주세요."
+          }
         }
       }
     },
@@ -2723,6 +3065,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "脚を伸ばして、そのまま止まってください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴고 잠시 멈춰 주세요."
           }
         }
       }
@@ -2771,6 +3119,12 @@
             "state" : "translated",
             "value" : "Exercício para ganhar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "운동으로 시간 벌기"
+          }
         }
       }
     },
@@ -2817,6 +3171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exercício"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "운동"
           }
         }
       }
@@ -2865,6 +3225,12 @@
             "state" : "translated",
             "value" : "A contagem pausa se seu corpo sair do quadro"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몸이 화면 밖으로 나가면 횟수 계산이 멈춰요"
+          }
         }
       }
     },
@@ -2911,6 +3277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/ %lld flexões"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ 팔굽혀펴기 %lld회"
           }
         }
       }
@@ -2959,6 +3331,12 @@
             "state" : "translated",
             "value" : "%1$lld de %2$lld flexões"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 %1$lld / %2$lld회"
+          }
         }
       }
     },
@@ -3005,6 +3383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flexão %1$lld de %2$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 %2$lld회 중 %1$lld회"
           }
         }
       }
@@ -3053,6 +3437,12 @@
             "state" : "translated",
             "value" : "Ganhe %lld min"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분 벌기"
+          }
         }
       }
     },
@@ -3099,6 +3489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Comece as flexões"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 시작"
           }
         }
       }
@@ -3147,6 +3543,12 @@
             "state" : "translated",
             "value" : "%1$lld flexões, ganhe %2$lld minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 %1$lld회로 %2$lld분 획득"
+          }
         }
       }
     },
@@ -3193,6 +3595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld flexões"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 %lld회"
           }
         }
       }
@@ -3241,6 +3649,12 @@
             "state" : "translated",
             "value" : "Ganhe %lld min"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분 벌기"
+          }
         }
       }
     },
@@ -3287,6 +3701,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Garantindo sua recompensa sem enviar dados da câmera."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카메라 데이터를 보내지 않고 보상을 확정하고 있어요."
           }
         }
       }
@@ -3335,6 +3755,12 @@
             "state" : "translated",
             "value" : "Adicionando seus minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간을 더하고 있어요"
+          }
         }
       }
     },
@@ -3381,6 +3807,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Começa em %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld초 후 시작"
           }
         }
       }
@@ -3429,6 +3861,12 @@
             "state" : "translated",
             "value" : "Fique em posição"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자세를 잡아요"
+          }
         }
       }
     },
@@ -3475,6 +3913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantenha a posição"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자세를 유지해요"
           }
         }
       }
@@ -3523,6 +3967,12 @@
             "state" : "translated",
             "value" : "Contagem regressiva do desafio iniciada"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지 시작 카운트다운"
+          }
         }
       }
     },
@@ -3569,6 +4019,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Braços estendidos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔을 펴요"
           }
         }
       }
@@ -3617,6 +4073,12 @@
             "state" : "translated",
             "value" : "Segure a posição alta da flexão e a série começa sozinha"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 위쪽 자세를 유지하면 자동으로 시작해요"
+          }
         }
       }
     },
@@ -3663,6 +4125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique assim"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그대로 유지해요"
           }
         }
       }
@@ -3711,6 +4179,12 @@
             "state" : "translated",
             "value" : "Estou te vendo, fique aí"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "잘 보여요. 그대로 있어 주세요"
+          }
         }
       }
     },
@@ -3757,6 +4231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mais luz"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "조금 더 밝게 해요"
           }
         }
       }
@@ -3805,6 +4285,12 @@
             "state" : "translated",
             "value" : "Está escuro demais para acompanhar seu corpo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 어두워서 몸을 인식할 수 없어요"
+          }
         }
       }
     },
@@ -3851,6 +4337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afaste-se"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "뒤로 가 주세요"
           }
         }
       }
@@ -3899,6 +4391,12 @@
             "state" : "translated",
             "value" : "Seu corpo inteiro precisa caber no quadro"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "온몸이 화면 안에 보여야 해요"
+          }
         }
       }
     },
@@ -3945,6 +4443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prancha reta"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "플랭크 자세로 펴요"
           }
         }
       }
@@ -3993,6 +4497,12 @@
             "state" : "translated",
             "value" : "Corpo alinhado dos ombros aos calcanhares, sem apoiar os joelhos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어깨부터 발뒤꿈치까지 일직선으로 펴고 무릎을 떼 주세요"
+          }
         }
       }
     },
@@ -4039,6 +4549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entre no quadro"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 안으로 와 주세요"
           }
         }
       }
@@ -4087,6 +4603,12 @@
             "state" : "translated",
             "value" : "Apoie o celular para que ele veja sua cabeça, seus ombros e suas mãos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "머리, 어깨, 손이 보이도록 휴대폰을 세워 주세요"
+          }
         }
       }
     },
@@ -4133,6 +4655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chegue mais perto"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가까이 와 주세요"
           }
         }
       }
@@ -4181,6 +4709,12 @@
             "state" : "translated",
             "value" : "Você está longe demais para a câmera ler seus braços"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 멀어서 카메라가 팔을 인식할 수 없어요"
+          }
         }
       }
     },
@@ -4227,6 +4761,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flexões ou agachamentos. Ganhe seu tempo de rolagem."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기나 스쿼트로 스크롤할 시간을 벌어요."
           }
         }
       }
@@ -4275,6 +4815,12 @@
             "state" : "translated",
             "value" : "Escolha um desafio de flexões ou agachamentos ao vivo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "실시간 팔굽혀펴기 또는 스쿼트 챌린지를 선택해요"
+          }
         }
       }
     },
@@ -4321,6 +4867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Precisa de tempo agora? Faça flexões ou agachamentos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지금 시간이 필요해요? 팔굽혀펴기나 스쿼트를 해요"
           }
         }
       }
@@ -4369,6 +4921,12 @@
             "state" : "translated",
             "value" : "Tente de novo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도해요"
+          }
         }
       }
     },
@@ -4415,6 +4973,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tentar de novo"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시도"
           }
         }
       }
@@ -4463,6 +5027,12 @@
             "state" : "translated",
             "value" : "Não foi possível continuar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계속 진행하지 못했어요"
+          }
         }
       }
     },
@@ -4509,6 +5079,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afaste-se para que seu corpo inteiro apareça"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "온몸이 보이도록 뒤로 가 주세요"
           }
         }
       }
@@ -4557,6 +5133,12 @@
             "state" : "translated",
             "value" : "Melhore a iluminação"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "조금 더 밝게 해 주세요"
+          }
         }
       }
     },
@@ -4603,6 +5185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ótima execução — continue assim"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "좋은 자세예요. 계속해요"
           }
         }
       }
@@ -4651,6 +5239,12 @@
             "state" : "translated",
             "value" : "Desça um pouco mais"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "조금 더 내려가요"
+          }
         }
       }
     },
@@ -4697,6 +5291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Volte para o quadro"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면 안으로 돌아와 주세요"
           }
         }
       }
@@ -4745,6 +5345,12 @@
             "state" : "translated",
             "value" : "Suba de novo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 밀어 올려요"
+          }
         }
       }
     },
@@ -4791,6 +5397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vá mais devagar para completar a repetição"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "온전히 한 회를 마치도록 천천히 해요"
           }
         }
       }
@@ -4839,6 +5451,12 @@
             "state" : "translated",
             "value" : "Comece com os braços estendidos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔을 편 자세에서 시작해요"
+          }
         }
       }
     },
@@ -4885,6 +5503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantenha a prancha reta, sem apoiar os joelhos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무릎을 대지 않고 몸을 일직선으로 유지해요"
           }
         }
       }
@@ -4933,6 +5557,12 @@
             "state" : "translated",
             "value" : "Testar agora"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지금 체험"
+          }
         }
       }
     },
@@ -4979,6 +5609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Os passos já não são o único caminho. Apoie o celular na sua frente, faça uma série e a câmera conta ao vivo."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이제 걷기만 있는 게 아니에요. 앞에 휴대폰을 세우고 한 세트를 해 보세요. 카메라가 실시간으로 횟수를 세어요."
           }
         }
       }
@@ -5027,6 +5663,12 @@
             "state" : "translated",
             "value" : "NOVA FORMA DE GANHAR"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간을 버는 새로운 방법"
+          }
         }
       }
     },
@@ -5073,6 +5715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agora não"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나중에"
           }
         }
       }
@@ -5121,6 +5769,12 @@
             "state" : "translated",
             "value" : "A contagem acontece neste iPhone. Nenhum vídeo, imagem ou ponto corporal é gravado, salvo ou enviado."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 iPhone에서 횟수를 세어요. 동영상, 이미지, 신체 관절 위치 정보는 기록하거나 저장하거나 업로드하지 않아요."
+          }
         }
       }
     },
@@ -5167,6 +5821,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apoie o celular virado para você"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나를 향해 휴대폰을 세워요"
           }
         }
       }
@@ -5215,6 +5875,12 @@
             "state" : "translated",
             "value" : "Enquadramento de selfie: ele só precisa ver sua cabeça, seus ombros e suas mãos. Começa sozinho assim que te vê em posição, sem botão para alcançar."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "셀카처럼 머리, 어깨, 손만 보이면 돼요. 준비된 자세가 보이면 자동으로 시작해요. 버튼을 누를 필요 없어요."
+          }
         }
       }
     },
@@ -5261,6 +5927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escolha 5, 10 ou 20 repetições"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5회, 10회, 20회 중 선택해요"
           }
         }
       }
@@ -5309,6 +5981,12 @@
             "state" : "translated",
             "value" : "Cada repetição só conta quando você desce até o fim e volta a subir."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "끝까지 내려갔다가 올라와야 한 회로 세어요."
+          }
         }
       }
     },
@@ -5355,6 +6033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Receba os minutos na hora"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "바로 시간을 받아요"
           }
         }
       }
@@ -5403,6 +6087,12 @@
             "state" : "translated",
             "value" : "A recompensa entra no mesmo saldo que seus passos alimentam, até 30 minutos por dia."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보상은 걸음으로 모으는 시간과 같은 잔액에 더해져요. 하루 최대 30분까지 벌 수 있어요."
+          }
         }
       }
     },
@@ -5449,6 +6139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flexões agora também dão tempo de tela."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이제 팔굽혀펴기로도 스크린타임을 벌어요."
           }
         }
       }
@@ -5497,6 +6193,12 @@
             "state" : "translated",
             "value" : "Você pode voltar a ganhar com flexões às %@."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@부터 팔굽혀펴기로 다시 시간을 벌 수 있어요."
+          }
         }
       }
     },
@@ -5543,6 +6245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Volte depois da redefinição diária em UTC."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UTC 기준으로 하루가 바뀌면 다시 와 주세요."
           }
         }
       }
@@ -5591,6 +6299,12 @@
             "state" : "translated",
             "value" : "Recompensas de flexões de hoje"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 팔굽혀펴기 보상"
+          }
         }
       }
     },
@@ -5637,6 +6351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Você atingiu o limite de hoje"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 한도에 도달했어요"
           }
         }
       }
@@ -5685,6 +6405,12 @@
             "state" : "translated",
             "value" : "Carregando desafios de flexões"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 챌린지 불러오는 중"
+          }
         }
       }
     },
@@ -5731,6 +6457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verificando os desafios de hoje"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 챌린지 확인 중"
           }
         }
       }
@@ -5779,6 +6511,12 @@
             "state" : "translated",
             "value" : "Flexões para ganhar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기로 시간 벌기"
+          }
         }
       }
     },
@@ -5825,6 +6563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flexões"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기"
           }
         }
       }
@@ -5873,6 +6617,12 @@
             "state" : "translated",
             "value" : "Seu desafio concluído está salvo neste celular. Reconecte e tente de novo para adicionar a recompensa uma única vez."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료한 챌린지는 이 휴대폰에 저장돼 있어요. 다시 연결한 뒤 재시도하면 보상이 한 번만 더해져요."
+          }
         }
       }
     },
@@ -5919,6 +6669,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desafio salvo"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지 저장 완료"
           }
         }
       }
@@ -5967,6 +6723,12 @@
             "state" : "translated",
             "value" : "Tentar recompensa de novo"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보상 다시 받기"
+          }
         }
       }
     },
@@ -6013,6 +6775,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seus minutos estão esperando"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모은 시간이 기다려요"
           }
         }
       }
@@ -6061,6 +6829,12 @@
             "state" : "translated",
             "value" : "Abrir Ajustes"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 열기"
+          }
         }
       }
     },
@@ -6107,6 +6881,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "É preciso liberar a câmera"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카메라 접근 권한이 필요해요"
           }
         }
       }
@@ -6155,6 +6935,12 @@
             "state" : "translated",
             "value" : "Escolher desafio"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지 선택"
+          }
         }
       }
     },
@@ -6201,6 +6987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escolha um desafio com fim definido. As recompensas de flexões têm limite de 30 minutos por dia UTC."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정해진 횟수의 챌린지를 선택해요. 팔굽혀펴기 보상은 UTC 기준 하루 최대 30분이에요."
           }
         }
       }
@@ -6249,6 +7041,12 @@
             "state" : "translated",
             "value" : "Quanto tempo você quer ganhar?"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몇 분을 벌까요?"
+          }
         }
       }
     },
@@ -6295,6 +7093,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contamos suas flexões ao vivo neste iPhone. Nenhum vídeo, imagem ou ponto corporal é gravado, salvo ou enviado."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 iPhone에서 팔굽혀펴기 횟수를 실시간으로 세어요. 동영상, 이미지, 신체 관절 위치 정보는 기록하거나 저장하거나 업로드하지 않아요."
           }
         }
       }
@@ -6343,6 +7147,12 @@
             "state" : "translated",
             "value" : "Sua câmera continua privada"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카메라 정보는 비공개예요"
+          }
         }
       }
     },
@@ -6389,6 +7199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sem botão: segure a posição alta da flexão e começa sozinho"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼 없이 시작해요. 팔굽혀펴기 위쪽 자세를 유지하면 자동으로 시작돼요"
           }
         }
       }
@@ -6437,6 +7253,12 @@
             "state" : "translated",
             "value" : "Começar mesmo assim: %lld s para se posicionar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "바로 시작 · 준비 시간 %lld초"
+          }
         }
       }
     },
@@ -6483,6 +7305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Posição detectada, começando"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자세 확인 완료 · 시작해요"
           }
         }
       }
@@ -6531,6 +7359,12 @@
             "state" : "translated",
             "value" : "Preparando o desafio e a recompensa."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지와 보상을 확정하고 있어요."
+          }
         }
       }
     },
@@ -6577,6 +7411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniciando o desafio"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지 시작 중"
           }
         }
       }
@@ -6625,6 +7465,12 @@
             "state" : "translated",
             "value" : "Fazer outro desafio"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 챌린지 하기"
+          }
         }
       }
     },
@@ -6671,6 +7517,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Você ganhou %lld minutos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분을 벌었어요"
           }
         }
       }
@@ -6719,6 +7571,12 @@
             "state" : "translated",
             "value" : "Você completou %lld flexões. Seu saldo de tempo de tela está pronto para usar."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 %lld회를 완료했어요. 모은 스크린타임을 사용할 수 있어요."
+          }
         }
       }
     },
@@ -6765,6 +7623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desafio concluído"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "챌린지 완료"
           }
         }
       }
@@ -6813,6 +7677,12 @@
             "state" : "translated",
             "value" : "Desbloquear meus apps por %lld minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 %lld분 잠금 해제"
+          }
         }
       }
     },
@@ -6859,6 +7729,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eles voltam a ser bloqueados sozinhos quando o tempo acaba."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간이 끝나면 앱이 자동으로 다시 잠겨요."
           }
         }
       }
@@ -6907,6 +7783,12 @@
             "state" : "translated",
             "value" : "Você ganhou %lld minutos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld분을 벌었어요"
+          }
         }
       }
     },
@@ -6953,6 +7835,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usar meus minutos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내 시간 사용"
           }
         }
       }
@@ -7001,6 +7889,12 @@
             "state" : "translated",
             "value" : "Flexões para ganhar"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기로 시간 벌기"
+          }
         }
       }
     },
@@ -7047,6 +7941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estique os braços na posição alta da flexão e segure."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "팔굽혀펴기 위쪽에서 팔을 펴고 자세를 유지해 주세요."
           }
         }
       }
@@ -7095,6 +7995,12 @@
             "state" : "translated",
             "value" : "Perfeito. Começando."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "좋아요. 지금 시작해요."
+          }
         }
       }
     },
@@ -7141,6 +8047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique em posição. Começando em %lld segundos."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자세를 잡아 주세요. %lld초 후에 시작해요."
           }
         }
       }
@@ -7189,6 +8101,12 @@
             "state" : "translated",
             "value" : "Desativar as instruções por voz"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성 코칭 끄기"
+          }
         }
       }
     },
@@ -7235,6 +8153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acabou. Mandou bem."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "해냈어요. 잘했어요."
           }
         }
       }
@@ -7283,6 +8207,12 @@
             "state" : "translated",
             "value" : "Ativar as instruções por voz"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "음성 코칭 켜기"
+          }
         }
       }
     },
@@ -7329,6 +8259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vai!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작!"
           }
         }
       }
@@ -7377,6 +8313,12 @@
             "state" : "translated",
             "value" : "Te peguei. Não se mexa."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "잘 보여요. 잠시 멈춰 주세요."
+          }
         }
       }
     },
@@ -7423,6 +8365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apoie o celular e fique na posição de flexão. Eu começo sozinho assim que te vir."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 세우고 팔굽혀펴기 자세를 잡아 주세요. 자세가 보이면 자동으로 시작할게요."
           }
         }
       }
@@ -7471,6 +8419,12 @@
             "state" : "translated",
             "value" : "Está escuro demais. Acenda uma luz se puder."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 어두워요. 가능하면 조명을 켜 주세요."
+          }
         }
       }
     },
@@ -7517,6 +8471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afaste-se até seu corpo inteiro caber no quadro."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "온몸이 화면 안에 보일 때까지 뒤로 가 주세요."
           }
         }
       }
@@ -7565,6 +8525,12 @@
             "state" : "translated",
             "value" : "Estique o corpo em prancha. Não apoie os joelhos."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몸을 일직선으로 펴서 플랭크 자세를 잡아요. 무릎을 바닥에 대지 마세요."
+          }
         }
       }
     },
@@ -7611,6 +8577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ainda não te vejo. Se posicione para a câmera ver sua cabeça, seus ombros e suas mãos."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 모습이 보이지 않아요. 머리, 어깨, 손이 카메라에 보이도록 움직여 주세요."
           }
         }
       }
@@ -7659,6 +8631,12 @@
             "state" : "translated",
             "value" : "Você está longe demais. Chegue um pouco mais perto do celular."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 멀어요. 휴대폰에 조금 더 가까이 와 주세요."
+          }
         }
       }
     },
@@ -7705,6 +8683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "/ %lld agachamentos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/ 스쿼트 %lld회"
           }
         }
       }
@@ -7753,6 +8737,12 @@
             "state" : "translated",
             "value" : "%1$lld de %2$lld agachamentos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 %1$lld / %2$lld회"
+          }
         }
       }
     },
@@ -7799,6 +8789,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agachamento %1$lld de %2$lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 %2$lld회 중 %1$lld회"
           }
         }
       }
@@ -7847,6 +8843,12 @@
             "state" : "translated",
             "value" : "Comece os agachamentos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 시작"
+          }
         }
       }
     },
@@ -7893,6 +8895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld agachamentos, ganhe %2$lld minutos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 %1$lld회로 %2$lld분 획득"
           }
         }
       }
@@ -7941,6 +8949,12 @@
             "state" : "translated",
             "value" : "%lld agachamentos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 %lld회"
+          }
         }
       }
     },
@@ -7987,6 +9001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique de pé"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "똑바로 서요"
           }
         }
       }
@@ -8035,6 +9055,12 @@
             "state" : "translated",
             "value" : "De pé de frente para o celular, pés na largura do quadril"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "발을 골반 너비로 벌리고 휴대폰을 바라보며 서 주세요"
+          }
         }
       }
     },
@@ -8081,6 +9107,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apoie o celular em pé para que ele veja você da cabeça aos pés"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "머리부터 발끝까지 보이도록 휴대폰을 세워 주세요"
           }
         }
       }
@@ -8129,6 +9161,12 @@
             "state" : "translated",
             "value" : "Pernas esticadas"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴요"
+          }
         }
       }
     },
@@ -8175,6 +9213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique de pé e parado, e a série começa sozinha"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "똑바로 서서 가만히 있으면 자동으로 시작해요"
           }
         }
       }
@@ -8223,6 +9267,12 @@
             "state" : "translated",
             "value" : "Você está longe demais para a câmera ler suas pernas"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "너무 멀어서 카메라가 다리를 인식할 수 없어요"
+          }
         }
       }
     },
@@ -8269,6 +9319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Leve o quadril para trás e desça"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "엉덩이를 뒤로 빼고 내려가요"
           }
         }
       }
@@ -8317,6 +9373,12 @@
             "state" : "translated",
             "value" : "Volte a ficar de pé"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 일어서요"
+          }
         }
       }
     },
@@ -8363,6 +9425,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique de pé, de frente para o celular"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 바라보며 서요"
           }
         }
       }
@@ -8411,6 +9479,12 @@
             "state" : "translated",
             "value" : "Comece de pé com as pernas esticadas"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴고 선 자세에서 시작해요"
+          }
         }
       }
     },
@@ -8457,6 +9531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Você poderá ganhar com agachamentos de novo às %@."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@부터 스쿼트로 다시 시간을 벌 수 있어요."
           }
         }
       }
@@ -8505,6 +9585,12 @@
             "state" : "translated",
             "value" : "Recompensas de exercício de hoje"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오늘의 운동 보상"
+          }
         }
       }
     },
@@ -8551,6 +9637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Carregando desafios de agachamentos"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 챌린지 불러오는 중"
           }
         }
       }
@@ -8599,6 +9691,12 @@
             "state" : "translated",
             "value" : "Agachamentos"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트"
+          }
         }
       }
     },
@@ -8645,6 +9743,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escolha um desafio finito. As recompensas de agachamentos e flexões compartilham um limite de 30 minutos por dia UTC."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정해진 횟수의 챌린지를 선택해요. 스쿼트와 팔굽혀펴기 보상을 합쳐 UTC 기준 하루 최대 30분까지 벌 수 있어요."
           }
         }
       }
@@ -8693,6 +9797,12 @@
             "state" : "translated",
             "value" : "Contamos seus agachamentos ao vivo neste iPhone. Nenhum vídeo, imagem ou ponto do corpo é gravado, salvo ou enviado."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 iPhone에서 스쿼트 횟수를 실시간으로 세어요. 동영상, 이미지, 신체 관절 위치 정보는 기록하거나 저장하거나 업로드하지 않아요."
+          }
         }
       }
     },
@@ -8739,6 +9849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sem botões: fique de pé no enquadramento e começa sozinho"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼 없이 시작해요. 화면 안에 똑바로 서면 자동으로 시작돼요"
           }
         }
       }
@@ -8787,6 +9903,12 @@
             "state" : "translated",
             "value" : "Você completou %lld agachamentos. Seu saldo de tempo de tela está pronto para usar."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트 %lld회를 완료했어요. 모은 스크린타임을 사용할 수 있어요."
+          }
         }
       }
     },
@@ -8833,6 +9955,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agachamentos para ganhar"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스쿼트로 시간 벌기"
           }
         }
       }
@@ -8881,6 +10009,12 @@
             "state" : "translated",
             "value" : "Apoie o celular em pé, afaste-se até ele ver seus pés e fique de pé. Eu começo sozinho quando vir você."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 세우고 발까지 보이도록 뒤로 가서 똑바로 서 주세요. 자세가 보이면 자동으로 시작할게요."
+          }
         }
       }
     },
@@ -8927,6 +10061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fique de pé, de frente para o celular."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "휴대폰을 바라보며 서 주세요."
           }
         }
       }
@@ -8975,6 +10115,12 @@
             "state" : "translated",
             "value" : "Ainda não vejo você. Posicione-se para a câmera ver você da cabeça aos pés."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 모습이 보이지 않아요. 머리부터 발끝까지 카메라에 보이도록 움직여 주세요."
+          }
         }
       }
     },
@@ -9021,6 +10167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estique as pernas e fique parado."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다리를 펴고 잠시 멈춰 주세요."
           }
         }
       }
