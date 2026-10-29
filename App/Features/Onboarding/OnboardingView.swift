@@ -1,3 +1,4 @@
+import AVFoundation
 import EarnDomain
 import SwiftUI
 
@@ -39,7 +40,6 @@ struct OnboardingView: View {
     @AppStorage(OnboardingRouteStorage.key, store: AppGroup.defaults) private var storedRoute = Route.hook.rawValue
 
     @State private var profile = OnboardingProfile()
-    @State private var pushupsDemo = OnboardingPushupsDemoModel()
     @State private var isMovingBack = false
     @State private var isLoadingHealth = false
     @State private var isActivating = false
@@ -53,8 +53,12 @@ struct OnboardingView: View {
 
     /// Someone who left on the paywall under v7 resumes at the mission: that screen and the
     /// paywall's position after the first unlock both assume they have already set up.
+    ///
+    /// The push-up demo screens are gone, so anyone who left on one picks up at the apps step,
+    /// which is where the demo used to send them.
     private var route: Route {
         if storedRoute == Route.legacyPaywallRawValue { return .mission }
+        if Route.legacyPushupsDemoRawValues.contains(storedRoute) { return .apps }
         return Route(rawValue: storedRoute) ?? .hook
     }
 
@@ -170,20 +174,6 @@ struct OnboardingView: View {
             } action: { EmptyView() }
         case .goal:
             goalStep
-        case .pushupsIntro:
-            OnboardingPushupsIntroStep(
-                model: pushupsDemo,
-                onTryNow: {
-                    pushupsDemo.tapTryNow(in: env)
-                    go(to: .pushupsDemo)
-                },
-                onLater: continueWithoutDemo,
-                onBack: goBack
-            )
-        case .pushupsDemo:
-            pushupsDemoStep
-        case .pushupsLater:
-            OnboardingPushupsLaterStep(model: pushupsDemo, onContinue: advance)
         case .apps:
             AppsStep(onContinue: advance, onBack: goBack)
         case .plan:
@@ -197,39 +187,6 @@ struct OnboardingView: View {
         case .mission:
             missionStep
         }
-    }
-
-    /// The demo route hosts both the contextual camera explanation and the camera itself, so
-    /// the capture session is created once and torn down the moment the route changes.
-    @ViewBuilder
-    private var pushupsDemoStep: some View {
-        switch pushupsDemo.phase {
-        case .cameraExplanation:
-            OnboardingCameraExplanationStep(model: pushupsDemo, onSkip: continueWithoutDemo)
-        case .intro:
-            // Only reachable by relaunching onto a stored route whose in-memory demo is gone.
-            // Send the user back to the offer rather than to an empty camera screen.
-            Color.clear.onAppear { go(to: .pushupsIntro, movingBack: true) }
-        case .skipped:
-            Color.clear.onAppear { go(to: .pushupsLater) }
-        default:
-            OnboardingPushupsDemoStep(
-                model: pushupsDemo,
-                onFinished: { go(to: .apps) },
-                onSkip: { go(to: .pushupsLater) }
-            )
-            .onDisappear { pushupsDemo.close(in: env) }
-        }
-    }
-
-    /// Every "later" path: the intro's secondary action, and the explanation's. Neither has
-    /// asked for a permission, so the only thing to record is the choice itself.
-    private func continueWithoutDemo() {
-        pushupsDemo.tapLater(in: env)
-        env.analytics.track(.onboardingContinueWithoutDemo.withProperties([
-            "detection_supported": .bool(pushupsDemo.offersDemo)
-        ]))
-        go(to: .pushupsLater)
     }
 
     // MARK: - Steps
@@ -534,7 +491,17 @@ struct OnboardingView: View {
     /// unspent. In 1.2.2, four of the five people who finished onboarding wandered into Home and
     /// Settings instead of earning anything, and none of them came back.
     private var offersPushupsNow: Bool {
-        OnboardingPushupsDemoModel.isDetectionSupported && env.featureAccess.canUseWorkoutEarning
+        Self.canCountReps && env.featureAccess.canUseWorkoutEarning
+    }
+
+    /// Rep counting needs a front camera. The Simulator has none but still gets the push-up
+    /// mission, so its layout can be checked there; the camera screen then shows its error.
+    private static var canCountReps: Bool {
+        #if targetEnvironment(simulator)
+        true
+        #else
+        AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) != nil
+        #endif
     }
 
     private func startFirstEarn(withPushups: Bool) {
@@ -548,8 +515,8 @@ struct OnboardingView: View {
             await env.activateAdaptivePlan(profile)
             // Home's navigation stack picks this up as soon as it appears.
             if withPushups {
-                // Someone who started a trial during onboarding is Pro, and Pro users who skipped
-                // the demo are owed the push-ups announcement — which would open over the camera.
+                // Anyone who has not met push-ups is owed the announcement sheet on Home, which
+                // would open over the camera they are about to use.
                 env.markPushupsIntroSeen()
                 env.requestRoute(.pushups)
             }
@@ -559,7 +526,70 @@ struct OnboardingView: View {
     /// The commitment moment, and the only other place onboarding spends an illustration: the
     /// path he is about to walk. Everything between the opening and here has been plain ground,
     /// so the artwork returning is what marks this as the end of setup.
+    ///
+    /// When this phone can count reps, the screen leads with earning the first minutes here and
+    /// now, and spending them straight after: the whole trade the app sells, inside the first
+    /// session. Until 1.3.5 it led with a walk, and the median person who finished onboarding
+    /// took 38 minutes to earn anything; 27 of 40 never did within a week.
+    @ViewBuilder
     private var missionStep: some View {
+        if offersPushupsNow {
+            pushupsMission
+        } else {
+            walkMission
+        }
+    }
+
+    private var pushupsMission: some View {
+        illustratedLayout(scene: .earnPath) {
+            Text("Earn your first 5 minutes right now.")
+                .font(.serif(38, relativeTo: .largeTitle))
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            VStack(alignment: .leading, spacing: Theme.Space.m) {
+                missionBeat(1, "Do 5 push-ups in front of the camera.")
+                missionBeat(2, "Your 5 minutes land in your balance.")
+                missionBeat(3, "Unlock your apps with them, right away.")
+            }
+            .padding(.top, Theme.Space.l)
+            Text("Push-ups are counted on this iPhone. No video is recorded or uploaded.")
+                .font(.sans(13.5))
+                .foregroundStyle(Theme.muted)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, Theme.Space.l)
+        } action: {
+            Button {
+                startFirstEarn(withPushups: true)
+            } label: {
+                HStack {
+                    if isActivating { ProgressView().tint(Color.white) }
+                    Text(isActivating ? "Activating your plan" : "Earn them now with push-ups")
+                }
+            }
+            .buttonStyle(.pill)
+            .disabled(isActivating)
+            Button("I'd rather walk 500 steps") { startFirstEarn(withPushups: false) }
+                .buttonStyle(.quiet)
+                .disabled(isActivating)
+        }
+    }
+
+    private func missionBeat(_ number: Int, _ text: LocalizedStringKey) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: Theme.Space.m) {
+            Text(number.formatted())
+                .font(.serif(25))
+                .foregroundStyle(Night.cobaltText)
+                .frame(width: 22, alignment: .leading)
+                .accessibilityHidden(true)
+            Text(text)
+                .font(.sans(17, weight: .semibold))
+                .foregroundStyle(Night.textSoft)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var walkMission: some View {
         illustratedLayout(scene: .earnPath) {
             Text("Your first 5 minutes are 500 steps away.")
                 .font(.serif(38, relativeTo: .largeTitle))
@@ -580,37 +610,17 @@ struct OnboardingView: View {
                 .foregroundStyle(Theme.muted)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, Theme.Space.l)
-            Text("In a hurry? Five push-ups in front of the camera earn the same five minutes.")
-                .font(.serif(25))
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, Theme.Space.l)
         } action: {
-            if offersPushupsNow {
-                Button {
-                    startFirstEarn(withPushups: true)
-                } label: {
-                    HStack {
-                        if isActivating { ProgressView().tint(Color.white) }
-                        Text(isActivating ? "Activating your plan" : "Earn them now with push-ups")
-                    }
+            Button {
+                startFirstEarn(withPushups: false)
+            } label: {
+                HStack {
+                    if isActivating { ProgressView().tint(Color.white) }
+                    Text(isActivating ? "Activating your plan" : "Take a short walk")
                 }
-                .buttonStyle(.pill)
-                .disabled(isActivating)
-                Button("I'll take a walk") { startFirstEarn(withPushups: false) }
-                    .buttonStyle(.quiet)
-                    .disabled(isActivating)
-            } else {
-                Button {
-                    startFirstEarn(withPushups: false)
-                } label: {
-                    HStack {
-                        if isActivating { ProgressView().tint(Color.white) }
-                        Text(isActivating ? "Activating your plan" : "Take a short walk")
-                    }
-                }
-                .buttonStyle(.pill)
-                .disabled(isActivating)
             }
+            .buttonStyle(.pill)
+            .disabled(isActivating)
         }
     }
 
@@ -803,15 +813,17 @@ struct OnboardingView: View {
     enum Route: String, CaseIterable {
         case hook, scrolling, timeCost, intent, previousAttempt, mechanism
         case health, manualBaseline, goal
-        /// The optional push-up demo. Every one of these three is skippable, and none of them
-        /// asks for Screen Time, which is why they sit before `apps` rather than inside it.
-        case pushupsIntro, pushupsDemo, pushupsLater
         case apps, plan, customize, trial, notifications, mission
 
         /// v7 ended onboarding at a paywall; v8 moves it after the first unlock. `trial` is a
         /// new raw value so nobody resuming from that old route lands on the new offer.
         static let legacyPaywallRawValue = "paywall"
-        static let progressCount = 12
+        /// Up to 1.3.5 a three-rep push-up demo sat between the goal and the apps. It asked for
+        /// the camera and the effort and paid nothing: 23 of 29 people who started it never
+        /// finished, and those who did were asked for five more reps at the mission. The first
+        /// push-ups are now the real challenge the mission opens, which credits the minutes.
+        static let legacyPushupsDemoRawValues: Set<String> = ["pushupsIntro", "pushupsDemo", "pushupsLater"]
+        static let progressCount = 11
         var progress: Int {
             switch self {
             case .hook: 0
@@ -822,12 +834,11 @@ struct OnboardingView: View {
             case .mechanism: 5
             case .health, .manualBaseline: 6
             case .goal: 7
-            case .pushupsIntro, .pushupsDemo, .pushupsLater: 8
-            case .apps: 9
-            case .plan, .customize: 10
+            case .apps: 8
+            case .plan, .customize: 9
             // Full screen, with no progress rule of its own.
-            case .trial, .notifications: 11
-            case .mission: 12
+            case .trial, .notifications: 10
+            case .mission: 11
             }
         }
         var next: Route? {
@@ -839,9 +850,7 @@ struct OnboardingView: View {
             case .previousAttempt: .mechanism
             case .mechanism: .health
             case .health, .manualBaseline: .goal
-            case .goal: .pushupsIntro
-            case .pushupsIntro: .pushupsDemo
-            case .pushupsDemo, .pushupsLater: .apps
+            case .goal: .apps
             case .apps: .plan
             // Customizing returns to the plan rather than skipping past it, so the number the
             // new goal produces is the thing that sends you on.
@@ -862,10 +871,6 @@ struct OnboardingView: View {
             case .health: .mechanism
             case .manualBaseline: .health
             case .goal: .health
-            case .pushupsIntro: .goal
-            // The demo screens own their own way out ("Cancel", "Continue without the demo"),
-            // and re-entering a finished demo from behind would only show stale state.
-            case .pushupsDemo, .pushupsLater: nil
             case .apps: .goal
             case .plan: .apps
             case .customize: .plan

@@ -125,25 +125,12 @@ struct AnalyticsEvent: Sendable, Equatable {
     /// cover both; each carries an `exercise` property.
     static let exerciseSelected = AnalyticsEvent("exercise_selected")
 
-    // The optional push-up demo inside onboarding. Kept separate from the `pushups_*` events
-    // above because the demo grants nothing: mixing them would pollute the earning funnel.
-    static let onboardingPushupsIntroViewed = AnalyticsEvent("onboarding_pushups_intro_viewed")
-    static let onboardingPushupsTryNowTapped = AnalyticsEvent("onboarding_pushups_try_now_tapped")
-    static let onboardingPushupsLaterTapped = AnalyticsEvent("onboarding_pushups_later_tapped")
-    static let onboardingCameraExplanationViewed = AnalyticsEvent("onboarding_camera_explanation_viewed")
-    static let onboardingCameraPermissionRequested = AnalyticsEvent("onboarding_camera_permission_requested")
-    static let onboardingCameraPermissionGranted = AnalyticsEvent("onboarding_camera_permission_granted")
-    static let onboardingCameraPermissionDenied = AnalyticsEvent("onboarding_camera_permission_denied")
-    static let onboardingPushupsDemoStarted = AnalyticsEvent("onboarding_pushups_demo_started")
-    static let onboardingPushupsRepDetected = AnalyticsEvent("onboarding_pushups_rep_detected")
-    static let onboardingPushupsDemoCompleted = AnalyticsEvent("onboarding_pushups_demo_completed")
-    static let onboardingPushupsDemoAbandoned = AnalyticsEvent("onboarding_pushups_demo_abandoned")
-    static let onboardingPushupsDemoError = AnalyticsEvent("onboarding_pushups_demo_error")
-    static let onboardingContinueWithoutDemo = AnalyticsEvent("onboarding_continue_without_demo")
     static let onboardingScreenTimePermissionRequested =
         AnalyticsEvent("onboarding_screen_time_permission_requested")
     static let firstAppBlocked = AnalyticsEvent("first_app_blocked")
     static let firstRealUnlockCompleted = AnalyticsEvent("first_real_unlock_completed")
+    /// The first reward's "unlock my apps" button, which leads straight into the first session.
+    static let firstUnlockGuideTapped = AnalyticsEvent("first_unlock_guide_tapped")
     static let reviewPromptRequested = AnalyticsEvent("review_prompt_requested")
     static let rateAppTapped = AnalyticsEvent("rate_app_tapped")
 
@@ -152,7 +139,6 @@ struct AnalyticsEvent: Sendable, Equatable {
     static let paywallOfferLoaded = AnalyticsEvent("paywall_offer_loaded")
     static let paywallCancelNudgeShown = AnalyticsEvent("paywall_cancel_nudge_shown")
     static let familyControlsDenied = AnalyticsEvent("family_controls_denied")
-    static let onboardingPushupsDemoTrouble = AnalyticsEvent("onboarding_pushups_demo_trouble")
     static let onboardingBackTapped = AnalyticsEvent("onboarding_back_tapped")
 
     /// The first reward someone earned by doing something (push-ups, study). `first_reward_earned`

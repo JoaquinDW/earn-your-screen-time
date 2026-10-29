@@ -13465,6 +13465,46 @@
         }
       }
     },
+    "Do 5 push-ups in front of the camera." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mach 5 Liegestütze vor der Kamera."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haz 5 flexiones frente a la cámara."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fais 5 pompes devant la caméra."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fai 5 flessioni davanti alla fotocamera."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラの前で腕立て伏せを5回。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faça 5 flexões na frente da câmera."
+          }
+        }
+      }
+    },
     "Do push-ups to unlock the apps that distract you most." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -13953,6 +13993,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ganhe agora com flexões"
+          }
+        }
+      }
+    },
+    "Earn your first 5 minutes right now." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verdiene jetzt sofort deine ersten 5 Minuten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gana tus primeros 5 minutos ahora mismo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gagne tes 5 premières minutes tout de suite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guadagna subito i tuoi primi 5 minuti."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最初の5分を今すぐ獲得しよう。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganhe seus primeiros 5 minutos agora mesmo."
           }
         }
       }
@@ -18488,6 +18568,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quero isso"
+          }
+        }
+      }
+    },
+    "I'd rather walk 500 steps" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieber 500 Schritte gehen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prefiero caminar 500 pasos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je préfère marcher 500 pas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferisco camminare 500 passi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "500歩歩くほうがいい"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prefiro caminhar 500 passos"
           }
         }
       }
@@ -30742,6 +30862,46 @@
         }
       }
     },
+    "Push-ups are counted on this iPhone. No video is recorded or uploaded." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Liegestütze werden auf diesem iPhone gezählt. Es wird kein Video aufgenommen oder hochgeladen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las flexiones se cuentan en este iPhone. No se graba ni se sube ningún video."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les pompes sont comptées sur cet iPhone. Aucune vidéo n'est enregistrée ni envoyée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le flessioni vengono contate su questo iPhone. Nessun video viene registrato o caricato."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回数のカウントはこのiPhone上で行われます。動画が録画・アップロードされることはありません。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As flexões são contadas neste iPhone. Nenhum vídeo é gravado ou enviado."
+          }
+        }
+      }
+    },
     "READY FOR A LITTLE MORE" : {
       "localizations" : {
         "de" : {
@@ -41651,6 +41811,46 @@
         }
       }
     },
+    "Unlock your apps with them, right away." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entsperre damit sofort deine Apps."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Úsalos para desbloquear tus apps al instante."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Débloque tes apps avec, tout de suite."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sblocca subito le tue app con questi minuti."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "そのまますぐにアプリのロックを解除。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desbloqueie seus apps com eles, na hora."
+          }
+        }
+      }
+    },
     "Up to %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -44889,6 +45089,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sua meta de 30 dias"
+          }
+        }
+      }
+    },
+    "Your 5 minutes land in your balance." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine 5 Minuten landen auf deinem Guthaben."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus 5 minutos se suman a tu saldo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tes 5 minutes arrivent sur ton solde."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I tuoi 5 minuti finiscono nel tuo saldo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5分があなたの残高に入ります。"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seus 5 minutos entram no seu saldo."
           }
         }
       }
