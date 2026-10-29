@@ -42,6 +42,20 @@ M["en-GB"] = dict(
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("Push-ups","Press-ups").replace("PUSH-UPS","PRESS-UPS"))
 
+M["en-AU"] = dict(
+ name=M["en-GB"]["name"],
+ subtitle=M["en-GB"]["subtitle"],
+ keywords="mobile,addiction,focus,habit,tiktok,reels,insta,social,media,wellbeing,detox,walk,unlock",
+ promo=M["en-GB"]["promo"],
+ desc=M["en-GB"]["desc"].replace("Your phone", "Your mobile phone"))
+
+M["en-CA"] = dict(
+ name=M["en-US"]["name"],
+ subtitle=M["en-US"]["subtitle"],
+ keywords="cellphone,addiction,focus,habit,tiktok,reels,insta,social,media,wellness,detox,walk,unlock",
+ promo=M["en-US"]["promo"],
+ desc=M["en-US"]["desc"].replace("Your phone shouldn't be free.", "Time on your phone shouldn't be free."))
+
 M["es-ES"] = dict(
  name="Ganar tiempo pantalla: Earnit",
  subtitle="Supera la adicción al móvil",
@@ -141,3 +155,10 @@ CONÇU PRIVÉ
 Les données de santé et de mouvement restent sur votre iPhone. Les applis que vous bloquez, nous ne les voyons jamais : iOS les garde privées, même vis-à-vis d'Earnit.
 
 Bougez d'abord. Scrollez ensuite.""")
+
+M["fr-CA"] = dict(
+ name=M["fr-FR"]["name"],
+ subtitle=M["fr-FR"]["subtitle"],
+ keywords="cellulaire,dépendance,autocontrôle,pompes,limite,distraction,habitude,marche,réseau,social",
+ promo=M["fr-FR"]["promo"],
+ desc=M["fr-FR"]["desc"].replace("téléphone", "cellulaire"))
