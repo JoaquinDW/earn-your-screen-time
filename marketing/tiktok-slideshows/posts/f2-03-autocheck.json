@@ -1,0 +1,75 @@
+{
+  "id": "f2-03-autocheck",
+  "format": "f2-pov-pushups",
+  "language": "en",
+  "status": "ready",
+  "topic": "interrupt the automatic check",
+  "caption": "turn the automatic check into a choice: move, earn, then start a session. no video is saved.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "shield",
+      "copy": {
+        "title": "pov: your quick check starts with push-ups"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "count",
+      "copy": {
+        "title": "your iPhone counts each rep on-device"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "pushups"
+    },
+    {
+      "id": "earned",
+      "copy": {
+        "title": "finish the set. bank the minutes."
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "earned"
+    },
+    {
+      "id": "session",
+      "copy": {
+        "title": "spend them in a 10-minute session"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy",
+      "screen": "running"
+    },
+    {
+      "id": "relock",
+      "copy": {
+        "title": "then your selected apps lock again"
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "search Earnit on the App Store"
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

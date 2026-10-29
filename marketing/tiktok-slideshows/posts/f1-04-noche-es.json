@@ -1,0 +1,75 @@
+{
+  "id": "f1-04-noche-es",
+  "format": "f1-listicle",
+  "language": "es",
+  "status": "ready",
+  "topic": "cambios para la noche",
+  "caption": "elige un cambio pequeño antes de acostarte. guarda estas ideas para probarlas a tu ritmo.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "5 cambios para dejar de abrir instagram por reflejo"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "grayscale",
+      "copy": {
+        "title": "1. quita el color",
+        "body": "prueba la escala de grises. observa si todavía te apetece abrir el feed."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "notifications",
+      "copy": {
+        "title": "2. silencia las invitaciones",
+        "body": "desactiva las notificaciones de las apps que abres sin pensar."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "charger",
+      "copy": {
+        "title": "3. cambia el cargador de sitio",
+        "body": "déjalo fuera del dormitorio antes de acostarte."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "4. gana minutos con earnit antes de entrar"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "best-tip",
+      "copy": {
+        "title": "5. elige tu pausa antes de desbloquear",
+        "body": "agua, estiramientos o una vuelta. decide primero. guarda esto para esta noche."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

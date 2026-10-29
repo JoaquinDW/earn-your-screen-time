@@ -1,0 +1,75 @@
+{
+  "id": "f1-03-between-tasks",
+  "format": "f1-listicle",
+  "language": "en",
+  "status": "ready",
+  "topic": "the automatic between-task check",
+  "caption": "a break can have a beginning and an end. save these for your next automatic check.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "5 things to try between tasks instead of scrolling"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "grayscale",
+      "copy": {
+        "title": "1. remove the color",
+        "body": "try grayscale when a quick check keeps becoming a long one."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "notifications",
+      "copy": {
+        "title": "2. stop the little nudges",
+        "body": "turn off notifications that do not need an answer today."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "charger",
+      "copy": {
+        "title": "3. park the charger elsewhere",
+        "body": "keep the phone away from the spot where you take breaks."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "4. turn a walk into earnit minutes"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "best-tip",
+      "copy": {
+        "title": "5. decide what your break is for",
+        "body": "water, a stretch, a window. pick one before unlocking. save this."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

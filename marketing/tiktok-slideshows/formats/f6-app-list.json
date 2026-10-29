@@ -1,0 +1,98 @@
+{
+  "id": "f6-app-list",
+  "version": 1,
+  "family": "clean-list",
+  "requiresEvidence": false,
+  "description": "Research B: icon swap hook, four apps with three phone screenshots each.",
+  "slides": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "layout": "text-hook",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": null,
+      "fallback": "navy",
+      "iconSwap": true
+    },
+    {
+      "id": "language",
+      "role": "value",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "duolingo"
+    },
+    {
+      "id": "puzzle",
+      "role": "value",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nyt-games"
+    },
+    {
+      "id": "run",
+      "role": "value",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nike-run-club"
+    },
+    {
+      "id": "earnit",
+      "role": "product",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "earnit"
+    },
+    {
+      "id": "save",
+      "role": "cta",
+      "layout": "cta",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": null,
+      "fallback": "navy"
+    }
+  ]
+}

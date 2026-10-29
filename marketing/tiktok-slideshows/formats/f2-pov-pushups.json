@@ -1,0 +1,86 @@
+{
+  "id": "f2-pov-pushups",
+  "version": 1,
+  "family": "native",
+  "requiresEvidence": false,
+  "description": "Shield → count → banked minutes → explicit session → relock.",
+  "slides": [
+    {
+      "id": "shield",
+      "role": "hook",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "count",
+      "role": "mechanism",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "pushups"
+    },
+    {
+      "id": "earned",
+      "role": "balance",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "earned"
+    },
+    {
+      "id": "session",
+      "role": "session",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy",
+      "screen": "running"
+    },
+    {
+      "id": "relock",
+      "role": "boundary",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "find",
+      "role": "cta",
+      "layout": "cta",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

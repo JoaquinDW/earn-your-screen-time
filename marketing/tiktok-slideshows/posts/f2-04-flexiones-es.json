@@ -1,0 +1,75 @@
+{
+  "id": "f2-04-flexiones-es",
+  "format": "f2-pov-pushups",
+  "language": "es",
+  "status": "ready",
+  "topic": "flexiones antes del feed",
+  "caption": "primero te mueves. luego eliges una sesión. las repeticiones se cuentan en tu iPhone, sin guardar video.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "shield",
+      "copy": {
+        "title": "pov: haces flexiones antes de abrir tiktok"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "count",
+      "copy": {
+        "title": "tu cámara cuenta las repeticiones"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "pushups"
+    },
+    {
+      "id": "earned",
+      "copy": {
+        "title": "ganas minutos. las apps siguen bloqueadas."
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "earned"
+    },
+    {
+      "id": "session",
+      "copy": {
+        "title": "inicia una sesión de 10 minutos"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy",
+      "screen": "running"
+    },
+    {
+      "id": "relock",
+      "copy": {
+        "title": "se acaba la sesión. vuelven a bloquearse."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "busca Earnit en el App Store"
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

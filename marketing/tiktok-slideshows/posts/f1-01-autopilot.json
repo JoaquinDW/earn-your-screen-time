@@ -1,0 +1,75 @@
+{
+  "id": "f1-01-autopilot",
+  "format": "f1-listicle",
+  "language": "en",
+  "status": "ready",
+  "topic": "small changes for autopilot scrolling",
+  "caption": "a few small changes for the apps you open without thinking. save one to try tonight.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "5 things to try when you keep opening tiktok"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "grayscale",
+      "copy": {
+        "title": "1. make your phone boring",
+        "body": "try grayscale. see if the feed still feels worth opening."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "notifications",
+      "copy": {
+        "title": "2. mute the invitations",
+        "body": "turn off notifications from the apps you open without thinking."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "charger",
+      "copy": {
+        "title": "3. move the charger",
+        "body": "charge outside your bedroom. give your thumb a longer commute."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "4. earn the scroll with earnit"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "best-tip",
+      "copy": {
+        "title": "5. choose the next thing first",
+        "body": "put your shoes by the door before picking up your phone. save this."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

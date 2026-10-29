@@ -1,0 +1,84 @@
+{
+  "id": "f4-04-semana-es",
+  "format": "f4-seven-days",
+  "language": "es",
+  "status": "draft",
+  "topic": "registro semanal",
+  "caption": "plantilla: añade tus datos reales y su fuente antes de compartir.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "7 días con earnit: {{fecha_inicio}}"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-1-2",
+      "copy": {
+        "title": "días 1 y 2",
+        "body": "día 1: {{d1_pasos}} pasos. día 2: {{d2_pasos}} pasos."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "days-3-4",
+      "copy": {
+        "title": "días 3 y 4",
+        "body": "día 3: {{d3_pasos}} pasos. día 4: {{d4_pasos}} pasos."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-5-6",
+      "copy": {
+        "title": "días 5 y 6",
+        "body": "día 5: {{d5_pasos}} pasos. día 6: {{d6_pasos}} pasos."
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "day-7",
+      "copy": {
+        "title": "día 7",
+        "body": "{{d7_pasos}} pasos. {{nota_real}}."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "summary",
+      "copy": {
+        "title": "la semana completa",
+        "body": "minutos ganados: {{minutos_ganados}}. minutos usados: {{minutos_usados}}."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "takeaway",
+      "copy": {
+        "title": "lo que observaste",
+        "body": "{{observacion_real}}. guarda tu registro para comparar la próxima semana."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

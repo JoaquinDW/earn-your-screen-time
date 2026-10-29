@@ -1,0 +1,101 @@
+{
+  "id": "f6-02-break",
+  "format": "f6-app-list",
+  "language": "en",
+  "status": "draft",
+  "topic": "break",
+  "caption": "four ideas for your next automatic app check. choose a lesson, a puzzle, a run, or move first.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    },
+    {
+      "claim": "Duolingo has short language lessons.",
+      "url": "https://en.duolingo.com/nojs/splash"
+    },
+    {
+      "claim": "NYT Games includes Wordle and other daily word puzzles.",
+      "url": "https://thenewyorktimeshelpcenter.helpjuice.com/360011158491-New-York-Times-Games/360052272251-New-York-Times-Games-Subscription"
+    },
+    {
+      "claim": "Nike Run Club offers audio-guided runs and run tracking.",
+      "url": "https://www.nike.com/nrc-app"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "your break deserves a better app"
+      },
+      "image": null,
+      "fallback": "navy",
+      "fromApps": [
+        "tiktok",
+        "instagram",
+        "x"
+      ],
+      "toApps": [
+        "duolingo",
+        "nyt-games",
+        "nike-run-club",
+        "earnit"
+      ]
+    },
+    {
+      "id": "language",
+      "copy": {
+        "title": "Duolingo",
+        "body": "give your next break a language lesson to finish."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "duolingo"
+    },
+    {
+      "id": "puzzle",
+      "copy": {
+        "title": "NYT Games",
+        "body": "try Wordle when you want a word puzzle instead of a feed."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nyt-games"
+    },
+    {
+      "id": "run",
+      "copy": {
+        "title": "Nike Run Club",
+        "body": "let an audio-guided run give your break a direction."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "nike-run-club"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "Earnit",
+        "body": "take a walk or do camera-counted exercises before spending earned minutes."
+      },
+      "image": null,
+      "fallback": "navy",
+      "app": "earnit"
+    },
+    {
+      "id": "save",
+      "copy": {
+        "title": "save your next-break list. find Earnit on the App Store."
+      },
+      "image": null,
+      "fallback": "navy"
+    }
+  ]
+}

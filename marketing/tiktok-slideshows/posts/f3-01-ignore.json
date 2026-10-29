@@ -1,0 +1,74 @@
+{
+  "id": "f3-01-ignore",
+  "format": "f3-limits-dont-work",
+  "language": "en",
+  "status": "ready",
+  "topic": "ignore limit loop",
+  "caption": "if you keep ignoring the limit, try making the choice before you open the feed.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "keep tapping ignore limit? try changing when you decide"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "ignore",
+      "copy": {
+        "title": "the button is right there",
+        "body": "you hit your limit. you want another video. ignoring it is an option."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "temptation",
+      "copy": {
+        "title": "that is an awkward time to decide",
+        "body": "you are already in the feed when the phone asks you to stop."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "beforehand",
+      "copy": {
+        "title": "make the choice before the feed",
+        "body": "earn minutes by walking or doing camera-counted exercises first."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "earnit: choose 5, 10 or 15 minutes. then it locks."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "search Earnit on the App Store"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

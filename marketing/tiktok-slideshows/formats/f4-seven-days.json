@@ -1,0 +1,111 @@
+{
+  "id": "f4-seven-days",
+  "version": 1,
+  "family": "native",
+  "requiresEvidence": true,
+  "description": "Seven-day paired-day summary template. All measurements remain placeholders.",
+  "slides": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "layout": "text-hook",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-1-2",
+      "role": "evidence",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-3-4",
+      "role": "evidence",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-5-6",
+      "role": "evidence",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "day-7",
+      "role": "evidence",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "summary",
+      "role": "evidence",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "takeaway",
+      "role": "takeaway",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

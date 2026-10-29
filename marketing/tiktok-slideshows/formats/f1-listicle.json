@@ -1,0 +1,94 @@
+{
+  "id": "f1-listicle",
+  "version": 1,
+  "family": "native",
+  "requiresEvidence": false,
+  "description": "Five tips: three practical changes, Earnit fourth, strongest tip and save last.",
+  "slides": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "layout": "text-hook",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "grayscale",
+      "role": "value",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "notifications",
+      "role": "value",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "charger",
+      "role": "value",
+      "layout": "text-body",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "earnit",
+      "role": "product",
+      "layout": "product",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        }
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "best-tip",
+      "role": "value-save",
+      "layout": "photo-caption",
+      "slots": {
+        "title": {
+          "maxChars": 110
+        },
+        "body": {
+          "maxChars": 155
+        }
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

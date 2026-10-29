@@ -1,0 +1,75 @@
+{
+  "id": "f2-02-floor",
+  "format": "f2-pov-pushups",
+  "language": "en",
+  "status": "ready",
+  "topic": "the floor before the feed",
+  "caption": "a set before the feed. earned minutes only open your apps when you start a session.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "shield",
+      "copy": {
+        "title": "pov: the floor comes before your feed"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "count",
+      "copy": {
+        "title": "do your set. the camera counts."
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "pushups"
+    },
+    {
+      "id": "earned",
+      "copy": {
+        "title": "your minutes go into your balance"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "earned"
+    },
+    {
+      "id": "session",
+      "copy": {
+        "title": "choose 10 minutes. now you can scroll."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy",
+      "screen": "running"
+    },
+    {
+      "id": "relock",
+      "copy": {
+        "title": "session over? back to locked."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "find Earnit on the App Store"
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    }
+  ]
+}

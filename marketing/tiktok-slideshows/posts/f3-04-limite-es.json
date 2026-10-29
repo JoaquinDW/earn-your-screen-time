@@ -1,0 +1,74 @@
+{
+  "id": "f3-04-limite-es",
+  "format": "f3-limits-dont-work",
+  "language": "es",
+  "status": "ready",
+  "topic": "decidir antes de entrar",
+  "caption": "si siempre ignoras el límite, prueba a decidir antes de abrir el feed. primero te mueves; luego eliges tu sesión.",
+  "hashtags": [
+    "#tiempodepantalla",
+    "#habitos",
+    "#muevetemas",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "¿siempre ignoras el límite? cambia cuándo decides"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "ignore",
+      "copy": {
+        "title": "el botón sigue ahí",
+        "body": "llegas al límite y quieres otro video. puedes tocar ignorar límite."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "temptation",
+      "copy": {
+        "title": "estás decidiendo dentro del feed",
+        "body": "justo cuando seguir parece más fácil que parar."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "beforehand",
+      "copy": {
+        "title": "decide antes de entrar",
+        "body": "gana minutos caminando o haciendo ejercicios que cuenta tu cámara."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "en earnit eliges 5, 10 o 15 minutos. después se bloquea."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "busca Earnit en el App Store"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

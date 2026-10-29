@@ -1,0 +1,75 @@
+{
+  "id": "f1-02-bedtime",
+  "format": "f1-listicle",
+  "language": "en",
+  "status": "ready",
+  "topic": "bedtime boundaries",
+  "caption": "pick a bedtime boundary before you get into bed. which one would you actually keep?",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "5 ways to make bedtime less scrollable"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "grayscale",
+      "copy": {
+        "title": "1. lose the color",
+        "body": "try grayscale in the evening. your home screen can be boring."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "notifications",
+      "copy": {
+        "title": "2. quiet the group chat",
+        "body": "mute nonessential notifications before getting into bed."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "charger",
+      "copy": {
+        "title": "3. give the charger a new home",
+        "body": "put it outside your bedroom before you get comfortable."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "4. earn minutes before opening earnit sessions"
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "navy",
+      "screen": "shield"
+    },
+    {
+      "id": "best-tip",
+      "copy": {
+        "title": "5. leave the phone before lying down",
+        "body": "make the choice while you are still standing. save this for tonight."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "f3-03-founder",
+  "format": "f3-limits-dont-work",
+  "language": "en",
+  "status": "ready",
+  "topic": "founder explanation",
+  "caption": "why i built it this way: move first, choose a session, then let the apps lock again.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "why i built earnit around earning, not reminders"
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "ignore",
+      "copy": {
+        "title": "a limit can become another tap",
+        "body": "if you keep choosing ignore limit, the reminder is not the whole answer."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "temptation",
+      "copy": {
+        "title": "the timing matters",
+        "body": "you are being asked to stop while you still want to scroll."
+      },
+      "image": "images/bed-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "beforehand",
+      "copy": {
+        "title": "so the effort comes first",
+        "body": "push-ups, squats, lunges, jumping jacks. earn minutes before opening a session."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "earnit",
+      "copy": {
+        "title": "earnit sessions last 5, 10 or 15 minutes. then apps relock."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy",
+      "screen": "sessions"
+    },
+    {
+      "id": "find",
+      "copy": {
+        "title": "search Earnit on the App Store"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    }
+  ]
+}

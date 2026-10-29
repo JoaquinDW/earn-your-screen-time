@@ -1,0 +1,84 @@
+{
+  "id": "f4-01-movement",
+  "format": "f4-seven-days",
+  "language": "en",
+  "status": "draft",
+  "topic": "movement log",
+  "caption": "template: add your real seven-day log and its source before sharing.",
+  "hashtags": [
+    "#doomscrolling",
+    "#screentime",
+    "#movefirst",
+    "#earnit"
+  ],
+  "sources": [
+    {
+      "claim": "Earnit feature mechanics; no customer outcome claims. Current brief overrides older hidden-feature references.",
+      "url": "repo:App/Features/Dashboard/DashboardHome.swift"
+    }
+  ],
+  "slides": [
+    {
+      "id": "hook",
+      "copy": {
+        "title": "7 days with earnit: {{start_date}}"
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-1-2",
+      "copy": {
+        "title": "days 1 + 2",
+        "body": "day 1: {{d1_steps}} steps. day 2: {{d2_steps}} steps."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "days-3-4",
+      "copy": {
+        "title": "days 3 + 4",
+        "body": "day 3: {{d3_steps}} steps. day 4: {{d4_steps}} steps."
+      },
+      "image": "images/walk-dusk.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "days-5-6",
+      "copy": {
+        "title": "days 5 + 6",
+        "body": "day 5: {{d5_steps}} steps. day 6: {{d6_steps}} steps."
+      },
+      "image": "images/living-room-pushups.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "day-7",
+      "copy": {
+        "title": "day 7",
+        "body": "{{d7_steps}} steps. {{real_note}}."
+      },
+      "image": "images/phone-facedown.jpg",
+      "fallback": "navy"
+    },
+    {
+      "id": "summary",
+      "copy": {
+        "title": "the full week",
+        "body": "minutes earned: {{minutes_earned}}. minutes used: {{minutes_used}}."
+      },
+      "image": "images/desk-night.jpg",
+      "fallback": "ivory"
+    },
+    {
+      "id": "takeaway",
+      "copy": {
+        "title": "what you noticed",
+        "body": "{{real_observation}}. save your log to compare next week."
+      },
+      "image": "images/candle-journal.jpg",
+      "fallback": "navy"
+    }
+  ]
+}
