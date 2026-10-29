@@ -71,7 +71,21 @@ async function renderScreen(browser, screen, language, destination) {
       for (const image of document.images) await image.decode();
     }, { screen, language, localizations: sessionStrings(language) });
     if (errors.length) throw new Error(errors.join('; '));
+    const bounds = await page.evaluate(() => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const bounds = [];
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node.textContent.trim()) continue;
+        const range = document.createRange(); range.selectNodeContents(node);
+        for (const r of range.getClientRects()) if (r.width && r.height) bounds.push({
+          x: r.x, y: r.y, width: r.width, height: r.height, text: node.textContent.trim()
+        });
+      }
+      return bounds;
+    });
     await page.screenshot({ path: destination });
+    return bounds;
   } finally { await page.close(); fs.unlinkSync(workFile); }
 }
 

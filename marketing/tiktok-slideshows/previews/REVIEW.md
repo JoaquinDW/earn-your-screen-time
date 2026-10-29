@@ -4,6 +4,8 @@ Reviewed 2026-10-29. All 24 contact sheets were visually inspected, covering 152
 
 Checks: readable hooks at thumbnail size; safe-zone spacing; no clipped or overflowing copy; no hidden feature or competitor content. Ivory fallback contrast was corrected, and a long body paragraph was shortened before the final render.
 
+Re-reviewed the 20 changed contact sheets after removing the example-screen labels in both languages. Single-phone mockups are 40% larger in width and height (605 × 1322); three-phone rows are enlarged to the safe width (300 × 655 each). The renderer also verifies text inside the enlarged Earnit screens against the safe zone. The four seven-day sheets are unchanged.
+
 Native starters use the requested solid fallbacks until photos are supplied. F4 keeps real-data placeholders; F6 keeps labeled third-party asset slots. Those eight posts remain drafts. Product screens show illustrative mechanics, with personal outcome/streak figures removed.
 
 | Post | Language | State |

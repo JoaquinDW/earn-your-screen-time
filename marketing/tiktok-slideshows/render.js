@@ -22,8 +22,12 @@ function slideHTML(post, format, slide, spec, screens, warnings) {
   const hasPhoto = photo && fs.existsSync(photo);
   if (photo && !hasPhoto) warnings.add(`Solid fallback: ${slide.image}`);
   const assetWarnings = new Set();
-  let phones = '', visual = '', demo = '', appIcon = '';
-  const phone = file => `<div class="phone">${imageTag(file)}</div>`;
+  let phones = '', visual = '', appIcon = '';
+  const phone = asset => {
+    const file = typeof asset === 'string' ? asset : asset.file;
+    const bounds = typeof asset === 'string' ? '' : ` data-ui-bounds="${escape(JSON.stringify(asset.bounds))}"`;
+    return `<div class="phone"><img src="${escape(fileURL(file))}"${bounds} alt=""></div>`;
+  };
   if (spec.screen) phones = phone(screens[`${post.language}/${slide.screen}`]);
   if (spec.app) {
     appIcon = icon(slide.app, assetWarnings);
@@ -35,13 +39,12 @@ function slideHTML(post, format, slide, spec, screens, warnings) {
     }).join('');
   }
   if (spec.iconSwap) visual = `<section class="icon-swap" data-safe><div class="icon-group">${slide.fromApps.map(app => icon(app, assetWarnings)).join('')}</div><svg class="arrow" viewBox="0 0 130 120" aria-hidden="true"><path d="M8 92Q65 15 115 73M85 35l33 42-50 2" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><div class="icon-group">${slide.toApps.map(app => icon(app, assetWarnings)).join('')}</div></section>`;
-  if (spec.screen || slide.app === 'earnit') demo = `<div class="demo" data-safe>${post.language === 'es' ? 'vista de ejemplo · sin resultados personales' : 'example screen · no personal results'}</div>`;
   if (spec.layout === 'cta') appIcon = icon('earnit', warnings);
   const dataPlaceholder = Object.values(slide.copy).some(value => value.includes('{{'));
   const assetPlaceholder = assetWarnings.size > 0;
   for (const note of assetWarnings) warnings.add(note);
   const draftLabel = dataPlaceholder ? (post.language === 'es' ? 'plantilla · añade datos reales' : 'template · add real data') : assetPlaceholder ? (post.language === 'es' ? 'borrador · faltan imágenes' : 'draft · assets needed') : '';
-  const values = { title: escape(slide.copy.title), body: escape(slide.copy.body), phones, visual, demo, icon: appIcon };
+  const values = { title: escape(slide.copy.title), body: escape(slide.copy.body), phones, visual, icon: appIcon };
   const template = fs.readFileSync(path.join(ROOT, 'layouts', `${spec.layout}.html`), 'utf8');
   const content = template.replace(/{{(\w+)}}/g, (_, key) => values[key] || '').replace(/<p><\/p>/g, '');
   return `<!doctype html><html lang="${post.language}"><head><meta charset="utf-8"><link rel="stylesheet" href="${fileURL(path.join(ROOT, 'layouts/base.css'))}"></head>
@@ -55,7 +58,10 @@ async function auditSlide(page) {
     const rect = el => el.getBoundingClientRect();
     for (const block of document.querySelectorAll('[data-safe]')) {
       const r = rect(block);
-      if (r.top < 150 || r.bottom > 1520 || r.left < 60 || r.right > 960) issues.push(`Outside safe zone: ${block.className}`);
+      // Empty phone chrome may extend below the text-safe band; actual UI text
+      // is checked against that band using bounds captured from its source DOM.
+      const bottomLimit = block.classList.contains('phones') ? 1920 : 1520;
+      if (r.top < 150 || r.bottom > bottomLimit || r.left < 60 || r.right > 960) issues.push(`Outside safe zone: ${block.className}`);
       if (block.scrollWidth > block.clientWidth + 1 || block.scrollHeight > block.clientHeight + 1) issues.push(`Overflow: ${block.className}`);
       for (const text of block.querySelectorAll('h1,p')) {
         const r = rect(text);
@@ -63,6 +69,15 @@ async function auditSlide(page) {
         const style = getComputedStyle(text);
         const lines = Math.round((r.height - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)) / parseFloat(style.lineHeight));
         if (block.classList.contains('body') && text.tagName === 'P' && lines > 3) issues.push(`Body exceeds three lines: ${text.textContent}`);
+      }
+    }
+    for (const image of document.querySelectorAll('img[data-ui-bounds]')) {
+      const r = rect(image);
+      const scale = Math.max(r.width / image.naturalWidth, r.height / image.naturalHeight);
+      const left = r.left + (r.width - image.naturalWidth * scale) / 2;
+      const top = r.top + (r.height - image.naturalHeight * scale) / 2;
+      for (const text of JSON.parse(image.dataset.uiBounds)) {
+        if (left + text.x * scale < 60 || left + (text.x + text.width) * scale > 960 || top + text.y * scale < 150 || top + (text.y + text.height) * scale > 1520) issues.push(`Phone UI text outside safe zone: ${text.text}`);
       }
     }
     const heading = document.querySelector('.product-heading'), phones = document.querySelector('.phones');
@@ -122,7 +137,8 @@ async function main() {
       const [language, screen] = key.split('/');
       if (!SCREENS.includes(screen)) throw new Error('Unsupported screen');
       const destination = path.join(work, `${language}-${screen}.png`);
-      await renderScreen(browser, screen, language, destination); screens[key] = destination;
+      const bounds = await renderScreen(browser, screen, language, destination);
+      screens[key] = { file: destination, bounds };
     }
     for (const {post,format} of jobs) {
       // Validate a complete post before replacing its previous successful export.
@@ -139,7 +155,18 @@ async function main() {
           const html = slideHTML(post,format,slide,format.slides[i],screens,warnings);
           const source = path.join(output,'slide.html'); fs.writeFileSync(source,html);
           await page.goto(fileURL(source));
-          await page.evaluate(async()=> { await document.fonts.ready; await Promise.all([...document.images].map(img=>img.decode())); });
+          await page.evaluate(async()=> {
+            await document.fonts.ready;
+            await Promise.all([...document.images].map(img=>img.decode()));
+            const title = document.querySelector('.native .product-heading h1');
+            if (title) {
+              const heading = title.parentElement, phones = document.querySelector('.phones');
+              for (let size = 66; size >= 48; size--) {
+                title.style.fontSize = `${size}px`;
+                if (heading.getBoundingClientRect().bottom + 25 <= phones.getBoundingClientRect().top) break;
+              }
+            }
+          });
           const audit = await auditSlide(page);
           if (audit.issues.length || errors.length) throw new Error(`${post.id}/${i+1}: ${[...audit.issues,...errors].join('; ')}`);
           const filename = `${String(i+1).padStart(2,'0')}.png`;

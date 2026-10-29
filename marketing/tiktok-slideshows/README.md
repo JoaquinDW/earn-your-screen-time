@@ -102,8 +102,9 @@ F4's **four starters are templates**, with obvious placeholders for every
 measurement and observation. Replace these with your real log and source;
 there are no fictional diaries. F5 describes possible choices, not personal
 before/after results. Its report is the existing Your day screen with numbers
-replaced by dashes. All exported product screens are labeled examples, and
-sample streak/outcome badges from the App Store artwork are excluded.
+replaced by dashes. Sample streak/outcome badges from the App Store artwork
+are excluded. Product slides have no example-screen label. Single-phone mockups
+are 605 × 1322; the three-phone lists use 300 × 655 phones to fit the safe width.
 
 F6's **four starters are asset drafts** until you supply genuine third-party
 icons and screenshots. See [the asset manifest](images/third-party/README.md).
@@ -140,7 +141,10 @@ Research images are references only and are never read by the renderer.
    again after any copy, asset or layout change.
 
 The canvas is 1080 × 1920. Key content must stay in **x=60…960, y=150…1520**;
-normal copy is inset farther to x=80…928. Every render checks safe bounds,
+normal copy is inset farther to x=80…928. Empty phone chrome can extend below
+the text-safe band; the renderer maps the original phone UI text bounds into
+each enlarged mockup and checks that text against the safe zone too.
+Every render checks safe bounds,
 overflow, phone/heading collisions, missing images, failed fonts/resources and
 network requests. It fails instead of exporting a clipped slide. Native hooks
 stay large enough to read in a contact sheet. The renderer rejects hidden
