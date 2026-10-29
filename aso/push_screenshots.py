@@ -23,8 +23,8 @@ DISPLAY_TYPE = "APP_IPHONE_61"
 SIZE = (1206, 2622)
 # Store locale -> screenshot folder. Locales without a folder of their own are skipped, so they
 # keep falling back to the primary language until their set is rendered.
-FOLDERS = {"en-US": "en-US", "en-GB": "en-US", "es-ES": "es", "es-MX": "es",
-           "de-DE": "de", "fr-FR": "fr", "it": "it", "pt-BR": "pt-BR", "nl-NL": "nl", "pl": "pl",
+FOLDERS = {"en-US": "en-US", "en-GB": "en-US", "en-AU": "en-US", "en-CA": "en-US", "es-ES": "es", "es-MX": "es",
+           "de-DE": "de", "fr-FR": "fr", "fr-CA": "fr", "it": "it", "pt-BR": "pt-BR", "nl-NL": "nl", "pl": "pl",
            "tr": "tr", "ru": "ru", "ja": "ja", "ko": "ko", "zh-Hans": "zh-Hans", "ar-SA": "ar"}
 WRITE = "--write" in sys.argv
 

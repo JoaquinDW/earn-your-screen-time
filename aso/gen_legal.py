@@ -24,6 +24,10 @@ BODY = {
 "ar-SA":("يتطلب Earnit اشتراكاً لتفعيل حظر التطبيقات وكسب الوقت. يتجدد الاشتراك تلقائياً ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية. يمكنك إدارته أو إلغاؤه في أي وقت من إعدادات حساب Apple.","شروط الاستخدام (EULA)","سياسة الخصوصية"),
 }
 
+BODY["en-AU"] = BODY["en-US"]
+BODY["en-CA"] = BODY["en-US"]
+BODY["fr-CA"] = BODY["fr-FR"]
+
 def block(loc):
     body, tou, pp = BODY[loc]
     return "\n\n———\n%s\n\n%s: %s\n%s: %s" % (body, tou, EULA, pp, PRIV)

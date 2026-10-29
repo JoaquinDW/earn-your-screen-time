@@ -3,7 +3,7 @@ import os, sys, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_part1, gen_part2, gen_part3, gen_legal
 
-LOCALES = ["en-US","en-GB","es-ES","es-MX","de-DE","fr-FR","it","pt-BR",
+LOCALES = ["en-US","en-GB","en-AU","en-CA","es-ES","es-MX","de-DE","fr-FR","fr-CA","it","pt-BR",
            "nl-NL","pl","tr","ru","ja","ko","zh-Hans","zh-Hant","ar-SA"]
 LIMITS = {"name":30,"subtitle":30,"keywords":100,"promotional_text":170,"description":4000}
 ATOMS  = ["iPhone","Apple Health","iOS","Earnit", gen_legal.EULA, gen_legal.PRIV]
