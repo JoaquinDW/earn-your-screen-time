@@ -9478,53 +9478,6 @@
         }
       }
     },
-    "After 3 days: %@ %@ unless you cancel at least 24 hours before the trial ends." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nach 3 Tagen: %1$@ %2$@, sofern du nicht mindestens 24 Stunden vor Ende der Probephase kündigst."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "After 3 days: %@ %@ unless you cancel at least 24 hours before the trial ends."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Después de 3 días: %1$@ %2$@, salvo que canceles al menos 24 horas antes de que termine la prueba."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Après 3 jours : %1$@ %2$@, sauf si vous résiliez au moins 24 heures avant la fin de l’essai."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dopo 3 giorni: %1$@ %2$@, a meno che tu non annulli almeno 24 ore prima della fine della prova."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "3日後：%1$@ %2$@。トライアル終了の24時間前までに解約した場合は請求されません。"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Após 3 dias: %1$@ %2$@, a menos que você cancele pelo menos 24 horas antes do fim do teste."
-          }
-        }
-      }
-    },
     "An estimate based on the range you selected. The point isn't guilt. It's seeing what autopilot can cost." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -11181,53 +11134,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancele nos ajustes da App Store pelo menos 24 horas antes do fim do período atual."
-          }
-        }
-      }
-    },
-    "Cancel in App Store settings at least 24 hours before the trial ends." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kündige in den App-Store-Einstellungen mindestens 24 Stunden vor Ende der Probephase."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel in App Store settings at least 24 hours before the trial ends."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancela en los ajustes de App Store al menos 24 horas antes de que termine la prueba."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Résiliez dans les réglages de l’App Store au moins 24 heures avant la fin de l’essai."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Annulla nelle impostazioni dell’App Store almeno 24 ore prima della fine della prova."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "トライアル終了の24時間前までにApp Storeの設定で解約してください。"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancele nos ajustes da App Store pelo menos 24 horas antes do fim do teste."
           }
         }
       }
@@ -16790,53 +16696,6 @@
         }
       }
     },
-    "Go Pro to keep earning and unlocking your chosen apps." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mit Pro kannst du weiter Zeit verdienen und deine ausgewählten Apps entsperren."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go Pro to keep earning and unlocking your chosen apps."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pásate a Pro para seguir ganando tiempo y desbloqueando las apps que elegiste."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passez à Pro pour continuer à gagner du temps et à débloquer les apps choisies."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passa a Pro per continuare a guadagnare tempo e sbloccare le app scelte."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proに登録して、時間を獲得し、選んだアプリを引き続き使えるようにしましょう。"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assine o Pro para continuar ganhando tempo e desbloqueando os apps escolhidos."
-          }
-        }
-      }
-    },
     "Goal reward" : {
       "localizations" : {
         "de" : {
@@ -21400,53 +21259,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SEM CÂMERA, SEM PROBLEMA"
-          }
-        }
-      }
-    },
-    "No charge during your trial" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Kosten während der Probephase"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No charge during your trial"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin cargos durante la prueba"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucun prélèvement pendant l’essai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun addebito durante la prova"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "トライアル中の請求なし"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem cobrança durante o teste"
           }
         }
       }
@@ -28792,100 +28604,6 @@
         }
       }
     },
-    "Pay once. Keep earning and unlocking your chosen apps. No subscription." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einmal zahlen. Weiter Zeit verdienen und deine Apps freischalten. Ohne Abo."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pay once. Keep earning and unlocking your chosen apps. No subscription."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paga una vez. Sigue ganando tiempo y desbloqueando tus apps. Sin suscripción."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Payez une fois. Continuez à gagner du temps et à débloquer vos apps. Sans abonnement."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paga una volta. Continua a guadagnare tempo e sbloccare le tue app. Senza abbonamento."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "一度の支払いで、時間を獲得して選んだアプリを使い続けられます。サブスクリプション不要。"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pague uma vez. Continue ganhando tempo e desbloqueando seus apps. Sem assinatura."
-          }
-        }
-      }
-    },
-    "paywall.eyebrow" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Earnit-Mitgliedschaft"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Earnit membership"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Membresía Earnit"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abonnement Earnit"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abbonamento Earnit"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Earnit メンバーシップ"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assinatura Earnit"
-          }
-        }
-      }
-    },
     "paywall.headline" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -28929,53 +28647,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Transforme seus passos em tempo de tela."
-          }
-        }
-      }
-    },
-    "paywall.plan.eyebrow" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dein Plan ist fertig"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your plan is ready"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tu plan está listo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ton plan est prêt"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il tuo piano è pronto"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "プランの準備ができました"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seu plano está pronto"
           }
         }
       }
@@ -38758,53 +38429,6 @@
         }
       }
     },
-    "Subscription begins unless you cancel" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das Abo beginnt, wenn du nicht kündigst"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Subscription begins unless you cancel"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La suscripción comienza si no cancelas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L’abonnement commence sauf si vous résiliez"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L’abbonamento inizia se non annulli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "解約しない場合はサブスクリプション開始"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A assinatura começa se você não cancelar"
-          }
-        }
-      }
-    },
     "Subscription plans" : {
       "comment" : "The accessibility label for the section that lists subscription plans.",
       "extractionState" : "stale",
@@ -41017,6 +40641,53 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teste o Earnit Pro grátis por 3 dias."
+          }
+        }
+      }
+    },
+    "3 days free, then %@ %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 days free, then %1$@ %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 días gratis, luego %1$@ %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 Tage gratis, dann %1$@ %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 jours gratuits, puis %1$@ %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 giorni gratis, poi %1$@ %2$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3日間無料、その後 %1$@ %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 dias grátis, depois %1$@ %2$@"
           }
         }
       }

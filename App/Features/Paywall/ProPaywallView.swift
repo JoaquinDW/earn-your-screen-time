@@ -105,8 +105,8 @@ private struct ProPaywallContent: View {
                     subscriptionUpgradeNotice
                     hero
                     if !viewModel.isLifetimeUpgrade { benefits }
-                    pricing
                     trialTimeline
+                    pricing
                     cancelNudge
                     renewalDisclosure
                     legalLinks
@@ -191,19 +191,6 @@ private struct ProPaywallContent: View {
 
     private var hero: some View {
         VStack(spacing: Theme.Space.m) {
-            Group {
-                if viewModel.isLifetimeUpgrade {
-                    Text("Lifetime Pro")
-                } else if trialPackage != nil {
-                    Text("3-day free trial")
-                } else if profile == nil {
-                    Text("paywall.eyebrow")
-                } else {
-                    Text("paywall.plan.eyebrow")
-                }
-            }
-            .eyebrowStyle(Night.textSoft)
-
             if earnedMinutes > 0, !viewModel.isLifetimeUpgrade {
                 earnedProof
             }
@@ -217,26 +204,12 @@ private struct ProPaywallContent: View {
                     Text("Keep your momentum going.")
                 }
             }
-            .font(.serif(38, relativeTo: .largeTitle))
+            .font(.serif(34, relativeTo: .largeTitle))
             .foregroundStyle(Night.text)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isHeader)
-
-            Group {
-                if trialPackage != nil {
-                    Text("No charge today or during your 3-day trial.")
-                } else if viewModel.selectedPackage?.plan == .lifetime {
-                    Text("Pay once. Keep earning and unlocking your chosen apps. No subscription.")
-                } else {
-                    Text("Go Pro to keep earning and unlocking your chosen apps.")
-                }
-            }
-            .font(.sans(15, weight: .medium))
-            .foregroundStyle(Night.textSoft)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
 
             if let freePlanNote, !viewModel.isLifetimeUpgrade {
                 Text(freePlanNote)
@@ -257,10 +230,8 @@ private struct ProPaywallContent: View {
             benefit("figure.walk", "Earn more access from your steps")
             benefit("timer", "Use focus sessions and see your progress")
         }
-        .padding(Theme.Space.m)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Night.panel, in: .rect(cornerRadius: Night.panelRadius))
-        .padding(.horizontal, Theme.Space.gutter)
+        .padding(.horizontal, Theme.Space.gutter + Theme.Space.s)
         .padding(.top, Theme.Space.l)
     }
 
@@ -282,13 +253,8 @@ private struct ProPaywallContent: View {
     private var trialTimeline: some View {
         if let package = trialPackage {
             VStack(alignment: .leading, spacing: Theme.Space.s) {
-                timelineRow("Today", detail: "No charge during your trial", price: package.zeroPrice)
-                Rectangle()
-                    .fill(Night.edge)
-                    .frame(height: 1)
-                    .padding(.leading, 26)
-                    .accessibilityHidden(true)
-                timelineRow("After 3 days", detail: "Subscription begins unless you cancel", price: "\(package.price) \(billingPeriod(for: package))")
+                timelineRow("lock.open.fill", "Today", price: package.zeroPrice)
+                timelineRow("bell.fill", "After 3 days", price: "\(package.price) \(billingPeriod(for: package))")
             }
             .padding(Theme.Space.m)
             .background(Night.cobaltWash, in: .rect(cornerRadius: Night.panelRadius))
@@ -297,21 +263,17 @@ private struct ProPaywallContent: View {
         }
     }
 
-    private func timelineRow(_ title: LocalizedStringKey, detail: LocalizedStringKey, price: String) -> some View {
+    private func timelineRow(_ symbol: String, _ title: LocalizedStringKey, price: String) -> some View {
         HStack(alignment: .center, spacing: Theme.Space.s) {
-            Image(systemName: "circle.fill")
-                .font(.system(size: 8))
+            Image(systemName: symbol)
+                .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(Night.cobaltText)
-                .frame(width: 18)
+                .frame(width: 28, height: 28)
+                .background(Night.panel, in: .circle)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.sans(14, weight: .bold))
-                    .foregroundStyle(Night.text)
-                Text(detail)
-                    .font(.sans(12))
-                    .foregroundStyle(Night.textSoft)
-            }
+            Text(title)
+                .font(.sans(14, weight: .bold))
+                .foregroundStyle(Night.text)
             Spacer(minLength: Theme.Space.s)
             Text(verbatim: price)
                 .font(.sans(13, weight: .semibold))
@@ -341,21 +303,15 @@ private struct ProPaywallContent: View {
     @ViewBuilder
     private var cancelNudge: some View {
         if viewModel.showsCancelNudge, trialPackage != nil {
-            VStack(alignment: .leading, spacing: Theme.Space.xs) {
-                Text("No charge today or during your 3-day trial.")
-                    .font(.sans(16, weight: .bold))
-                    .foregroundStyle(Night.text)
-                Text("Cancel in App Store settings at least 24 hours before the trial ends.")
-                    .font(.sans(14))
-                    .foregroundStyle(Night.textSoft)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(Theme.Space.m)
-            .background(Night.cobaltWash, in: .rect(cornerRadius: Night.panelRadius))
-            .padding(.horizontal, Theme.Space.gutter)
-            .padding(.top, Theme.Space.m)
-            .accessibilityElement(children: .combine)
+            Text("No charge today or during your 3-day trial.")
+                .font(.sans(15, weight: .bold))
+                .foregroundStyle(Night.text)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(Theme.Space.m)
+                .background(Night.cobaltWash, in: .rect(cornerRadius: Night.panelRadius))
+                .padding(.horizontal, Theme.Space.gutter)
+                .padding(.top, Theme.Space.m)
         }
     }
 
@@ -452,12 +408,7 @@ private struct ProPaywallContent: View {
                 if package.plan == .lifetime {
                     Text("One-time payment. Lifetime Pro access.")
                 } else if trialPackage != nil {
-                    Text("No charge today or during your 3-day trial.")
-                        .font(.sans(14, weight: .bold))
-                        .foregroundStyle(Night.cobaltText)
-                    Text("After 3 days: \(package.price) \(billingPeriod(for: package)) unless you cancel at least 24 hours before the trial ends.")
-                        .font(.sans(12, weight: .medium))
-                        .foregroundStyle(Night.textSoft)
+                    Text("3 days free, then \(package.price) \(billingPeriod(for: package))")
                 } else {
                     Text("\(package.price) \(billingPeriod(for: package)).")
                         + Text(verbatim: " ")
