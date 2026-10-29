@@ -7,7 +7,7 @@ M = {}
 M["en-US"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pushups,workout,brainrot,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pushups,workout,self,control,addiction,phone",
  promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
@@ -38,14 +38,14 @@ Move first. Scroll later.""")
 M["en-GB"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pressups,workout,brainrot,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pressups,gym,self,control,addiction,phone",
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("Push-ups","Press-ups").replace("PUSH-UPS","PRESS-UPS"))
 
 M["es-ES"] = dict(
  name="Ganar tiempo pantalla: Earnit",
- subtitle="Bloquear apps y detox digital",
- keywords="adiccion al movil,autocontrol,flexiones,ejercicio,limite,bloqueo,habitos,dejar de scrollear",
+ subtitle="Supera la adicción al móvil",
+ keywords="bloquear,apps,detox,digital,autocontrol,flexiones,ejercicio,limite,habitos,dejar de scrollear",
  promo="Nuevo: prueba una serie real de flexiones en el propio onboarding y descubre cómo Earnit desbloquea tus apps. La cámara cuenta, el vídeo nunca se guarda.",
  desc="""Tu móvil no debería ser gratis. Gánatelo.
 
@@ -83,15 +83,15 @@ M["es-MX"] = dict(
 M["de-DE"] = dict(
  name="Bildschirmzeit: Earnit",
  subtitle="App Sperre & Digital Detox",
- keywords="verdienen,handysucht,selbstkontrolle,lernen,fokus,ablenkung,limit,gewohnheit,weniger scrollen",
+ keywords="verdienen,handysucht,selbstkontrolle,kniebeugen,fokus,ablenkung,limit,gewohnheit,weniger scrollen",
  promo="Neu: Probier direkt im Onboarding einen echten Satz Liegestütze und erlebe, wie Earnit deine Apps freischaltet. Kamera zählt, Video wird nie gespeichert.",
  desc="""Dein Handy sollte nicht umsonst sein. Verdien es dir.
 
-Earnit sperrt die Apps, die dir den Tag wegfressen, und hält sie gesperrt, bis du etwas tust, das sich lohnt. Laufen. Lernen. Liegestütze. Jede Anstrengung wird zu Minuten, die du wirklich ausgeben kannst.
+Earnit sperrt die Apps, die dir den Tag wegfressen, und hält sie gesperrt, bis du etwas tust, das sich lohnt. Laufen. Liegestütze. Kniebeugen. Jede Anstrengung wird zu Minuten, die du wirklich ausgeben kannst.
 
 SO FUNKTIONIERT ES
 1. Wähl die Apps, die gesperrt werden sollen. Sie bleiben standardmäßig blockiert.
-2. Verdien Minuten: Schritte aus Apple Health, eine konzentrierte Lernsession oder Liegestütze, die das Gerät selbst zählt.
+2. Verdien Minuten: Schritte aus Apple Health oder Liegestütze und Kniebeugen, die das Gerät selbst zählt.
 3. Gib sie in einer bewussten Session von 5, 10 oder 15 Minuten aus. Danach greift die Sperre von allein wieder.
 
 WARUM ES WIRKT, WO TIMER VERSAGEN
@@ -99,9 +99,6 @@ Ein Timer bittet dich aufzuhören. Earnit bittet dich zu tauschen. Kein "15 Minu
 
 LAUFEN ZUM ENTSPERREN
 Schritte kommen direkt aus Apple Health. Stell dir ein Tempo ein, das zu dir passt, und jeder Spaziergang füllt dein Guthaben ganz nebenbei auf.
-
-LERNEN ZUM ENTSPERREN
-Starte eine konzentrierte Lernsession und leg die investierte Zeit auf die Seite. Gebaut für alle, die das Handy weg brauchen, bis die Arbeit erledigt ist.
 
 LIEGESTÜTZE ZUM ENTSPERREN
 Direkt auf dem Gerät gezählt, ganz ohne Wearable. Ein Satz, wenn du Minuten zurückwillst.
@@ -117,15 +114,15 @@ Erst bewegen. Dann scrollen.""")
 M["fr-FR"] = dict(
  name="Temps d'écran : Earnit",
  subtitle="Bloquer les applis & détox",
- keywords="gagner,addiction telephone,autodiscipline,concentration,etudier,limite,distraction,habitude",
+ keywords="gagner,addiction telephone,autodiscipline,concentration,pompes,limite,distraction,habitude",
  promo="Nouveau : essayez une vraie série de pompes dès l'onboarding et découvrez comment Earnit débloque vos applis. La caméra compte, la vidéo n'est jamais gardée.",
  desc="""Votre téléphone ne devrait pas être gratuit. Méritez-le.
 
-Earnit bloque les applis qui dévorent vos journées et les garde bloquées jusqu'à ce que vous fassiez quelque chose qui en vaut la peine. Marcher. Réviser. Faire des pompes. Chaque effort devient des minutes que vous pouvez réellement dépenser.
+Earnit bloque les applis qui dévorent vos journées et les garde bloquées jusqu'à ce que vous fassiez quelque chose qui en vaut la peine. Marcher. Faire des pompes. Des squats. Chaque effort devient des minutes que vous pouvez réellement dépenser.
 
 COMMENT ÇA MARCHE
 1. Choisissez les applis à bloquer. Elles restent verrouillées par défaut.
-2. Gagnez des minutes : pas issus d'Apple Health, session de révision concentrée, ou pompes comptées par le téléphone.
+2. Gagnez des minutes : pas issus d'Apple Health ou pompes et squats comptés par le téléphone.
 3. Dépensez-les dans une session délibérée de 5, 10 ou 15 minutes. À la fin, le blocage revient tout seul.
 
 POURQUOI ÇA MARCHE LÀ OÙ LES MINUTEURS ÉCHOUENT
@@ -133,9 +130,6 @@ Un minuteur vous demande d'arrêter. Earnit vous demande d'échanger. Pas de bou
 
 MARCHER POUR DÉBLOQUER
 Les pas viennent directement d'Apple Health. Réglez un rythme qui vous convient et chaque promenade recharge votre solde sans y penser.
-
-RÉVISER POUR DÉBLOQUER
-Lancez une session de révision concentrée et mettez de côté le temps investi. Pensé pour ceux qui doivent laisser le téléphone loin jusqu'à ce que le travail soit fait.
 
 POMPES POUR DÉBLOQUER
 Comptées sur l'appareil, sans montre ni bracelet. Une série quand vous voulez récupérer des minutes.

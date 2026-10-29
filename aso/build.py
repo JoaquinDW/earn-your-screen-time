@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_part1, gen_part2, gen_part3, gen_legal
 
 LOCALES = ["en-US","en-GB","es-ES","es-MX","de-DE","fr-FR","it","pt-BR",
-           "nl-NL","pl","tr","ru","ja","ko","zh-Hans","ar-SA"]
+           "nl-NL","pl","tr","ru","ja","ko","zh-Hans","zh-Hant","ar-SA"]
 LIMITS = {"name":30,"subtitle":30,"keywords":100,"promotional_text":170,"description":4000}
 ATOMS  = ["iPhone","Apple Health","iOS","Earnit", gen_legal.EULA, gen_legal.PRIV]
 
@@ -44,7 +44,7 @@ for loc in LOCALES:
         if n > cap: fails.append("%s %s %d>%d" % (loc, field, n, cap))
     # verbatim atoms survived
     for a in ATOMS:
-        if a in ("iPhone","Apple Health","iOS") and loc in ("ja","ko","zh-Hans","ar-SA","ru"):
+        if a in ("iPhone","Apple Health","iOS") and loc in ("ja","ko","zh-Hans","zh-Hant","ar-SA","ru"):
             pass  # these may legitimately be absent from a rewritten body
         if a.startswith("http") and a not in f["description"]:
             fails.append("%s missing URL %s" % (loc, a)); notes.append("URL!")

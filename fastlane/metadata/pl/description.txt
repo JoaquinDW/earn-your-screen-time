@@ -1,10 +1,10 @@
 Telefon nie powinien być za darmo. Zapracuj na niego.
 
-Earnit blokuje aplikacje, które zjadają ci dzień, i trzyma je zablokowane, dopóki nie zrobisz czegoś wartościowego. Spacer. Nauka. Pompki. Każdy wysiłek zamienia się w minuty, które naprawdę możesz wydać.
+Earnit blokuje aplikacje, które zjadają ci dzień, i trzyma je zablokowane, dopóki nie zrobisz czegoś wartościowego. Spacer. Pompki. Przysiady. Każdy wysiłek zamienia się w minuty, które naprawdę możesz wydać.
 
 JAK TO DZIAŁA
 1. Wybierz aplikacje do zablokowania. Domyślnie pozostają zablokowane.
-2. Zdobywaj minuty: kroki z Apple Health, skupiona sesja nauki albo pompki liczone przez samo urządzenie.
+2. Zdobywaj minuty: kroki z Apple Health albo pompki i przysiady liczone przez samo urządzenie.
 3. Wydaj je w świadomej sesji 5, 10 lub 15 minut. Po jej końcu blokada wraca sama.
 
 DLACZEGO DZIAŁA TAM, GDZIE MINUTNIKI ZAWODZĄ
@@ -12,9 +12,6 @@ Minutnik prosi, żebyś przestał. Earnit proponuje wymianę. Nie ma przycisku "
 
 SPACER, ŻEBY ODBLOKOWAĆ
 Kroki płyną prosto z Apple Health. Ustaw tempo, które ci pasuje, a każdy spacer po cichu uzupełnia twoje saldo.
-
-NAUKA, ŻEBY ODBLOKOWAĆ
-Przeprowadź skupioną sesję nauki i odłóż zainwestowany czas. Dla tych, którzy potrzebują telefonu poza zasięgiem, aż praca będzie skończona.
 
 POMPKI, ŻEBY ODBLOKOWAĆ
 Liczone na urządzeniu, bez opaski ani zegarka. Seria, gdy chcesz odzyskać minuty.

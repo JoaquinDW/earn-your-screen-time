@@ -1,10 +1,10 @@
 Dein Handy sollte nicht umsonst sein. Verdien es dir.
 
-Earnit sperrt die Apps, die dir den Tag wegfressen, und hält sie gesperrt, bis du etwas tust, das sich lohnt. Laufen. Lernen. Liegestütze. Jede Anstrengung wird zu Minuten, die du wirklich ausgeben kannst.
+Earnit sperrt die Apps, die dir den Tag wegfressen, und hält sie gesperrt, bis du etwas tust, das sich lohnt. Laufen. Liegestütze. Kniebeugen. Jede Anstrengung wird zu Minuten, die du wirklich ausgeben kannst.
 
 SO FUNKTIONIERT ES
 1. Wähl die Apps, die gesperrt werden sollen. Sie bleiben standardmäßig blockiert.
-2. Verdien Minuten: Schritte aus Apple Health, eine konzentrierte Lernsession oder Liegestütze, die das Gerät selbst zählt.
+2. Verdien Minuten: Schritte aus Apple Health oder Liegestütze und Kniebeugen, die das Gerät selbst zählt.
 3. Gib sie in einer bewussten Session von 5, 10 oder 15 Minuten aus. Danach greift die Sperre von allein wieder.
 
 WARUM ES WIRKT, WO TIMER VERSAGEN
@@ -12,9 +12,6 @@ Ein Timer bittet dich aufzuhören. Earnit bittet dich zu tauschen. Kein "15 Minu
 
 LAUFEN ZUM ENTSPERREN
 Schritte kommen direkt aus Apple Health. Stell dir ein Tempo ein, das zu dir passt, und jeder Spaziergang füllt dein Guthaben ganz nebenbei auf.
-
-LERNEN ZUM ENTSPERREN
-Starte eine konzentrierte Lernsession und leg die investierte Zeit auf die Seite. Gebaut für alle, die das Handy weg brauchen, bis die Arbeit erledigt ist.
 
 LIEGESTÜTZE ZUM ENTSPERREN
 Direkt auf dem Gerät gezählt, ganz ohne Wearable. Ein Satz, wenn du Minuten zurückwillst.
