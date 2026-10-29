@@ -475,20 +475,41 @@ struct PushupsToEarnView: View {
             PushupsText(model.exercise.successDetailKey(model.targetReps))
                 .font(.sans(17))
                 .foregroundStyle(Night.textSoft)
+            if isFirstUnlockAhead {
+                // Someone who has never unlocked is one tap from the payoff the app promises.
+                // Spending it now, instead of being offered another set, is what closes the loop
+                // in the first session.
+                PushupsText("pushups.success.firstUnlock.detail")
+                    .font(.sans(15))
+                    .foregroundStyle(Night.textMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Button {
+                if isFirstUnlockAhead {
+                    env.analytics.track(.firstUnlockGuideTapped.withProperties([
+                        "minutes_earned": .int(model.earnedRewardMinutes),
+                        "exercise": .string(model.exercise.rawValue)
+                    ]))
+                }
                 dismiss()
                 onUseMinutes()
             } label: {
-                PushupsText("pushups.success.use")
+                if isFirstUnlockAhead {
+                    PushupsText("pushups.success.firstUnlock.cta \(model.earnedRewardMinutes)")
+                } else {
+                    PushupsText("pushups.success.use")
+                }
             }
             .buttonStyle(.nightPill)
-            Button {
-                Task { await model.doAnother(in: env) }
-            } label: {
-                PushupsText("pushups.success.again")
+            if !isFirstUnlockAhead {
+                Button {
+                    Task { await model.doAnother(in: env) }
+                } label: {
+                    PushupsText("pushups.success.again")
+                }
+                .buttonStyle(.quietLink)
+                .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.quietLink)
-            .frame(maxWidth: .infinity)
         }
         .opacity(rewardPresented ? 1 : 0)
         .scaleEffect(rewardPresented || reduceMotion ? 1 : 0.98, anchor: .topLeading)
@@ -504,6 +525,8 @@ struct PushupsToEarnView: View {
         }
         .onDisappear { rewardPresented = false }
     }
+
+    private var isFirstUnlockAhead: Bool { !env.state.firstRealUnlockTracked }
 
     private var dailyCap: some View {
         VStack(alignment: .leading, spacing: Theme.Space.l) {

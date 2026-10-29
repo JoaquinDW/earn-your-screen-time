@@ -759,8 +759,9 @@ final class AppEnvironment {
             state.onboarding = finalizedProfile
             state.onboardingCompleted = true
             state.adaptiveIntroSeen = true
-            // Someone who ran the demo has already met push-ups. Someone who skipped it is
-            // owed the offer from Home, which is what the announcement sheet is for.
+            // Someone who ran the demo (up to 1.3.5) has already met push-ups. Everyone else is
+            // owed the offer from Home, which is what the announcement sheet is for, unless the
+            // mission sends them straight into a set (`markPushupsIntroSeen`).
             state.pushupsIntroSeen = state.onboardingPushupDemo == .completed
             state.hasEarnedFirstReward = false
             state.goalProgressionCooldownUntil = today.adding(days: 7)
