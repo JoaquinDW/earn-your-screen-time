@@ -1,10 +1,10 @@
 Votre téléphone ne devrait pas être gratuit. Méritez-le.
 
-Earnit bloque les applis qui dévorent vos journées et les garde bloquées jusqu'à ce que vous fassiez quelque chose qui en vaut la peine. Marcher. Réviser. Faire des pompes. Chaque effort devient des minutes que vous pouvez réellement dépenser.
+Earnit bloque les applis qui dévorent vos journées et les garde bloquées jusqu'à ce que vous fassiez quelque chose qui en vaut la peine. Marcher. Faire des pompes. Des squats. Chaque effort devient des minutes que vous pouvez réellement dépenser.
 
 COMMENT ÇA MARCHE
 1. Choisissez les applis à bloquer. Elles restent verrouillées par défaut.
-2. Gagnez des minutes : pas issus d'Apple Health, session de révision concentrée, ou pompes comptées par le téléphone.
+2. Gagnez des minutes : pas issus d'Apple Health ou pompes et squats comptés par le téléphone.
 3. Dépensez-les dans une session délibérée de 5, 10 ou 15 minutes. À la fin, le blocage revient tout seul.
 
 POURQUOI ÇA MARCHE LÀ OÙ LES MINUTEURS ÉCHOUENT
@@ -12,9 +12,6 @@ Un minuteur vous demande d'arrêter. Earnit vous demande d'échanger. Pas de bou
 
 MARCHER POUR DÉBLOQUER
 Les pas viennent directement d'Apple Health. Réglez un rythme qui vous convient et chaque promenade recharge votre solde sans y penser.
-
-RÉVISER POUR DÉBLOQUER
-Lancez une session de révision concentrée et mettez de côté le temps investi. Pensé pour ceux qui doivent laisser le téléphone loin jusqu'à ce que le travail soit fait.
 
 POMPES POUR DÉBLOQUER
 Comptées sur l'appareil, sans montre ni bracelet. Une série quand vous voulez récupérer des minutes.

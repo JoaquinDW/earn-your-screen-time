@@ -4,15 +4,15 @@ M = {}
 M["it"] = dict(
  name="Tempo di utilizzo: Earnit",
  subtitle="Blocco app e detox digitale",
- keywords="guadagnare,dipendenza smartphone,autocontrollo,studiare,concentrazione,limite,distrazione",
+ keywords="guadagnare,dipendenza smartphone,autocontrollo,flessioni,concentrazione,limite,distrazione",
  promo="Novità: prova una vera serie di flessioni già nell'onboarding e scopri come Earnit sblocca le tue app. La fotocamera conta, il video non viene mai salvato.",
  desc="""Il telefono non dovrebbe essere gratis. Guadagnatelo.
 
-Earnit blocca le app che ti mangiano la giornata e le tiene bloccate finché non fai qualcosa che vale la pena. Cammina. Studia. Fai flessioni. Ogni sforzo diventa minuti che puoi davvero spendere.
+Earnit blocca le app che ti mangiano la giornata e le tiene bloccate finché non fai qualcosa che vale la pena. Cammina. Fai flessioni. Fai squat. Ogni sforzo diventa minuti che puoi davvero spendere.
 
 COME FUNZIONA
 1. Scegli le app da bloccare. Restano bloccate per impostazione predefinita.
-2. Guadagna minuti: passi da Apple Health, una sessione di studio concentrata, o flessioni contate dal telefono stesso.
+2. Guadagna minuti: passi da Apple Health o flessioni e squat contati dal telefono stesso.
 3. Spendili in una sessione deliberata da 5, 10 o 15 minuti. Alla fine il blocco torna da solo.
 
 PERCHÉ FUNZIONA DOVE I TIMER FALLISCONO
@@ -20,9 +20,6 @@ Un timer ti chiede di smettere. Earnit ti chiede di scambiare. Nessun pulsante "
 
 CAMMINA PER SBLOCCARE
 I passi arrivano direttamente da Apple Health. Imposta un ritmo che ti va bene e ogni passeggiata ricarica il saldo senza pensarci.
-
-STUDIA PER SBLOCCARE
-Avvia una sessione di studio concentrata e metti da parte il tempo investito. Pensato per chi deve tenere il telefono lontano finché il lavoro non è finito.
 
 FLESSIONI PER SBLOCCARE
 Contate sul dispositivo, senza smartwatch. Una serie quando vuoi indietro qualche minuto.
@@ -37,16 +34,16 @@ Prima muoviti. Poi scrolla.""")
 
 M["pt-BR"] = dict(
  name="Tempo de tela: Earnit",
- subtitle="Bloqueio de apps e detox",
- keywords="ganhar,vicio em celular,autocontrole,estudar,foco,limite,distracao,habito,parar de rolar",
+ subtitle="Chega de vício em celular",
+ keywords="ganhar,bloqueio,apps,detox,digital,autocontrole,foco,limite,distracao,habito,parar de rolar,flexoes",
  promo="Novo: experimente uma série real de flexões já no onboarding e veja como o Earnit desbloqueia seus apps. A câmera conta, o vídeo nunca é salvo.",
  desc="""Seu celular não devia ser de graça. Conquiste ele.
 
-O Earnit bloqueia os apps que comem o seu dia e mantém tudo bloqueado até você fazer algo que vale a pena. Caminhe. Estude. Faça flexões. Cada esforço vira minutos que você pode gastar de verdade.
+O Earnit bloqueia os apps que comem o seu dia e mantém tudo bloqueado até você fazer algo que vale a pena. Caminhe. Faça flexões. Agachamentos. Cada esforço vira minutos que você pode gastar de verdade.
 
 COMO FUNCIONA
 1. Escolha os apps que quer bloquear. Eles ficam bloqueados por padrão.
-2. Ganhe minutos: passos do Apple Health, uma sessão de estudo concentrada, ou flexões contadas pelo próprio aparelho.
+2. Ganhe minutos: passos do Apple Health ou flexões e agachamentos contados pelo próprio aparelho.
 3. Gaste em uma sessão deliberada de 5, 10 ou 15 minutos. No fim, o bloqueio volta sozinho.
 
 POR QUE FUNCIONA ONDE TEMPORIZADOR NÃO FUNCIONA
@@ -54,9 +51,6 @@ Um temporizador pede pra você parar. O Earnit pede pra você trocar. Não tem b
 
 CAMINHE PARA DESBLOQUEAR
 Os passos vêm direto do Apple Health. Ajuste um ritmo que combine com você e cada caminhada recarrega seu saldo sem esforço.
-
-ESTUDE PARA DESBLOQUEAR
-Faça uma sessão de estudo concentrada e guarde o tempo investido. Feito para quem precisa do celular longe até o trabalho terminar.
 
 FLEXÕES PARA DESBLOQUEAR
 Contadas no aparelho, sem pulseira nem relógio. Uma série quando quiser minutos de volta.
@@ -72,15 +66,15 @@ Mexa-se primeiro. Role depois.""")
 M["nl-NL"] = dict(
  name="Schermtijd verdienen: Earnit",
  subtitle="Apps blokkeren & detox",
- keywords="telefoonverslaving,zelfbeheersing,studeren,focus,limiet,afleiding,gewoonte,minder scrollen",
+ keywords="telefoonverslaving,zelfbeheersing,squats,focus,limiet,afleiding,gewoonte,minder scrollen",
  promo="Nieuw: probeer een echte set push-ups al tijdens de onboarding en zie hoe Earnit je apps ontgrendelt. Camera telt mee, video wordt nooit opgeslagen.",
  desc="""Je telefoon zou niet gratis moeten zijn. Verdien hem.
 
-Earnit vergrendelt de apps die je dag opeten en houdt ze vergrendeld tot je iets doet dat de moeite waard is. Wandelen. Studeren. Push-ups. Elke inspanning wordt minuten die je echt kunt uitgeven.
+Earnit vergrendelt de apps die je dag opeten en houdt ze vergrendeld tot je iets doet dat de moeite waard is. Wandelen. Push-ups. Squats. Elke inspanning wordt minuten die je echt kunt uitgeven.
 
 ZO WERKT HET
 1. Kies de apps die je geblokkeerd wilt. Die blijven standaard op slot.
-2. Verdien minuten: stappen uit Apple Health, een geconcentreerde studiesessie, of push-ups die het toestel zelf telt.
+2. Verdien minuten: stappen uit Apple Health of push-ups en squats die het toestel zelf telt.
 3. Geef ze uit in een bewuste sessie van 5, 10 of 15 minuten. Daarna gaat het slot vanzelf weer dicht.
 
 WAAROM DIT WERKT WAAR TIMERS FALEN
@@ -88,9 +82,6 @@ Een timer vraagt je te stoppen. Earnit vraagt je te ruilen. Geen "nog 15 minuten
 
 WANDELEN OM TE ONTGRENDELEN
 Stappen komen rechtstreeks uit Apple Health. Stel een tempo in dat bij je past en elke wandeling vult je saldo ongemerkt aan.
-
-STUDEREN OM TE ONTGRENDELEN
-Start een geconcentreerde studiesessie en zet de tijd die je investeert opzij. Gemaakt voor wie de telefoon weg moet hebben tot het werk af is.
 
 PUSH-UPS OM TE ONTGRENDELEN
 Op het toestel geteld, zonder wearable. Een setje als je minuten terug wilt.
@@ -106,15 +97,15 @@ Eerst bewegen. Daarna scrollen.""")
 M["pl"] = dict(
  name="Czas przed ekranem: Earnit",
  subtitle="Blokada aplikacji i detoks",
- keywords="zarabiaj,uzaleznienie od telefonu,samokontrola,nauka,skupienie,limit,app blocker,screen time",
+ keywords="zarabiaj,uzaleznienie od telefonu,samokontrola,pompki,skupienie,limit,app blocker,screen time",
  promo="Nowość: wykonaj prawdziwą serię pompek już podczas onboardingu i zobacz, jak Earnit odblokowuje twoje aplikacje. Kamera liczy, nagranie nigdy nie jest zapisywane.",
  desc="""Telefon nie powinien być za darmo. Zapracuj na niego.
 
-Earnit blokuje aplikacje, które zjadają ci dzień, i trzyma je zablokowane, dopóki nie zrobisz czegoś wartościowego. Spacer. Nauka. Pompki. Każdy wysiłek zamienia się w minuty, które naprawdę możesz wydać.
+Earnit blokuje aplikacje, które zjadają ci dzień, i trzyma je zablokowane, dopóki nie zrobisz czegoś wartościowego. Spacer. Pompki. Przysiady. Każdy wysiłek zamienia się w minuty, które naprawdę możesz wydać.
 
 JAK TO DZIAŁA
 1. Wybierz aplikacje do zablokowania. Domyślnie pozostają zablokowane.
-2. Zdobywaj minuty: kroki z Apple Health, skupiona sesja nauki albo pompki liczone przez samo urządzenie.
+2. Zdobywaj minuty: kroki z Apple Health albo pompki i przysiady liczone przez samo urządzenie.
 3. Wydaj je w świadomej sesji 5, 10 lub 15 minut. Po jej końcu blokada wraca sama.
 
 DLACZEGO DZIAŁA TAM, GDZIE MINUTNIKI ZAWODZĄ
@@ -122,9 +113,6 @@ Minutnik prosi, żebyś przestał. Earnit proponuje wymianę. Nie ma przycisku "
 
 SPACER, ŻEBY ODBLOKOWAĆ
 Kroki płyną prosto z Apple Health. Ustaw tempo, które ci pasuje, a każdy spacer po cichu uzupełnia twoje saldo.
-
-NAUKA, ŻEBY ODBLOKOWAĆ
-Przeprowadź skupioną sesję nauki i odłóż zainwestowany czas. Dla tych, którzy potrzebują telefonu poza zasięgiem, aż praca będzie skończona.
 
 POMPKI, ŻEBY ODBLOKOWAĆ
 Liczone na urządzeniu, bez opaski ani zegarka. Seria, gdy chcesz odzyskać minuty.
@@ -140,15 +128,15 @@ Najpierw ruch. Potem przewijanie.""")
 M["tr"] = dict(
  name="Ekran süresi kazan: Earnit",
  subtitle="Uygulama engelleme & detoks",
- keywords="telefon bagimliligi,oz kontrol,ders calisma,odaklanma,limit,dikkat dagitici,app blocker",
+ keywords="telefon bagimliligi,oz kontrol,egzersiz,odaklanma,limit,dikkat dagitici,app blocker",
  promo="Yeni: onboarding sırasında gerçek bir şınav seti dene ve Earnit'in uygulamalarını nasıl açtığını gör. Kamera sayar, video asla kaydedilmez.",
  desc="""Telefonun bedava olmamalı. Hak et.
 
-Earnit gününü yiyen uygulamaları kilitler ve değerli bir şey yapana kadar kilitli tutar. Yürü. Ders çalış. Şınav çek. Her çaba, gerçekten harcayabileceğin dakikalara dönüşür.
+Earnit gününü yiyen uygulamaları kilitler ve değerli bir şey yapana kadar kilitli tutar. Yürü. Şınav çek. Squat yap. Her çaba, gerçekten harcayabileceğin dakikalara dönüşür.
 
 NASIL ÇALIŞIR
 1. Engellemek istediğin uygulamaları seç. Varsayılan olarak kilitli kalırlar.
-2. Dakika kazan: Apple Health'ten adımlar, odaklanmış bir çalışma seansı ya da cihazın kendi saydığı şınavlar.
+2. Dakika kazan: Apple Health'ten adımlar ya da cihazın kendi saydığı şınav ve squatlar.
 3. Onları bilinçli bir 5, 10 veya 15 dakikalık seansta harca. Seans bitince kilit kendiliğinden geri gelir.
 
 ZAMANLAYICILAR İŞE YARAMAZKEN BU NEDEN YARAR
@@ -156,9 +144,6 @@ Zamanlayıcı durmanı ister. Earnit takas etmeni ister. "15 dakika daha" düğm
 
 AÇMAK İÇİN YÜRÜ
 Adımlar doğrudan Apple Health'ten gelir. Sana uyan bir tempo belirle; her yürüyüş bakiyeni sessizce doldursun.
-
-AÇMAK İÇİN DERS ÇALIŞ
-Odaklanmış bir çalışma seansı yap ve harcadığın zamanı kenara koy. Telefonu iş bitene kadar uzakta tutması gerekenler için.
 
 AÇMAK İÇİN ŞINAV ÇEK
 Cihazda sayılır, giyilebilir cihaz gerekmez. Dakikalarını geri istediğinde bir set.
@@ -174,15 +159,15 @@ Sağlık ve hareket verileri iPhone'unda kalır. Hangi uygulamaları engellediğ
 M["ru"] = dict(
  name="Экранное время: Earnit",
  subtitle="Блокировка приложений",
- keywords="заработать,зависимость от телефона,самоконтроль,учеба,фокус,лимит,цифровой детокс,привычки",
+ keywords="заработать,зависимость от телефона,самоконтроль,отжимания,фокус,лимит,цифровой детокс,привычки",
  promo="Новое: попробуйте настоящий подход отжиманий прямо в онбординге и узнайте, как Earnit разблокирует приложения. Камера считает, видео не сохраняется.",
  desc="""Телефон не должен быть бесплатным. Заработай его.
 
-Earnit блокирует приложения, которые съедают твой день, и держит их закрытыми, пока ты не сделаешь что-то стоящее. Ходи. Учись. Отжимайся. Любое усилие превращается в минуты, которые можно потратить по-настоящему.
+Earnit блокирует приложения, которые съедают твой день, и держит их закрытыми, пока ты не сделаешь что-то стоящее. Ходи. Отжимайся. Приседай. Любое усилие превращается в минуты, которые можно потратить по-настоящему.
 
 КАК ЭТО РАБОТАЕТ
 1. Выбери приложения для блокировки. По умолчанию они закрыты.
-2. Зарабатывай минуты: шаги из Apple Health, сосредоточенная учебная сессия или отжимания, которые считает само устройство.
+2. Зарабатывай минуты: шаги из Apple Health или отжимания и приседания, которые считает само устройство.
 3. Трать их в осознанной сессии на 5, 10 или 15 минут. Когда она заканчивается, блокировка возвращается сама.
 
 ПОЧЕМУ ЭТО РАБОТАЕТ ТАМ, ГДЕ ТАЙМЕРЫ НЕТ
@@ -190,9 +175,6 @@ Earnit блокирует приложения, которые съедают т
 
 ХОДИ, ЧТОБЫ ОТКРЫТЬ
 Шаги приходят прямо из Apple Health. Настрой подходящий темп, и каждая прогулка незаметно пополняет баланс.
-
-УЧИСЬ, ЧТОБЫ ОТКРЫТЬ
-Проведи сосредоточенную учебную сессию и отложи вложенное время. Для тех, кому телефон нужен подальше, пока работа не сделана.
 
 ОТЖИМАЙСЯ, ЧТОБЫ ОТКРЫТЬ
 Считается на устройстве, без браслета и часов. Подход, когда хочешь вернуть минуты.
