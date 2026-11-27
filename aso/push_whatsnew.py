@@ -10,9 +10,11 @@ nothing else drifted, and again afterwards to read the result back.
 import json, subprocess, sys, time
 sys.path.insert(0, "aso")
 import build as B, whatsnew
+from asc_targets import editable_version
 
 ASC = "/Users/balthasardeweert/.claude/plugins/cache/vibe-aso-marketplace/vibe-aso/0.1.0/skills/vibe-aso/scripts/asc.rb"
-VERSION_ID = "1ff3dd9c-547b-473d-800f-2cf226e9c0a2"
+VERSION_ID, VERSION = editable_version()
+print("writing release notes to version %s (%s)" % (VERSION, VERSION_ID))
 DRY = "--write" not in sys.argv
 
 def asc(method, path, body=None, tries=4):

@@ -1,21 +1,68 @@
 # -*- coding: utf-8 -*-
-"""Customer-facing release notes for the editable 1.3.1 App Store version."""
+"""Customer-facing release notes for the editable 1.3.5 App Store version.
+
+1.3.4 (live since 2026-10-27) shipped Friends, squads, the new camera exercises and the
+refreshed Home. 1.3.5 adds the guided first reward in onboarding, the simpler paywall with
+the trial timeline, and Korean. The rating prompt and hiding Study are not called out.
+Push with `python3 aso/push_whatsnew.py --write`, read back with `python3 aso/verify.py`.
+"""
+
+_EN = ("A simpler start: during setup you now earn your first real minutes and unlock an app step by step, so you see how Earnit works right away.\n\n"
+       "A clearer Pro screen shows each step of your free trial before you choose a plan.\n\n"
+       "Earnit is now available in Korean, plus smaller fixes and polish.")
+_ES_ES = ("Un comienzo más sencillo: durante la configuración ganas tus primeros minutos reales y desbloqueas una app paso a paso, para ver cómo funciona Earnit desde el primer momento.\n\n"
+          "La pantalla de Pro es más clara y muestra cada paso de tu prueba gratuita antes de elegir un plan.\n\n"
+          "Earnit ya está disponible en coreano, además de pequeñas mejoras y correcciones.")
+_ES_MX = ("Un comienzo más sencillo: durante la configuración ganas tus primeros minutos reales y desbloqueas una app paso a paso, para que veas cómo funciona Earnit desde el primer momento.\n\n"
+          "La pantalla de Pro es más clara y muestra cada paso de tu prueba gratis antes de elegir un plan.\n\n"
+          "Earnit ya está disponible en coreano, además de pequeñas mejoras y correcciones.")
+_FR = ("Un démarrage plus simple : pendant la configuration, vous gagnez vos premières vraies minutes et déverrouillez une app étape par étape, pour comprendre tout de suite comment fonctionne Earnit.\n\n"
+       "L’écran Pro, plus clair, présente chaque étape de votre essai gratuit avant que vous choisissiez une formule.\n\n"
+       "Earnit est désormais disponible en coréen, avec aussi quelques corrections et améliorations.")
 
 W = {
-    "en-US": "New: add the Earnit widget to your Home or Lock Screen to see minutes ready to spend and your progress at a glance. During an unlock, it shows the time left.\n\nChoose a time for an optional daily walking reminder. Earnit can also notify you when steps earn minutes, even while the app is closed. Manage notifications and the widget in Settings.",
-    "en-GB": "New: add the Earnit widget to your Home or Lock Screen to see minutes ready to spend and your progress at a glance. During an unlock, it shows the time left.\n\nChoose a time for an optional daily walking reminder. Earnit can also notify you when steps earn minutes, even while the app is closed. Manage notifications and the widget in Settings.",
-    "es-ES": "Novedad: añade el widget de Earnit a la pantalla de inicio o de bloqueo para ver tus minutos disponibles y tu progreso de un vistazo. Durante un desbloqueo, muestra el tiempo restante.\n\nElige la hora de un recordatorio diario opcional para caminar. Earnit también puede avisarte cuando tus pasos te den minutos, incluso con la app cerrada. Gestiona las notificaciones y el widget en Ajustes.",
-    "es-MX": "Novedad: agrega el widget de Earnit a la pantalla de inicio o de bloqueo para ver tus minutos disponibles y tu progreso de un vistazo. Durante un desbloqueo, muestra el tiempo restante.\n\nElige la hora de un recordatorio diario opcional para caminar. Earnit también puede avisarte cuando tus pasos te den minutos, incluso con la app cerrada. Configura las notificaciones y el widget en Ajustes.",
-    "de-DE": "Neu: Mit dem Earnit-Widget auf dem Home- oder Sperrbildschirm siehst du deine verfügbaren Minuten und deinen Fortschritt auf einen Blick. Während einer Freigabe zeigt es die verbleibende Zeit.\n\nWähle eine Uhrzeit für die optionale tägliche Erinnerung ans Gehen. Earnit kann dich auch benachrichtigen, wenn du durch Schritte Minuten verdienst – selbst bei geschlossener App. Benachrichtigungen und Widget verwaltest du in den Einstellungen.",
-    "fr-FR": "Nouveau : ajoutez le widget Earnit à l’écran d’accueil ou verrouillé pour voir vos minutes disponibles et votre progression en un coup d’œil. Pendant un déverrouillage, il affiche le temps restant.\n\nChoisissez l’heure d’un rappel quotidien facultatif pour marcher. Earnit peut aussi vous avertir lorsque vos pas vous font gagner des minutes, même si l’app est fermée. Gérez les notifications et le widget dans Réglages.",
-    "it": "Novità: aggiungi il widget di Earnit alla schermata Home o alla schermata di blocco per vedere a colpo d’occhio i minuti disponibili e i tuoi progressi. Durante uno sblocco mostra il tempo rimanente.\n\nScegli l’ora di un promemoria quotidiano facoltativo per camminare. Earnit può avvisarti quando i tuoi passi ti fanno guadagnare minuti, anche con l’app chiusa. Gestisci notifiche e widget nelle Impostazioni.",
-    "pt-BR": "Novidade: adicione o widget do Earnit à tela de Início ou de Bloqueio para ver seus minutos disponíveis e seu progresso rapidamente. Durante um desbloqueio, ele mostra o tempo restante.\n\nEscolha o horário de um lembrete diário opcional para caminhar. O Earnit também pode avisar quando seus passos renderem minutos, mesmo com o app fechado. Gerencie as notificações e o widget em Ajustes.",
-    "nl-NL": "Nieuw: voeg de Earnit-widget toe aan je beginscherm of toegangsscherm om je beschikbare minuten en voortgang in één oogopslag te zien. Tijdens een ontgrendeling toont hij de resterende tijd.\n\nKies een tijd voor een optionele dagelijkse wandelherinnering. Earnit kan je ook laten weten wanneer je met stappen minuten verdient, zelfs als de app gesloten is. Beheer meldingen en de widget in Instellingen.",
-    "pl": "Nowość: dodaj widżet Earnit do ekranu początkowego lub ekranu blokady, aby szybko sprawdzić dostępne minuty i postępy. Podczas odblokowania pokazuje pozostały czas.\n\nWybierz godzinę opcjonalnego codziennego przypomnienia o spacerze. Earnit może też powiadomić Cię, gdy kroki przyniosą kolejne minuty, nawet przy zamkniętej aplikacji. Powiadomieniami i widżetem zarządzasz w Ustawieniach.",
-    "tr": "Yeni: Kullanılabilir dakikalarını ve ilerlemeni bir bakışta görmek için Earnit araç takımını Ana Ekranına veya Kilit Ekranına ekle. Kilit açma sırasında kalan süreyi gösterir.\n\nİsteğe bağlı günlük yürüyüş hatırlatıcısı için bir saat seç. Earnit, uygulama kapalıyken bile adımların sana dakika kazandırdığında haber verebilir. Bildirimleri ve araç takımını Ayarlar’dan yönetebilirsin.",
-    "ru": "Новое: добавьте виджет Earnit на экран «Домой» или экран блокировки, чтобы сразу видеть доступные минуты и свой прогресс. Во время разблокировки он показывает оставшееся время.\n\nВыберите время для необязательного ежедневного напоминания о прогулке. Earnit также может сообщать, когда шаги приносят вам минуты, даже если приложение закрыто. Настраивайте уведомления и виджет в разделе «Настройки».",
-    "ja": "新機能：Earnitのウィジェットをホーム画面またはロック画面に追加すると、使える分数と進捗をひと目で確認できます。アプリのロック解除中は残り時間を表示します。\n\n任意の毎日のウォーキング通知は、好きな時刻に設定できます。アプリを閉じていても、歩数で分数を獲得したときに通知を受け取れます。通知とウィジェットは設定から管理できます。",
-    "ko": "새 기능: Earnit 위젯을 홈 화면이나 잠금 화면에 추가하면 사용할 수 있는 시간과 진행 상황을 한눈에 볼 수 있습니다. 잠금 해제 중에는 남은 시간을 표시합니다.\n\n선택 사항인 일일 걷기 알림 시간을 직접 정하세요. 앱을 닫아도 걸음 수로 시간을 얻으면 Earnit이 알려줄 수 있습니다. 알림과 위젯은 설정에서 관리할 수 있습니다.",
-    "zh-Hans": "新功能：将 Earnit 小组件添加到主屏幕或锁定屏幕，即可快速查看可用分钟数和进度。解锁期间还会显示剩余时间。\n\n你可以自选每日步行提醒的时间。即使关闭 App，Earnit 也可以在步数为你赢得分钟数时发出通知。通知和小组件都可在“设置”中管理。",
-    "ar-SA": "جديد: أضف أداة Earnit إلى الشاشة الرئيسية أو شاشة القفل لتعرف الدقائق المتاحة وتقدمك بنظرة سريعة. وأثناء فتح التطبيقات، تعرض الوقت المتبقي.\n\nاختر وقتًا لتذكير يومي اختياري بالمشي. ويمكن لـ Earnit أيضًا إشعارك عندما تكسب دقائق من خطواتك، حتى عندما يكون التطبيق مغلقًا. تحكّم في الإشعارات والأداة من الإعدادات.",
+    "en-US": _EN,
+    "en-GB": _EN,
+    "en-AU": _EN,
+    "en-CA": _EN,
+    "es-ES": _ES_ES,
+    "es-MX": _ES_MX,
+    "de-DE": ("Ein einfacherer Start: Bei der Einrichtung verdienst du jetzt deine ersten echten Minuten und gibst Schritt für Schritt eine App frei – so siehst du sofort, wie Earnit funktioniert.\n\n"
+              "Der übersichtlichere Pro-Bildschirm zeigt jeden Schritt deines kostenlosen Probezeitraums, bevor du ein Abo wählst.\n\n"
+              "Earnit gibt es jetzt auch auf Koreanisch, dazu kleinere Fehlerbehebungen und Verbesserungen."),
+    "fr-FR": _FR,
+    "fr-CA": _FR,
+    "it": ("Un inizio più semplice: durante la configurazione guadagni i tuoi primi minuti reali e sblocchi un’app passo dopo passo, così capisci subito come funziona Earnit.\n\n"
+           "La schermata Pro è più chiara e mostra ogni fase della prova gratuita prima di scegliere un piano.\n\n"
+           "Earnit ora è disponibile anche in coreano, con piccole correzioni e miglioramenti."),
+    "pt-BR": ("Um começo mais simples: durante a configuração, você ganha seus primeiros minutos de verdade e desbloqueia um app passo a passo, para ver na hora como o Earnit funciona.\n\n"
+              "A tela do Pro ficou mais clara e mostra cada etapa do teste grátis antes de você escolher um plano.\n\n"
+              "O Earnit agora está disponível em coreano, além de pequenas correções e melhorias."),
+    "nl-NL": ("Een eenvoudiger begin: tijdens het instellen verdien je nu je eerste echte minuten en ontgrendel je stap voor stap een app, zodat je meteen ziet hoe Earnit werkt.\n\n"
+              "Het overzichtelijkere Pro-scherm toont elke stap van je gratis proefperiode voordat je een abonnement kiest.\n\n"
+              "Earnit is nu ook in het Koreaans beschikbaar, plus kleine verbeteringen en oplossingen."),
+    "pl": ("Prostszy start: podczas konfiguracji zdobywasz pierwsze prawdziwe minuty i krok po kroku odblokowujesz aplikację, więc od razu widzisz, jak działa Earnit.\n\n"
+           "Bardziej przejrzysty ekran Pro pokazuje każdy etap bezpłatnego okresu próbnego, zanim wybierzesz plan.\n\n"
+           "Earnit jest teraz dostępny także po koreańsku, a do tego drobne poprawki i usprawnienia."),
+    "tr": ("Daha kolay bir başlangıç: Kurulum sırasında artık ilk gerçek dakikalarını kazanıyor ve bir uygulamanın kilidini adım adım açıyorsun; böylece Earnit’in nasıl çalıştığını hemen görüyorsun.\n\n"
+           "Daha anlaşılır Pro ekranı, bir plan seçmeden önce ücretsiz denemenin her adımını gösteriyor.\n\n"
+           "Earnit artık Korece de kullanılabiliyor; ayrıca küçük düzeltmeler ve iyileştirmeler var."),
+    "ru": ("Более простое начало: во время настройки вы зарабатываете первые настоящие минуты и шаг за шагом разблокируете приложение, чтобы сразу понять, как работает Earnit.\n\n"
+           "Обновлённый экран Pro понятнее показывает каждый этап бесплатного пробного периода до выбора плана.\n\n"
+           "Earnit теперь доступен на корейском языке, а также мелкие исправления и улучшения."),
+    "ja": ("はじめての設定がよりシンプルに：設定中に最初の分数を実際に獲得し、アプリのロック解除をステップごとに体験できるので、Earnitの使い方がすぐにわかります。\n\n"
+           "Proの画面がわかりやすくなり、プランを選ぶ前に無料トライアルの流れを確認できます。\n\n"
+           "Earnitが韓国語に対応しました。そのほか細かな修正と改善を行いました。"),
+    "ko": ("더 쉬워진 시작: 설정 중에 첫 번째 시간을 직접 얻고 앱 잠금 해제를 단계별로 해 보며 Earnit의 사용법을 바로 알 수 있습니다.\n\n"
+           "더 명확해진 Pro 화면에서 요금제를 고르기 전에 무료 체험의 각 단계를 확인할 수 있습니다.\n\n"
+           "이제 Earnit을 한국어로 사용할 수 있습니다. 그 밖에 작은 수정과 개선이 포함되어 있습니다."),
+    "zh-Hans": ("更简单的上手体验：设置过程中，你会赚到第一批真正的分钟数，并一步步解锁一个 App，马上了解 Earnit 的用法。\n\n"
+                "更清晰的 Pro 页面会在你选择方案前展示免费试用的每个阶段。\n\n"
+                "Earnit 现已支持韩语，并包含一些小修复和改进。"),
+    "zh-Hant": ("更簡單的上手體驗：設定過程中，你會賺到第一批真正的分鐘數，並一步步解鎖一個 App，馬上了解 Earnit 的用法。\n\n"
+                "更清楚的 Pro 畫面會在你選擇方案前顯示免費試用的每個階段。\n\n"
+                "Earnit 現已支援韓文，並包含一些小修正和改進。"),
+    "ar-SA": ("بداية أبسط: أثناء الإعداد تكسب الآن أولى دقائقك الحقيقية وتفتح تطبيقًا خطوة بخطوة، لترى فورًا كيف يعمل Earnit.\n\n"
+              "شاشة Pro أصبحت أوضح، وتعرض كل مرحلة من الفترة التجريبية المجانية قبل أن تختار خطة.\n\n"
+              "أصبح Earnit متاحًا الآن باللغة الكورية، إلى جانب إصلاحات وتحسينات صغيرة."),
 }
