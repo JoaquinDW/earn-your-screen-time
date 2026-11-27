@@ -9,21 +9,21 @@ the status table before continuing.
 | Phase | State |
 |---|---|
 | 1 Keyword research | **Done** — `01-keyword-research.md` |
-| 2 Store metadata (16 locales) | **Done** — 1.3.1 release notes saved and read back in all 16 locales; existing listing metadata carried forward |
+| 2 Store metadata (16 locales) | **Ready to push** — 20 locales in `fastlane/metadata`, 1.3.5 release notes in `whatsnew.py` |
 | 3 Screenshots | **en-US/en-GB/es-ES/es-MX/de-DE done** on draft version 1.2 (`APP_IPHONE_65`, 6 each); the other 11 locales still have no set and fall back to English |
 | 4 Territory pricing (GNI bands) | **Applied** — `aso/pricing.py`, 130 of 175 territories cut on both subscriptions |
 | 5 In-app strings | **5 of 12 locales translated and merged into the app** (de, fr, it, ja, pt-BR) |
 | 6 Submission | **Not started** |
 
-**1.3.1 draft** (`1ff3dd9c-547b-473d-800f-2cf226e9c0a2`, `PREPARE_FOR_SUBMISSION`, no build attached)
-was already present on 2026-10-12. Version-specific scripts now point at it and the editable
-appInfo `b5370e75-460e-4bb7-b721-2ed575e04da0`. Its release notes cover the widget and
-progress notifications in all 16 locales; `aso/verify.py` read them back. The review notes
-explain that HealthKit background delivery needs a physical iPhone and has not been validated
-in the simulator. The version has not been submitted for review.
+**Next release: 1.3.5 (1).** 1.3.4 is `READY_FOR_SALE` since 2026-10-27 (Friends, squads, the new
+camera exercises, refreshed Home). 1.3.5 adds the guided first reward in onboarding, the simpler
+paywall, the rating prompt, Study hidden and Korean. Its release notes are in `aso/whatsnew.py` for
+all 20 locales. The live listing still has the old name, the Study copy and the old screenshots:
+create 1.3.5 in App Store Connect, then run `push.py`, `push_whatsnew.py --write`,
+`push_screenshots.py --write` and `verify.py`.
 
 The live en-US name/subtitle/keywords and the empty promotional text differ from the local ASO
-sources, so `verify.py` reports those existing mismatches. Version 1.3.0 is `READY_FOR_SALE`.
+sources until `push.py` runs.
 
 **Decided 2026-10-28: the local sources win over the live listing.** An Appeak audit found the
 live en-US listing at #72 for "earn screen time". English names now spend all 30 characters on
