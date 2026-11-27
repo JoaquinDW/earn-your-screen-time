@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:F;font-weight:700;src:url(Figtree-Bold.ttf)}@font-face{font-family:F;font-weight:600;src:url(Figtree-SemiBold.ttf)}
+@font-face{font-family:IS;src:url(InstrumentSerif-Regular.ttf)}@font-face{font-family:IS;font-style:italic;src:url(InstrumentSerif-Italic.ttf)}
+:root{--c:#2E5CE6;--n:#0B1F45;--i:#F5F0E3}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:5244px;height:2950px;overflow:hidden}
+body{position:relative;font-family:F}
+.safe{position:absolute;left:1921px;top:660px;width:1402px;height:962px}
+.ph{position:absolute}
+.guide{position:absolute;left:1921px;top:660px;width:1402px;height:962px;outline:8px dashed #f0f;z-index:99;display:none}
+body.g .guide{display:block}
+/* ---------- A cobalto ---------- */
+.A{background:radial-gradient(ellipse 2600px 1500px at 50% 38%,#3D6BF0 0%,#2E5CE6 45%,#2149C4 100%)}
+.A h1{position:absolute;left:0;right:0;top:690px;text-align:center;color:var(--i);font-weight:700;font-size:162px;line-height:.92;letter-spacing:-7px}
+.A h1 em{display:block;font-family:IS;font-style:italic;font-weight:400;font-size:1.18em;letter-spacing:-3px}
+.A .sub{position:absolute;left:0;right:0;top:1150px;text-align:center;color:var(--i);opacity:.86;font-weight:600;font-size:54px}
+.A .chips{position:absolute;left:0;right:0;top:1290px;display:flex;justify-content:center;gap:28px}
+.A .chip{border:5px solid rgba(245,240,227,.55);color:var(--i);border-radius:999px;padding:20px 40px;font-weight:600;font-size:44px}
+.band{position:absolute;left:0;right:0;display:flex}
+.band b{flex:1;display:flex;justify-content:center}.band b::after{content:"";width:12px;border-radius:6px;background:rgba(245,240,227,.25)}
+.band b.on::after{background:var(--i)}
+/* ---------- B noche ---------- */
+.B{background:radial-gradient(circle 1500px at 50% 39%,#16306A 0%,#0B1F45 55%,#060F26 100%)}
+.B .dial{position:absolute;left:50%;top:1141px;transform:translate(-50%,-50%)}
+.B h1{position:absolute;left:0;right:0;top:1470px;text-align:center;color:var(--i);font-family:IS;font-weight:400;font-size:124px;line-height:1;letter-spacing:-2px}
+.B h1 em{color:#6E97FF}
+/* ---------- C marfil ---------- */
+.C{background:#F5F0E3}
+.C h1{position:absolute;left:0;right:0;top:680px;text-align:center;color:var(--n);font-family:IS;font-weight:400;font-size:186px;line-height:.92;letter-spacing:-3px}
+.C h1 em{display:block;color:var(--c)}
+.C .sub{position:absolute;left:0;right:0;top:1060px;text-align:center;color:var(--n);opacity:.8;font-weight:600;font-size:44px}
+</style></head><body>
+<div class="guide"></div>
+<script>
+const q=new URLSearchParams(location.search),c=q.get('c')||'A',L=q.get('l')||'es';if(q.get('g'))document.body.classList.add('g');
+document.body.classList.add(c);
+const T={es:{A:['Muévete primero.','Scrollea después.','Tus apps se desbloquean cuando te mueves.','Conteo en tu iPhone','Sin video'],
+B:['Gana tu <em>tiempo de pantalla.</em>'],C:['Gana tu','tiempo de pantalla.','Tus apps se desbloquean cuando te mueves.']},
+en:{A:['Move first.','Scroll later.','Your apps unlock when you move.','Counted on your iPhone','No video saved'],
+B:['Earn your <em>screen time.</em>'],C:['Earn your','screen time.','Your apps unlock when you move.']}}[L][c];
+const ph=(f,x,y,w,r,z,o)=>`<img class="ph" src="../phones-${L}/${f}.png" style="left:${x}px;top:${y}px;width:${w}px;transform:rotate(${r}deg);z-index:${z||1};opacity:${o??1}">`;
+let h='';
+if(c==='A'){
+ h+=`<h1>${T[0]}<em>${T[1]}</em></h1><div class="sub">${T[2]}</div><div class="chips"><span class="chip">📱 ${T[3]}</span><span class="chip">🚫 ${T[4]}</span></div>`;
+ // phones on both sides, auxiliary area
+ h+=ph('02-pushups',380,600,1000,-9)+ph('03-walk',-420,1150,1000,-4)+ph('05-lock',3860,600,1000,8)+ph('09-friends',4660,1150,1000,5);
+ h+='<div class="band" style="top:2700px;height:160px" id="band"></div>';
+}
+if(c==='B'){
+ // dial of ticks around app glyph
+ const R1=330,R2=420,N=72;let t='';for(let k=0;k<N;k++){const a=(k/N)*2*Math.PI-Math.PI/2,on=k<N*0.68;
+  t+=`<line x1="${Math.cos(a)*R1}" y1="${Math.sin(a)*R1}" x2="${Math.cos(a)*R2}" y2="${Math.sin(a)*R2}" stroke="${on?'#F5F0E3':'rgba(245,240,227,.18)'}" stroke-width="16" stroke-linecap="round"/>`;}
+ // outer faint rings of ticks across the canvas
+ let rings='';for(const [r,n,op] of [[700,140,.10],[1000,200,.07],[1350,260,.05],[1750,320,.035],[2200,380,.025]])for(let k=0;k<n;k++){const a=k/n*2*Math.PI;rings+=`<line x1="${Math.cos(a)*r}" y1="${Math.sin(a)*r}" x2="${Math.cos(a)*(r+60)}" y2="${Math.sin(a)*(r+60)}" stroke="rgba(110,151,255,${op*3})" stroke-width="10" stroke-linecap="round"/>`}
+ h+=`<svg class="dial" width="5000" height="5000" viewBox="-2500 -2500 5000 5000" style="top:${q.get('nt')?1141:1000}px"><defs><radialGradient id="gl"><stop offset="0" stop-color="#2E5CE6" stop-opacity=".55"/><stop offset="1" stop-color="#2E5CE6" stop-opacity="0"/></radialGradient></defs>
+ <circle r="900" fill="url(#gl)"/>${rings}${t}
+ <g transform="translate(0,25)">
+  <path d="M-115,-95 V-190 A115,115 0 0 1 115,-190 V-165" fill="none" stroke="#F5F0E3" stroke-width="58" stroke-linecap="round"/>
+  <rect x="-205" y="-110" width="410" height="330" rx="70" fill="#F5F0E3"/>
+  <path d="M-95,-55 H95 M-95,165 H95" stroke="#0B1F45" stroke-width="26" stroke-linecap="round"/>
+  <path d="M-80,-55 C-80,25 -14,40 -14,55 C-14,70 -80,85 -80,165 H80 C80,85 14,70 14,55 C14,40 80,25 80,-55 Z" fill="#0B1F45"/>
+  <path d="M-62,160 C-55,120 -20,105 0,100 C20,105 55,120 62,160 Z" fill="#2E5CE6"/>
+ </g></svg>`;
+ if(!q.get('nt'))h+=`<h1>${T[0]}</h1>`;
+}
+if(c==='C'){
+ h+=`<h1>${T[0]}<em>${T[1]}</em></h1><div class="sub">${T[2]}</div>`;
+ const fs=['07-schedule','09-friends','02-pushups','03-walk','01-hook','05-lock','04-exercises','08-outcome','06-sessions'];
+ const W=1060,step=600,x0=2622-W/2-step*4;
+ fs.forEach((f,i)=>{const d=Math.abs(i-4);h+=ph(f,x0+i*step,1240+d*d*35,W,(i-4)*3.2,10-d)});
+}
+document.body.insertAdjacentHTML('beforeend',h);
+const b=document.getElementById('band');if(b)for(let k=0;k<200;k++){const e=document.createElement('b');if(k<130)e.className='on';b.appendChild(e)}
+</script></body></html>
