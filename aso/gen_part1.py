@@ -7,7 +7,7 @@ M = {}
 M["en-US"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pushups,workout,self,control,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pushups,reduce,self,control,addiction,phone",
  promo="New: try a real push-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc="""Your phone shouldn't be free. Earn it.
 
@@ -38,21 +38,21 @@ Move first. Scroll later.""")
 M["en-GB"] = dict(
  name="Earn Screen Time Rewards",
  subtitle="Stop Doomscrolling: Limit Apps",
- keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pressups,gym,self,control,addiction,phone",
+ keywords="walk,unlock,steps,digital,detox,dopamine,blocker,squats,pressups,reduce,self,control,addiction,phone",
  promo="New: try a real press-up set right in onboarding and feel exactly how Earnit unlocks your apps. Camera-counted, video never saved.",
  desc=M["en-US"]["desc"].replace("push-ups","press-ups").replace("Push-ups","Press-ups").replace("PUSH-UPS","PRESS-UPS"))
 
 M["en-AU"] = dict(
  name=M["en-GB"]["name"],
  subtitle=M["en-GB"]["subtitle"],
- keywords="mobile,addiction,focus,habit,tiktok,reels,insta,social,media,wellbeing,detox,walk,unlock",
+ keywords="mobile,addiction,focus,habit,social,media,wellbeing,detox,walk,unlock,reduce,mindful,steps,dopamine",
  promo=M["en-GB"]["promo"],
  desc=M["en-GB"]["desc"].replace("Your phone", "Your mobile phone"))
 
 M["en-CA"] = dict(
  name=M["en-US"]["name"],
  subtitle=M["en-US"]["subtitle"],
- keywords="cellphone,addiction,focus,habit,tiktok,reels,insta,social,media,wellness,detox,walk,unlock",
+ keywords="cellphone,addiction,focus,habit,social,media,wellness,detox,walk,unlock,reduce,mindful,steps",
  promo=M["en-US"]["promo"],
  desc=M["en-US"]["desc"].replace("Your phone shouldn't be free.", "Time on your phone shouldn't be free."))
 
